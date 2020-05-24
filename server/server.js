@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-require('./routes')(app);
+require('./routes/index.js')(app);
 
 connect().then(() => {
 	console.log('DB is connected');
