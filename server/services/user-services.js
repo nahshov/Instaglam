@@ -15,10 +15,15 @@ function getUser(email) {
 }
 
 // Update users
+async function editUser(email, newData = {}) {
+	const user = await User.findOne({ email });
+	Object.assign(user, newData);
+	return user.save();
+}
 
 // Remove users
 function deleteUser(email) {
 	return User.findOneAndRemove({ email });
 }
 
-module.exports = { createUser, getUser, deleteUser };
+module.exports = { createUser, getUser, deleteUser, editUser };
