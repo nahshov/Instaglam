@@ -4,16 +4,14 @@ const {
 	deleteUser
 } = require('../services/user-services.js');
 module.exports = function(app) {
-	app.get(`/api/users/:id`, async (req, res) => {
-		console.log(req.params.id);
-
+	app.get(`/api/users/:email`, async (req, res) => {
 		try {
-			const user = await getUser(req.params.id);
+			const user = await getUser(req.params.email);
 
 			if (!user) {
 				return res
 					.status(404)
-					.json({ message: 'no user with requested id' })
+					.json({ message: 'no user with requested email' })
 					.end();
 			}
 			res.status(200).json(user).end();
@@ -43,10 +41,12 @@ module.exports = function(app) {
 				.end();
 		}
 	});
-	// app.put
-	app.delete('/api/users/:id', async (req, res) => {
+
+	// todo - app.put
+
+	app.delete('/api/users/:email', async (req, res) => {
 		try {
-			const user = await deleteUser(req.params.id);
+			const user = await deleteUser(req.params.email);
 			res.status(200).json(user).end();
 		} catch (e) {
 			res

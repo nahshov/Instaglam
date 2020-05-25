@@ -7,14 +7,15 @@ function createUser(user) {
 }
 
 // Get users
-function getUser(ID) {
-	return User.findOne({ _id: ID });
+function getUser(email) {
+	return User.findOne({ email });
 }
+
 // Update users
 
 // Remove users
-function deleteUser(ID) {
-	return User.findOneAndRemove({ _id: ID });
+function deleteUser(email) {
+	return User.findOneAndRemove({ email });
 }
 
 module.exports = { createUser, getUser, deleteUser };
