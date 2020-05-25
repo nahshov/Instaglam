@@ -3,6 +3,9 @@ const User = require('../models/User.js');
 // Create users
 function createUser(user) {
 	user = new User(user);
+	if (!user.bio) {
+		user.bio = `Hello my name is ${user.firstName} ${user.lastName}`;
+	}
 	return user.save();
 }
 

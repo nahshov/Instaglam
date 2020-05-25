@@ -13,10 +13,18 @@ const UserSchema = new mongoose.Schema({
 	},
 
 	salt      : String,
-	firstName : String,
-	lastName  : String,
+	firstName : {
+		type     : String,
+		required : true
+	},
+	lastName  : {
+		type     : String,
+		required : true
+	},
 	city      : String,
-	bio       : String,
+	bio       : {
+		type : String
+	},
 	birthDate : String,
 	created   : {
 		type    : Date,
