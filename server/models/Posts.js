@@ -6,7 +6,9 @@ const PostSchema = new mongoose.Schema({
 		default : Date.now
 	},
     content: String,
-    image: String
+    image: String,
+    likes: String,
+    user: String
 })
 
 const Post = mongoose.model('Post', PostSchema);
