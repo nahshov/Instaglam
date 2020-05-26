@@ -29,7 +29,7 @@ function removeAllPosts(user) {
 
 // Update post
 function updatePost(_id, newContent) {
-	return Post.findOneAndUpdate(id, newContent, { new: true });
+	return Post.findOneAndUpdate(_id, newContent, { new: true });
 }
 
 module.exports = {
