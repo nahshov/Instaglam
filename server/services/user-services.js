@@ -15,10 +15,8 @@ function getUser(email) {
 }
 
 // Update users
-async function editUser(email, newData = {}) {
-	const user = await User.findOne({ email });
-	Object.assign(user, newData);
-	return user.save();
+function editUser(email, newData) {
+	return User.findOneAndUpdate(email, newData, {new: true});
 }
 
 // Remove users
