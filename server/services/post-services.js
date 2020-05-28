@@ -1,13 +1,14 @@
 const Post = require('../models/Posts.js');
 
+
 // Get all posts of a userEmail
 function getAllPosts(userEmail) {
-	return Post.find({ userEmail });
+	return Post.find({ user: userEmail });
 }
 
 // Get one post of a userEmail
-function getPost(userEmail, postId) {
-	return Post.findOne({ userEmail, postId });
+function getPost(postId) {
+	return Post.findOne({_id: postId });
 }
 
 createPost
@@ -19,17 +20,17 @@ function createPost(post) {
 
 // removePost
 function removePost(postId) {
-	return Post.findOneAndRemove({ postId });
+	return Post.findOneAndRemove({ _id: postId });
 }
 
 // Remove all posts from a specific userEmail
 function removeAllPosts(userEmail) {
-	return Post.deleteMany({ userEmail });
+	return Post.deleteMany({user: userEmail});
 }
 
 // Update post
-function updatePost(postId, newContent) {
-	return Post.findOneAndUpdate(postId, newContent, { new: true });
+async function updatePost(postId, newContent) {
+	return Post.findOneAndUpdate( {_id: postId}, newContent, { new: true });
 }
 
 module.exports = {

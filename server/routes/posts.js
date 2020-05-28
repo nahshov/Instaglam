@@ -1,4 +1,4 @@
-const { 
+const {
     getAllPosts,
     getPost,
     createPost,
@@ -7,17 +7,18 @@ const {
     updatePost,
 } = require('../services/post-services.js');
 module.exports = function(app) {
+
     //get all posts
     app.get('/api/posts/:email', async (req, res) => {
-        try{
-        const user = await getAllPosts(req.params.email);
-        if (!user) {
+        try {
+        const post = await getAllPosts(req.params.email);
+        if (!post) {
             return res
             .status(404)
             .json({ message: 'there are no posts with requested email'})
             .end();
         }
-        res.status(200).json(user).end();
+        res.status(200).json(post).end();
         } catch (e) {
             res
                 .status(500)
@@ -26,22 +27,22 @@ module.exports = function(app) {
         }
     });
 
-    //get one post of a user
+    //get one post of a user using post id
     app.get('/api/posts/:id', async (req, res) => {
-        try{
-			const user = await getPost(req.body.user, req.params.id);
+        try {
+			const post = await getPost(req.params.id);
 
-			if (!user) {
+			if (!post) {
 				return res
 					.status(404)
 					.json({ message: 'no post with requested id' })
 					.end();
 			}
-			res.status(200).json(user).end();
+			res.status(200).json(post).end();
 		} catch (e) {
 			res
 				.status(500)
-				.json({ message: `internal error while trying to find user` })
+				.json({ message: `internal error while trying to find post` })
 				.end();
 		}
 	});
@@ -61,14 +62,14 @@ module.exports = function(app) {
 		} catch (e) {
 			res
 				.status(500)
-				.json({ message: `internal error while trying to create user` })
+				.json({ message: `internal error while trying to create post` })
 				.end();
 		}
     });
 
     //remove a post
-    app.delete('/api/posts/:id', async (req, res) => {
-        try{
+    app.delete('/api/posts/:email/:id', async (req, res) => {
+        try {
             const post = await removePost(req.params.id);
             res.status(200).json(post).end();
 
@@ -82,10 +83,9 @@ module.exports = function(app) {
 
     // remove all posts
     app.delete('/api/posts/:email', async (req, res) => {
-        try{
+        try {
             const post = await removeAllPosts(req.params.email);
-            res.status(200).json(post).end();
-
+            res.status(200).json({ message: 'Successfully removed all user\'s posts'}).end();
         } catch(e){
             res
             .status(500)
@@ -95,17 +95,15 @@ module.exports = function(app) {
     });
 
     //update a post
-    app.put('/api/posts/:id', async (req, res){
-        try{
+    app.put('/api/posts/:email/:id', async (req, res) => {
+        try {
             const post = await updatePost(req.params.id, req.body)
-            res.status(200).json(user).end();
+            res.status(200).json(post).end();
         } catch (e) {
             res
                 .status(500)
-                .json({ message: `internal error while trying to update post})
+                .json({ message: `internal error while trying to update post`})
                 .end();
-
         }
     });
-
 }
