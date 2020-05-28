@@ -1,4 +1,4 @@
-const Post = require('../models/Posts.js');
+const Post = require('../models/Post.js');
 
 
 // Get all posts of a userEmail
