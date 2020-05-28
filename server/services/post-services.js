@@ -1,4 +1,4 @@
-const Post = require('../models/Post.js');
+const Post = require('../models/Posts.js');
 
 // Get all posts of a userEmail
 function getAllPosts(userEmail) {
@@ -10,10 +10,10 @@ function getPost(userEmail, postId) {
 	return Post.findOne({ userEmail, postId });
 }
 
-// createPost
+createPost
 function createPost(post) {
 	// Did not use Model.create to be consistent with userEmail services.
-	const post = new Post(post);
+	post = new Post(post);
 	return post.save();
 }
 
