@@ -1,35 +1,35 @@
 const Post = require('../models/Post.js');
 
-// Get all posts of a user
-function getAllPosts(user) {
-	return Post.find({ user });
+// Get all posts of a userEmail
+function getAllPosts(userEmail) {
+	return Post.find({ userEmail });
 }
 
-// Get one post of a user
-function getPost(user, _id) {
-	return Post.findOne({ user, _id });
+// Get one post of a userEmail
+function getPost(userEmail, postId) {
+	return Post.findOne({ userEmail, postId });
 }
 
 // createPost
 function createPost(post) {
-	// Did not use Model.create to be consistent with user services.
+	// Did not use Model.create to be consistent with userEmail services.
 	const post = new Post(post);
 	return post.save();
 }
 
 // removePost
-function removePost(_id) {
-	return Post.findOneAndRemove({ _id });
+function removePost(postId) {
+	return Post.findOneAndRemove({ postId });
 }
 
-// Remove all posts from a specific user
-function removeAllPosts(user) {
-	return Post.deleteMany({ user });
+// Remove all posts from a specific userEmail
+function removeAllPosts(userEmail) {
+	return Post.deleteMany({ userEmail });
 }
 
 // Update post
-function updatePost(_id, newContent) {
-	return Post.findOneAndUpdate(_id, newContent, { new: true });
+function updatePost(postId, newContent) {
+	return Post.findOneAndUpdate(postId, newContent, { new: true });
 }
 
 module.exports = {
