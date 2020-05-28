@@ -7,8 +7,12 @@ const PostSchema = new mongoose.Schema({
 	},
     content: String,
     image: String,
+    video: String,
     likes: String,
-    user: String
+    user: {
+        type: String,
+        required: true,
+    } 
 })
 
 const Post = mongoose.model('Post', PostSchema);
