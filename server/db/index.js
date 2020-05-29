@@ -3,6 +3,8 @@ const { mongoUri } = require('../config');
 
 module.exports = async function connect() {
 	require('../models/User');
+	require('../models/Post');
+	require('../models/Like');
 
 	try {
 		return mongoose.connect(mongoUri, {
