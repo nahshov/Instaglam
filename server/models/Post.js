@@ -9,10 +9,10 @@ const PostSchema = new mongoose.Schema({
     image: String,
     video: String,
     likes: String,
-        user: {
-            type: String,
-            required: true,
-        } 
+    user: {
+        type: String,
+        required: true,
+    } 
 })
 
 const Post = mongoose.model('Post', PostSchema);
