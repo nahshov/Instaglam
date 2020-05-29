@@ -7,10 +7,10 @@ function getAllPosts(userEmail) {
 
 // Get one post of a userEmail
 function getPost(postId) {
-	return Post.findOne({_id: postId });
+	return Post.findOne({ _id: postId });
 }
 
-createPost
+// createPost
 function createPost(post) {
 	// Did not use Model.create to be consistent with userEmail services.
 	post = new Post(post);
@@ -24,12 +24,12 @@ function removePost(postId) {
 
 // Remove all posts from a specific userEmail
 function removeAllPosts(userEmail) {
-	return Post.deleteMany({user: userEmail});
+	return Post.deleteMany({ user: userEmail });
 }
 
 // Update post
 async function updatePost(postId, newContent) {
-	return Post.findOneAndUpdate( {_id: postId}, newContent, { new: true });
+	return Post.findOneAndUpdate({ _id: postId }, newContent, { new: true });
 }
 
 module.exports = {
