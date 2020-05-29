@@ -1,33 +1,39 @@
 const Post = require('../models/Post.js');
 
-// Get all posts of a userEmail
+// @desc: Get all posts of a userEmail
+// @route: /api/posts/:email
 function getAllPosts(userEmail) {
 	return Post.find({ user: userEmail });
 }
 
-// Get one post of a userEmail
+// @desc: Get one post of a userEmail
+// @route: /api/posts/:id
 function getPost(postId) {
 	return Post.findOne({ _id: postId });
 }
 
-// createPost
+// @desc: createPost
+// @route: /api/posts
 function createPost(post) {
 	// Did not use Model.create to be consistent with userEmail services.
 	post = new Post(post);
 	return post.save();
 }
 
-// removePost
+// @desc: removePost
+// @route: /api/posts/:email/:id
 function removePost(postId) {
 	return Post.findOneAndRemove({ _id: postId });
 }
 
-// Remove all posts from a specific userEmail
+// @desc: Remove all posts from a specific userEmail
+// @route: /api/posts/:email
 function removeAllPosts(userEmail) {
 	return Post.deleteMany({ user: userEmail });
 }
 
-// Update post
+// @desc: Update post
+// @route: /api/posts/:email/:id
 async function updatePost(postId, newContent) {
 	return Post.findOneAndUpdate({ _id: postId }, newContent, { new: true });
 }

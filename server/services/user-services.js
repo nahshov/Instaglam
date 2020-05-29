@@ -1,6 +1,7 @@
 const User = require('../models/User.js');
 
-// Create users
+// @desc: Create users
+// @route: /api/users
 function createUser(user) {
 	user = new User(user);
 	if (!user.bio) {
@@ -9,17 +10,20 @@ function createUser(user) {
 	return user.save();
 }
 
-// Get users
+// @desc: Get users
+// @route: /api/users/:email
 function getUser(email) {
 	return User.findOne({ email });
 }
 
-// Update users
+// @desc: Update users
+// @route: /api/users/:email
 function editUser(email, newData) {
-	return User.findOneAndUpdate(email, newData, {new: true});
+	return User.findOneAndUpdate(email, newData, { new: true });
 }
 
-// Remove users
+// @desc: Remove users
+// @route: /api/users/:email
 function deleteUser(email) {
 	return User.findOneAndRemove({ email });
 }
