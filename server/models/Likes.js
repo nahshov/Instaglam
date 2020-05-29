@@ -5,11 +5,11 @@ const LikeSchema = new mongoose.Schema({
 		type    : Date,
 		default : Date.now
 	},
-    userID: {
+    user: {
         type: String,
         required: true,
     },
-    postID: {
+    post: {
         type: String,
         required: true,
     } 
