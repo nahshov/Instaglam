@@ -1,6 +1,5 @@
 const Like = require('../models/Like.js');
 
-
 //get likes of a post
 function getLikes(postId) {
     return Like.find({post: postId})
