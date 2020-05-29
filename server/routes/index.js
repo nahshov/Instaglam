@@ -1,5 +1,5 @@
 module.exports = function(app) {
-	require('./user')(app);
+	require('./users')(app);
 	require('./posts')(app)
 };
 
