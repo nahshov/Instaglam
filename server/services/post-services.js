@@ -1,6 +1,5 @@
 const Post = require('../models/Post.js');
 
-
 // Get all posts of a userEmail
 function getAllPosts(userEmail) {
 	return Post.find({ user: userEmail });
