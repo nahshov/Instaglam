@@ -8,7 +8,12 @@ function getLikes(postId) {
 
 // @desc: add like to a post
 // @route: /api/likes
-function addLike(like) {
+async function addLike(like) {
+	const { user, post } = like;
+	const doesLikeExist = await Like.findOne({ user, post });
+	if (doesLikeExist) {
+		return;
+	}
 	like = new Like(like);
 	return like.save();
 }
