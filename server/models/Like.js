@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 
 const LikeSchema = new mongoose.Schema({
-    created   : {
+	created : {
 		type    : Date,
 		default : Date.now
 	},
-    user: {
-        type: String,
-        required: true,
-    },
-    post: {
-        type: String,
-        required: true,
-    } 
-})
+	user    : {
+		type     : mongoose.Types.ObjectId,
+		ref      : 'User',
+		required : true,
+		index    : true
+	},
+	post    : {
+		type     : mongoose.Types.ObjectId,
+		ref      : 'Post',
+		required : true,
+		index    : true
+	}
+});
 
 const Like = mongoose.model('Like', LikeSchema);
 
