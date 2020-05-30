@@ -1,9 +1,14 @@
 const Post = require('../models/Post.js');
 
-// @desc: Get all posts of a userEmail
-// @route: /api/posts/:email
-function getAllPosts(userEmail) {
-	return Post.find({ user: userEmail });
+// @desc: Get all posts of a user
+// @route: /api/posts/:userId
+function getAllPosts() {
+	return Post.find({});
+}
+// @desc: Get all posts of a user
+// @route: /api/posts/:userId
+function getAllPostsOfUser(userId) {
+	return Post.find({ user: userId });
 }
 
 // @desc: Get one post of a userEmail
@@ -39,10 +44,11 @@ async function updatePost(postId, newContent) {
 }
 
 module.exports = {
-	getAllPosts,
+	getAllPostsOfUser,
 	getPost,
 	createPost,
 	removePost,
 	removeAllPosts,
-	updatePost
+	updatePost,
+	getAllPosts
 };

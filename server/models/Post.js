@@ -10,7 +10,9 @@ const PostSchema = new mongoose.Schema({
 	video   : String,
 	likes   : Number,
 	user    : {
-		type     : String,
+		type     : mongoose.Types.ObjectId,
+		ref      : 'User',
+		index    : true,
 		required : true
 	}
 });
