@@ -1,8 +1,10 @@
 const { getLikes, addLike, removeLike } = require('../services/like-services');
 
+const verifyUser = require('../services/auth-services');
+
 module.exports = function(app) {
 	// get all likes of a specific post
-	app.get('/api/likes/:postId', async (req, res) => {
+	app.get('/api/likes/:postId', verifyUser, async (req, res) => {
 		try {
 			const likes = await getLikes(req.params.postId);
 			res.status(200).json(likes).end();
@@ -15,7 +17,7 @@ module.exports = function(app) {
 	});
 
 	// Add likes to a post
-	app.post('/api/likes', async (req, res) => {
+	app.post('/api/likes', verifyUser, async (req, res) => {
 		try {
 			const like = await addLike(req.body);
 			res.status(200).json(like).end();
@@ -28,7 +30,7 @@ module.exports = function(app) {
 	});
 
 	// Remove like
-	app.delete('/api/likes/:postId', async (req, res) => {
+	app.delete('/api/likes/:postId', verifyUser, async (req, res) => {
 		try {
 			const like = await removeLike(req.params.postId);
 			res.status(200).json(like).end();
