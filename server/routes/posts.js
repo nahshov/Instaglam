@@ -8,9 +8,11 @@ const {
 	getAllPosts
 } = require('../services/post-services.js');
 
+const verifyUser = require('../services/auth-services');
+
 module.exports = function(app) {
 	// Get all posts
-	app.get('/api/posts', async (req, res) => {
+	app.get('/api/posts', verifyUser, async (req, res) => {
 		try {
 			const post = await getAllPosts();
 			res.status(200).json(post).end();
@@ -23,7 +25,7 @@ module.exports = function(app) {
 	});
 
 	//get all posts of specific user
-	app.get('/api/posts/:id', async (req, res) => {
+	app.get('/api/posts/:id', verifyUser, async (req, res) => {
 		try {
 			const post = await getAllPostsOfUser(req.params.id);
 			if (!post) {
@@ -44,7 +46,7 @@ module.exports = function(app) {
 	});
 
 	//get one post of a user using post id
-	app.get('/api/posts/singlePost/:id', async (req, res) => {
+	app.get('/api/posts/singlePost/:id', verifyUser, async (req, res) => {
 		try {
 			const post = await getPost(req.params.id);
 
@@ -64,7 +66,7 @@ module.exports = function(app) {
 	});
 
 	//create a post
-	app.post('/api/posts', async (req, res) => {
+	app.post('/api/posts', verifyUser, async (req, res) => {
 		if (!req.body) {
 			return res
 				.status(400)
@@ -84,7 +86,7 @@ module.exports = function(app) {
 	});
 
 	//remove a post
-	app.delete('/api/posts/:email/:id', async (req, res) => {
+	app.delete('/api/posts/:email/:id', verifyUser, async (req, res) => {
 		try {
 			const post = await removePost(req.params.id);
 			res.status(200).json(post).end();
@@ -99,7 +101,7 @@ module.exports = function(app) {
 	});
 
 	// remove all posts
-	app.delete('/api/posts/:email', async (req, res) => {
+	app.delete('/api/posts/:email', verifyUser, async (req, res) => {
 		try {
 			const post = await removeAllPosts(req.params.email);
 			res
@@ -117,7 +119,7 @@ module.exports = function(app) {
 	});
 
 	//update a post
-	app.put('/api/posts/:email/:id', async (req, res) => {
+	app.put('/api/posts/:email/:id', verifyUser, async (req, res) => {
 		try {
 			const post = await updatePost(req.params.id, req.body);
 			res.status(200).json(post).end();

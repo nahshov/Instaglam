@@ -4,6 +4,7 @@ const {
 	deleteUser,
 	editUser
 } = require('../services/user-services.js');
+
 module.exports = function(app) {
 	app.get(`/api/users/:email`, async (req, res) => {
 		try {
