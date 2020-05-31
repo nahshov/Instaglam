@@ -46,9 +46,10 @@ UserSchema.pre('save', function () {
 });
 
 UserSchema.methods.verifyPassword = function(password) {
+	const user = this;
 	const hash = crypto.createHash('sha256')
 	hash.update(password + user.salt)
-	return user.password = hash.digest('hex')
+	return user.password === hash.digest('hex')
 }
 
 const User = mongoose.model('User', UserSchema);

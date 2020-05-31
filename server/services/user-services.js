@@ -28,4 +28,8 @@ function deleteUser(email) {
 	return User.findOneAndRemove({ email });
 }
 
-module.exports = { createUser, getUser, deleteUser, editUser };
+function verifyPassword(user, password) {
+	return user.verifyPassword(password)
+}
+
+module.exports = { createUser, getUser, deleteUser, editUser, verifyPassword };
