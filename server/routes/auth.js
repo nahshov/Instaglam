@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const { tokenSecret, refreshTokenSecret } = require('../config');
-const { verifyPassword, getUser } = require('../services/user-services');
+const {
+	verifyPassword,
+	getUser,
+	createUser
+} = require('../services/user-services');
 
 function getTokens(user) {
 	const created = new Date().toJSON();
@@ -50,6 +54,26 @@ module.exports = function(app) {
 			res
 				.status(500)
 				.json({ message: 'Internal server error when trying to login' })
+				.end();
+		}
+	});
+
+	app.post('/api/register', async (req, res) => {
+		if (!req.body) {
+			return res
+				.status(400)
+				.json({ message: `request is invalid` })
+				.end();
+		}
+
+		const user = { ...req.body };
+		try {
+			const newUser = await createUser(user);
+			res.status(200).json({ payload: getTokens(newUser) }).end();
+		} catch (e) {
+			res
+				.status(500)
+				.json({ message: `internal error while trying to create user` })
 				.end();
 		}
 	});
