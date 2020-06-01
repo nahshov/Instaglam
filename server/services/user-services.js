@@ -29,7 +29,7 @@ function deleteUser(email) {
 }
 
 function verifyPassword(user, password) {
-	return user.verifyPassword(password)
+	return user.verifyPassword(password);
 }
 
 module.exports = { createUser, getUser, deleteUser, editUser, verifyPassword };
