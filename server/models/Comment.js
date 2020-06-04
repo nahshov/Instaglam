@@ -17,6 +17,7 @@ const CommentSchema = new mongoose.Schema({
 		required : true,
 		index    : true
 	},
+	like: number,
 	content: {
 		type: string,
 		required: true
