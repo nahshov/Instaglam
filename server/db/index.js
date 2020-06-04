@@ -5,6 +5,7 @@ module.exports = async function connect() {
 	require('../models/User');
 	require('../models/Post');
 	require('../models/Like');
+	require('../models/Comment');
 
 	try {
 		return mongoose.connect(mongoUri, {
