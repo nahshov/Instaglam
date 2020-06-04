@@ -11,7 +11,7 @@ module.exports = function(app) {
 		} catch (error) {
 			res
 				.status(500)
-				.json({ message: `internal error while trying to likes` })
+				.json({ message: `internal error while trying to get likes` })
 				.end();
 		}
 	});
