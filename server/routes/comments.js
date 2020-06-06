@@ -60,9 +60,9 @@ module.exports = function(app) {
 	);
 
 	// Remove all comments from a post
-	app.delete('/api/comments/:postsId', verifyUser, async (req, res) => {
+	app.delete('/api/comments/:postId', verifyUser, async (req, res) => {
 		try {
-			const comment = await removeAllPostComments(req.params.postsId);
+			const comment = await removeAllPostComments(req.params.postId);
 			res.status(200).json(comment).end();
 		} catch (error) {
 			res

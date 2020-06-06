@@ -20,7 +20,7 @@ function removeComment(commentId) {
 }
 
 // @desc: remove all comments from a post
-// @route: /api/posts/:postsId/comments
+// @route: /api/posts/:postId/comments
 function removeAllPostComments(postId) {
 	return Comment.deleteMany({ post: postId });
 }
