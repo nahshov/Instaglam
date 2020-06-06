@@ -25,9 +25,9 @@ module.exports = function(app) {
 	});
 
 	//get all posts of specific user
-	app.get('/api/posts/:id', verifyUser, async (req, res) => {
+	app.get('/api/posts/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await getAllPostsOfUser(req.params.id);
+			const post = await getAllPostsOfUser(req.params.postId);
 			if (!post) {
 				return res
 					.status(404)
@@ -46,9 +46,9 @@ module.exports = function(app) {
 	});
 
 	//get one post of a user using post id
-	app.get('/api/posts/singlePost/:id', verifyUser, async (req, res) => {
+	app.get('/api/posts/singlePost/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await getPost(req.params.id);
+			const post = await getPost(req.params.postId);
 
 			if (!post) {
 				return res
@@ -73,7 +73,7 @@ module.exports = function(app) {
 				.json({ message: `request is invalid` })
 				.end();
 		}
-		
+
 		const post = { ...req.body, user: req.user.sub };
 		try {
 			const newPost = await createPost(post);
@@ -87,9 +87,9 @@ module.exports = function(app) {
 	});
 
 	//remove a post
-	app.delete('/api/posts/:email/:id', verifyUser, async (req, res) => {
+	app.delete('/api/posts/:userId/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await removePost(req.params.id);
+			const post = await removePost(req.params.postId);
 			res.status(200).json(post).end();
 		} catch (e) {
 			res
@@ -102,9 +102,9 @@ module.exports = function(app) {
 	});
 
 	// remove all posts
-	app.delete('/api/posts/:email', verifyUser, async (req, res) => {
+	app.delete('/api/posts/:userId', verifyUser, async (req, res) => {
 		try {
-			const post = await removeAllPosts(req.params.email);
+			const post = await removeAllPosts(req.params.userId);
 			res
 				.status(200)
 				.json({ message: "Successfully removed all user's posts" })
@@ -120,9 +120,9 @@ module.exports = function(app) {
 	});
 
 	//update a post
-	app.put('/api/posts/:email/:id', verifyUser, async (req, res) => {
+	app.put('/api/posts/:userId/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await updatePost(req.params.id, req.body);
+			const post = await updatePost(req.params.postId, req.body);
 			res.status(200).json(post).end();
 		} catch (e) {
 			res
