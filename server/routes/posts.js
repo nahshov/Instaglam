@@ -73,7 +73,8 @@ module.exports = function(app) {
 				.json({ message: `request is invalid` })
 				.end();
 		}
-		const post = { ...req.body };
+		
+		const post = { ...req.body, user: req.user.sub };
 		try {
 			const newPost = await createPost(post);
 			res.status(200).json(newPost).end();
