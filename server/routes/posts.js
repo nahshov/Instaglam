@@ -49,7 +49,6 @@ module.exports = function(app) {
 	app.get('/api/posts/singlePost/:postId', verifyUser, async (req, res) => {
 		try {
 			const post = await getPost(req.params.postId);
-
 			if (!post) {
 				return res
 					.status(404)
@@ -96,24 +95,6 @@ module.exports = function(app) {
 				.status(500)
 				.json({
 					message : `internal error while trying to delete a post`
-				})
-				.end();
-		}
-	});
-
-	// remove all posts
-	app.delete('/api/posts/:userId', verifyUser, async (req, res) => {
-		try {
-			const post = await removeAllPosts(req.params.userId);
-			res
-				.status(200)
-				.json({ message: "Successfully removed all user's posts" })
-				.end();
-		} catch (e) {
-			res
-				.status(500)
-				.json({
-					message : `internal error while trying to delete all posts`
 				})
 				.end();
 		}

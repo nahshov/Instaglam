@@ -2,10 +2,10 @@ const {
 	getComments,
 	addComment,
 	removeComment,
-	removeAllPostComments,
-	removeAllUserComments,
 	updateComment
 } = require('../services/comment-services');
+
+const {getPost} = require('../services/post-services');
 
 const verifyUser = require('../services/auth-services');
 
@@ -28,8 +28,9 @@ module.exports = function(app) {
 	// Add comments to a post
 	app.post('/api/posts/:postId/comments', verifyUser, async (req, res) => {
 		try {
-			const comment = await addComment(req.body);
-			res.status(200).json(comment).end();
+			const comment = {...req.body, user: req.user.sub, post: req.params.postId}
+			const response = await addComment(comment);
+			res.status(200).json(response).end();
 		} catch (error) {
 			res
 				.status(500)
@@ -46,6 +47,7 @@ module.exports = function(app) {
 		verifyUser,
 		async (req, res) => {
 			try {
+				const post = await getPost(req.params.postId)
 				const comment = await removeComment(req.params.commentId);
 				res.status(200).json(comment).end();
 			} catch (error) {
@@ -58,36 +60,6 @@ module.exports = function(app) {
 			}
 		}
 	);
-
-	// Remove all comments from a post
-	app.delete('/api/comments/:postId', verifyUser, async (req, res) => {
-		try {
-			const comment = await removeAllPostComments(req.params.postId);
-			res.status(200).json(comment).end();
-		} catch (error) {
-			res
-				.status(500)
-				.json({
-					message : `internal error while trying to remove all the comments from the post`
-				})
-				.end();
-		}
-	});
-
-	// Remove all comments of a user
-	app.delete('/api/users/comments/:userId', verifyUser, async (req, res) => {
-		try {
-			const comment = await removeAllUserComments(req.params.userId);
-			res.status(200).json(comment).end();
-		} catch (error) {
-			res
-				.status(500)
-				.json({
-					message : `internal error while trying to remove all the comments of the user`
-				})
-				.end();
-		}
-	});
 
 	//update a comment in a post
 	app.put(
