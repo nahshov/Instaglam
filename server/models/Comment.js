@@ -8,14 +8,12 @@ const CommentSchema = new mongoose.Schema({
 	user    : {
 		type     : mongoose.Types.ObjectId,
 		ref      : 'User',
-		required : true,
-		index    : true
+		required : true
 	},
 	post    : {
 		type     : mongoose.Types.ObjectId,
 		ref      : 'Post',
-		required : true,
-		index    : true
+		required : true
 	},
 	like    : Number,
 	content : {
