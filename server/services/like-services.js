@@ -4,7 +4,7 @@ const Like = require('../models/Like.js');
 // @route: /api/likes/:postId
 async function getPostLikes(postId) {
 	const likes = await Like.find({ post: postId });
-	return likes.filter(like => !like.comment)
+	return likes.filter(like => !like.comment);
 }
 
 // @desc: get likes of a comment
@@ -28,7 +28,7 @@ async function addLikeToPost(like) {
 // @desc: add like to a comment
 // @route: /api/comments/:commentId/likes
 async function addLikeToComment(like) {
-	const {user, post, comment } = like;
+	const { user, post, comment } = like;
 	const doesLikeExist = await Like.findOne({ user, post, comment });
 	if (doesLikeExist) {
 		return;
@@ -39,21 +39,20 @@ async function addLikeToComment(like) {
 
 // @desc: remove like from a post
 // @route: /api/posts/:postId/likes
-function removeLikeFromPost(postId) {
-	return Like.findOneAndRemove({ post: postId });
+function removeLikeFromPost(likeId) {
+	return Like.findOneAndRemove({ _id: likeId });
 }
 
 // @desc: remove like from a comment
 // @route: /api/comments/:commentId/likes
-function removeLikeFromComment(commentId) {
-	console.log(commentId);
-	return Like.findOneAndRemove({ comment: commentId });
+function removeLikeFromComment(likeId) {
+	return Like.findOneAndRemove({ _id: likeId });
 }
 
 // @desc: remove all likes of a user
 // @route: DELETE /api/me
 function removeAllUserLikes(userId) {
-	return Like.deleteMany({ user: userId })
+	return Like.deleteMany({ user: userId });
 }
 
 module.exports = {

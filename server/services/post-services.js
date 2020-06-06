@@ -1,7 +1,7 @@
 const Post = require('../models/Post.js');
 
 // @desc: Get all posts of a user
-// @route: /api/posts/:userId
+// @route: /api/posts
 function getAllPosts() {
 	return Post.find({});
 }
@@ -11,8 +11,8 @@ function getAllPostsOfUser(userId) {
 	return Post.find({ user: userId });
 }
 
-// @desc: Get one post of a userEmail
-// @route: /api/posts/:id
+// @desc: Get one post of a user
+// @route: /api/posts/singlePost/:postId
 function getPost(postId) {
 	return Post.findOne({ _id: postId });
 }
@@ -26,7 +26,7 @@ function createPost(post) {
 }
 
 // @desc: removePost
-// @route: /api/posts/:email/:id
+// @route: /api/posts/:id
 function removePost(postId) {
 	return Post.findOneAndRemove({ _id: postId });
 }
@@ -38,7 +38,7 @@ function removeAllUserPosts(userId) {
 }
 
 // @desc: Update post
-// @route: /api/posts/:email/:id
+// @route: /api/posts/:id
 async function updatePost(postId, newContent) {
 	return Post.findOneAndUpdate({ _id: postId }, newContent, { new: true });
 }
