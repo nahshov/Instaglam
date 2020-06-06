@@ -18,8 +18,10 @@ function getUser(email) {
 
 // @desc: Update users
 // @route: /api/users/:email
-function editUser(email, newData) {
-	return User.findOneAndUpdate(email, newData, { new: true });
+async function editUser(email, newData) {
+	const user = await User.findOne({email})
+	Object.assign(user, newData)
+	return user.save()
 }
 
 // @desc: Remove users

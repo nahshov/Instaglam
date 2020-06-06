@@ -7,6 +7,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use(function (err, req, res, next) {
+	// error handling logic
+	res.status(400).send('Bad request');
+});
+
 require('./routes/index.js')(app);
 
 connect().then(() => {

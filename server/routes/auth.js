@@ -66,10 +66,9 @@ module.exports = function(app) {
 				.end();
 		}
 
-		const user = { ...req.body };
 		try {
-			const newUser = await createUser(user);
-			res.status(200).json({ payload: getTokens(newUser) }).end();
+			const user = await createUser(req.body);
+			res.status(200).json({payload: getTokens(user)}).end();
 		} catch (e) {
 			res
 				.status(500)

@@ -32,9 +32,9 @@ function removePost(postId) {
 }
 
 // @desc: Remove all posts from a specific userEmail
-// @route: /api/posts/:email
-function removeAllPosts(userEmail) {
-	return Post.deleteMany({ user: userEmail });
+// @route: DELETE /api/me
+function removeAllUserPosts(userId) {
+	return Post.deleteMany({ user: userId });
 }
 
 // @desc: Update post
@@ -48,7 +48,7 @@ module.exports = {
 	getPost,
 	createPost,
 	removePost,
-	removeAllPosts,
+	removeAllUserPosts,
 	updatePost,
 	getAllPosts
 };

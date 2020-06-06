@@ -24,8 +24,16 @@ function removeLike(postId) {
 	return Like.findOneAndRemove({ post: postId });
 }
 
+// @desc: remove all likes of a user
+// @route: DELETE /api/me
+
+function removeAllUserLikes(userId) {
+	return Like.deleteMany({ user: userId })
+}
+
 module.exports = {
 	getLikes,
 	addLike,
-	removeLike
+	removeLike,
+	removeAllUserLikes
 };
