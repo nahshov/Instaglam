@@ -15,6 +15,7 @@ module.exports = function(app) {
 			const post = await getAllPosts(req.query.limit, req.query.skip);
 			res.status(200).json(post).end();
 		} catch (e) {
+			console.log(e);
 			res
 				.status(500)
 				.json({ message: `internal error while trying to get posts` })

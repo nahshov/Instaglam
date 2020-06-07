@@ -3,7 +3,7 @@ const Post = require('../models/Post.js');
 // @desc: Get all posts of a user
 // @route: /api/posts
 function getAllPosts(limit = 10, skip = 10) {
-	return Post.find({}).limit(limit).skip(skip).sort('-created');
+	return Post.find({}).limit(+limit).skip(+skip).sort('-created');
 }
 // @desc: Get all posts of a user
 // @route: /api/posts/:userId
