@@ -19,9 +19,9 @@ function getUser(email) {
 // @desc: Update users
 // @route: /api/users/:email
 async function editUser(email, newData) {
-	const user = await User.findOne({email})
-	Object.assign(user, newData)
-	return user.save()
+	const user = await User.findOne({ email });
+	Object.assign(user, newData);
+	return user.save();
 }
 
 // @desc: Remove users

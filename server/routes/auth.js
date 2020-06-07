@@ -6,6 +6,8 @@ const {
 	createUser
 } = require('../services/user-services');
 
+const verifyUser = require('../services/auth-services');
+
 function getTokens(user) {
 	const created = new Date().toJSON();
 	//jwt.sign creates a jwt token
@@ -68,11 +70,25 @@ module.exports = function(app) {
 
 		try {
 			const user = await createUser(req.body);
-			res.status(200).json({payload: getTokens(user)}).end();
+			res.status(200).json({ payload: getTokens(user) }).end();
 		} catch (e) {
 			res
 				.status(500)
 				.json({ message: `internal error while trying to create user` })
+				.end();
+		}
+	});
+
+	app.post('/api/logout', verifyUser, async (req, res) => {
+		try {
+			const user = await getUser(req.user.email);
+			user.refreshTokenIdentifier = '';
+			user.save();
+			res.status(200).json({ message: 'Succesfully logged out' }).end();
+		} catch (error) {
+			res
+				.status(500)
+				.json({ message: `internal error while trying to logout` })
 				.end();
 		}
 	});

@@ -17,9 +17,9 @@ const LikeSchema = new mongoose.Schema({
 		required : true,
 		index    : true
 	},
-	comment    : {
-		type     : mongoose.Types.ObjectId,
-		ref      : 'Comment'
+	comment : {
+		type : mongoose.Types.ObjectId,
+		ref  : 'Comment'
 	}
 });
 

@@ -5,7 +5,7 @@ const {
 	updateComment
 } = require('../services/comment-services');
 
-const {getPost} = require('../services/post-services');
+const { getPost } = require('../services/post-services');
 
 const verifyUser = require('../services/auth-services');
 
@@ -28,7 +28,11 @@ module.exports = function(app) {
 	// Add comments to a post
 	app.post('/api/posts/:postId/comments', verifyUser, async (req, res) => {
 		try {
-			const comment = {...req.body, user: req.user.sub, post: req.params.postId}
+			const comment = {
+				...req.body,
+				user : req.user.sub,
+				post : req.params.postId
+			};
 			const response = await addComment(comment);
 			res.status(200).json(response).end();
 		} catch (error) {
@@ -47,7 +51,7 @@ module.exports = function(app) {
 		verifyUser,
 		async (req, res) => {
 			try {
-				const post = await getPost(req.params.postId)
+				const post = await getPost(req.params.postId);
 				const comment = await removeComment(req.params.commentId);
 				res.status(200).json(comment).end();
 			} catch (error) {

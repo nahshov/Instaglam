@@ -11,8 +11,8 @@ module.exports = async function connect() {
 		return mongoose.connect(mongoUri, {
 			useNewUrlParser    : true,
 			useUnifiedTopology : true,
-			useCreateIndex: true,
-			useFindAndModify: false
+			useCreateIndex     : true,
+			useFindAndModify   : false
 		});
 	} catch (e) {
 		console.log('could not connect to mongo');
