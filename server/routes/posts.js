@@ -10,10 +10,9 @@ const {
 const verifyUser = require('../services/auth-services');
 
 module.exports = function(app) {
-	// Get all posts
-	app.get('/api/posts', verifyUser, async (req, res) => {
+	app.get('/api/posts/', verifyUser, async (req, res) => {
 		try {
-			const post = await getAllPosts();
+			const post = await getAllPosts(req.query.limit, req.query.skip);
 			res.status(200).json(post).end();
 		} catch (e) {
 			res
