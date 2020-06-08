@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
 		type     : String,
 		required : true
 	},
+	profilePic               : {
+		type     : String,
+		// default  : './server/uploads/profilePic/defaultPic/No-Instagram-Profile-Pic.jpg'
+	},
 	city                   : String,
 	bio                    : {
 		type : String

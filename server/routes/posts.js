@@ -9,6 +9,8 @@ const {
 
 const verifyUser = require('../services/auth-services');
 
+const upload = require('../helpers/multer/posts')
+
 module.exports = function(app) {
 	app.get('/api/posts/', verifyUser, async (req, res) => {
 		try {
@@ -64,7 +66,8 @@ module.exports = function(app) {
 	});
 
 	//create a post
-	app.post('/api/posts', verifyUser, async (req, res) => {
+	//second parameter is uploading an array of files with multer with a limit of 10 pictures/videos for a post:
+	app.post('/api/posts', verifyUser, upload.array('media', 10), async (req, res) => {
 		if (!req.body) {
 			return res
 				.status(400)
@@ -72,7 +75,10 @@ module.exports = function(app) {
 				.end();
 		}
 
-		const post = { ...req.body, user: req.user.sub };
+		//iterating through all the files in the req.files array and extracting each file's path (which we need to send to the client) to the filePath variable:
+		const filePath = req.files.map(file => file.path)
+
+		const post = { ...req.body, media: filePath, user: req.user.sub };
 		try {
 			const newPost = await createPost(post);
 			res.status(200).json(newPost).end();
