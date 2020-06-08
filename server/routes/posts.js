@@ -9,13 +9,15 @@ const {
 
 const verifyUser = require('../services/auth-services');
 
-const upload = require('../helpers/multer/posts')
+const posts = require('../helpers/multer/posts')
+
+const sharp = require('sharp')
 
 module.exports = function(app) {
 	app.get('/api/posts/', verifyUser, async (req, res) => {
 		try {
-			const post = await getAllPosts(req.query.limit, req.query.skip);
-			res.status(200).json(post).end();
+			const posts = await getAllPosts(req.query.limit, req.query.skip);
+			res.status(200).json(posts).end();
 		} catch (e) {
 			console.log(e);
 			res
@@ -66,19 +68,16 @@ module.exports = function(app) {
 	});
 
 	//create a post
-	//second parameter is uploading an array of files with multer with a limit of 10 pictures/videos for a post:
-	app.post('/api/posts', verifyUser, upload.array('media', 10), async (req, res) => {
+	app.post('/api/posts', verifyUser, posts.single('media'), async (req, res) => {
 		if (!req.body) {
 			return res
 				.status(400)
 				.json({ message: `request is invalid` })
 				.end();
 		}
-
-		//iterating through all the files in the req.files array and extracting each file's path (which we need to send to the client) to the filePath variable:
-		const filePath = req.files.map(file => file.path)
-
-		const post = { ...req.body, media: filePath, user: req.user.sub };
+		
+		const buffer = await sharp(req.file.buffer).resize(640, 640).png().toBuffer()
+		const post = { ...req.body, media: buffer, user: req.user.sub };
 		try {
 			const newPost = await createPost(post);
 			res.status(200).json(newPost).end();

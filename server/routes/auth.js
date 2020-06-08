@@ -8,8 +8,6 @@ const {
 
 const verifyUser = require('../services/auth-services');
 
-const upload = require('../helpers/multer/profilePic')
-
 
 function getTokens(user) {
 	const created = new Date().toJSON();
@@ -63,8 +61,7 @@ module.exports = function(app) {
 		}
 	});
 
-	//second parameter is uploading a single pic with multer (the profile pic):
-	app.post('/api/register', upload.single('profilePic'), async (req, res) => {
+	app.post('/api/register', async (req, res) => {
 		if (!req.body) {
 			return res
 				.status(400)
@@ -73,8 +70,8 @@ module.exports = function(app) {
 		}
 
 		try {
-			//now also sending the profilePic to the user when creating it cause it's not included in req.body, it's in the req.file.path:
-			const user = await createUser({...req.body, profilePic: req.file.path});
+			
+			const user = await createUser(req.body);
 			res.status(200).json({ payload: getTokens(user) }).end();
 		} catch (e) {
 			res

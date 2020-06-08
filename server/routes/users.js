@@ -12,7 +12,11 @@ const { removeAllUserLikes } = require('../services/like-services.js');
 
 const verifyUser = require('../services/auth-services');
 
-module.exports = function(app) {
+const profilePic = require('../helpers/multer/profilePic')
+
+const sharp = require('sharp')
+
+module.exports = function (app) {
 	app.get(`/api/users/:email`, async (req, res) => {
 		try {
 			const user = await getUser(req.params.email);
@@ -26,11 +30,11 @@ module.exports = function(app) {
 			res
 				.status(200)
 				.json({
-					email     : user.email,
-					firstName : user.firstName,
-					lastName  : user.lastName,
-					created   : user.created,
-					bio       : user.bio
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					created: user.created,
+					bio: user.bio
 				})
 				.end();
 		} catch (e) {
@@ -46,11 +50,11 @@ module.exports = function(app) {
 		try {
 			const response = await getUser(req.user.email);
 			const user = {
-				email     : response.email,
-				firstName : response.firstName,
-				lastName  : response.lastName,
-				created   : response.created,
-				bio       : response.bio
+				email: response.email,
+				firstName: response.firstName,
+				lastName: response.lastName,
+				created: response.created,
+				bio: response.bio
 			};
 			res.status(200).json(user).end();
 		} catch (e) {
@@ -102,4 +106,94 @@ module.exports = function(app) {
 				.end();
 		}
 	});
+
+	app.post('/api/me/profilePic', verifyUser, profilePic.single('profilePic'), async (req, res) => {
+		try {
+			const user = await getUser(req.user.email)
+			const buffer = await sharp(req.file.buffer).resize(180, 180).png().toBuffer()
+			user.profilePic = buffer
+			await user.save()
+			res
+				.status(200)
+				.json({ message: 'Profile picture successfully uploaded!' })
+				.end();
+		} catch (e) {
+			res
+				.status(500)
+				.json({ message: `internal error while trying to upload profile picture` })
+				.end();
+		}
+	}, (error, req, res, next) => {
+		res
+		.status(400)
+		.json({error: error.message})
+		.end()
+	})
+
+	app.get('/api/me/profilePic', verifyUser, async (req, res) => {
+		try {
+			const user = await getUser(req.user.email)
+			if (!user.profilePic) {
+				throw new Error()
+			}
+			res.set('Content-Type', 'image/png')
+			res
+				.status(200)
+				.send(user.profilePic)
+				
+		} catch (e) {
+			res
+				.status(404)
+				.json({ message: `No profile picture found` })
+				.end();
+		}
+	})
+
+	app.put('/api/me/profilePic', verifyUser, profilePic.single('profilePic'), async (req, res) => {
+		try {
+			const user = await getUser(req.user.email)
+			const buffer = await sharp(req.file.buffer).resize(180, 180).png().toBuffer()
+
+			if (!user.profilePic) {
+				res
+				.status(400)
+				.json({message: `No profile picture found`})
+			}
+			user.profilePic = buffer
+			await user.save() 
+			res
+				.status(200)
+				.json(user.profilePic)
+				.end();
+
+		} catch (e) {
+			res
+				.status(500)
+				.json({ message: `internal error while trying to upload profile picture` })
+				.end();
+		}
+	})
+
+	app.delete('/api/me/profilePic', verifyUser, async (req, res) => {
+		try {
+			const user = await getUser(req.user.email)
+			if (!user.profilePic) {
+				res
+				.status(400)
+				.json({message: `No profile picture found`})
+			}
+			user.profilePic = undefined;
+			await user.save()
+			res
+				.status(200)
+				.json(user.profilePic)
+				.end();
+
+		} catch (e) {
+			res
+				.status(500)
+				.json({ message: `internal error while trying to delete profile picture` })
+				.end();
+		}
+	})
 };

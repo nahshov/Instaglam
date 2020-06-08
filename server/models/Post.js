@@ -7,7 +7,7 @@ const PostSchema = new mongoose.Schema({
 	},
 	content : String,
 	media   : {
-		type     : Array,
+		type     : Buffer,
 		required : true
 	},
 	likes   : Number,

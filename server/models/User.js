@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
 		required : true
 	},
 	profilePic               : {
-		type     : String,
+		type     : Buffer,
 		// default  : './server/uploads/profilePic/defaultPic/No-Instagram-Profile-Pic.jpg'
 	},
 	city                   : String,
