@@ -3,6 +3,7 @@ const multer = require('multer');
 
 //a variable(profilePic) with everything multer related we defined above:
 const posts = multer ({
+	dest: './test',
     limits: {
         fileSize: 5000000,
     },
