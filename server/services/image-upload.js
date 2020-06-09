@@ -1,4 +1,4 @@
-const bucket = require('../services/google-cloud');
+const { bucket } = require('../services/google-cloud');
 const { v4: uuid } = require('uuid');
 
 const uploadImage = (originalname, buffer) =>
@@ -12,8 +12,7 @@ const uploadImage = (originalname, buffer) =>
 				filename =
 					originalname.split('.')[0].replace(/ /g, '_') +
 					uuid() +
-					'.' +
-					'jpeg';
+					'.jpeg';
 			}
 
 			const blob = bucket.file(filename);

@@ -11,6 +11,7 @@ const {
 const verifyUser = require('../services/auth-services');
 const postsHandler = require('../multer/posts');
 const uploadImage = require('../services/image-upload');
+const { deleteFromBucket } = require('../services/google-cloud');
 
 module.exports = function(app) {
 	//create a post
@@ -119,8 +120,13 @@ module.exports = function(app) {
 	//remove a post
 	app.delete('/api/posts/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await removePost(req.params.postId);
-			res.status(200).json(post).end();
+			const post = await getPost(req.params.postId);
+			await removePost(req.params.postId);
+			await deleteFromBucket(post.media);
+			res
+				.status(200)
+				.json({ message: 'File successfully deleted' })
+				.end();
 		} catch (e) {
 			res
 				.status(500)

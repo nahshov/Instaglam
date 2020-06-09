@@ -7,6 +7,7 @@ const {
 const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
+const { deleteFromBucket } = require('../services/google-cloud');
 
 const verifyUser = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
@@ -110,6 +111,12 @@ module.exports = function(app) {
 					getUser(req.user.email)
 				]);
 
+				console.log(user, imgUrl);
+
+				if (user.profilePic) {
+					await deleteFromBucket(user.profilePic);
+				}
+
 				user.profilePic = `${imgUrl}`;
 				await user.save();
 				res
@@ -142,42 +149,21 @@ module.exports = function(app) {
 		}
 	});
 
-	app.put(
-		'/api/me/profilePic',
-		verifyUser,
-		profilePic.single('profilePic'),
-		async (req, res) => {
-			try {
-				const user = await getUser(req.user.email);
-
-				if (!user.profilePic) {
-					res
-						.status(400)
-						.json({ message: `No profile picture found` });
-				}
-
-				user.profilePic = await uploadImage(req.file);
-				await user.save();
-				res.status(200).json({ profilePic: user.profilePic }).end();
-			} catch (e) {
-				res
-					.status(500)
-					.json({
-						message : `internal error while trying to upload profile picture`
-					})
-					.end();
-			}
-		}
-	);
-
 	app.delete('/api/me/profilePic', verifyUser, async (req, res) => {
 		try {
 			const user = await getUser(req.user.email);
 			if (!user.profilePic) {
 				res.status(400).json({ message: `No profile picture found` });
 			}
+
+			const imgUrl = user.profilePic;
+
 			user.profilePic = undefined;
-			await user.save();
+
+			await Promise.all([
+				user.save(),
+				deleteFromBucket(imgUrl)
+			]);
 			res
 				.status(200)
 				.json({ message: 'Successfully deleted profile picture' })

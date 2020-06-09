@@ -1,5 +1,6 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
+const bucketName = 'instaglam-bucket';
 
 const gc = new Storage({
 	keyFilename : path.join(__dirname, '../../dev1-263221-002724bbed5f.json'),
@@ -7,4 +8,12 @@ const gc = new Storage({
 });
 const bucket = gc.bucket('instaglam-bucket');
 
-module.exports = bucket;
+const deleteFromBucket = async originalName => {
+	const fileName = originalName.split(`${bucketName}/`)[1];
+	return bucket.file(fileName).delete();
+};
+
+module.exports = {
+	bucket,
+	deleteFromBucket
+};
