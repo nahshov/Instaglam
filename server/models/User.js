@@ -22,9 +22,8 @@ const UserSchema = new mongoose.Schema({
 		type     : String,
 		required : true
 	},
-	profilePic               : {
-		type     : Buffer,
-		// default  : './server/uploads/profilePic/defaultPic/No-Instagram-Profile-Pic.jpg'
+	profilePic             : {
+		type : String
 	},
 	city                   : String,
 	bio                    : {
@@ -55,6 +54,18 @@ UserSchema.methods.verifyPassword = function(password) {
 	const hash = crypto.createHash('sha256');
 	hash.update(password + user.salt);
 	return user.password === hash.digest('hex');
+};
+
+UserSchema.methods.toJSON = function() {
+	const user = this;
+
+	const userObject = user.toObject();
+	delete userObject.password;
+	delete userObject.salt;
+	delete userObject.refreshTokenIdentifier;
+	delete userObject._id;
+
+	return userObject;
 };
 
 const User = mongoose.model('User', UserSchema);
