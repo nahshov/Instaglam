@@ -94,11 +94,19 @@ module.exports = function(app) {
 		profilePic.single('profilePic'),
 		async (req, res) => {
 			try {
+				let buffer;
+				if (!req.file.originalname.endsWith('.jpeg')) {
+					buffer = await sharp(req.file.buffer)
+						.resize(180, 180)
+						.jpeg()
+						.toBuffer();
+				}
+
 				const [
 					imgUrl,
 					user
 				] = await Promise.all([
-					uploadImage(req.file),
+					uploadImage(req.file.originalname, buffer),
 					getUser(req.user.email)
 				]);
 
