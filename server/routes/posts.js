@@ -27,7 +27,6 @@ module.exports = function(app) {
 					.end();
 			}
 			try {
-				let mimetype = req.file.mimetype;
 				let buffer;
 
 				if (
