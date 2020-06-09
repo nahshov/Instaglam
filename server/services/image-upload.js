@@ -6,11 +6,15 @@ const uploadImage = (originalname, buffer) =>
 		(resolve, reject) => {
 			let filename;
 
+			const toReplace = originalname.substring(
+				originalname.lastIndexOf('.')
+			);
+
 			if (
 				!(originalname.endsWith('mov') || originalname.endsWith('mp4'))
 			) {
 				filename =
-					originalname.split('.')[0].replace(/ /g, '_') +
+					originalname.replace(toReplace, '').replace(/ /g, '_') +
 					uuid() +
 					'.jpeg';
 			}

@@ -27,6 +27,7 @@ module.exports = function(app) {
 					.end();
 			}
 			try {
+				let mimetype = req.file.mimetype;
 				let buffer;
 
 				if (
@@ -44,7 +45,8 @@ module.exports = function(app) {
 
 				const mediaUrl = await uploadImage(
 					req.file.originalname,
-					buffer
+					buffer,
+					mimetype
 				);
 				const post = {
 					...req.body,
