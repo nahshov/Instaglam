@@ -45,8 +45,7 @@ module.exports = function(app) {
 
 				const mediaUrl = await uploadImage(
 					req.file.originalname,
-					buffer,
-					mimetype
+					buffer
 				);
 				const post = {
 					...req.body,
