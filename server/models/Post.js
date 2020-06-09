@@ -6,8 +6,10 @@ const PostSchema = new mongoose.Schema({
 		default : Date.now
 	},
 	content : String,
-	image   : String,
-	video   : String,
+	media   : {
+		type     : String,
+		required : true
+	},
 	likes   : Number,
 	user    : {
 		type     : mongoose.Types.ObjectId,

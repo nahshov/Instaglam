@@ -1,8 +1,9 @@
 const Post = require('../models/Post.js');
+const { deleteFromBucket } = require('../services/google-cloud');
 
 // @desc: Get all posts of a user
 // @route: /api/posts
-function getAllPosts(limit = 10, skip = 10) {
+function getAllPosts(limit = 10, skip = 0) {
 	return Post.find({}).limit(+limit).skip(+skip).sort('-created');
 }
 // @desc: Get all posts of a user
@@ -33,7 +34,12 @@ function removePost(postId) {
 
 // @desc: Remove all posts from a specific userEmail
 // @route: DELETE /api/me
-function removeAllUserPosts(userId) {
+async function removeAllUserPosts(userId) {
+	const posts = await getAllPostsOfUser(userId);
+	const postPromisesArray = posts.map(post => {
+		deleteFromBucket(post.media);
+	});
+	await Promise.all(postPromisesArray);
 	return Post.deleteMany({ user: userId });
 }
 

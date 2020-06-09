@@ -8,6 +8,7 @@ const {
 
 const verifyUser = require('../services/auth-services');
 
+
 function getTokens(user) {
 	const created = new Date().toJSON();
 	//jwt.sign creates a jwt token
@@ -69,6 +70,7 @@ module.exports = function(app) {
 		}
 
 		try {
+			
 			const user = await createUser(req.body);
 			res.status(200).json({ payload: getTokens(user) }).end();
 		} catch (e) {

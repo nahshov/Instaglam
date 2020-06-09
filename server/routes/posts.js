@@ -1,3 +1,5 @@
+const sharp = require('sharp');
+
 const {
 	getAllPostsOfUser,
 	getPost,
@@ -6,14 +8,66 @@ const {
 	updatePost,
 	getAllPosts
 } = require('../services/post-services.js');
-
 const verifyUser = require('../services/auth-services');
+const postsHandler = require('../multer/posts');
+const uploadImage = require('../services/image-upload');
+const { deleteFromBucket } = require('../services/google-cloud');
 
 module.exports = function(app) {
+	//create a post
+	app.post(
+		'/api/posts',
+		verifyUser,
+		postsHandler.single('media'),
+		async (req, res) => {
+			if (!req.body) {
+				return res
+					.status(400)
+					.json({ message: `request is invalid` })
+					.end();
+			}
+			try {
+				let buffer;
+
+				if (
+					!(
+						req.file.originalname.endsWith('mov') ||
+						req.file.originalname.endsWith('mp4')
+					) &&
+					!req.file.originalname.endsWith('.jpeg')
+				) {
+					buffer = await sharp(req.file.buffer)
+						.resize(600, 600)
+						.jpeg()
+						.toBuffer();
+				}
+
+				const mediaUrl = await uploadImage(
+					req.file.originalname,
+					buffer
+				);
+				const post = {
+					...req.body,
+					user  : req.user.sub,
+					media : mediaUrl
+				};
+				const newPost = await createPost(post);
+				res.status(200).json(newPost).end();
+			} catch (e) {
+				res
+					.status(500)
+					.json({
+						message : `internal error while trying to create post`
+					})
+					.end();
+			}
+		}
+	);
+
 	app.get('/api/posts/', verifyUser, async (req, res) => {
 		try {
-			const post = await getAllPosts(req.query.limit, req.query.skip);
-			res.status(200).json(post).end();
+			const posts = await getAllPosts(req.query.limit, req.query.skip);
+			res.status(200).json(posts).end();
 		} catch (e) {
 			console.log(e);
 			res
@@ -63,32 +117,16 @@ module.exports = function(app) {
 		}
 	});
 
-	//create a post
-	app.post('/api/posts', verifyUser, async (req, res) => {
-		if (!req.body) {
-			return res
-				.status(400)
-				.json({ message: `request is invalid` })
-				.end();
-		}
-
-		const post = { ...req.body, user: req.user.sub };
-		try {
-			const newPost = await createPost(post);
-			res.status(200).json(newPost).end();
-		} catch (e) {
-			res
-				.status(500)
-				.json({ message: `internal error while trying to create post` })
-				.end();
-		}
-	});
-
 	//remove a post
 	app.delete('/api/posts/:postId', verifyUser, async (req, res) => {
 		try {
-			const post = await removePost(req.params.postId);
-			res.status(200).json(post).end();
+			const post = await getPost(req.params.postId);
+			await removePost(req.params.postId);
+			await deleteFromBucket(post.media);
+			res
+				.status(200)
+				.json({ message: 'File successfully deleted' })
+				.end();
 		} catch (e) {
 			res
 				.status(500)
