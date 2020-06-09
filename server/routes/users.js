@@ -19,6 +19,7 @@ module.exports = function(app) {
 	app.get(`/api/users/:email`, async (req, res) => {
 		try {
 			const user = await getUser(req.params.email);
+
 			if (!user) {
 				return res
 					.status(404)
@@ -110,8 +111,6 @@ module.exports = function(app) {
 					uploadImage(req.file.originalname, buffer),
 					getUser(req.user.email)
 				]);
-
-				console.log(user, imgUrl);
 
 				if (user.profilePic) {
 					await deleteFromBucket(user.profilePic);
