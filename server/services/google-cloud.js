@@ -8,8 +8,8 @@ const gc = new Storage({
 });
 const bucket = gc.bucket('instaglam-bucket');
 
-const deleteFromBucket = async originalName => {
-	const fileName = originalName.split(`${bucketName}/`)[1];
+const deleteFromBucket = async url => {
+	const fileName = url.split(`${bucketName}/`)[1];
 	return bucket.file(fileName).delete();
 };
 
