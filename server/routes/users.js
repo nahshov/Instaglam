@@ -83,6 +83,7 @@ module.exports = function(app) {
 				.json({ message: 'User successfully deleted' })
 				.end();
 		} catch (e) {
+			console.log(e);
 			res
 				.status(500)
 				.json({ message: `internal error while trying to delete user` })

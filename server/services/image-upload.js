@@ -4,14 +4,16 @@ const { v4: uuid } = require('uuid');
 const uploadImage = (originalname, buffer) =>
 	new Promise((resolve, reject) => {
 		let filename;
-
 		const toReplace = originalname.substring(originalname.lastIndexOf('.'));
 
 		if (!(originalname.endsWith('mov') || originalname.endsWith('mp4'))) {
 			filename =
 				originalname.replace(toReplace, '').replace(/ /g, '_') +
+				+'.' +
 				uuid() +
 				'.jpeg';
+		} else {
+			filename = uuid() + '.' + originalname;
 		}
 
 		const blob = bucket.file(filename);
@@ -24,7 +26,7 @@ const uploadImage = (originalname, buffer) =>
 				resolve(publicUrl);
 			})
 			.on('error', () => {
-				reject(`Unable to upload image, something went wrong`);
+				reject(`Unable to upload media, something went wrong`);
 			})
 			.end(buffer);
 	});

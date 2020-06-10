@@ -29,7 +29,9 @@ async function editUser(email, newData) {
 // @route: /api/users/:email
 async function deleteUser(email) {
 	const user = await getUser(email);
-	await deleteFromBucket(user.profilePic);
+	if (user.profilePic) {
+		await deleteFromBucket(user.profilePic);
+	}
 	return User.findOneAndRemove({ email });
 }
 
