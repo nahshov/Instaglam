@@ -42,23 +42,19 @@ module.exports = function(app) {
 	});
 
 	// Remove like from a post
-	app.delete(
-		'/api/posts/:postId/likes/:likeId',
-		verifyUser,
-		async (req, res) => {
-			try {
-				const like = await removeLikeFromPost(req.params.likeId);
-				res.status(200).json(like).end();
-			} catch (error) {
-				res
-					.status(500)
-					.json({
-						message : `internal error while trying to remove a like`
-					})
-					.end();
-			}
+	app.delete('/api/posts/:postId/likes/', verifyUser, async (req, res) => {
+		try {
+			const like = await removeLikeFromPost(req.user.sub);
+			res.status(200).json(like).end();
+		} catch (error) {
+			res
+				.status(500)
+				.json({
+					message : `internal error while trying to remove a like`
+				})
+				.end();
 		}
-	);
+	});
 
 	// Get likes of a comment
 	app.get('/api/comments/:commentId/likes', verifyUser, async (req, res) => {
@@ -86,7 +82,6 @@ module.exports = function(app) {
 			});
 			res.status(200).json(like).end();
 		} catch (error) {
-			console.log(error);
 			res
 				.status(500)
 				.json({ message: `internal error while trying to add a like` })
@@ -96,11 +91,11 @@ module.exports = function(app) {
 
 	// Remove like from a comment
 	app.delete(
-		'/api/comments/:commentId/likes/:likeId',
+		'/api/comments/:commentId/likes',
 		verifyUser,
 		async (req, res) => {
 			try {
-				const like = await removeLikeFromComment(req.params.likeId);
+				const like = await removeLikeFromComment(req.user.sub);
 				res.status(200).json(like).end();
 			} catch (error) {
 				res

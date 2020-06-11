@@ -39,14 +39,14 @@ async function addLikeToComment(like) {
 
 // @desc: remove like from a post
 // @route: /api/posts/:postId/likes
-function removeLikeFromPost(likeId) {
-	return Like.findOneAndRemove({ _id: likeId });
+function removeLikeFromPost(userId) {
+	return Like.findOneAndRemove({ user: userId });
 }
 
 // @desc: remove like from a comment
 // @route: /api/comments/:commentId/likes
-function removeLikeFromComment(likeId) {
-	return Like.findOneAndRemove({ _id: likeId });
+function removeLikeFromComment(userId) {
+	return Like.findOneAndRemove({ user: userId });
 }
 
 // @desc: remove all likes of a user

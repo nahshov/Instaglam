@@ -51,7 +51,6 @@ module.exports = function(app) {
 		verifyUser,
 		async (req, res) => {
 			try {
-				const post = await getPost(req.params.postId);
 				const comment = await removeComment(req.params.commentId);
 				res.status(200).json(comment).end();
 			} catch (error) {
