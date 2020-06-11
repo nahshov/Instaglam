@@ -55,7 +55,6 @@ module.exports = function(app) {
 				const newPost = await createPost(post);
 				res.status(200).json(newPost).end();
 			} catch (e) {
-				console.log(e);
 				res
 					.status(500)
 					.json({

@@ -20,9 +20,11 @@ const uploadMedia = (originalname, buffer) =>
 		const blobStream = blob.createWriteStream({
 			resumable : false
 		});
+
 		blobStream
 			.on('finish', () => {
 				const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+
 				resolve(publicUrl);
 			})
 			.on('error', () => {
