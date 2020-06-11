@@ -3,7 +3,7 @@ const path = require('path');
 const bucketName = 'instaglam-bucket';
 
 const gc = new Storage({
-	keyFilename : path.join(__dirname, '../../dev1-263221-002724bbed5f.json'),
+	keyFilename : path.join(__dirname, '../../dev1-263221-7258d8ee70b0.json'),
 	projectId   : 'dev1-263221'
 });
 const bucket = gc.bucket('instaglam-bucket');

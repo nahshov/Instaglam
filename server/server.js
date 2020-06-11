@@ -2,10 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { port } = require('./config');
 const connect = require('./db');
+// const swagger = require('swagger-node-express');
 
 const app = express();
 
 app.use(bodyParser.json());
+// swagger.setAppHandler(app);
 
 app.use(function(err, req, res, next) {
 	// error handling logic

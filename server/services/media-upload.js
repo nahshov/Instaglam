@@ -1,7 +1,7 @@
-const { bucket } = require('../services/google-cloud');
+const { bucket } = require('./google-cloud');
 const { v4: uuid } = require('uuid');
 
-const uploadImage = (originalname, buffer) =>
+const uploadMedia = (originalname, buffer) =>
 	new Promise((resolve, reject) => {
 		let filename;
 		const toReplace = originalname.substring(originalname.lastIndexOf('.'));
@@ -31,4 +31,4 @@ const uploadImage = (originalname, buffer) =>
 			.end(buffer);
 	});
 
-module.exports = uploadImage;
+module.exports = uploadMedia;

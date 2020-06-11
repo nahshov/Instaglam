@@ -11,7 +11,7 @@ const { deleteFromBucket } = require('../services/google-cloud');
 
 const verifyUser = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
-const uploadImage = require('../services/image-upload');
+const uploadMedia = require('../services/media-upload');
 
 const sharp = require('sharp');
 
@@ -109,7 +109,7 @@ module.exports = function(app) {
 					imgUrl,
 					user
 				] = await Promise.all([
-					uploadImage(req.file.originalname, buffer),
+					uploadMedia(req.file.originalname, buffer),
 					getUser(req.user.email)
 				]);
 

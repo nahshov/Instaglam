@@ -10,7 +10,7 @@ const {
 } = require('../services/post-services.js');
 const verifyUser = require('../services/auth-services');
 const postsHandler = require('../multer/posts');
-const uploadImage = require('../services/image-upload');
+const uploadMedia = require('../services/media-upload');
 const { deleteFromBucket } = require('../services/google-cloud');
 
 module.exports = function(app) {
@@ -33,8 +33,7 @@ module.exports = function(app) {
 					!(
 						req.file.originalname.endsWith('mov') ||
 						req.file.originalname.endsWith('mp4')
-					) &&
-					!req.file.originalname.endsWith('.jpeg')
+					)
 				) {
 					buffer = await sharp(req.file.buffer)
 						.resize(600, 600)
@@ -44,7 +43,7 @@ module.exports = function(app) {
 					buffer = req.file.buffer;
 				}
 
-				const mediaUrl = await uploadImage(
+				const mediaUrl = await uploadMedia(
 					req.file.originalname,
 					buffer
 				);
