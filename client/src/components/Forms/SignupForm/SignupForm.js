@@ -36,30 +36,8 @@ const SignupForm = () => {
 					<button>Sign up</button>
 				</div>
 			</form>
-			<div>
-				<div>
-					<p>
-						Don't have an account?
-						<a href='#'>
-							<span>Sign up</span>
-						</a>
-					</p>
-				</div>
-			</div>
 		</div>
 	);
 };
 
 export default SignupForm;
-
-/* 
-
-Components: 
-
-Logo: 
-Input text field: Roi
-Button primary: Omer
-AuthSwitch:
-
-
-*/
