@@ -1,17 +1,31 @@
-import React from 'react';
-import { h1 } from './SignupForm.module.scss';
+import React, {useState} from 'react';
+import style from './SignupForm.module.scss';
 
 const SignupForm = () => {
+
+	const [activeInput, setActiveInput] = useState(false)
+
+	let spanStyle = !activeInput ? style.notActiveSpanStyle : style.activeSpanStyle
+	let inputStyle = !activeInput ? style.notActiveInputStyle : style.activeInputStyle
+
+	const handleChange = (e) => {
+		if(e.target.value === '') {
+			setActiveInput(false)
+		} else {
+			setActiveInput(true)
+		}
+	}
+	
+
 	return (
 		<div>
-			<h1 className={h1}>Instaglam</h1>
+			<h1>Instaglam</h1>
 			<form>
 				<h2>Sign up to see photos and videos from your friends.</h2>
-
-				<div>
-					<label>
-						<span>Mobile Number or Email</span>
-						<input />
+				<div className={style.fieldDiv}>
+					<label className={style.label}>
+						<span className={spanStyle}>Mobile Number or Email</span>
+						<input className={inputStyle} onChange={handleChange}/>
 					</label>
 				</div>
 				<div>
