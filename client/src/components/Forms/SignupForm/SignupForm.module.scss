@@ -1,3 +1,50 @@
-.h1 {
-	background: red;
+.fieldDiv {
+	width: 18%;
+	margin-bottom: 15px;
+	display: flex;
+
+	.label {
+		display: flex;
+		width: 100%;
+
+		.notActiveSpanStyle {
+			color: rgb(142, 142, 142);
+			font-size: 16px;
+			left: 20px;
+			line-height: 42px;
+			overflow: hidden;
+			position: absolute;
+			transition: all 0.2s ease-in-out;
+		}
+
+		.activeSpanStyle {
+			color: rgb(142, 142, 142);
+			font-size: 12px;
+			left: 18px;
+			position: absolute;
+			letter-spacing: 1px;
+			line-height: 25px;
+			transition: all 0.2s ease-in-out;
+		}
+
+		.notActiveInputStyle {
+			padding-left: 8px;
+			padding-bottom: 7px;
+			padding-top: 9px;
+			width: 100%;
+			font-size: 20px;
+			border: 1px solid rgb(219, 219, 219);
+			border-radius: 3px;
+		}
+
+		.activeInputStyle {
+			padding-left: 8px;
+			padding-bottom: 4px;
+			padding-top: 20px;
+			border: none;
+			outline: none;
+			width: 100%;
+			font-size: 12x;
+		}
+	}
 }
