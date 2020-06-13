@@ -1,15 +1,10 @@
 .ProfilePic {
-	display: inline-block;
-	height: 100%;
-	width: 100%;
-	border: none;
-	border-radius: 50%;
+	composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
 	overflow: hidden;
-}
 
-.ProfilePic img {
-	width: 100%;
-	height: 100%;
-	border: none;
-	border-radius: 50%;
+	& img {
+		width: inherit;
+		height: inherit;
+		border: 2px solid transparent;
+	}
 }
