@@ -9,7 +9,7 @@ const Navbar = () => {
 	return (
 		<nav className={styles.Navbar}>
 			<div className={styles.content}>
-				<Link exact to='/'>
+				<Link exact='true' to='/'>
 					<Logo />
 				</Link>
 				<SearchInput />
