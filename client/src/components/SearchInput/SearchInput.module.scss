@@ -1,0 +1,15 @@
+.SearchInputContainer{
+    position: relative;
+    width: 215px;
+    .SearchInput{
+        width: 100%;
+        height: 100%;
+    }
+    .SearchPlaceholder{
+        position: absolute;
+        top: 0;
+        display: flex;
+        
+    }
+
+}
