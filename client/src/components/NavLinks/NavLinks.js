@@ -4,7 +4,7 @@ import HomeIcon from '../Icons/HomeIcon/HomeIcon';
 import ChatIcon from '../Icons/ChatIcon/ChatIcon';
 import ExploreIcon from '../Icons/ExploreIcon/ExploreIcon';
 import styles from './NavLinks.module.scss';
-import HeartIcon from '../Icons/HeatIcon/HeartIcon';
+import HeartIcon from '../Icons/HeartIcon/HeartIcon';
 import ProfilePic from '../ProfilePic/ProfilePic';
 
 const NavLinks = () => {
