@@ -71,13 +71,12 @@ module.exports = function(app) {
 
 	app.delete('/api/me', verifyUser, async (req, res) => {
 		try {
-			const promisesArr = [
+			await Promise.all([
 				removeAllUserPosts(req.user.sub),
 				removeAllUserComments(req.user.sub),
 				removeAllUserLikes(req.user.sub),
 				deleteUser(req.user.email)
-			];
-			await Promise.all(promisesArr);
+			]);
 			res
 				.status(200)
 				.json({ message: 'User successfully deleted' })
