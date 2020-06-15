@@ -8,7 +8,7 @@ module.exports = {
   googleStorageCredentials: {
     client_email:
       process.env.GOOGLE_STORAGE_KEY || process.env.GOOGLE_STORAGE_EMAIL,
-    private_key: process.env.GOOGLE_STORAGE_SECRET,
+    private_key: process.env.GOOGLE_STORAGE_SECRET
   },
-  googleStorageBucketName: process.env.BUCKET_NAME,
+  googleStorageBucketName: process.env.GOOGLE_STORAGE_BUCKET_NAME
 };

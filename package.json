@@ -4,7 +4,7 @@
   "description": "### By [Almog Ram](), [Roi Assa](https://github.com/roiassa), [Omer Gronich](https://github.com/OmerGronich)",
   "main": "index.js",
   "scripts": {
-	"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/db-data:/data/db -d  mongo",
+	"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
 	"start": "cd server && npm start",
 	"dev": "cd server && npm run dev",
     "client:install": "cd client && npm install",
