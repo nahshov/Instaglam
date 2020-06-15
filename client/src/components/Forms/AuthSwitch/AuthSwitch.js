@@ -8,19 +8,19 @@ const AuthSwitch = ({ hasAccount, setHasAccount }) => {
 	const linkText = !hasAccount ? 'Sign up' : 'Log in';
 
 	return (
-		<div className={styles.wrapper}>
-			<p className={styles.paragraph}>
-				{hasAccountText}
-				<a href='#' className={styles.link}>
-					<span
-						className={styles.linkText}
-						onClick={() => setHasAccount(!hasAccount)}
-					>
-						{linkText}
-					</span>
-				</a>
-			</p>
-		</div>
+  <div className={styles.wrapper}>
+    <p className={styles.paragraph}>
+      {hasAccountText}
+      <a href='#' className={styles.link}>
+        <span
+          className={styles.linkText}
+          onClick={() => setHasAccount(!hasAccount)}
+        >
+          {linkText}
+        </span>
+      </a>
+    </p>
+  </div>
 	);
 };
 

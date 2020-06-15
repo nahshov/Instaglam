@@ -17,7 +17,6 @@ const AuthForm = () => {
 			</div>
 				<AuthSwitch hasAccount={hasAccount} setHasAccount={setHasAccount} />
 		</div>
-
 	);
 };
 

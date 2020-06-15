@@ -5,8 +5,8 @@ const SignupForm = ({ hasAccount }) => {
 
 	const [activeInput, setActiveInput] = useState(false)
 
-	let spanStyle = !activeInput ? style.notActiveSpanStyle : style.activeSpanStyle
-	let inputStyle = !activeInput ? style.notActiveInputStyle : style.activeInputStyle
+	const spanStyle = !activeInput ? style.notActiveSpanStyle : style.activeSpanStyle
+	const inputStyle = !activeInput ? style.notActiveInputStyle : style.activeInputStyle
 
 	const handleChange = (e) => {
 		if (e.target.value === '') {

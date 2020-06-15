@@ -1,19 +1,18 @@
+const {
+  googleStorageCredentials: credentials,
+  googleStorageBucketName,
+} = require('../config');
 const { Storage } = require('@google-cloud/storage');
-const path = require('path');
-const bucketName = 'instaglam-bucket';
 
-const gc = new Storage({
-	keyFilename : path.join(__dirname, '../../dev1-263221-7258d8ee70b0.json'),
-	projectId   : 'dev1-263221'
-});
-const bucket = gc.bucket('instaglam-bucket');
+const gc = new Storage({ credentials });
+const bucket = gc.bucket(googleStorageBucketName);
 
-const deleteFromBucket = async url => {
-	const fileName = url.split(`${bucketName}/`)[1];
-	return bucket.file(fileName).delete();
+const deleteFromBucket = async (url) => {
+  const fileName = url.split(`${googleStorageBucketName}/`)[1];
+  return bucket.file(fileName).delete();
 };
 
 module.exports = {
-	bucket,
-	deleteFromBucket
+  bucket,
+  deleteFromBucket,
 };
