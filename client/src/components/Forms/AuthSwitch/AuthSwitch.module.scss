@@ -1,18 +1,22 @@
 .wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	box-sizing: border-box;
 	font-size: 15px;
-	height: 63px;
-	width: 350px;
+	height: 80px;
+	width: 100%;
+	max-width: 453px;
 	background: #ffffff;
 	margin: 0 0 10px;
-	padding: 10px 0;
 	border: 1px solid #dbdbdb;
 	border-radius: 1px;
+	margin-top: 12px;
 }
 
 .paragraph {
-	margin: 15px;
+	font-size: 18px;
 	text-align: center;
 }
 

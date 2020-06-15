@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import style from './SignupForm.module.scss';
 
-const SignupForm = () => {
+const SignupForm = ({ hasAccount }) => {
 
 	const [activeInput, setActiveInput] = useState(false)
 
@@ -9,48 +9,52 @@ const SignupForm = () => {
 	let inputStyle = !activeInput ? style.notActiveInputStyle : style.activeInputStyle
 
 	const handleChange = (e) => {
-		if(e.target.value === '') {
+		if (e.target.value === '') {
 			setActiveInput(false)
 		} else {
 			setActiveInput(true)
 		}
+		console.log(e.target.name)
 	}
-	
+
+	console.log(hasAccount)
 
 	return (
-		<div>
-			<h1>Instaglam</h1>
-			<form>
-				<h2>Sign up to see photos and videos from your friends.</h2>
+		<React.Fragment>
+			<div className={style.authHeader}>
+				<h1 className={style.title}>Instaglam</h1>
+				<h2 className={style.h2}>Sign up to see photos and videos from your friends.</h2>
+			</div>
+			<form className={style.authForm} onChange={handleChange}>
 				<div className={style.fieldDiv}>
 					<label className={style.label}>
 						<span className={spanStyle}>Mobile Number or Email</span>
-						<input className={inputStyle} onChange={handleChange}/>
+						<input type="text" name="mobileOrEmail" className={inputStyle} />
 					</label>
 				</div>
-				<div>
-					<label>
-						<span>Full Name</span>
-						<input />
+				<div className={style.fieldDiv}>
+					<label className={style.label}>
+						<span className={spanStyle}>Full Name</span>
+						<input type="text" name="fullName" className={inputStyle} />
 					</label>
 				</div>
-				<div>
-					<label>
-						<span>Username</span>
-						<input />
+				<div className={style.fieldDiv}>
+					<label className={style.label}>
+						<span className={spanStyle}>Username</span>
+						<input type="text" name="userName" className={inputStyle} />
 					</label>
 				</div>
-				<div>
-					<label>
-						<span>Password</span>
-						<input />
+				<div className={style.fieldDiv}>
+					<label className={style.label}>
+						<span className={spanStyle}>Password</span>
+						<input type="text" name="password" className={inputStyle} />
 					</label>
 				</div>
-				<div>
+				<div className={style.signUpBtnDiv}>
 					<button>Sign up</button>
 				</div>
 			</form>
-		</div>
+		</React.Fragment>
 	);
 };
 

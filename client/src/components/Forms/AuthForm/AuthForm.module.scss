@@ -1,0 +1,22 @@
+.authWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    
+    .authDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 450px;
+        width: 100%;
+        height: 70%;
+        margin-top: 20px;
+        border: 1px solid #dbdbdb;
+        border-radius: 1px;
+        overflow: hidden;
+        background-color: white;
+    }
+}

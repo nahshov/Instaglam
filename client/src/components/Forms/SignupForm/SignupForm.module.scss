@@ -1,50 +1,132 @@
-.fieldDiv {
-	width: 18%;
-	margin-bottom: 15px;
+.authHeader {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 40%;
+	padding-top: 10px;
+	text-align: center;
+	overflow: hidden;
+	.title {
+		font-family: Brush Script MT, Brush Script Std, cursive;
+		font-size: 70px;
+		margin-bottom: 10px;
+	}
 
-	.label {
+	.h2 {
+		color: rgb(142, 142, 142);
+		margin-right: 50px;
+		margin-left: 50px;
+		font-size: 20px;
+		font-weight: 500;
+	}
+}
+
+.authForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+
+	.fieldDiv {
+		width: 80%;
+		margin-bottom: 10px;
+		border-radius: 3px;
+		display: flex;
+
+		.label {
+			display: flex;
+			width: 100%;
+
+			.notActiveSpanStyle {
+				color: rgb(142, 142, 142);
+				font-size: 16px;
+				line-height: 42px;
+				overflow: hidden;
+				position: absolute;
+				padding-left: 10px;
+				transition: all 0.2s ease-in-out;
+				text-align: center;
+
+				// &:focus {
+				// 	color: rgb(142, 142, 142);
+				// 	font-size: 12px;
+				// 	padding-left: 10px;
+				// 	position: absolute;
+				// 	letter-spacing: 1px;
+				// 	line-height: 25px;
+				// 	transition: all 0.2s ease-in-out;
+				// }
+			}
+
+			.activeSpanStyle {
+				color: rgb(142, 142, 142);
+				font-size: 12px;
+				padding-left: 10px;
+				position: absolute;
+				letter-spacing: 1px;
+				line-height: 25px;
+				transition: all 0.2s ease-in-out;
+			}
+
+			.notActiveInputStyle {
+				padding-left: 8px;
+				padding-bottom: 7px;
+				padding-top: 9px;
+				width: 100%;
+				border: none;
+				outline: none;
+				font-size: 20px;
+				border: 1px solid rgb(219, 219, 219);
+				border-radius: 5px;
+				background-color: rgb(250, 250, 250);
+
+				&:focus {
+					border: 1px solid #a8a8a8;
+					border-radius: 5px;
+				}
+			}
+
+			.activeInputStyle {
+				padding-left: 8px;
+				padding-bottom: 4px;
+				padding-top: 20px;
+				border: none;
+				outline: none;
+				width: 100%;
+				font-size: 12px;
+				border: 1px solid rgb(219, 219, 219);
+				border-radius: 5px;
+
+				&:focus {
+					border: 1px solid #a8a8a8;
+					border-radius: 5px;
+				}
+			}
+		}
+	}
+
+	.signUpBtnDiv {
 		display: flex;
 		width: 100%;
+		justify-content: center;
+		padding-top: 10px;
 
-		.notActiveSpanStyle {
-			color: rgb(142, 142, 142);
-			font-size: 16px;
-			left: 20px;
-			line-height: 42px;
-			overflow: hidden;
-			position: absolute;
-			transition: all 0.2s ease-in-out;
-		}
-
-		.activeSpanStyle {
-			color: rgb(142, 142, 142);
-			font-size: 12px;
-			left: 18px;
-			position: absolute;
-			letter-spacing: 1px;
-			line-height: 25px;
-			transition: all 0.2s ease-in-out;
-		}
-
-		.notActiveInputStyle {
-			padding-left: 8px;
-			padding-bottom: 7px;
-			padding-top: 9px;
-			width: 100%;
-			font-size: 20px;
-			border: 1px solid rgb(219, 219, 219);
-			border-radius: 3px;
-		}
-
-		.activeInputStyle {
-			padding-left: 8px;
-			padding-bottom: 4px;
-			padding-top: 20px;
+		button {
+			background-color: #0095f6;
 			border: none;
+			border-radius: 4px;
+			color: rgb(255, 255, 255);
+			width: 79%;
+			height: 35px;
+			cursor: pointer;
 			outline: none;
-			width: 100%;
-			font-size: 12x;
+			font-size: 18px;
+			font-weight: bold;
+
+			&:active {
+				background-color: #41b0fa;
+			}
 		}
 	}
 }
