@@ -10,11 +10,11 @@ const AuthForm = () => {
 	] = useState(true);
 
 	return (
-		<div>
-			<Signup />
-			{/* <LoginForm /> */}
-			<AuthSwitch hasAccount={hasAccount} setHasAccount={setHasAccount} />
-		</div>
+  <div>
+    <Signup />
+    {/* <LoginForm /> */}
+    <AuthSwitch hasAccount={hasAccount} setHasAccount={setHasAccount} />
+  </div>
 	);
 };
 
