@@ -7,6 +7,7 @@
   justify-content: center;
   border: 1px solid #dbdbdb;
   background-color: #fafafa;
+  color: #8e8e8e;
 
   .SearchInput {
     background: transparent;
@@ -15,9 +16,11 @@
     height: 100%;
     border: none;
     outline: none;
+    color: inherit;
 
     &:focus {
       padding-left: 25px;
+      color: #000;
       + .searchLabel {
         justify-content: space-between;
 
@@ -53,7 +56,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #dbdbdb;
 
     .searchIcon {
       font-size: 15px;
