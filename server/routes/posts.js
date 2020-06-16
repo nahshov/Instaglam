@@ -10,8 +10,7 @@ const {
 } = require('../services/post-services.js');
 const verifyUser = require('../services/auth-services');
 const postsHandler = require('../multer/posts');
-const uploadMedia = require('../services/media-upload');
-const { deleteFromBucket } = require('../services/google-cloud');
+const { uploadFile, deleteFile } = require('../services/cloud-services');
 
 module.exports = function (app) {
   //create a post
@@ -40,7 +39,7 @@ module.exports = function (app) {
           buffer = req.file.buffer;
         }
 
-        const mediaUrl = await uploadMedia(req.file.originalname, buffer);
+        const mediaUrl = await uploadFile(req.file.originalname, buffer);
         const post = {
           ...req.body,
           user: req.user.sub,
@@ -117,7 +116,7 @@ module.exports = function (app) {
     try {
       const post = await getPost(req.params.postId);
       await removePost(req.params.postId);
-      await deleteFromBucket(post.media);
+      await deleteFile(post.media);
       res.status(200).json({ message: 'File successfully deleted' }).end();
     } catch (e) {
       res
