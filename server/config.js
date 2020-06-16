@@ -1,5 +1,4 @@
 require('dotenv').config();
-const path = require('path');
 
 module.exports = {
   mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/instaglam',
