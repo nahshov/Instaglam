@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import styles from 'components/NavLinks/NavLinks.module.scss';
+import { isActive } from 'utils/isActive';
 import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
 import ChatIcon from 'components/Icons/ChatIcon/ChatIcon';
 import ExploreIcon from 'components/Icons/ExploreIcon/ExploreIcon';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import { isActive } from 'utils/isActive';
-import styles from 'components/NavLinks/NavLinks.module.scss';
 
 const NavLinks = () => {
   const [homeIcon, setHomeIcon] = useState(true);

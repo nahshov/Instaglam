@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaRegPaperPlane, FaPaperPlane } from 'react-icons/fa';
 import styles from 'components/Icons/ChatIcon/ChatIcon.module.scss';
+import { FaRegPaperPlane, FaPaperPlane } from 'react-icons/fa';
 
 const ChatIcon = ({ isFilled }) => (
   <React.Fragment>

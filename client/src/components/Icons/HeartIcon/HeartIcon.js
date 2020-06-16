@@ -1,6 +1,6 @@
 import React from 'react';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import styles from 'components/Icons/HeartIcon/HeartIcon.module.scss';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 const HeartIcon = ({ isFilled }) => (
   <React.Fragment>

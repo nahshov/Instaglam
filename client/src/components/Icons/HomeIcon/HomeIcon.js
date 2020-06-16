@@ -1,6 +1,6 @@
 import React from 'react';
-import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 import styles from './HomeIcon.module.scss';
+import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 
 const HomeIconButton = ({ isFilled }) => (
   <React.Fragment>
