@@ -18,7 +18,7 @@ const uploadMedia = (originalname, buffer) =>
 
     const blob = bucket.file(filename);
     const blobStream = blob.createWriteStream({
-      resumable: false,
+      resumable: false
     });
 
     blobStream
@@ -27,7 +27,7 @@ const uploadMedia = (originalname, buffer) =>
 
         resolve(publicUrl);
       })
-      .on('error', () => {
+      .on('error', (e) => {
         reject(`Unable to upload media, something went wrong`);
       })
       .end(buffer);

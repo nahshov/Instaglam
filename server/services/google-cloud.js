@@ -1,13 +1,15 @@
 const {
   googleStorageCredentials: credentials,
-  googleStorageBucketName,
+  googleStorageBucketName
 } = require('../config');
 const { Storage } = require('@google-cloud/storage');
+const path = require('path');
 
-const gc = new Storage({ credentials });
+const gc = new Storage({
+  keyFilename: path.join(__dirname, `../${credentials.keyFilename}`),
+  projectId: credentials.projectId
+});
 const bucket = gc.bucket(googleStorageBucketName);
-
-gc.getBuckets((x) => console.log(x));
 
 const deleteFromBucket = async (url) => {
   const fileName = url.split(`${googleStorageBucketName}/`)[1];
@@ -16,5 +18,5 @@ const deleteFromBucket = async (url) => {
 
 module.exports = {
   bucket,
-  deleteFromBucket,
+  deleteFromBucket
 };

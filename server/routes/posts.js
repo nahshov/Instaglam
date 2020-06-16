@@ -6,7 +6,7 @@ const {
   createPost,
   removePost,
   updatePost,
-  getAllPosts,
+  getAllPosts
 } = require('../services/post-services.js');
 const verifyUser = require('../services/auth-services');
 const postsHandler = require('../multer/posts');
@@ -44,7 +44,7 @@ module.exports = function (app) {
         const post = {
           ...req.body,
           user: req.user.sub,
-          media: mediaUrl,
+          media: mediaUrl
         };
         const newPost = await createPost(post);
         res.status(200).json(newPost).end();
@@ -52,7 +52,7 @@ module.exports = function (app) {
         res
           .status(500)
           .json({
-            message: `internal error while trying to create post`,
+            message: `internal error while trying to create post`
           })
           .end();
       }
@@ -80,7 +80,7 @@ module.exports = function (app) {
         return res
           .status(404)
           .json({
-            message: 'there are no posts with requested user id',
+            message: 'there are no posts with requested user id'
           })
           .end();
       }
@@ -123,7 +123,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to delete a post`,
+          message: `internal error while trying to delete a post`
         })
         .end();
     }
