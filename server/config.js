@@ -6,9 +6,8 @@ module.exports = {
   tokenSecret: process.env.TOKEN_SECRET || 'mySecret',
   refreshTokenSecret: process.env.REFRESH_TOKEN || 'myRefresh',
   googleStorageCredentials: {
-    client_email:
-      process.env.GOOGLE_STORAGE_KEY || process.env.GOOGLE_STORAGE_EMAIL,
-    private_key: process.env.GOOGLE_STORAGE_SECRET,
+    keyFilename: process.env.GOOGLE_STORAGE_KEYFILENAME,
+    projectId: process.env.GOOGLE_STORAGE_PROEJCT
   },
-  googleStorageBucketName: process.env.BUCKET_NAME,
+  googleStorageBucketName: process.env.GOOGLE_STORAGE_BUCKET_NAME
 };

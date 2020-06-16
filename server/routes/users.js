@@ -1,17 +1,15 @@
 const {
   getUser,
   deleteUser,
-  editUser,
+  editUser
 } = require('../services/user-services.js');
 
 const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
-const { deleteFromBucket } = require('../services/google-cloud');
-
+const { deleteFile, uploadFile } = require('../services/cloud-services');
 const verifyUser = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
-const uploadMedia = require('../services/media-upload');
 
 const sharp = require('sharp');
 
@@ -69,7 +67,7 @@ module.exports = function (app) {
         removeAllUserPosts(req.user.sub),
         removeAllUserComments(req.user.sub),
         removeAllUserLikes(req.user.sub),
-        deleteUser(req.user.email),
+        deleteUser(req.user.email)
       ]);
       res.status(200).json({ message: 'User successfully deleted' }).end();
     } catch (e) {
@@ -96,12 +94,12 @@ module.exports = function (app) {
         }
 
         const [imgUrl, user] = await Promise.all([
-          uploadMedia(req.file.originalname, buffer),
-          getUser(req.user.email),
+          uploadFile(req.file.originalname, buffer),
+          getUser(req.user.email)
         ]);
 
         if (user.profilePic) {
-          await deleteFromBucket(user.profilePic);
+          await deleteFile(user.profilePic);
         }
 
         user.profilePic = `${imgUrl}`;
@@ -114,7 +112,7 @@ module.exports = function (app) {
         res
           .status(500)
           .json({
-            message: `internal error while trying to upload profile picture`,
+            message: `internal error while trying to upload profile picture`
           })
           .end();
       }
@@ -147,7 +145,7 @@ module.exports = function (app) {
 
       user.profilePic = undefined;
 
-      await Promise.all([user.save(), deleteFromBucket(imgUrl)]);
+      await Promise.all([user.save(), deleteFile(imgUrl)]);
       res
         .status(200)
         .json({ message: 'Successfully deleted profile picture' })
@@ -156,7 +154,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to delete profile picture`,
+          message: `internal error while trying to delete profile picture`
         })
         .end();
     }
