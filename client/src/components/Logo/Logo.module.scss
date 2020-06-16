@@ -1,5 +1,7 @@
+@import '../../styles/typography.scss';
+
 .Logo {
-  font-family: 'Pacifico', sans-serif;
+  font-family: $cursive-font;
   font-size: 20px;
   letter-spacing: 2px;
   margin: 0;
