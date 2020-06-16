@@ -1,15 +1,17 @@
+@import '../../styles/color-palette.scss';
+
 .Navbar {
-	height: 54px;
-	width: 100%;
-	border-bottom: 1px solid #dbdbdb;
-	background: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  height: 54px;
+  width: 100%;
+  border-bottom: 1px solid $primary-border-color;
+  background: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .content {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
 }

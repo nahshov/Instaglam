@@ -1,3 +1,5 @@
+@import '../../styles/color-palette.scss';
+
 .searchInputContainer {
   position: relative;
   width: 215px;
@@ -5,9 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #dbdbdb;
-  background-color: #fafafa;
-  color: #8e8e8e;
+  border: 1px solid $primary-border-color;
+  background-color: $primary-background;
+  color: $secondary-text-color;
 
   .SearchInput {
     background: transparent;
@@ -20,7 +22,7 @@
 
     &:focus {
       padding-left: 25px;
-      color: #000;
+      color: $color-black;
       + .searchLabel {
         justify-content: space-between;
 
