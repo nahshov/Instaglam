@@ -1,0 +1,35 @@
+.authBtnDiv {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-top: 10px;
+
+  button:disabled {
+    background-color: rgba(0, 149, 246, 0.3);
+    border: none;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    width: 79%;
+    height: 35px;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  button:enabled {
+    background-color: #0095f6;
+    border: none;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    width: 79%;
+    height: 35px;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+
+    &:active {
+      background-color: #41b0fa;
+    }
+  }
+}

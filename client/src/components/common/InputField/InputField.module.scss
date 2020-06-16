@@ -1,0 +1,64 @@
+.fieldDiv {
+  width: 80%;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: flex;
+
+  .label {
+    display: flex;
+    width: 100%;
+
+    span {
+      color: rgb(142, 142, 142);
+      font-size: 16px;
+      line-height: 42px;
+      overflow: hidden;
+      position: absolute;
+      padding-left: 10px;
+      transition: all 0.2s ease-in-out;
+      text-align: center;
+    }
+
+    input {
+      padding-left: 8px;
+      padding-bottom: 7px;
+      padding-top: 9px;
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 20px;
+      border: 1px solid rgb(219, 219, 219);
+      border-radius: 5px;
+      background-color: rgb(250, 250, 250);
+
+      &:focus {
+        border: 1px solid #a8a8a8;
+        border-radius: 5px;
+      }
+
+      &:valid {
+        padding-left: 8px;
+        padding-bottom: 5px;
+        padding-top: 20px;
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 12px;
+        border: 1px solid rgb(219, 219, 219);
+        border-radius: 5px;
+        border: 1px solid #a8a8a8;
+        border-radius: 5px;
+      }
+
+      &:valid ~ span {
+        color: rgb(142, 142, 142);
+        font-size: 12px;
+        padding-left: 10px;
+        position: absolute;
+        letter-spacing: 1px;
+        line-height: 25px;
+        transition: all 0.1s ease-in-out;
+      }
+    }
+  }
+}
