@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../client/src/styles/color-palette.scss"
+    ],
+    "names": [],
+    "file": "color-palette.css"
+}

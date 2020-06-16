@@ -1,10 +1,8 @@
-@import '../../styles/color-palette.scss';
-
 .Navbar {
   height: 54px;
   width: 100%;
-  border-bottom: 1px solid $primary-border-color;
-  background: $color-white;
+  border-bottom: 1px solid #dbdbdb;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,3 +14,4 @@
   align-items: center;
   width: 60%;
 }
+/*# sourceMappingURL=Navbar.module.css.map */

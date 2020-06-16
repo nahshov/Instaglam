@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,UAAU,CAAC;EACT,SAAS,ECGS,IAAI;CDFvB",
+    "sources": [
+        "../client/src/components/Icons/HeartIcon/HeartIcon.module.scss",
+        "../client/src/styles/typography.scss"
+    ],
+    "names": [],
+    "file": "HeartIcon.module.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../client/src/components/Forms/AuthForm/AuthForm.module.scss"
+    ],
+    "names": [],
+    "file": "AuthForm.module.css"
+}

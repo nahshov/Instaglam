@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,SAAS,CAAC;EACR,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;CACpB;;AAED,AAAA,SAAS,GAAG,CAAC,CAAC;EACZ,MAAM,EAAE,aAAa;EACrB,MAAM,EAAE,OAAO;CAChB;;AAED,AAAA,eAAe,CAAC;EACd,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;EACvB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,MAAM,EAAE,qBAAqB;EAC7B,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,CAAC;CACX;;AAED,AAAA,iBAAiB,CAAC;EAChB,QAAQ,EAAE,cAAc;EACxB,QAAQ,EAAE,QAAQ;CAMnB;;AARD,AAIE,iBAJe,CAIb,GAAG,CAAC;EACJ,aAAa,EAAE,GAAG;EAClB,QAAQ,EAAE,QAAQ;CACnB",
+    "sources": [
+        "../client/src/components/NavLinks/NavLinks.module.scss",
+        "../client/src/styles/color-palette.scss"
+    ],
+    "names": [],
+    "file": "NavLinks.module.css"
+}

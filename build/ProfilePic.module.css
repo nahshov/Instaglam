@@ -1,0 +1,11 @@
+.ProfilePic {
+  composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
+  overflow: hidden;
+}
+
+.ProfilePic img {
+  width: inherit;
+  height: inherit;
+  border: 2px solid #000000;
+}
+/*# sourceMappingURL=ProfilePic.module.css.map */

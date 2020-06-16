@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,WAAW,CAAC;EACV,QAAQ,EAAE,sDAAsD;EAChE,QAAQ,EAAE,MAAM;CAOjB;;AATD,AAIE,WAJS,CAIP,GAAG,CAAC;EACJ,KAAK,EAAE,OAAO;EACd,MAAM,EAAE,OAAO;EACf,MAAM,EAAE,GAAG,CAAC,KAAK,CCPP,OAAO;CDQlB",
+    "sources": [
+        "../client/src/components/ProfilePic/ProfilePic.module.scss",
+        "../client/src/styles/color-palette.scss"
+    ],
+    "names": [],
+    "file": "ProfilePic.module.css"
+}

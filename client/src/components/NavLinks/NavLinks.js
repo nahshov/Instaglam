@@ -3,9 +3,10 @@ import { NavLink } from 'react-router-dom';
 import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
 import ChatIcon from 'components/Icons/ChatIcon/ChatIcon';
 import ExploreIcon from 'components/Icons/ExploreIcon/ExploreIcon';
-import styles from 'components/NavLinks/NavLinks.module.scss';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
+import { isActive } from 'utils/isActive';
+import styles from 'components/NavLinks/NavLinks.module.scss';
 
 const NavLinks = () => {
   const [homeIcon, setHomeIcon] = useState(true);
@@ -16,43 +17,13 @@ const NavLinks = () => {
 
   return (
     <div className={styles.NavLinks}>
-      <NavLink
-        exact
-        to="/"
-        isActive={(match) => {
-          if (!match) {
-            setHomeIcon(false);
-          } else {
-            setHomeIcon(true);
-          }
-        }}
-      >
+      <NavLink exact to="/" isActive={isActive(setHomeIcon)}>
         <HomeIcon isFilled={homeIcon} />
       </NavLink>
-      <NavLink
-        exact
-        to="/direct/inbox"
-        isActive={(match) => {
-          if (!match) {
-            setChatIcon(false);
-          } else {
-            setChatIcon(true);
-          }
-        }}
-      >
+      <NavLink exact to="/direct/inbox" isActive={isActive(setChatIcon)}>
         <ChatIcon isFilled={chatIcon} />
       </NavLink>
-      <NavLink
-        exact
-        to="/explore"
-        isActive={(match) => {
-          if (!match) {
-            setExploreIcon(false);
-          } else {
-            setExploreIcon(true);
-          }
-        }}
-      >
+      <NavLink exact to="/explore" isActive={isActive(setExploreIcon)}>
         <ExploreIcon isFilled={exploreIcon} />
       </NavLink>
       <HeartIcon />
