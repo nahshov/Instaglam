@@ -1,5 +1,5 @@
 const Post = require('../models/Post.js');
-const { deleteFromBucket } = require('../services/google-cloud');
+const { deleteFile } = require('./cloud-services');
 
 // @desc: Get all posts of a user
 // @route: /api/posts
@@ -40,7 +40,7 @@ function removePost(postId) {
 async function removeAllUserPosts(userId) {
   const posts = await getAllPostsOfUser(userId);
   const postPromisesArray = posts.map((post) => {
-    deleteFromBucket(post.media);
+    deleteFile(post.media);
   });
   await Promise.all(postPromisesArray);
   return Post.deleteMany({ user: userId });
@@ -59,5 +59,5 @@ module.exports = {
   removePost,
   removeAllUserPosts,
   updatePost,
-  getAllPosts,
+  getAllPosts
 };
