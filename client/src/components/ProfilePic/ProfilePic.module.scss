@@ -1,10 +1,12 @@
-.ProfilePic {
-	composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
-	overflow: hidden;
+@import '../../styles/color-palette.scss';
 
-	& img {
-		width: inherit;
-		height: inherit;
-		border: 2px solid transparent;
-	}
+.ProfilePic {
+  composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
+  overflow: hidden;
+
+  & img {
+    width: inherit;
+    height: inherit;
+    border: 2px solid $color-black;
+  }
 }

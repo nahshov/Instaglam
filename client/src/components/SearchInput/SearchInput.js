@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SearchInput.module.scss';
+import styles from 'components/SearchInput/SearchInput.module.scss';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDelete } from 'react-icons/ti';
 

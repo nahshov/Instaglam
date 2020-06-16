@@ -1,7 +1,9 @@
+@import '../../../styles/typography.scss';
+
 .HomeIcon {
-	font-size: 30px;
+  font-size: $icon-medium-large;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }

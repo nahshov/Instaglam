@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import HomeIcon from '../Icons/HomeIcon/HomeIcon';
-import ChatIcon from '../Icons/ChatIcon/ChatIcon';
-import ExploreIcon from '../Icons/ExploreIcon/ExploreIcon';
-import styles from './NavLinks.module.scss';
-import HeartIcon from '../Icons/HeartIcon/HeartIcon';
-import ProfilePic from '../ProfilePic/ProfilePic';
+import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
+import ChatIcon from 'components/Icons/ChatIcon/ChatIcon';
+import ExploreIcon from 'components/Icons/ExploreIcon/ExploreIcon';
+import styles from 'components/NavLinks/NavLinks.module.scss';
+import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 
 const NavLinks = () => {
   const [homeIcon, setHomeIcon] = useState(true);

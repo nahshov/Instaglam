@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ProfilePic.module.scss';
+import styles from 'components/ProfilePic/ProfilePic.module.scss';
 
 const ProfilePic = () => {
   return (

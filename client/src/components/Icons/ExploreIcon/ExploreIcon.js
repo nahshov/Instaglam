@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCompass } from 'react-icons/fa';
 import { FiCompass } from 'react-icons/fi';
-import styles from './ExploreIcon.module.scss';
+import styles from 'components/Icons/ExploreIcon/ExploreIcon.module.scss';
 
 const ExploreIcon = ({ isFilled }) => {
   return (
