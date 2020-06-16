@@ -1,0 +1,11 @@
+@import '../../../styles/typography.scss';
+@import '../../../styles/mixins.scss';
+
+.MobileSearchIcon {
+  display: none;
+
+  @include respond(phone) {
+    font-size: $icon-medium-small;
+    display: block;
+  }
+}
