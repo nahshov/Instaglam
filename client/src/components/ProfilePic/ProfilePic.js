@@ -3,7 +3,11 @@ import styles from 'components/ProfilePic/ProfilePic.module.scss';
 
 const ProfilePic = () => (
   <div className={styles.ProfilePic}>
-    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.securities-services.societegenerale.com%2Fuploads%2Ftx_bisgbio%2Fdefault-profile.png&f=1&nofb=1" />
+    <img
+      alt="default profile pic"
+      src="https://orangesupplies.com/wp-content/uploads/2019/08/Author__Placeholder.png"
+      className={styles.profileImg}
+    />
   </div>
 );
 

@@ -1,15 +1,18 @@
 @import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
 
 .searchInputContainer {
+  @include flexCenter;
   position: relative;
   width: 215px;
   height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: 1px solid $primary-border-color;
   background-color: $primary-background;
   color: $secondary-text-color;
+
+  @include respond(phablet) {
+    display: none;
+  }
 
   .SearchInput {
     background: transparent;
@@ -52,12 +55,10 @@
     }
   }
   .searchLabel {
+    @include flexCenter;
     padding: 10px;
     position: absolute;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     .searchIcon {
       font-size: 15px;
