@@ -2,7 +2,7 @@ const {
   getComments,
   addComment,
   removeComment,
-  updateComment,
+  updateComment
 } = require('../services/comment-services');
 
 const { getPost } = require('../services/post-services');
@@ -19,7 +19,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to get all comments for this post`,
+          message: `internal error while trying to get all comments for this post`
         })
         .end();
     }
@@ -31,7 +31,7 @@ module.exports = function (app) {
       const comment = {
         ...req.body,
         user: req.user.sub,
-        post: req.params.postId,
+        post: req.params.postId
       };
       const response = await addComment(comment);
       res.status(200).json(response).end();
@@ -39,7 +39,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to add a comment`,
+          message: `internal error while trying to add a comment`
         })
         .end();
     }
@@ -57,7 +57,7 @@ module.exports = function (app) {
         res
           .status(500)
           .json({
-            message: `internal error while trying to remove a comment`,
+            message: `internal error while trying to remove a comment`
           })
           .end();
       }
@@ -76,7 +76,7 @@ module.exports = function (app) {
         res
           .status(500)
           .json({
-            message: `internal error while trying to update comment`,
+            message: `internal error while trying to update comment`
           })
           .end();
       }

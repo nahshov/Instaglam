@@ -1,9 +1,7 @@
-import React from 'react'
-import styles from './Logo.module.scss'
+import React from 'react';
+import styles from './Logo.module.scss';
 const Logo = () => {
-    return (
-        <h1 className={styles.Logo}>Instaglam</h1>
-    )
-}
+  return <h1 className={styles.Logo}>Instaglam</h1>;
+};
 
-export default Logo
+export default Logo;

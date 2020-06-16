@@ -1,12 +1,8 @@
-import React from 'react'
-import styles from './ProfilePage.module.scss'
+import React from 'react';
+import styles from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
-    return (
-        <div>
-            ProfilePage
-        </div>
-    )
-}
+  return <div>ProfilePage</div>;
+};
 
-export default ProfilePage
+export default ProfilePage;

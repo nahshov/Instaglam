@@ -3,7 +3,7 @@ const { tokenSecret, refreshTokenSecret } = require('../config');
 const {
   verifyPassword,
   getUser,
-  createUser,
+  createUser
 } = require('../services/user-services');
 
 const verifyUser = require('../services/auth-services');
@@ -14,7 +14,7 @@ function getTokens(user) {
   const accessToken = jwt.sign(
     {
       sub: user._id,
-      email: user.email,
+      email: user.email
     },
     tokenSecret,
     { expiresIn: '1h' }
@@ -24,7 +24,7 @@ function getTokens(user) {
     {
       sub: user._id,
       email: user.email,
-      created,
+      created
     },
     refreshTokenSecret,
     { expiresIn: '30d' }
@@ -34,7 +34,7 @@ function getTokens(user) {
   user.save();
   return {
     access_token: accessToken,
-    refresh_token: refreshToken,
+    refresh_token: refreshToken
   };
 }
 

@@ -62,5 +62,5 @@ module.exports = {
   addLikeToComment,
   removeLikeFromPost,
   removeLikeFromComment,
-  removeAllUserLikes,
+  removeAllUserLikes
 };

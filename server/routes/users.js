@@ -1,7 +1,7 @@
 const {
   getUser,
   deleteUser,
-  editUser,
+  editUser
 } = require('../services/user-services.js');
 
 const { removeAllUserPosts } = require('../services/post-services.js');
@@ -69,7 +69,7 @@ module.exports = function (app) {
         removeAllUserPosts(req.user.sub),
         removeAllUserComments(req.user.sub),
         removeAllUserLikes(req.user.sub),
-        deleteUser(req.user.email),
+        deleteUser(req.user.email)
       ]);
       res.status(200).json({ message: 'User successfully deleted' }).end();
     } catch (e) {
@@ -97,7 +97,7 @@ module.exports = function (app) {
 
         const [imgUrl, user] = await Promise.all([
           uploadMedia(req.file.originalname, buffer),
-          getUser(req.user.email),
+          getUser(req.user.email)
         ]);
 
         if (user.profilePic) {
@@ -114,7 +114,7 @@ module.exports = function (app) {
         res
           .status(500)
           .json({
-            message: `internal error while trying to upload profile picture`,
+            message: `internal error while trying to upload profile picture`
           })
           .end();
       }
@@ -156,7 +156,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to delete profile picture`,
+          message: `internal error while trying to delete profile picture`
         })
         .end();
     }
