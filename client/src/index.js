@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-<<<<<<< HEAD
   <React.StrictMode>
     <BrowserRouter>
       {/* <Provider store={store}> */}

@@ -1,45 +1,72 @@
+.searchInputContainer {
+  position: relative;
+  width: 215px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbdbdb;
+  background-color: #fafafa;
 
-.searchInputContainer{
-    position: relative;
-    width: 215px;
-    height:25px;
+  .SearchInput {
+    background: transparent;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+
+    &:focus {
+      padding-left: 25px;
+      + .searchLabel {
+        justify-content: space-between;
+
+        .deleteIcon {
+          display: inline-block;
+          width: 1.2em;
+          height: 1.2em;
+        }
+      }
+    }
+
+    &:valid {
+      + .searchLabel .searchText {
+        opacity: 0;
+      }
+    }
+
+    &:not(:focus):valid {
+      text-align: center;
+
+      + .searchLabel {
+        justify-content: flex-start;
+        .searchText {
+          display: none;
+        }
+      }
+    }
+  }
+  .searchLabel {
+    padding: 10px;
+    position: absolute;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #dbdbdb;
+    color: #dbdbdb;
 
-    .SearchInput{
-        background:transparent;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        border: none;
-        outline: none;
-
-        &:focus {
-            padding-left: 15px;
-            +.searchLabel{
-                justify-content: space-between;
-                .deleteIcon{
-                    display: inline-block;
-                    width: 1.2em;
-                    height: 1.2em;
-                }
-            }
-        }
+    .searchIcon {
+      font-size: 15px;
+      transform: translateY(2px);
     }
-    .searchLabel{
-        position: absolute;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .searchIcon{
-            transform: translateY(1.5px)
-        }
-        .deleteIcon{
-            display: none;
-        }
-        }
-    
+
+    .searchText {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+    }
+    .deleteIcon {
+      display: none;
+    }
+  }
 }
