@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Button.module.scss';
+import styles from 'components/Button/Button.module.scss';
 
 const Button = ({ text, disabled }) => {
   return (

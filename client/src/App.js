@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AuthForm from './components/Forms/AuthForm/AuthForm';
+import AuthForm from 'components/Forms/AuthForm/AuthForm';
 import Navbar from 'components/Navbar/Navbar';
 import HomePage from 'pages/HomePage/HomePage';
 import ProfilePage from 'pages/ProfilePage/ProfilePage';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './AuthSwitch.module.scss';
+import styles from 'components/Forms/AuthForm/AuthSwitch/AuthSwitch.module.scss';
 
 const AuthSwitch = ({
   hasAccount,
