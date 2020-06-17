@@ -1,9 +1,9 @@
 import React from 'react';
+import styles from '../AuthForm.module.scss';
 import AuthHeader from '../AuthHeader/AuthHeader';
 import InputField from '../../../InputField/InputField';
 import Button from '../../../Button/Button';
 import AuthSwitch from '../AuthSwitch/AuthSwitch';
-import styles from '../AuthForm.module.scss';
 
 const LogInForm = ({ hasAccount, setHasAccount, disabled, form, setForm }) => {
   const handleChange = (e) => {

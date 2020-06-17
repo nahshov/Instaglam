@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUpForm from './SignUpForm/SignUpForm';
 import LogInForm from './LogInForm/LogInForm';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 const AuthForm = () => {
   const [hasAccount, setHasAccount] = useState(true);

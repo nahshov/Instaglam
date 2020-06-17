@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './AuthSwitch.module.scss';
 import { Link } from 'react-router-dom';
+import styles from './AuthSwitch.module.scss';
 
 const AuthSwitch = ({
   hasAccount,
   setHasAccount,
   hasAccountText,
-  linkText,
+  linkText
 }) => {
   return (
     <div className={styles.wrapper}>
