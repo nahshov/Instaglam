@@ -1,26 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUpForm from 'components/Forms/AuthForm/SignUpForm/SignUpForm';
 import LogInForm from 'components/Forms/AuthForm/LogInForm/LogInForm';
 
 const AuthForm = () => {
   const [hasAccount, setHasAccount] = useState(true);
-  const [form, setForm] = useState({
-    phoneOrEmail: '',
-    fullName: '',
-    userName: '',
-    password: ''
-  });
   const [disabled, setDisabled] = useState(true);
-
-  useEffect(() => {
-    const result = Object.values(form).filter((value) => {
-      return value !== '';
-    });
-    result.length < 4 || form.password.length < 6
-      ? setDisabled(true)
-      : setDisabled(false);
-  }, [form, disabled]);
+  const [showPass, setShowPass] = useState(false);
 
   return (
     <React.Fragment>
@@ -34,8 +20,8 @@ const AuthForm = () => {
               setHasAccount={setHasAccount}
               disabled={disabled}
               setDisabled={setDisabled}
-              form={form}
-              setForm={setForm}
+              showPass={showPass}
+              setShowPass={setShowPass}
             />
           )}
         />
@@ -48,8 +34,8 @@ const AuthForm = () => {
               setHasAccount={setHasAccount}
               disabled={disabled}
               setDisabled={setDisabled}
-              form={form}
-              setForm={setForm}
+              showPass={showPass}
+              setShowPass={setShowPass}
             />
           )}
         />
