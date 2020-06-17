@@ -35,7 +35,7 @@ function removeAllUserComments(userId) {
 // @route: /api/comments/:postId
 async function updateComment(commentId, newContent) {
   return Comment.findOneAndUpdate({ _id: commentId }, newContent, {
-    new: true,
+    new: true
   });
 }
 
@@ -45,5 +45,5 @@ module.exports = {
   removeComment,
   removeAllPostComments,
   removeAllUserComments,
-  updateComment,
+  updateComment
 };

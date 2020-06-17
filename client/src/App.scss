@@ -1,0 +1,28 @@
+@import './styles/color-palette.scss';
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  background: $primary-background;
+  width: 100%;
+  height: 100%;
+  color: $primary-text-color;
+}
+
+a {
+  text-decoration: none;
+  color: $color-black;
+}

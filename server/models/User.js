@@ -6,35 +6,35 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    index: true,
+    index: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
 
   salt: String,
   firstName: {
     type: String,
-    required: true,
+    required: true
   },
   lastName: {
     type: String,
-    required: true,
+    required: true
   },
   profilePic: {
-    type: String,
+    type: String
   },
   city: String,
   bio: {
-    type: String,
+    type: String
   },
   refreshTokenIdentifier: String,
   birthDate: String,
   created: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 UserSchema.pre('save', function () {

@@ -4,7 +4,7 @@ const {
   addLikeToPost,
   addLikeToComment,
   removeLikeFromPost,
-  removeLikeFromComment,
+  removeLikeFromComment
 } = require('../services/like-services');
 
 const Comment = require('../models/Comment');
@@ -30,7 +30,7 @@ module.exports = function (app) {
     try {
       const like = await addLikeToPost({
         post: req.params.postId,
-        user: req.user.sub,
+        user: req.user.sub
       });
       res.status(200).json(like).end();
     } catch (error) {
@@ -50,7 +50,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to remove a like`,
+          message: `internal error while trying to remove a like`
         })
         .end();
     }
@@ -73,12 +73,12 @@ module.exports = function (app) {
   app.post('/api/comments/:commentId/likes', verifyUser, async (req, res) => {
     try {
       const comment = await Comment.findOne({
-        _id: req.params.commentId,
+        _id: req.params.commentId
       });
       const like = await addLikeToComment({
         user: req.user.sub,
         comment: req.params.commentId,
-        post: comment.post,
+        post: comment.post
       });
       res.status(200).json(like).end();
     } catch (error) {
@@ -98,7 +98,7 @@ module.exports = function (app) {
       res
         .status(500)
         .json({
-          message: `internal error while trying to remove a like`,
+          message: `internal error while trying to remove a like`
         })
         .end();
     }

@@ -1,0 +1,24 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.Navbar {
+  @include flexCenter;
+  height: 54px;
+  width: 100%;
+  border-bottom: 1px solid $primary-border-color;
+  background: $color-white;
+}
+
+.content {
+  @include flexCenter;
+  justify-content: space-between;
+  width: 60%;
+
+  @include respond(tab-port) {
+    width: 90%;
+  }
+
+  @include respond(phone) {
+    position: relative;
+  }
+}

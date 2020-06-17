@@ -1,0 +1,71 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/typography.scss';
+
+.NavLinks {
+  display: flex;
+  align-items: center;
+
+  @include respond(phone) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: $secondary-background;
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid $primary-border-color;
+    padding: 10px;
+  }
+}
+
+.NavLinks * {
+  margin: 0 10px 0 10px;
+  cursor: pointer;
+
+  @include respond(phone) {
+    margin: 0;
+    padding: 0;
+    max-height: 20px;
+    max-width: 20px;
+  }
+}
+
+.profilePicLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid transparent;
+  border-radius: 100%;
+  padding: 0;
+
+  & img {
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    position: absolute;
+  }
+}
+
+.activeProfilePic {
+  composes: profilePicLink;
+  position: relative;
+
+  & img {
+    display: block;
+    border: 2px solid $color-black;
+    border-radius: 50%;
+    position: absolute;
+  }
+}
+
+.chatLink {
+  @include respond(phone) {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    margin-right: 15px;
+  }
+}
