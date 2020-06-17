@@ -94,7 +94,7 @@ module.exports = function (app) {
         }
 
         const [imgUrl, user] = await Promise.all([
-          uploadFile(req.file.originalname, buffer),
+          uploadMedia(req.file.originalname, buffer),
           getUser(req.user.email)
         ]);
 

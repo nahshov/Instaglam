@@ -1,0 +1,7 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.ProfilePic {
+  composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
+  overflow: hidden;
+}

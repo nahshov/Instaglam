@@ -9,7 +9,7 @@ const AuthForm = () => {
     phoneOrEmail: '',
     fullName: '',
     userName: '',
-    password: '',
+    password: ''
   });
   const [disabled, setDisabled] = useState(true);
 

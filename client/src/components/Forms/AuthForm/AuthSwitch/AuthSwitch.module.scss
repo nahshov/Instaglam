@@ -1,3 +1,5 @@
+@import '../../../../styles/color-palette.scss';
+
 .wrapper {
   display: flex;
   justify-content: center;
@@ -8,9 +10,9 @@
   height: 80px;
   width: 100%;
   max-width: 453px;
-  background: #ffffff;
+  background: $color-white;
   margin: 0 0 10px;
-  border: 1px solid #dbdbdb;
+  border: 1px solid $primary-border-color;
   border-radius: 1px;
   margin-top: 12px;
 
@@ -23,7 +25,7 @@
     .link {
       text-decoration: none;
       margin-left: 3px;
-      color: #0095f6;
+      color: $primary-color;
     }
   }
 }

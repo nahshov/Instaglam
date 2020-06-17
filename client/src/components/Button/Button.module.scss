@@ -1,3 +1,5 @@
+@import '../../styles/color-palette.scss';
+
 .authBtnDiv {
   display: flex;
   width: 100%;
@@ -5,10 +7,10 @@
   padding-top: 10px;
 
   button:disabled {
-    background-color: rgba(0, 149, 246, 0.3);
+    background-color: $secondary-color;
     border: none;
     border-radius: 4px;
-    color: rgb(255, 255, 255);
+    color: $color-white;
     width: 79%;
     height: 35px;
     outline: none;
@@ -17,10 +19,10 @@
   }
 
   button:enabled {
-    background-color: #0095f6;
+    background-color: $primary-color;
     border: none;
     border-radius: 4px;
-    color: rgb(255, 255, 255);
+    color: $color-white;
     width: 79%;
     height: 35px;
     cursor: pointer;
@@ -29,7 +31,7 @@
     font-weight: bold;
 
     &:active {
-      background-color: #41b0fa;
+      background-color: $active-color;
     }
   }
 }

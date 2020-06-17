@@ -1,3 +1,5 @@
+@import '../../../../styles/color-palette.scss';
+
 .authHeader {
   display: flex;
   flex-direction: column;
@@ -15,7 +17,7 @@
   }
 
   .h2 {
-    color: rgb(142, 142, 142);
+    color: $secondary-text-color;
     margin-right: 50px;
     margin-left: 50px;
     font-size: 20px;
