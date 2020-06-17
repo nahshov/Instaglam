@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthHeader from '../AuthHeader/AuthHeader';
-import InputField from '../../../common/InputField/InputField';
-import Button from '../../../common/Button/Button';
+import InputField from '../../../InputField/InputField';
+import Button from '../../../Button/Button';
 import AuthSwitch from '../AuthSwitch/AuthSwitch';
 import styles from '../AuthForm.module.scss';
 
