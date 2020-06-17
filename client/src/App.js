@@ -7,16 +7,21 @@ import ProfilePage from 'pages/ProfilePage/ProfilePage';
 import 'App.scss';
 
 const App = () => {
-  const [hasTokens, setHasTokens] = useState(true);
+  const [hasTokens, setHasTokens] = useState(false);
 
   return (
     <div className="App">
-      <AuthForm />
-      <Navbar />
-      <Switch>
-        <Route exact path="/" render={() => <HomePage />} />
-        <Route exact path="/profile" render={() => <ProfilePage />} />
-      </Switch>
+      {!hasTokens ? (
+        <AuthForm />
+      ) : (
+        <React.Fragment>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" render={() => <HomePage />} />
+            <Route exact path="/profile" render={() => <ProfilePage />} />
+          </Switch>
+        </React.Fragment>
+      )}
     </div>
   );
 };

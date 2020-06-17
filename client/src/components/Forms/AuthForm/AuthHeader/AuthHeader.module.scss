@@ -1,9 +1,8 @@
 @import '../../../../styles/color-palette.scss';
+@import '../../../../styles/mixins.scss';
 
 .authHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flexColumn;
   width: 100%;
   height: 40%;
   margin-top: 20px;

@@ -9,9 +9,7 @@
   overflow: hidden;
 
   .authDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flexColumn;
     max-width: 450px;
     width: 100%;
     height: 65%;
@@ -21,9 +19,7 @@
     background-color: $color-white;
 
     .authForm {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      @include flexColumn;
       width: 100%;
     }
   }
