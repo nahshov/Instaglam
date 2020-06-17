@@ -1,7 +1,7 @@
 const { bucket } = require('./google-cloud');
 const { v4: uuid } = require('uuid');
 
-const uploadMedia = (originalname, buffer) =>
+const uploadFile = (originalname, buffer) =>
   new Promise((resolve, reject) => {
     let filename;
     const toReplace = originalname.substring(originalname.lastIndexOf('.'));
@@ -33,4 +33,12 @@ const uploadMedia = (originalname, buffer) =>
       .end(buffer);
   });
 
-module.exports = uploadMedia;
+const deleteFile = async (url) => {
+  const fileName = url.split(`${googleStorageBucketName}/`)[1];
+  return bucket.file(fileName).delete();
+};
+
+module.exports = {
+  uploadFile,
+  deleteFile
+};

@@ -7,11 +7,9 @@ const {
 const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
-const { deleteFromBucket } = require('../services/google-cloud');
-
+const { deleteFile, uploadFile } = require('../services/cloud-services');
 const verifyUser = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
-const uploadMedia = require('../services/media-upload');
 
 const sharp = require('sharp');
 
@@ -96,12 +94,12 @@ module.exports = function (app) {
         }
 
         const [imgUrl, user] = await Promise.all([
-          uploadMedia(req.file.originalname, buffer),
+          uploadFile(req.file.originalname, buffer),
           getUser(req.user.email)
         ]);
 
         if (user.profilePic) {
-          await deleteFromBucket(user.profilePic);
+          await deleteFile(user.profilePic);
         }
 
         user.profilePic = `${imgUrl}`;
@@ -147,7 +145,7 @@ module.exports = function (app) {
 
       user.profilePic = undefined;
 
-      await Promise.all([user.save(), deleteFromBucket(imgUrl)]);
+      await Promise.all([user.save(), deleteFile(imgUrl)]);
       res
         .status(200)
         .json({ message: 'Successfully deleted profile picture' })

@@ -1,5 +1,5 @@
 const User = require('../models/User.js');
-const { deleteFromBucket } = require('../services/google-cloud');
+const { deleteFile } = require('./cloud-services');
 
 // @desc: Create users
 // @route: /api/users
@@ -30,7 +30,7 @@ async function editUser(email, newData) {
 async function deleteUser(email) {
   const user = await getUser(email);
   if (user.profilePic) {
-    await deleteFromBucket(user.profilePic);
+    await deleteFile(user.profilePic);
   }
   return User.findOneAndRemove({ email });
 }

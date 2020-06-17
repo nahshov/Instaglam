@@ -12,12 +12,6 @@ const gc = new Storage({
 
 const bucket = gc.bucket(googleStorageBucketName);
 
-const deleteFromBucket = async (url) => {
-  const fileName = url.split(`${googleStorageBucketName}/`)[1];
-  return bucket.file(fileName).delete();
-};
-
 module.exports = {
-  bucket,
-  deleteFromBucket
+  bucket
 };
