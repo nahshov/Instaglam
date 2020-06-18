@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from 'components/Forms/AuthForm/AuthForm.module.scss';
 import AuthHeader from 'components/Forms/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -8,14 +8,7 @@ import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
 
-const SignUpForm = ({
-  hasAccount,
-  setHasAccount,
-  disabled,
-  setDisabled,
-  showPass,
-  setShowPass
-}) => {
+const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
   const [signUpForm, setSignUpForm] = useState({
     phoneOrEmail: '',
     fullName: '',
@@ -27,14 +20,13 @@ const SignUpForm = ({
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
+  const checkDisabled = () => {
+    console.log('checkDisabled');
     const result = Object.values(signUpForm).filter((value) => {
       return value !== '';
     });
-    result.length < 4 || signUpForm.password.length < 6
-      ? setDisabled(true)
-      : setDisabled(false);
-  }, [signUpForm, disabled]);
+    return result.length < 4 || signUpForm.password.length < 6;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,7 +69,7 @@ const SignUpForm = ({
             content={buttonText}
             icon={<CheckIcon />}
           />
-          <Button text={'Sign Up'} disabled={disabled} />
+          <Button text={'Sign Up'} disabled={checkDisabled()} />
         </form>
       </div>
       <AuthSwitch

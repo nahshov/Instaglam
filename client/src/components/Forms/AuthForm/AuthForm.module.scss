@@ -21,6 +21,7 @@
     .authForm {
       @include flexColumn;
       width: 100%;
+      position: relative;
     }
   }
 }

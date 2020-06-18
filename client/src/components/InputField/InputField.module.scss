@@ -61,10 +61,11 @@
   }
   .insideInputDiv {
     @include flexCenter;
-    position: absolute;
     padding-bottom: 5px;
     padding-right: 5px;
-    margin-left: 305px;
+    padding-top: 3px;
+    width: 100%;
+    max-width: 0px;
 
     .iconDiv {
       font-size: 32px;
@@ -72,7 +73,6 @@
 
     .showPassDiv {
       @include flexCenter;
-      padding-top: 10px;
 
       button {
         background: none;
