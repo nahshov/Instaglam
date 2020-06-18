@@ -1,15 +1,20 @@
 import React from 'react';
-import styles from './HomeIcon.module.scss';
+import PropTypes from 'prop-types';
+import styles from 'components/Icons/HomeIcon/HomeIcon.module.scss';
 import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 
-const HomeIconButton = ({ isFilled }) => (
-  <React.Fragment>
-    {isFilled ? (
+const HomeIcon = ({ match }) => (
+  <>
+    {match ? (
       <AiFillHome className={styles.HomeIcon} />
     ) : (
       <AiOutlineHome className={styles.HomeIcon} />
     )}
-  </React.Fragment>
+  </>
 );
 
-export default HomeIconButton;
+HomeIcon.propTypes = {
+  match: PropTypes.bool.isRequired
+};
+
+export default HomeIcon;

@@ -1,16 +1,54 @@
 {
   "env": {
     "browser": true,
-    "es2020": true
+    "es6": true
   },
-  "extends": ["airbnb", "airbnb/hooks", "plugin:react/recommended", "prettier"],
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 11,
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
-  "rules": { "react/jsx-filename-extension": [0], "func-names": "off" }
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
+        "depth": 3
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
 }

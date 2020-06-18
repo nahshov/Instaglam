@@ -5,8 +5,8 @@ import { TiDelete } from 'react-icons/ti';
 
 const SearchInput = () => (
   <div className={styles.searchInputContainer}>
-    <input className={styles.SearchInput} required />
-    <label className={styles.searchLabel}>
+    <input id="searchInput" className={styles.SearchInput} required />
+    <label htmlFor="searchInput" className={styles.searchLabel}>
       <div>
         <AiOutlineSearch className={styles.searchIcon} />
         <span className={styles.searchText}>Search</span>
