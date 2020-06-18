@@ -27,7 +27,7 @@
     "hooks": {
       "pre-commit": "npm run format"
     }
-  }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
