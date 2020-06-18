@@ -13,7 +13,7 @@ const postsHandler = require('../multer/posts');
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 
 module.exports = function (app) {
-  //create a post
+  // create a post
   app.post(
     '/api/posts',
     verifyUser,
@@ -71,7 +71,7 @@ module.exports = function (app) {
     }
   });
 
-  //get all posts of specific user
+  // get all posts of specific user
   app.get('/api/posts/:userId', verifyUser, async (req, res) => {
     try {
       const post = await getAllPostsOfUser(req.params.userId);
@@ -92,7 +92,7 @@ module.exports = function (app) {
     }
   });
 
-  //get one post of a user using post id
+  // get one post of a user using post id
   app.get('/api/posts/singlePost/:postId', verifyUser, async (req, res) => {
     try {
       const post = await getPost(req.params.postId);
@@ -111,7 +111,7 @@ module.exports = function (app) {
     }
   });
 
-  //remove a post
+  // remove a post
   app.delete('/api/posts/:postId', verifyUser, async (req, res) => {
     try {
       const post = await getPost(req.params.postId);
@@ -128,7 +128,7 @@ module.exports = function (app) {
     }
   });
 
-  //update a post
+  // update a post
   app.put('/api/posts/:postId', verifyUser, async (req, res) => {
     try {
       const post = await updatePost(req.params.postId, req.body);

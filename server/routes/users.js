@@ -1,3 +1,4 @@
+const sharp = require('sharp');
 const {
   getUser,
   deleteUser,
@@ -10,8 +11,6 @@ const { removeAllUserLikes } = require('../services/like-services.js');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
 const verifyUser = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
-
-const sharp = require('sharp');
 
 module.exports = function (app) {
   app.get(`/api/users/:email`, async (req, res) => {
@@ -33,7 +32,7 @@ module.exports = function (app) {
     }
   });
 
-  //api/me
+  // api/me
   app.get(`/api/me`, verifyUser, async (req, res) => {
     try {
       const user = await getUser(req.user.email);

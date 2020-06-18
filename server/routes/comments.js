@@ -64,7 +64,7 @@ module.exports = function (app) {
     }
   );
 
-  //update a comment in a post
+  // update a comment in a post
   app.put(
     '/api/posts/:postId/comments/:commentId',
     verifyUser,

@@ -1,13 +1,14 @@
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
 const {
   googleStorageCredentials: credentials,
   googleStorageBucketName
 } = require('../config');
-const { Storage } = require('@google-cloud/storage');
-const path = require('path');
 
 const gc = new Storage({
-  keyFilename: path.join(__dirname, `../${credentials.keyFilename}`),
-  projectId: credentials.projectId
+  // keyFilename: path.join(__dirname, `../${credentials.keyFilename}`),
+  // projectId: credentials.projectId
+  credentials
 });
 
 const bucket = gc.bucket(googleStorageBucketName);

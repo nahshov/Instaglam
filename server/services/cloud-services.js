@@ -1,5 +1,5 @@
-const { bucket } = require('./google-cloud');
 const { v4: uuid } = require('uuid');
+const { bucket } = require('./google-cloud');
 
 const uploadFile = (originalname, buffer) =>
   new Promise((resolve, reject) => {
@@ -7,13 +7,11 @@ const uploadFile = (originalname, buffer) =>
     const toReplace = originalname.substring(originalname.lastIndexOf('.'));
 
     if (!(originalname.endsWith('mov') || originalname.endsWith('mp4'))) {
-      filename =
-        originalname.replace(toReplace, '').replace(/ /g, '_') +
-        +'.' +
-        uuid() +
-        '.jpeg';
+      filename = `${
+        originalname.replace(toReplace, '').replace(/ /g, '_') + +'.' + uuid()
+      }.jpeg`;
     } else {
-      filename = uuid() + '.' + originalname;
+      filename = `${uuid()}.${originalname}`;
     }
 
     const blob = bucket.file(filename);

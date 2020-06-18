@@ -9,7 +9,7 @@ const postsHandler = multer({
     if (!file.originalname.match(/\.(jpg|jpeg|png|bmp|mov|mp4)$/g)) {
       return cb(new Error('Please upload an image/video'));
     }
-    cb(null, true);
+    return cb(null, true);
   }
 });
 

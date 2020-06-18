@@ -9,7 +9,7 @@ const profilePic = multer({
     if (!file.originalname.match(/\.(jpg|jpeg|png|bmp)$/g)) {
       return cb(new Error('Please upload an image'));
     }
-    cb(null, true);
+    return cb(null, true);
   }
 });
 

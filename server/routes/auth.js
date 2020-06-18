@@ -10,7 +10,7 @@ const verifyUser = require('../services/auth-services');
 
 function getTokens(user) {
   const created = new Date().toJSON();
-  //jwt.sign creates a jwt token
+  // jwt.sign creates a jwt token
   const accessToken = jwt.sign(
     {
       sub: user._id,
