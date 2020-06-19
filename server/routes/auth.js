@@ -17,7 +17,7 @@ function getTokens(user) {
       email: user.email
     },
     tokenSecret,
-    { expiresIn: '1h' }
+    { expiresIn: '15m' }
   );
 
   const refreshToken = jwt.sign(
