@@ -9,8 +9,8 @@ const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
-const verifyUser = require('../services/auth-services');
-const profilePic = require('../multer/profilePic');
+const verifyUser = require('../middleware/verifyUser');
+const { uploadProfilePic } = require('../middleware/fileUpload');
 
 module.exports = function (app) {
   app.get(`/api/users/:email`, async (req, res) => {
@@ -70,7 +70,6 @@ module.exports = function (app) {
       ]);
       res.status(200).json({ message: 'User successfully deleted' }).end();
     } catch (e) {
-      console.log(e);
       res
         .status(500)
         .json({ message: `internal error while trying to delete user` })
@@ -81,7 +80,7 @@ module.exports = function (app) {
   app.post(
     '/api/me/profilePic',
     verifyUser,
-    profilePic.single('profilePic'),
+    uploadProfilePic.single('profilePic'),
     async (req, res) => {
       try {
         let buffer;

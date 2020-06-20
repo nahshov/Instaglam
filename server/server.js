@@ -1,11 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const { port } = require('./config');
 const connect = require('./db');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json({ extended: false }));
 
 app.use(function (err, req, res, next) {
   // error handling logic

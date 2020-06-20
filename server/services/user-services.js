@@ -1,12 +1,18 @@
+const gravatar = require('gravatar');
 const User = require('../models/User.js');
-const { deleteFile } = require('./cloud-services');
 
 // @desc: Create users
 // @route: /api/users
 function createUser(user) {
   user = new User(user);
+  const profilePic = gravatar.url(user.email, {
+    s: '200',
+    r: 'pg',
+    d: 'mm'
+  });
+  user.profilePic = profilePic.replace(/^\/\//, '');
   if (!user.bio) {
-    user.bio = `Hello my name is ${user.firstName} ${user.lastName}`;
+    user.bio = `Hello my name is ${user.fullName}`;
   }
   return user.save();
 }
@@ -28,10 +34,6 @@ async function editUser(email, newData) {
 // @desc: Remove users
 // @route: /api/users/:email
 async function deleteUser(email) {
-  const user = await getUser(email);
-  if (user.profilePic) {
-    await deleteFile(user.profilePic);
-  }
   return User.findOneAndRemove({ email });
 }
 

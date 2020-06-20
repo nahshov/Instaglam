@@ -15,6 +15,7 @@ module.exports = async function connect() {
       useFindAndModify: false
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log('could not connect to mongo');
     process.exit(1);
   }

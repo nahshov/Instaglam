@@ -14,11 +14,11 @@ const UserSchema = new mongoose.Schema({
   },
 
   salt: String,
-  firstName: {
+  fullName: {
     type: String,
     required: true
   },
-  lastName: {
+  userName: {
     type: String,
     required: true
   },

@@ -26,7 +26,7 @@ const uploadFile = (originalname, buffer) =>
         resolve(publicUrl);
       })
       .on('error', (e) => {
-        reject(`Unable to upload media, something went wrong`);
+        reject(new Error(`Unable to upload media, something went wrong`));
       })
       .end(buffer);
   });
