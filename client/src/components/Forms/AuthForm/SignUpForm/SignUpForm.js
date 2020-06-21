@@ -21,7 +21,6 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
   };
 
   const checkDisabled = () => {
-    console.log('checkDisabled');
     const result = Object.values(signUpForm).filter((value) => {
       return value !== '';
     });
@@ -45,12 +44,14 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
             text={'Mobile Number or Email'}
             name={'phoneOrEmail'}
             onChange={handleChange}
+            withButton={false}
             icon={<ErrorIcon />}
           />
           <InputField
             text={'Full Name'}
             name={'fullName'}
             onChange={handleChange}
+            withButton={false}
             icon={<CheckIcon />}
           />
           <InputField
@@ -58,6 +59,7 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
             name={'userName'}
             onChange={handleChange}
             content={<RefreshIcon />}
+            withButton={true}
             icon={<ErrorIcon />}
           />
           <InputField
@@ -67,6 +69,7 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
             onChange={handleChange}
             onClick={() => setShowPass(!showPass)}
             content={buttonText}
+            withButton={true}
             icon={<CheckIcon />}
           />
           <Button text={'Sign Up'} disabled={checkDisabled()} />
