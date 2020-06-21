@@ -32,17 +32,24 @@ const SignUpForm = ({
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
       const res = await fetch('/api/register', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify(signUpForm)
       });
-      return res.status === 200 ? history.push('/') : Promise.reject();
-    } catch {
+      if (res.status === 200) {
+        history.push('/');
+      }
+
+      if (res.status !== 200) {
+        const { message } = await res.json();
+        console.error(message);
+      }
+    } catch (error) {
       // @TODO: make this appear as a jsx element in alert colors
-      throw new Error('Failed to sign up');
+      console.error(error);
     }
   };
 

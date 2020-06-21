@@ -54,7 +54,7 @@ const register = async (req, res) => {
     return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to create user`
+      message: 'Internal error while trying to create user'
     });
   }
 };
