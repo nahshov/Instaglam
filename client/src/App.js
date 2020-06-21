@@ -14,13 +14,13 @@ const App = () => {
       {!hasTokens ? (
         <AuthForm />
       ) : (
-        <React.Fragment>
+        <>
           <Navbar />
           <Switch>
             <Route exact path="/" render={() => <HomePage />} />
             <Route exact path="/profile" render={() => <ProfilePage />} />
           </Switch>
-        </React.Fragment>
+        </>
       )}
     </div>
   );

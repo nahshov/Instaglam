@@ -27,9 +27,7 @@ const SignUpForm = ({
   };
 
   const checkDisabled = () => {
-    const result = Object.values(signUpForm).filter((value) => {
-      return value !== '';
-    });
+    const result = Object.values(signUpForm).filter((value) => value !== '');
     return result.length < 4 || signUpForm.password.length < 6;
   };
 
@@ -43,7 +41,7 @@ const SignUpForm = ({
       });
       return res.status === 200 ? history.push('/') : Promise.reject();
     } catch {
-      //@TODO: make this appear as a jsx element in alert colors
+      // @TODO: make this appear as a jsx element in alert colors
       throw new Error('Failed to sign up');
     }
   };
@@ -75,7 +73,7 @@ const SignUpForm = ({
             name="username"
             onChange={handleChange}
             content={<RefreshIcon />}
-            withButton={true}
+            withButton
             icon={<ErrorIcon />}
           />
           <InputField
@@ -85,17 +83,17 @@ const SignUpForm = ({
             onChange={handleChange}
             onClick={() => setShowPass(!showPass)}
             content={buttonText}
-            withButton={true}
+            withButton
             icon={<CheckIcon />}
           />
-          <Button text={'Sign Up'} disabled={checkDisabled()} />
+          <Button text="Sign Up" disabled={checkDisabled()} />
         </form>
       </div>
       <AuthSwitch
         hasAccount={hasAccount}
         setHasAccount={setHasAccount}
-        hasAccountText={'Have an account?'}
-        linkText={'Log in'}
+        hasAccountText="Have an account?"
+        linkText="Log in"
       />
     </div>
   );

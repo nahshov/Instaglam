@@ -9,7 +9,7 @@ const AuthForm = () => {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <Switch>
         <Route
           exact
@@ -42,7 +42,7 @@ const AuthForm = () => {
           )}
         />
       </Switch>
-    </React.Fragment>
+    </>
   );
 };
 

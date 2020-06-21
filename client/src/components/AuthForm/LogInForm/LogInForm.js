@@ -24,9 +24,7 @@ const LogInForm = ({
   };
 
   useEffect(() => {
-    const result = Object.values(logInForm).filter((value) => {
-      return value !== '';
-    });
+    const result = Object.values(logInForm).filter((value) => value !== '');
     result.length < 2 || logInForm.password.length < 6
       ? setDisabled(true)
       : setDisabled(false);
@@ -42,7 +40,7 @@ const LogInForm = ({
       });
       return res.status === 200 ? history.push('/') : Promise.reject();
     } catch {
-      //@TODO: make this appear as a jsx element in alert colors
+      // @TODO: make this appear as a jsx element in alert colors
       throw new Error('Failed to log in');
     }
   };
@@ -69,14 +67,14 @@ const LogInForm = ({
             content={buttonText}
           />
 
-          <Button text={'Log In'} disabled={disabled} />
+          <Button text="Log In" disabled={disabled} />
         </form>
       </div>
       <AuthSwitch
         hasAccount={hasAccount}
         setHasAccount={setHasAccount}
         hasAccountText={"Don't have an account?"}
-        linkText={'Sign up'}
+        linkText="Sign up"
       />
     </div>
   );

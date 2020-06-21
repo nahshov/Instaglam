@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
-		"start": "cd client && npm start",
-		"dev": "cd server && npm run dev",
+		"start:frontend": "cd client && npm start",
+		"start:backend": "cd server && npm run dev",
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
 		"postinstall": "(npm run client:install) && (npm run server:install)",
@@ -18,18 +18,14 @@
 		"type": "git",
 		"url": "git+https://github.com/OmerGronich/Instaglam.git"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "(cd client && npm run format) && (cd server && npm run format)"
-		}
-	},
 	"author": "",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/OmerGronich/Instaglam/issues"
 	},
 	"homepage": "https://github.com/OmerGronich/Instaglam#readme",
-	"dependencies": {
-		"husky": "^4.2.5"
+	"dependencies": {},
+	"devDependencies": {
+		"babel-eslint": "^10.1.0"
 	}
 }

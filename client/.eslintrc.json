@@ -21,8 +21,10 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
+  "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": "error",
+    "indent": ["error", 2],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": [
       "error",
