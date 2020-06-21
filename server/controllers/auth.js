@@ -8,60 +8,77 @@ const {
   createUser
 } = require('../services/user-services');
 const getTokens = require('../services/auth-services');
-const response = require('../utils/response');
+const serverResponse = require('../utils/serverResponse');
 
+// @route   POST '/api/login'
+// @desc:   Authenticate users
+// @access: Public
 const login = async (req, res) => {
   try {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
-      return response(res, 400, { errors: errors.array() });
+      return serverResponse(res, 400, { message: errors.array() });
 
     const { email, password } = req.body || {};
     const user = await getUser(email);
 
     if (!(user && verifyPassword(user, password)))
-      return response(res, 401, { message: 'Invalid credentials' });
+      return serverResponse(res, 401, { message: 'Invalid credentials' });
 
-    return response(res, 200, { payload: getTokens(user) });
+    return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: 'Internal server error when trying to login'
     });
   }
 };
 
+// @route   POST '/api/register'
+// @desc:   Create users
+// @access: Public
 const register = async (req, res) => {
   try {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
-      return response(res, 400, { errors: errors.array() });
+      return serverResponse(res, 400, { message: errors.array() });
+
+    const exists = await getUser(req.body.email);
+
+    if (exists)
+      return serverResponse(res, 400, { message: 'User already exists' });
 
     const user = await createUser(req.body);
 
-    return response(res, 200, { payload: getTokens(user) });
+    return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: `internal error while trying to create user`
     });
   }
 };
 
+// @route   POST '/api/logout'
+// @desc:   Remove authentication
+// @access: Private
 const logout = async (req, res) => {
   try {
     const user = await getUser(req.user.email);
     user.refreshTokenIdentifier = '';
     await user.save();
 
-    return response(res, 200, { message: 'Succesfully logged out' });
+    return serverResponse(res, 200, { message: 'Succesfully logged out' });
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: `internal error while trying to logout`
     });
   }
 };
 
+// @route   POST '/api/token/refresh'
+// @desc:   Refresh token
+// @access: Public
 const refresh = async function (req, res) {
   try {
     if (req.headers.authorization) {
@@ -71,7 +88,7 @@ const refresh = async function (req, res) {
       try {
         decoded = jwt.verify(token, refreshTokenSecret);
       } catch (e) {
-        return response(res, 401, { message: 'Unauthorized' });
+        return serverResponse(res, 401, { message: 'Unauthorized' });
       }
 
       const { email, created } = decoded;
@@ -79,12 +96,12 @@ const refresh = async function (req, res) {
       const user = await getUser(email);
 
       if (created === user.refreshTokenIdentifier)
-        return response(res, 200, { payload: getTokens(user) });
+        return serverResponse(res, 200, { payload: getTokens(user) });
     }
 
-    return response(res, 401, { message: 'Unauthorized' });
+    return serverResponse(res, 401, { message: 'Unauthorized' });
   } catch (e) {
-    return response(res, 500, { message: 'Internal server error' });
+    return serverResponse(res, 500, { message: 'Internal server error' });
   }
 };
 

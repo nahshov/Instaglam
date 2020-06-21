@@ -1,5 +1,5 @@
 const verifyUser = require('../middleware/verifyUser');
-const { uploadPost } = require('../middleware/fileUpload');
+const { upload } = require('../middleware/fileUpload');
 const {
   submitPost,
   getPosts,
@@ -13,7 +13,7 @@ module.exports = function (app) {
   // create a post
   app
     .get('/api/posts', verifyUser, getPosts)
-    .post('/api/posts', verifyUser, uploadPost.single('media'), submitPost)
+    .post('/api/posts', verifyUser, upload('media'), submitPost)
     .get('/api/posts/:userId', verifyUser, getPostsOfAUser)
     .delete('/api/posts/:postId', verifyUser, deletePost)
     .put('/api/posts/:postId', verifyUser, editPost)

@@ -1,12 +1,10 @@
 const gravatar = require('gravatar');
 const User = require('../models/User.js');
 
-// @desc: Create users
-// @route: /api/users
 function createUser(user) {
   user = new User(user);
   const profilePic = gravatar.url(user.email, {
-    s: '200',
+    s: '180',
     r: 'pg',
     d: 'mm'
   });
@@ -17,22 +15,16 @@ function createUser(user) {
   return user.save();
 }
 
-// @desc: Get users
-// @route: /api/users/:email
 function getUser(email) {
   return User.findOne({ email });
 }
 
-// @desc: Update users
-// @route: /api/users/:email
 async function editUser(email, newData) {
   const user = await User.findOne({ email });
   Object.assign(user, newData);
   return user.save();
 }
 
-// @desc: Remove users
-// @route: /api/users/:email
 async function deleteUser(email) {
   return User.findOneAndRemove({ email });
 }

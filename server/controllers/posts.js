@@ -6,12 +6,15 @@ const {
   updatePost,
   getAllPosts
 } = require('../services/post-services.js');
-const response = require('../utils/response');
+const serverResponse = require('../utils/serverResponse');
 
 //  @TODO: uncomment after fixing google cloud ☟
 // const { uploadFile, deleteFile } = require('../services/cloud-services');
 // const formatImage = require('../utils/formatMedia.js');
 
+// @route  POST '/api/posts'
+// @desc   Submit a posts
+// @access private
 const submitPost = async (req, res) => {
   try {
     // @TODO: Fix google cloud upload and uncomment
@@ -23,43 +26,52 @@ const submitPost = async (req, res) => {
       media: 'https:/www.google.com' /* switch with mediaUrl */
     };
     const newPost = await createPost(post);
-    return response(res, 200, newPost);
+    return serverResponse(res, 200, newPost);
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: 'Internal error while trying to submit a post'
     });
   }
 };
 
+// @route  GET '/api/posts'
+// @desc   Get all posts
+// @access private
 const getPosts = async (req, res) => {
   try {
     const posts = await getAllPosts(req.query.limit, req.query.skip);
-    return response(res, 200, posts);
+    return serverResponse(res, 200, posts);
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: `internal error while trying to get posts`
     });
   }
 };
 
+// @route  GET '/api/posts/:userId'
+// @desc   Get posts of a user
+// @access private
 const getPostsOfAUser = async (req, res) => {
   try {
     const posts = await getAllPostsOfUser(req.params.userId);
 
     if (!posts.length) {
-      return response(res, 404, {
+      return serverResponse(res, 404, {
         message: 'there are no posts with requested user id'
       });
     }
 
-    return response(res, 200, posts);
+    return serverResponse(res, 200, posts);
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: 'Internal error while trying to get posts'
     });
   }
 };
 
+// @route  GET '/api/posts/singlePost/:postId'
+// @desc   Get one post, with post id
+// @access private
 const getOnePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
@@ -78,26 +90,32 @@ const getOnePost = async (req, res) => {
   }
 };
 
+// @route  DELETE '/api/posts/:postId'
+// @desc   Delete post of authenticated user
+// @access private
 const deletePost = async (req, res) => {
   try {
     // @TODO: Uncomment after fixing google cloud
     // const post = await getPost(req.params.postId);
     // await deleteFile(post.media);
     await removePost(req.params.postId);
-    return response(res, 200, { message: 'File successfully deleted' });
+    return serverResponse(res, 200, { message: 'File successfully deleted' });
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: `internal error while trying to delete a post`
     });
   }
 };
 
+// @route  PUT '/api/posts/:postId'
+// @desc   Edit post of authenticated user
+// @access private
 const editPost = async (req, res) => {
   try {
     const post = await updatePost(req.params.postId, req.body);
-    return response(res, 200, post);
+    return serverResponse(res, 200, post);
   } catch (e) {
-    return response(res, 500, {
+    return serverResponse(res, 500, {
       message: `internal error while trying to update post`
     });
   }
