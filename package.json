@@ -18,10 +18,18 @@
 		"type": "git",
 		"url": "git+https://github.com/OmerGronich/Instaglam.git"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "(cd client && npm run format) && (cd server && npm run format)"
+		}
+	},
 	"author": "",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/OmerGronich/Instaglam/issues"
 	},
-	"homepage": "https://github.com/OmerGronich/Instaglam#readme"
+	"homepage": "https://github.com/OmerGronich/Instaglam#readme",
+	"dependencies": {
+		"husky": "^4.2.5"
+	}
 }

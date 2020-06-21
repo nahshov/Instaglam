@@ -4,9 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
+    "start:frontend": "cd client && npm start",
+    "start:backend": "cd server && npm run dev",
+    "client:install": "cd client && npm install",
+    "server:install": "cd server && npm install",
+    "postinstall": "(npm run client:install) && (npm run server:install)",
     "format": "prettier-eslint --write $PWD/'**/*.js'"
   },
   "keywords": [],
@@ -14,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^5.0.1",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
