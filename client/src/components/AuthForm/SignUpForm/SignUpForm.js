@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import styles from 'components/Forms/AuthForm/AuthForm.module.scss';
-import AuthHeader from 'components/Forms/AuthForm/AuthHeader/AuthHeader';
+import styles from 'pages/AuthPage/AuthPage.module.scss';
+import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
-import AuthSwitch from 'components/Forms/AuthForm/AuthSwitch/AuthSwitch';
+import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
 
-const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
+const SignUpForm = ({
+  history,
+  hasAccount,
+  setHasAccount,
+  showPass,
+  setShowPass
+}) => {
   const [signUpForm, setSignUpForm] = useState({
-    phoneOrEmail: '',
+    email: '',
     fullName: '',
-    userName: '',
+    username: '',
     password: ''
   });
 
@@ -27,9 +33,19 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
     return result.length < 4 || signUpForm.password.length < 6;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(signUpForm);
+    try {
+      const res = await fetch('/api/register', {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(signUpForm)
+      });
+      return res.status === 200 ? history.push('/') : Promise.reject();
+    } catch {
+      //@TODO: make this appear as a jsx element in alert colors
+      throw new Error('Failed to sign up');
+    }
   };
 
   const inputType = showPass ? 'text' : 'password';
@@ -41,31 +57,31 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
-            text={'Mobile Number or Email'}
-            name={'phoneOrEmail'}
+            text="Email"
+            name="email"
             onChange={handleChange}
             withButton={false}
             icon={<ErrorIcon />}
           />
           <InputField
-            text={'Full Name'}
-            name={'fullName'}
+            text="Full Name"
+            name="fullName"
             onChange={handleChange}
             withButton={false}
             icon={<CheckIcon />}
           />
           <InputField
-            text={'Username'}
-            name={'userName'}
+            text="Username"
+            name="username"
             onChange={handleChange}
             content={<RefreshIcon />}
             withButton={true}
             icon={<ErrorIcon />}
           />
           <InputField
-            text={'Password'}
+            text="Password"
             type={inputType}
-            name={'password'}
+            name="password"
             onChange={handleChange}
             onClick={() => setShowPass(!showPass)}
             content={buttonText}

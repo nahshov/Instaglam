@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'components/Forms/AuthForm/AuthHeader/AuthHeader.module.scss';
+import styles from 'components/AuthForm/AuthHeader/AuthHeader.module.scss';
 
 const AuthHeader = ({ hasAccount }) => (
   <div className={styles.authHeader}>

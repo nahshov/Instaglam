@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styles from 'components/Forms/AuthForm/AuthForm.module.scss';
-import AuthHeader from 'components/Forms/AuthForm/AuthHeader/AuthHeader';
+import styles from 'pages/AuthPage/AuthPage.module.scss';
+import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
-import AuthSwitch from 'components/Forms/AuthForm/AuthSwitch/AuthSwitch';
+import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 
 const LogInForm = ({
+  history,
   hasAccount,
   setHasAccount,
   disabled,
@@ -14,7 +15,7 @@ const LogInForm = ({
   setShowPass
 }) => {
   const [logInForm, setLoginForm] = useState({
-    phoneUserNameEmail: '',
+    email: '',
     password: ''
   });
 
@@ -31,9 +32,19 @@ const LogInForm = ({
       : setDisabled(false);
   }, [logInForm, disabled]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(logInForm);
+    try {
+      const res = await fetch('/api/login', {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(logInForm)
+      });
+      return res.status === 200 ? history.push('/') : Promise.reject();
+    } catch {
+      //@TODO: make this appear as a jsx element in alert colors
+      throw new Error('Failed to log in');
+    }
   };
 
   const inputType = showPass ? 'text' : 'password';
@@ -45,14 +56,14 @@ const LogInForm = ({
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
-            text={'Phone number, username, or email'}
-            name={'phoneUserNameEmail'}
+            text="Phone number, username, or email"
+            name="email"
             onChange={handleChange}
           />
           <InputField
-            text={'Password'}
+            text="Password"
             type={inputType}
-            name={'password'}
+            name="password"
             onChange={handleChange}
             onClick={() => setShowPass(!showPass)}
             content={buttonText}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignUpForm from 'components/Forms/AuthForm/SignUpForm/SignUpForm';
-import LogInForm from 'components/Forms/AuthForm/LogInForm/LogInForm';
+import { Route, Switch } from 'react-router-dom';
+import SignUpForm from 'components/AuthForm/SignUpForm/SignUpForm';
+import LogInForm from 'components/AuthForm/LogInForm/LogInForm';
 
 const AuthForm = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -14,7 +14,7 @@ const AuthForm = () => {
         <Route
           exact
           path="/accounts/emailsignup/"
-          render={() => (
+          render={({ history }) => (
             <SignUpForm
               hasAccount={hasAccount}
               setHasAccount={setHasAccount}
@@ -22,13 +22,14 @@ const AuthForm = () => {
               setDisabled={setDisabled}
               showPass={showPass}
               setShowPass={setShowPass}
+              history={history}
             />
           )}
         />
         <Route
           exact
           path="/accounts/login/"
-          render={() => (
+          render={({ history }) => (
             <LogInForm
               hasAccount={hasAccount}
               setHasAccount={setHasAccount}
@@ -36,6 +37,7 @@ const AuthForm = () => {
               setDisabled={setDisabled}
               showPass={showPass}
               setShowPass={setShowPass}
+              history={history}
             />
           )}
         />
