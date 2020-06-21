@@ -8,7 +8,7 @@ const {
   updatePost,
   getAllPosts
 } = require('../services/post-services.js');
-const verifyUser = require('../services/auth-services');
+const { verifyUser } = require('../services/auth-services');
 const postsHandler = require('../multer/posts');
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 

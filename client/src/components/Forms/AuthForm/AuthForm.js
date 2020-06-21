@@ -14,8 +14,9 @@ const AuthForm = () => {
         <Route
           exact
           path="/accounts/emailsignup/"
-          render={() => (
+          render={({history}) => (
             <SignUpForm
+              history={history}
               hasAccount={hasAccount}
               setHasAccount={setHasAccount}
               disabled={disabled}
@@ -28,9 +29,10 @@ const AuthForm = () => {
         <Route
           exact
           path="/accounts/login/"
-          render={() => (
+          render={({history}) => (
             <LogInForm
-              hasAccount={hasAccount}
+	            history={history}
+	            hasAccount={hasAccount}
               setHasAccount={setHasAccount}
               disabled={disabled}
               setDisabled={setDisabled}

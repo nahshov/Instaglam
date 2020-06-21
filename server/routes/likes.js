@@ -9,7 +9,7 @@ const {
 
 const Comment = require('../models/Comment');
 
-const verifyUser = require('../services/auth-services');
+const { verifyUser } = require('../services/auth-services');
 
 module.exports = function (app) {
   // get all likes of a specific post
