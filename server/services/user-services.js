@@ -6,7 +6,7 @@ const { deleteFile } = require('./cloud-services');
 function createUser(user) {
   user = new User(user);
   if (!user.bio) {
-    user.bio = `Hello my name is ${user.firstName} ${user.lastName}`;
+    user.bio = `Hello my name is ${user.fullName}`;
   }
   return user.save();
 }

@@ -14,7 +14,7 @@ const LogInForm = ({
   setShowPass
 }) => {
   const [logInForm, setLoginForm] = useState({
-    phoneUserNameEmail: '',
+    email: '',
     password: ''
   });
 
@@ -33,7 +33,14 @@ const LogInForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(logInForm);
+    return fetch('/api/login', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(logInForm)
+    })
+      .then((res) => res.json())
+      .then((data) => data)
+      .catch(() => alert('ERROR!'));
   };
 
   const inputType = showPass ? 'text' : 'password';
@@ -45,27 +52,27 @@ const LogInForm = ({
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
-            text={'Phone number, username, or email'}
-            name={'phoneUserNameEmail'}
+            text="Phone number, username, or email"
+            name="email"
             onChange={handleChange}
           />
           <InputField
-            text={'Password'}
+            text="Password"
             type={inputType}
-            name={'password'}
+            name="password"
             onChange={handleChange}
             onClick={() => setShowPass(!showPass)}
             content={buttonText}
           />
 
-          <Button text={'Log In'} disabled={disabled} />
+          <Button text="Log In" disabled={disabled} />
         </form>
       </div>
       <AuthSwitch
         hasAccount={hasAccount}
         setHasAccount={setHasAccount}
         hasAccountText={"Don't have an account?"}
-        linkText={'Sign up'}
+        linkText="Sign up"
       />
     </div>
   );
