@@ -7,7 +7,7 @@ const {
   createUser
 } = require('../services/user-services');
 
-const { verifyUser } = require('../services/auth-services');
+const { verifyUser, setAuthCookie } = require('../services/auth-services');
 
 function getTokens(user) {
   const created = new Date().toJSON();
@@ -40,12 +40,31 @@ function getTokens(user) {
 
 module.exports = function (app) {
   app.post('/api/login', async function (req, res) {
-    const { email, password } = req.body || {};
-
     try {
+      const { email, password } = req.body || {};
+      const userAgent = req.headers['user-agent'];
+
+      // TODO: add user agent as an identifier
       const user = await getUser(email);
+
+      const { cookieToken } = await setAuthCookie(user);
+
+      if (userAgent) {
+        return res
+          .status(200)
+          .cookie('token', cookieToken, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 30
+          })
+          .json({ message: 'Successfully logged in' })
+          .end();
+      }
+
       if (!(user && verifyPassword(user, password))) {
-        res.status(401).json({ message: 'Invalid email or password' }).end();
+        return res
+          .status(401)
+          .json({ message: 'Invalid email or password' })
+          .end();
       }
       res
         .status(200)
