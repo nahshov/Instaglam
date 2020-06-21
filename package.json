@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
-		"start": "cd client && npm start",
-		"dev": "cd server && npm run dev",
+		"start:frontend": "cd client && npm start",
+		"start:backend": "cd server && npm run dev",
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
 		"postinstall": "(npm run client:install) && (npm run server:install)"
