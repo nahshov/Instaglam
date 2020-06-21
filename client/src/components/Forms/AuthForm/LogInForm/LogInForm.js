@@ -6,12 +6,13 @@ import Button from 'components/Button/Button';
 import AuthSwitch from 'components/Forms/AuthForm/AuthSwitch/AuthSwitch';
 
 const LogInForm = ({
+   history,
   hasAccount,
   setHasAccount,
   disabled,
   setDisabled,
   showPass,
-  setShowPass
+  setShowPass,
 }) => {
   const [logInForm, setLoginForm] = useState({
     email: '',
@@ -38,9 +39,15 @@ const LogInForm = ({
       method: 'POST',
       body: JSON.stringify(logInForm)
     })
-      .then((res) => res.json())
-      .then((data) => data)
-      .catch(() => alert('ERROR!'));
+	    .then((res) => {
+		    if(res.status === 200) {
+			    return res.json();
+		    } else {
+			    return Promise.reject();
+		    }
+	    })
+	    .then(() => history.push('/'))
+	    .catch(() => alert('ERROR!'));
   };
 
   const inputType = showPass ? 'text' : 'password';

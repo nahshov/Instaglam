@@ -7,9 +7,8 @@ import AuthSwitch from 'components/Forms/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
-import { BrowserRouter } from 'react-router-dom';
 
-const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
+const SignUpForm = ({ history, hasAccount, setHasAccount, showPass, setShowPass }) => {
   const [signUpForm, setSignUpForm] = useState({
     email: '',
     fullName: '',
@@ -35,8 +34,14 @@ const SignUpForm = ({ hasAccount, setHasAccount, showPass, setShowPass }) => {
       method: 'POST',
       body: JSON.stringify(signUpForm)
     })
-      .then((res) => res.json())
-      .then((data) => data)
+      .then((res) => {
+      	if(res.status === 200) {
+      	    return res.json();
+        } else {
+      		return Promise.reject();
+        }
+      })
+      .then(() => history.push('/'))
       .catch(() => alert('ERROR!'));
   };
 

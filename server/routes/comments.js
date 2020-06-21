@@ -7,7 +7,7 @@ const {
 
 const { getPost } = require('../services/post-services');
 
-const verifyUser = require('../services/auth-services');
+const { verifyUser } = require('../services/auth-services');
 
 module.exports = function (app) {
   // get all comments of a specific post

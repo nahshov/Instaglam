@@ -1,3 +1,4 @@
+const { setUserToken } = require('../services/user-services');
 const jwt = require('jsonwebtoken');
 const { tokenSecret, refreshTokenSecret } = require('../config');
 const {
@@ -6,7 +7,7 @@ const {
   createUser
 } = require('../services/user-services');
 
-const verifyUser = require('../services/auth-services');
+const { verifyUser } = require('../services/auth-services');
 
 function getTokens(user) {
   const created = new Date().toJSON();
@@ -30,8 +31,7 @@ function getTokens(user) {
     { expiresIn: '30d' }
   );
 
-  user.refreshTokenIdentifier = created;
-  user.save();
+  setUserToken(user, created);
   return {
     access_token: accessToken,
     refresh_token: refreshToken

@@ -8,7 +8,7 @@ const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
-const verifyUser = require('../services/auth-services');
+const { verifyUser } = require('../services/auth-services');
 const profilePic = require('../multer/profilePic');
 
 const sharp = require('sharp');
