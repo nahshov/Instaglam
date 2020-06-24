@@ -5,7 +5,6 @@ import LogInForm from 'components/AuthForm/LogInForm/LogInForm';
 
 const AuthPage = () => {
   const [hasAccount, setHasAccount] = useState(false);
-  const [disabled, setDisabled] = useState(true);
   const [showPass, setShowPass] = useState(false);
 
   return (

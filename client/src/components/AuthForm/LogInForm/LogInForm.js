@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from 'pages/AuthPage/AuthPage.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -9,46 +10,36 @@ import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login } from 'actions/auth';
 
 const LogInForm = ({
+  hasAccount,
   showPass,
   setShowPass,
   login,
   isAuthenticated,
   loading
 }) => {
-  const [disabled, setDisabled] = useState(true);
-  const [hasAccount, setHasAccount] = useState(false);
-
   const [logInForm, setLoginForm] = useState({
     email: '',
     password: ''
   });
 
-  const handleChange = (e) => {
-    const result = Object.values(logInForm).filter((value) => value !== '');
-    setDisabled(result.length < 2 || logInForm.password.length < 5);
-    // if (result.length < 2 || logInForm.password.length < 5) {
-    //   setDisabled(true);
-    // } else {
-    //   setDisabled(false);
-    // }
-    setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
+  const checkDisabled = () => {
+    const result = Object.values(logInForm).filter((value) => {
+      return value !== '';
+    });
+    return result.length < 2 || logInForm.password.length < 6;
   };
 
-  // @roiassa I think this logic is more appropriate in the handle change ☝︎
-  // useEffect(() => {
-  //   const result = Object.values(logInForm).filter((value) => value !== '');
-  //   result.length < 2 || logInForm.password.length < 6
-  //     ? setDisabled(true)
-  //     : setDisabled(false);
-  // }, [logInForm, disabled]);
+  const handleChange = (e) => {
+    setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       login(logInForm);
     } catch {
-      // @TODO: make this appear as a jsx element in alert colors
-      console.log('Failed to log in');
+      //@TODO: make error appear as a jsx element in error colors
+      throw new Error('Failed to log in');
     }
   };
 
@@ -70,16 +61,17 @@ const LogInForm = ({
             type={inputType}
             name="password"
             onChange={handleChange}
-            onClick={() => setShowPass(!showPass)}
+            withButton
+            onClick={() => {
+              setShowPass(!showPass);
+            }}
             content={buttonText}
           />
 
-          <Button text="Log In" disabled={disabled} />
+          <Button text="Log In" disabled={checkDisabled()} />
         </form>
       </div>
       <AuthSwitch
-        hasAccount={hasAccount}
-        setHasAccount={setHasAccount}
         hasAccountText={"Don't have an account?"}
         linkText="Sign up"
       />
@@ -91,5 +83,12 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   loading: state.auth.loading
 });
+
+LogInForm.propTypes = {
+  showPass: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps, { login })(LogInForm);

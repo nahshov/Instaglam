@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from 'components/AuthForm/AuthHeader/AuthHeader.module.scss';
 
 const AuthHeader = ({ hasAccount }) => (
@@ -11,4 +12,8 @@ const AuthHeader = ({ hasAccount }) => (
     ) : null}
   </div>
 );
+
+AuthHeader.propTypes = {
+  hasAccount: PropTypes.bool.isRequired
+};
 export default AuthHeader;

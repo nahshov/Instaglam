@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from 'components/InputField/InputField.module.scss';
 
 const InputField = ({
@@ -30,5 +31,15 @@ const InputField = ({
     </div>
   </div>
 );
+
+InputField.propTypes = {
+  text: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  content: PropTypes.string.isRequired,
+  withButton: PropTypes.bool.isRequired
+};
 
 export default InputField;
