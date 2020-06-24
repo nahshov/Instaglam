@@ -88,7 +88,7 @@ const logout = async (req, res) => {
 
     res.cookie('token', cookieToken, {
       httpOnly: true,
-      maxAge: 0
+      maxAge: 1
     });
 
     return serverResponse(res, 200, { message: ['Successfully logged out'] });

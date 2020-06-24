@@ -1,16 +1,10 @@
 const { Storage } = require('@google-cloud/storage');
 const replaceFileNameWithUUID = require('../utils/replaceFileName');
+const { googleStorage } = require('../config');
 
-const {
-  googleStorage: { projectId, keyFilename, bucketName }
-} = require('../config');
+const gc = new Storage(googleStorage.config);
 
-const gc = new Storage({
-  projectId,
-  keyFilename
-});
-
-const bucket = gc.bucket(bucketName);
+const bucket = gc.bucket(googleStorage.bucketName);
 
 const uploadFile = (originalname, buffer) =>
   new Promise((resolve, reject) => {
@@ -28,7 +22,8 @@ const uploadFile = (originalname, buffer) =>
 
         resolve(publicUrl);
       })
-      .on('error', () => {
+      .on('error', (e) => {
+        console.log(e);
         reject(new Error(`Unable to upload media, something went wrong`));
       })
       .end(buffer);

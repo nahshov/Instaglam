@@ -1,5 +1,5 @@
-require('dotenv').config();
-const path = require('path');
+debugger;
+require('dotenv').config({ encoding: 'utf8' });
 
 module.exports = {
   mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/instaglam',
@@ -8,8 +8,14 @@ module.exports = {
   refreshTokenSecret: process.env.REFRESH_TOKEN || 'myRefresh',
   cookieSecret: process.env.COOKIE_SECRET || 'myCookie',
   googleStorage: {
-    keyFilename: process.env.GOOGLE_STORAGE_KEYFILENAME,
-    projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
+    config: {
+      projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
+      scopes: 'https://www.googleapis.com/auth/cloud-platform',
+      credentials: {
+        client_email: process.env.GOOGLE_STORAGE_EMAIL,
+        private_key: process.env.GOOGLE_STORAGE_PRIVATE_KEY
+      }
+    },
     bucketName: process.env.GOOGLE_STORAGE_BUCKET_NAME
   }
 };
