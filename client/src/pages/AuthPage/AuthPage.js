@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import SignUpForm from 'components/AuthForm/SignUpForm/SignUpForm';
 import LogInForm from 'components/AuthForm/LogInForm/LogInForm';
 
-const AuthForm = () => {
-  const [hasAccount, setHasAccount] = useState(true);
+const AuthPage = () => {
+  const [hasAccount, setHasAccount] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [showPass, setShowPass] = useState(false);
 
@@ -46,4 +46,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default AuthPage;

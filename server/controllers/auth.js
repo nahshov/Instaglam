@@ -7,7 +7,7 @@ const {
   getUser,
   createUser
 } = require('../services/user-services');
-const getTokens = require('../services/auth-services');
+const { getTokens, setAuthCookie } = require('../services/auth-services');
 const serverResponse = require('../utils/serverResponse');
 
 // @route   POST '/api/login'
@@ -24,12 +24,28 @@ const login = async (req, res) => {
     const user = await getUser(email);
 
     if (!(user && verifyPassword(user, password)))
-      return serverResponse(res, 401, { message: 'Invalid credentials' });
+      return serverResponse(res, 401, { message: ['Invalid credentials'] });
+
+    // TODO @roiassa @almoghr: add user agent as an identifier
+    const userAgent = req.headers['user-agent'];
+
+    const { cookieToken } = await setAuthCookie(user);
+
+    if (userAgent) {
+      return res
+        .status(200)
+        .cookie('token', cookieToken, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24 * 30
+        })
+        .json({ message: ['Successfully logged in'] })
+        .end();
+    }
 
     return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal server error when trying to login'
+      message: ['Internal server error when trying to login']
     });
   }
 };
@@ -47,7 +63,7 @@ const register = async (req, res) => {
     const exists = await getUser(req.body.email);
 
     if (exists)
-      return serverResponse(res, 400, { message: 'User already exists' });
+      return serverResponse(res, 400, { message: ['User already exists'] });
 
     const user = await createUser(req.body);
 
@@ -68,7 +84,14 @@ const logout = async (req, res) => {
     user.refreshTokenIdentifier = '';
     await user.save();
 
-    return serverResponse(res, 200, { message: 'Succesfully logged out' });
+    const { cookieToken } = await setAuthCookie(user);
+
+    res.cookie('token', cookieToken, {
+      httpOnly: true,
+      maxAge: 0
+    });
+
+    return serverResponse(res, 200, { message: ['Successfully logged out'] });
   } catch (e) {
     return serverResponse(res, 500, {
       message: `internal error while trying to logout`

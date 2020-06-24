@@ -3,6 +3,8 @@ node_modules
 .vscode
 .env
 db-data
+/server/.env
+/client/.env
 
 
 # dependencies

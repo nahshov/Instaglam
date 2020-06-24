@@ -1,11 +1,23 @@
-const { bucket } = require('./google-cloud');
+const { Storage } = require('@google-cloud/storage');
 const replaceFileNameWithUUID = require('../utils/replaceFileName');
+
+const {
+  googleStorage: { projectId, keyFilename, bucketName }
+} = require('../config');
+
+const gc = new Storage({
+  projectId,
+  keyFilename
+});
+
+const bucket = gc.bucket(bucketName);
 
 const uploadFile = (originalname, buffer) =>
   new Promise((resolve, reject) => {
     const filename = replaceFileNameWithUUID(originalname);
 
     const blob = bucket.file(filename);
+
     const blobStream = blob.createWriteStream({
       resumable: false
     });
@@ -29,5 +41,6 @@ const deleteFile = async (url) => {
 
 module.exports = {
   uploadFile,
-  deleteFile
+  deleteFile,
+  bucket
 };

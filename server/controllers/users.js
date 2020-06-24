@@ -7,7 +7,7 @@ const {
 const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
-// const { deleteFile, uploadFile } = require('../services/cloud-services');
+const { deleteFile, uploadFile } = require('../services/cloud-services');
 const serverResponse = require('../utils/serverResponse');
 const formatImage = require('../utils/formatMedia.js');
 
@@ -69,14 +69,19 @@ const editProfile = async (req, res) => {
 // @access  private
 const deleteProfile = async (req, res) => {
   try {
-    await Promise.all([
-      removeAllUserPosts(req.user.sub),
-      removeAllUserComments(req.user.sub),
-      removeAllUserLikes(req.user.sub),
-      deleteUser(req.user.email)
-    ]);
+    const user = await getUser(req.user.email);
+    if (user) {
+      await Promise.all([
+        removeAllUserComments(req.user.sub),
+        removeAllUserLikes(req.user.sub),
+        removeAllUserPosts(req.user.sub),
+        deleteUser(req.user.email)
+      ]);
 
-    return serverResponse(res, 200, { message: 'User successfully deleted' });
+      return serverResponse(res, 200, { message: 'User successfully deleted' });
+    }
+
+    return serverResponse(res, 404, { message: 'User not found' });
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to delete user'
@@ -89,22 +94,14 @@ const deleteProfile = async (req, res) => {
 // @access  private
 const uploadProfilePic = async (req, res) => {
   try {
-    let buffer;
-    if (!req.file.originalname.endsWith('.jpeg')) {
-      buffer = await formatImage(req.file, 180);
-    }
+    const buffer = await formatImage(req.file, 180);
 
-    // @TODO: Uncomment after fixing gc
-    const [/* imgUrl, */ user] = await Promise.all([
-      /* uploadFile(req.file.originalname, buffer), */
+    const [imgUrl, user] = await Promise.all([
+      uploadFile(req.file.originalname, buffer),
       getUser(req.user.email)
     ]);
 
-    // if (user.profilePic) {
-    //   await deleteFile(user.profilePic);
-    // }
-
-    // user.profilePic = `${imgUrl}`;
+    user.profilePic = `${imgUrl}`;
     await user.save();
     return serverResponse(res, 200, {
       message: 'Profile picture successfully uploaded!'
@@ -143,12 +140,12 @@ const deleteProfilePic = async (req, res) => {
       return serverResponse(res, 404, { message: 'No profile picture found' });
     }
 
-    // const imgUrl = user.profilePic;
+    const imgUrl = user.profilePic;
 
     user.profilePic =
       'https://www.gravatar.com/avatar/9e7800080252bd18b5a7cffe2f4d54a1?s=180&r=pg&d=mm';
 
-    await Promise.all([/* deleteFile(imgUrl), */ user.save()]);
+    await Promise.all([deleteFile(imgUrl), user.save()]);
     return serverResponse(res, 200, {
       message: 'Successfully deleted profile picture'
     });

@@ -33,4 +33,26 @@ function verifyPassword(user, password) {
   return user.verifyPassword(password);
 }
 
-module.exports = { createUser, getUser, deleteUser, editUser, verifyPassword };
+async function verifyToken(decoded) {
+  const user = await User.verifyToken(decoded);
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return user;
+}
+
+async function setUserToken(user, identifier) {
+  user.refreshTokenIdentifier = identifier;
+  return user.save();
+}
+
+module.exports = {
+  createUser,
+  getUser,
+  deleteUser,
+  editUser,
+  verifyPassword,
+  setUserToken,
+  verifyToken
+};

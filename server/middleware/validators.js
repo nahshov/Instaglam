@@ -12,7 +12,7 @@ const signupValidator = () => [
 
 const loginValidator = () => [
   check('email', 'Please include a valid email').isEmail(),
-  check('password', 'Password is required').exists()
+  check('password', 'Password is required').isLength({ min: 6 })
 ];
 
 module.exports = {

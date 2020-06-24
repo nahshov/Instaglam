@@ -8,22 +8,20 @@ const {
 } = require('../services/post-services.js');
 const serverResponse = require('../utils/serverResponse');
 
-//  @TODO: uncomment after fixing google cloud ☟
-// const { uploadFile, deleteFile } = require('../services/cloud-services');
-// const formatImage = require('../utils/formatMedia.js');
+const { uploadFile, deleteFile } = require('../services/cloud-services');
+const formatImage = require('../utils/formatMedia.js');
 
 // @route  POST '/api/posts'
 // @desc   Submit a posts
 // @access private
 const submitPost = async (req, res) => {
   try {
-    // @TODO: Fix google cloud upload and uncomment
-    // const buffer = await formatImage(req.file, 600);
-    // const mediaUrl = await uploadFile(req.file.originalname, buffer);
+    const buffer = await formatImage(req.file, 600);
+    const mediaUrl = await uploadFile(req.file.originalname, buffer);
     const post = {
       ...req.body,
       user: req.user.sub,
-      media: 'https:/www.google.com' /* switch with mediaUrl */
+      media: mediaUrl
     };
     const newPost = await createPost(post);
     return serverResponse(res, 200, newPost);
@@ -95,9 +93,8 @@ const getOnePost = async (req, res) => {
 // @access private
 const deletePost = async (req, res) => {
   try {
-    // @TODO: Uncomment after fixing google cloud
-    // const post = await getPost(req.params.postId);
-    // await deleteFile(post.media);
+    const post = await getPost(req.params.postId);
+    await deleteFile(post.media);
     await removePost(req.params.postId);
     return serverResponse(res, 200, { message: 'File successfully deleted' });
   } catch (e) {

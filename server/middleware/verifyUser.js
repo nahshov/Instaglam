@@ -1,18 +1,35 @@
 const jwt = require('jsonwebtoken');
-const { tokenSecret } = require('../config');
+const { tokenSecret, cookieSecret } = require('../config');
+const { setAuthCookie } = require('../services/auth-services');
+const { verifyToken } = require('../services/user-services');
+
+const TEN_MINUTES = 1000 * 60 * 10;
 
 async function verifyUser(req, res, next) {
-  if (req.headers.authorization) {
-    const token = req.headers.authorization.split(' ')[1];
-
-    try {
-      const decoded = jwt.verify(token, tokenSecret);
+  try {
+    if (req.cookies.token) {
+      const decoded = jwt.verify(req.cookies.token, cookieSecret);
+      if (Date.now() - new Date(decoded.created) > TEN_MINUTES) {
+        const user = await verifyToken(decoded);
+        const { cookieToken } = await setAuthCookie(user);
+        res.cookie('token', cookieToken, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24 * 30
+        });
+        next();
+      } else {
+        req.user = decoded;
+        next();
+      }
+    } else if (req.headers.authorization) {
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = await jwt.verify(token, tokenSecret);
       req.user = decoded;
       next();
-    } catch (error) {
-      return res.status(401).json({ message: 'you are not authorized' }).end();
+    } else {
+      throw new Error('Invalid token');
     }
-  } else {
+  } catch (e) {
     return res.status(401).json({ message: 'you are not authorized' }).end();
   }
 }

@@ -1,5 +1,23 @@
 const jwt = require('jsonwebtoken');
-const { tokenSecret, refreshTokenSecret } = require('../config');
+const { tokenSecret, refreshTokenSecret, cookieSecret } = require('../config');
+const { setUserToken } = require('./user-services');
+
+async function setAuthCookie(user) {
+  const created = Date.now();
+  const cookieToken = jwt.sign(
+    {
+      sub: user._id,
+      email: user.email,
+      created
+    },
+    cookieSecret,
+    { expiresIn: '30d' }
+  );
+
+  await setUserToken(user, created);
+
+  return { cookieToken };
+}
 
 function getTokens(user) {
   const created = new Date().toJSON();
@@ -23,12 +41,15 @@ function getTokens(user) {
     { expiresIn: '30d' }
   );
 
-  user.refreshTokenIdentifier = created;
-  user.save();
+  setUserToken(user, created);
+
   return {
     accessToken,
     refreshToken
   };
 }
 
-module.exports = getTokens;
+module.exports = {
+  getTokens,
+  setAuthCookie
+};

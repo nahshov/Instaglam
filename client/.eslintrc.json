@@ -23,8 +23,13 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "react/jsx-props-no-spreading": "off",
+    "object-curly-newline": "off",
     "prettier/prettier": "error",
     "indent": ["error", 2],
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "consistent-return": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": [
       "error",

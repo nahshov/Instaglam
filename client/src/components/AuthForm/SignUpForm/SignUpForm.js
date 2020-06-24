@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import styles from 'pages/AuthPage/AuthPage.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -7,21 +10,16 @@ import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
+import { register } from 'actions/auth';
 
-const SignUpForm = ({
-  history,
-  hasAccount,
-  setHasAccount,
-  showPass,
-  setShowPass
-}) => {
+const SignUpForm = ({ showPass, setShowPass, register, isAuthenticated }) => {
+  const [hasAccount, setHasAccount] = useState(true);
   const [signUpForm, setSignUpForm] = useState({
     email: '',
     fullName: '',
     username: '',
     password: ''
   });
-
   const handleChange = (e) => {
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
   };
@@ -34,24 +32,17 @@ const SignUpForm = ({
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const res = await fetch('/api/register', {
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-        body: JSON.stringify(signUpForm)
-      });
-      if (res.status === 200) {
-        history.push('/');
-      }
 
-      if (res.status !== 200) {
-        const { message } = await res.json();
-        console.error(message);
-      }
+      register(signUpForm);
     } catch (error) {
-      // @TODO: make this appear as a jsx element in alert colors
+      // @roiassa @TODO: make this appear as a jsx element in alert colors
       console.error(error);
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
@@ -106,4 +97,8 @@ const SignUpForm = ({
   );
 };
 
-export default SignUpForm;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(SignUpForm);

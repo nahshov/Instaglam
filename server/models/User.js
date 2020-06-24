@@ -68,6 +68,13 @@ UserSchema.methods.toJSON = function toJSON() {
   return userObject;
 };
 
+UserSchema.statics.verifyToken = function (decoded) {
+  return this.findOne({
+    _id: decoded.sub,
+    refreshTokenIdentifier: decoded.created
+  });
+};
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
