@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Navbar from 'components/Navbar/Navbar';
-import { loadUser } from 'actions/auth';
+import { loadUser as loadUserAction } from 'actions/auth';
 
 const ProtectedRoute = ({
   component: Component,
@@ -44,4 +44,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { loadUser })(ProtectedRoute);
+export default connect(mapStateToProps, { loadUser: loadUserAction })(
+  ProtectedRoute
+);

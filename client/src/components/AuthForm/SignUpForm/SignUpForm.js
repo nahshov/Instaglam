@@ -11,16 +11,18 @@ import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
-import { register } from 'actions/auth';
+import { register as registerAction } from 'actions/auth';
 
-const SignUpForm = ({ showPass, setShowPass, register, isAuthenticated }) => {
+const SignUpForm = ({ register, isAuthenticated }) => {
   const [hasAccount] = useState(true);
+  const [showPass, setShowPass] = useState(false);
   const [signUpForm, setSignUpForm] = useState({
     email: '',
     fullName: '',
     username: '',
     password: ''
   });
+
   const handleChange = (e) => {
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
   };
@@ -101,4 +103,6 @@ SignUpForm.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, { register })(SignUpForm);
+export default connect(mapStateToProps, { register: registerAction })(
+  SignUpForm
+);

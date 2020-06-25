@@ -7,20 +7,15 @@ import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login } from 'actions/auth';
+import { login as loginAction } from 'actions/auth';
 
-const LogInForm = ({
-  hasAccount,
-  showPass,
-  setShowPass,
-  login,
-  isAuthenticated,
-  loading
-}) => {
+const LogInForm = ({ login, isAuthenticated, loading }) => {
   const [logInForm, setLoginForm] = useState({
     email: '',
     password: ''
   });
+  const [hasAccount] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const checkDisabled = () => {
     const result = Object.values(logInForm).filter((value) => value !== '');
@@ -83,10 +78,9 @@ const mapStateToProps = (state) => ({
 });
 
 LogInForm.propTypes = {
-  showPass: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, { login })(LogInForm);
+export default connect(mapStateToProps, { login: loginAction })(LogInForm);

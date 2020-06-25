@@ -9,38 +9,34 @@ const AuthPage = () => {
 
   return (
     <>
-      <Switch>
-        <Route
-          exact
-          path="/accounts/emailsignup/"
-          render={({ history }) => (
-            <SignUpForm
-              hasAccount={hasAccount}
-              setHasAccount={setHasAccount}
-              disabled={disabled}
-              setDisabled={setDisabled}
-              showPass={showPass}
-              setShowPass={setShowPass}
-              history={history}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/accounts/login/"
-          render={({ history }) => (
-            <LogInForm
-              hasAccount={hasAccount}
-              setHasAccount={setHasAccount}
-              disabled={disabled}
-              setDisabled={setDisabled}
-              showPass={showPass}
-              setShowPass={setShowPass}
-              history={history}
-            />
-          )}
-        />
-      </Switch>
+      {/* <Switch> */}
+      <Route
+        exact
+        path="/accounts/emailsignup/"
+        render={({ history }) => (
+          <SignUpForm
+            hasAccount={hasAccount}
+            setHasAccount={setHasAccount}
+            showPass={showPass}
+            setShowPass={setShowPass}
+            history={history}
+          />
+        )}
+      />
+      <Route
+        exact
+        path="/accounts/login/"
+        render={({ history }) => (
+          <LogInForm
+            hasAccount={hasAccount}
+            setHasAccount={setHasAccount}
+            showPass={showPass}
+            setShowPass={setShowPass}
+            history={history}
+          />
+        )}
+      />
+      {/* </Switch> */}
     </>
   );
 };
