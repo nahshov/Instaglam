@@ -29,9 +29,8 @@ const login = async (req, res) => {
     // TODO @roiassa @almoghr: add user agent as an identifier
     const userAgent = req.headers['user-agent'];
 
-    const { cookieToken } = await setAuthCookie(user);
-
     if (userAgent) {
+      const { cookieToken } = await setAuthCookie(user);
       return res
         .status(200)
         .cookie('token', cookieToken, {
