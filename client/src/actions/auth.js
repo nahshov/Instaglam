@@ -51,7 +51,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOADED,
-      user: res.data
+      payload: res.data
     });
   } catch (error) {
     dispatch({

@@ -7,16 +7,13 @@ import { loadUser } from 'actions/auth';
 
 const ProtectedRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading, user },
+  auth: { isAuthenticated, loading },
   loadUser,
   ...rest
 }) => {
   useEffect(() => {
     loadUser();
-
-    // Figure out why isn't user loading
-    console.log(user);
-  }, [user]);
+  }, []);
 
   return (
     <Route

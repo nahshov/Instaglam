@@ -8,7 +8,7 @@ function createUser(user) {
     r: 'pg',
     d: 'mm'
   });
-  user.profilePic = profilePic.replace(/^\/\//, '');
+  user.profilePic = profilePic.replace(/^\/\/www\./, 'http://');
   if (!user.bio) {
     user.bio = `Hello my name is ${user.fullName}`;
   }

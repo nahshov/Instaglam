@@ -67,6 +67,20 @@ const register = async (req, res) => {
 
     const user = await createUser(req.body);
 
+    const userAgent = req.headers['user-agent'];
+
+    if (userAgent) {
+      const { cookieToken } = await setAuthCookie(user);
+      return res
+        .status(200)
+        .cookie('token', cookieToken, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 24 * 30
+        })
+        .json({ message: ['Successfully registered'] })
+        .end();
+    }
+
     return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
     return serverResponse(res, 500, {

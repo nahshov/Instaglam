@@ -5,14 +5,14 @@ import Logo from 'components/Logo/Logo';
 import SearchInput from 'components/SearchInput/SearchInput';
 import NavLinks from 'components/NavLinks/NavLinks';
 
-const Navbar = ({ profilePic }) => (
+const Navbar = () => (
   <nav className={styles.Navbar}>
     <div className={styles.content}>
       <Link exact="true" to="/">
         <Logo />
       </Link>
       <SearchInput />
-      <NavLinks profilePic={profilePic} />
+      <NavLinks />
     </div>
   </nav>
 );
