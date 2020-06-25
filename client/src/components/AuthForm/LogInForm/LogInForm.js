@@ -23,9 +23,7 @@ const LogInForm = ({
   });
 
   const checkDisabled = () => {
-    const result = Object.values(logInForm).filter((value) => {
-      return value !== '';
-    });
+    const result = Object.values(logInForm).filter((value) => value !== '');
     return result.length < 2 || logInForm.password.length < 6;
   };
 
@@ -38,7 +36,7 @@ const LogInForm = ({
       e.preventDefault();
       login(logInForm);
     } catch {
-      //@TODO: make error appear as a jsx element in error colors
+      // @TODO: make error appear as a jsx element in error colors
       throw new Error('Failed to log in');
     }
   };
