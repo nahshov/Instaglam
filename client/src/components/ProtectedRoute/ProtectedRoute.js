@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,32 +7,40 @@ import { loadUser } from 'actions/auth';
 
 const ProtectedRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated, loading, user },
   loadUser,
   ...rest
-}) => (
-  <Route
-    {...rest}
-    render={(props) => {
-      loadUser();
+}) => {
+  useEffect(() => {
+    loadUser();
 
-      if (!isAuthenticated && !loading) {
-        return <Redirect to="/accounts/login" />;
-      }
+    // Figure out why isn't user loading
+    console.log(user);
+  }, [user]);
 
-      return (
-        <>
-          <Navbar />
-          <Component {...props} />
-        </>
-      );
-    }}
-  />
-);
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if (!isAuthenticated && !loading) {
+          return <Redirect to="/accounts/login" />;
+        }
+
+        return (
+          <>
+            <Navbar />
+            <Component {...props} />
+          </>
+        );
+      }}
+    />
+  );
+};
 
 ProtectedRoute.propTypes = {
   auth: PropTypes.shape.isRequired,
-  component: PropTypes.element.isRequired
+  component: PropTypes.element.isRequired,
+  loadUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

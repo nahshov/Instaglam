@@ -49,11 +49,10 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/me');
 
-    // @TODO @roiassa @almoghr: Figure out why these lines cause an infinite loop
-    // dispatch({
-    //   type: USER_LOADED,
-    //   res: res.data
-    // });
+    dispatch({
+      type: USER_LOADED,
+      user: res.data
+    });
   } catch (error) {
     dispatch({
       type: AUTH_ERROR
