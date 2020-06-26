@@ -2,12 +2,12 @@ import React, { cloneElement } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const CustomNavLink = ({ to, children }) => {
+const CustomNavLink = ({ to, children, ...props }) => {
   const { pathname } = useLocation();
 
   const myChild = cloneElement(children, { match: pathname === to });
   return (
-    <NavLink exact to={to}>
+    <NavLink {...props} exact to={to}>
       {myChild}
     </NavLink>
   );

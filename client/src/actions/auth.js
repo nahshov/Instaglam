@@ -38,7 +38,6 @@ export const register = ({ fullName, email, username, password }) => async (
     if (errors) {
       // TODO@roiassa:  Create alert action instead of console log
       errors.map((msg) => {
-        console.log(msg);
         setAlert(msg.msg, 'Error');
       });
     }
