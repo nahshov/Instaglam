@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "lint:fix": "prettier-eslint '**/*.js' --write"
+    "lint:fix": "npx eslint --fix ./"
   },
   "keywords": [],
   "author": "",
@@ -40,15 +40,5 @@
     "prettier": "^2.0.5",
     "prettier-eslint": "^11.0.0",
     "prettier-eslint-cli": "^5.0.0"
-  },
-  "lint-staged": {
-    "**/*.js": [
-      "npm run lint:fix"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

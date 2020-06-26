@@ -57,15 +57,5 @@
     "prettier-eslint": "^11.0.0",
     "prettier-eslint-cli": "^5.0.0"
   },
-  "lint-staged": {
-    "**/*.js": [
-      "npm run lint:fix"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "proxy": "http://localhost:4000"
 }
