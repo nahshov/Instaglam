@@ -3,9 +3,4 @@
 
 .ChatIcon {
   font-size: $icon-medium-small;
-
-  @include respond(phone) {
-    height: 25px;
-    width: 25px;
-  }
 }

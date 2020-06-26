@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styles from './SignUpForm.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
@@ -13,7 +14,6 @@ import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
 import { register as registerAction } from 'actions/auth';
 import { setAlert as setAlertAction } from 'actions/alert';
-import styles from './SignUpForm.module.scss';
 
 const SignUpForm = ({
   register,
@@ -91,7 +91,7 @@ const SignUpForm = ({
             icon={<CheckIcon />}
           />
           <Button text="Sign Up" disabled={checkDisabled()} />
-          <Alert alerts="bla" />
+          <Alert alerts={'bla'} />
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />
