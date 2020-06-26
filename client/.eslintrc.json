@@ -23,6 +23,7 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
     "prettier/prettier": "error",
