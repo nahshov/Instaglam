@@ -26,18 +26,6 @@
 	"homepage": "https://github.com/OmerGronich/Instaglam#readme",
 	"dependencies": {},
 	"devDependencies": {
-		"concurrently": "^5.2.0",
-		"husky": "^4.2.5",
-		"lint-staged": "^10.2.11"
-	},
-	"lint-staged": {
-		"**/*.js": [
-			"npm run lint:fix"
-		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
+		"concurrently": "^5.2.0"
 	}
 }
