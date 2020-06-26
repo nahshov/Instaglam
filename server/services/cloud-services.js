@@ -1,22 +1,17 @@
-const { bucket } = require('./google-cloud');
-const { v4: uuid } = require('uuid');
+const { Storage } = require('@google-cloud/storage');
+const replaceFileNameWithUUID = require('../utils/replaceFileName');
+const { googleStorage } = require('../config');
+
+const gc = new Storage(googleStorage.config);
+
+const bucket = gc.bucket(googleStorage.bucketName);
 
 const uploadFile = (originalname, buffer) =>
   new Promise((resolve, reject) => {
-    let filename;
-    const toReplace = originalname.substring(originalname.lastIndexOf('.'));
-
-    if (!(originalname.endsWith('mov') || originalname.endsWith('mp4'))) {
-      filename =
-        originalname.replace(toReplace, '').replace(/ /g, '_') +
-        +'.' +
-        uuid() +
-        '.jpeg';
-    } else {
-      filename = uuid() + '.' + originalname;
-    }
+    const filename = replaceFileNameWithUUID(originalname);
 
     const blob = bucket.file(filename);
+
     const blobStream = blob.createWriteStream({
       resumable: false
     });
@@ -28,17 +23,19 @@ const uploadFile = (originalname, buffer) =>
         resolve(publicUrl);
       })
       .on('error', (e) => {
-        reject(`Unable to upload media, something went wrong`);
+        console.log(e);
+        reject(new Error(`Unable to upload media, something went wrong`));
       })
       .end(buffer);
   });
 
 const deleteFile = async (url) => {
-  const fileName = url.split(`${googleStorageBucketName}/`)[1];
+  const fileName = url.split(`${bucket.name}/`)[1];
   return bucket.file(fileName).delete();
 };
 
 module.exports = {
   uploadFile,
-  deleteFile
+  deleteFile,
+  bucket
 };

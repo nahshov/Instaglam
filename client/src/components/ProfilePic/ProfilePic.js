@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styles from 'components/ProfilePic/ProfilePic.module.scss';
+import { loadUser } from 'actions/auth';
 
-const ProfilePic = () => (
+const ProfilePic = ({ auth: { user } }) => (
+  // Why profile pic is undefined when i try to assign it to img SRC
+
   <div className={styles.ProfilePic}>
     <img
       alt="default profile pic"
@@ -10,5 +15,12 @@ const ProfilePic = () => (
     />
   </div>
 );
+ProfilePic.propTypes = {
+  auth: PropTypes.shape.isRequired
+};
 
-export default ProfilePic;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { loadUser })(ProfilePic);

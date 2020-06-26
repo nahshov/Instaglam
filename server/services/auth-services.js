@@ -1,18 +1,55 @@
 const jwt = require('jsonwebtoken');
-const { tokenSecret } = require('../config');
+const { tokenSecret, refreshTokenSecret, cookieSecret } = require('../config');
+const { setUserToken } = require('./user-services');
 
-module.exports = async function verifyUser(req, res, next) {
-  if (req.headers.authorization) {
-    const token = req.headers.authorization.split(' ')[1];
+async function setAuthCookie(user) {
+  const created = Date.now();
+  const cookieToken = jwt.sign(
+    {
+      sub: user._id,
+      email: user.email,
+      created
+    },
+    cookieSecret,
+    { expiresIn: '30d' }
+  );
 
-    try {
-      const decoded = await jwt.verify(token, tokenSecret);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      return res.status(401).json({ message: 'you are not authorized' }).end();
-    }
-  } else {
-    return res.status(401).json({ message: 'you are not authorized' }).end();
-  }
+  await setUserToken(user, created);
+
+  return { cookieToken };
+}
+
+function getTokens(user) {
+  const created = new Date().toJSON();
+
+  const accessToken = jwt.sign(
+    {
+      sub: user._id,
+      email: user.email
+    },
+    tokenSecret,
+    { expiresIn: '1h' }
+  );
+
+  const refreshToken = jwt.sign(
+    {
+      sub: user._id,
+      email: user.email,
+      created
+    },
+    refreshTokenSecret,
+    { expiresIn: '30d' }
+  );
+
+  setUserToken(user, created);
+
+  return {
+    accessToken,
+    refreshToken
+  };
+}
+
+module.exports = {
+  getTokens,
+  setAuthCookie
 };

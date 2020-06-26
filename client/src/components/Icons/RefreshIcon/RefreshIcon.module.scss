@@ -1,0 +1,17 @@
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/mixins.scss';
+
+.refreshIcon {
+  color: $primary-color;
+  transform: rotate(30deg);
+  font-size: 27px;
+  padding-right: 5px;
+
+  @include respond(phone) {
+    font-size: 25px;
+  }
+
+  &:active {
+    color: $secondary-text-color;
+  }
+}

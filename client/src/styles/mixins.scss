@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* MEDIA QUERY MANAGER
 
 phones: 0 - 600px

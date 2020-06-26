@@ -14,11 +14,11 @@ const UserSchema = new mongoose.Schema({
   },
 
   salt: String,
-  firstName: {
+  fullName: {
     type: String,
     required: true
   },
-  lastName: {
+  username: {
     type: String,
     required: true
   },
@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre('save', function () {
+UserSchema.pre('save', function hashPassword() {
   const user = this;
   if (user.isModified('password')) {
     user.salt = crypto.randomBytes(16);
@@ -49,14 +49,14 @@ UserSchema.pre('save', function () {
   return Promise.resolve();
 });
 
-UserSchema.methods.verifyPassword = function (password) {
+UserSchema.methods.verifyPassword = function verifyPassword(password) {
   const user = this;
   const hash = crypto.createHash('sha256');
   hash.update(password + user.salt);
   return user.password === hash.digest('hex');
 };
 
-UserSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = function toJSON() {
   const user = this;
 
   const userObject = user.toObject();
@@ -66,6 +66,13 @@ UserSchema.methods.toJSON = function () {
   delete userObject._id;
 
   return userObject;
+};
+
+UserSchema.statics.verifyToken = function (decoded) {
+  return this.findOne({
+    _id: decoded.sub,
+    refreshTokenIdentifier: decoded.created
+  });
 };
 
 const User = mongoose.model('User', UserSchema);

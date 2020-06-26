@@ -1,15 +1,19 @@
 {
 	"name": "instaglam",
 	"version": "1.0.0",
-	"description": "### By [Almog Ram](), [Roi Assa](https://github.com/roiassa), [Omer Gronich](https://github.com/OmerGronich)",
+	"description": "### By [Almog Ram](https://github.com/almoghr), [Roi Assa](https://github.com/roiassa), [Omer Gronich](https://github.com/OmerGronich)",
 	"main": "index.js",
 	"scripts": {
 		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
-		"start": "cd client && npm start",
-		"dev": "cd server && npm run dev",
+		"start:frontend": "cd client && npm start",
+		"start:backend": "cd server && npm run dev",
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
-		"postinstall": "(npm run client:install) && (npm run server:install)"
+		"postinstall": "(npm run client:install) && (npm run server:install)",
+		"server:format": "cd server && npm run format",
+		"client:format": "cd client && npm run format",
+		"format": "(npm run server:format) && (npm run client:format)",
+		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
 	},
 	"repository": {
 		"type": "git",
@@ -20,5 +24,9 @@
 	"bugs": {
 		"url": "https://github.com/OmerGronich/Instaglam/issues"
 	},
-	"homepage": "https://github.com/OmerGronich/Instaglam#readme"
+	"homepage": "https://github.com/OmerGronich/Instaglam#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"concurrently": "^5.2.0"
+	}
 }

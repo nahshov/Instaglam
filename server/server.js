@@ -1,11 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const { port } = require('./config');
 const connect = require('./db');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.json({ extended: false }));
 
 app.use(function (err, req, res, next) {
   // error handling logic
