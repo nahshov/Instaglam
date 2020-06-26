@@ -3,17 +3,24 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styles from 'pages/AuthPage/AuthPage.module.scss';
+import styles from './SignUpForm.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
+import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
 import { register as registerAction } from 'actions/auth';
+import { setAlert as setAlertAction } from 'actions/alert';
 
-const SignUpForm = ({ register, isAuthenticated }) => {
+const SignUpForm = ({
+  register,
+  auth: { isAuthenticated, loading },
+  alert,
+  setAlert
+}) => {
   const [hasAccount] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [signUpForm, setSignUpForm] = useState({
@@ -33,15 +40,13 @@ const SignUpForm = ({ register, isAuthenticated }) => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      register(signUpForm);
-    } catch (error) {
-      // @roiassa @TODO: make this appear as a jsx element in alert colors
-      console.error(error);
+      const result = await register(signUpForm);
+    } catch (err) {
+      console.log(err);
     }
   };
-
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
@@ -86,6 +91,7 @@ const SignUpForm = ({ register, isAuthenticated }) => {
             icon={<CheckIcon />}
           />
           <Button text="Sign Up" disabled={checkDisabled()} />
+          <Alert alerts={'bla'} />
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />
@@ -94,7 +100,8 @@ const SignUpForm = ({ register, isAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  auth: state.auth,
+  alert: state.alert[0]
 });
 
 SignUpForm.propTypes = {
@@ -103,6 +110,7 @@ SignUpForm.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, { register: registerAction })(
-  SignUpForm
-);
+export default connect(mapStateToProps, {
+  register: registerAction,
+  setAlert: setAlertAction
+})(SignUpForm);

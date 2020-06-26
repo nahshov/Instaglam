@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGOUT
 } from './types';
+import { setAlert } from './alert';
 
 export const register = ({ fullName, email, username, password }) => async (
   dispatch
@@ -32,11 +33,14 @@ export const register = ({ fullName, email, username, password }) => async (
       payload: res.data
     });
   } catch (error) {
-    const { message } = error.response.data;
+    const { errors } = error.response.data;
 
-    if (message) {
+    if (errors) {
       // TODO@roiassa:  Create alert action instead of console log
-      message.forEach((msg) => console.log(msg));
+      errors.map((msg) => {
+        console.log(msg);
+        setAlert(msg.msg, 'Error');
+      });
     }
 
     dispatch({

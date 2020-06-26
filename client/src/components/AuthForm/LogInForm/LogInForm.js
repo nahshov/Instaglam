@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styles from 'pages/AuthPage/AuthPage.module.scss';
+import styles from './LogInForm.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
+import ErrorMsg from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login as loginAction } from 'actions/auth';
 
@@ -62,6 +63,7 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
           />
 
           <Button text="Log In" disabled={checkDisabled()} />
+          <ErrorMsg errorMessage="bla bla bla" />
         </form>
       </div>
       <AuthSwitch
