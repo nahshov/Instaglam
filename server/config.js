@@ -1,4 +1,3 @@
-debugger;
 require('dotenv').config({ encoding: 'utf8' });
 
 module.exports = {
