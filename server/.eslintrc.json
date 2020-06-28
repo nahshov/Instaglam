@@ -14,7 +14,12 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "no-underscore-dangle": 0,
     "no-param-reassign": 0,
     "func-names": 0,

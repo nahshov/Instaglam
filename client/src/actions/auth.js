@@ -35,6 +35,7 @@ export const register = ({ fullName, email, username, password }) => async (
     });
   } catch (error) {
     const { errors } = error.response.data;
+    console.log(errors);
 
     if (errors) {
       // TODO@roiassa:  Create alert action instead of console log

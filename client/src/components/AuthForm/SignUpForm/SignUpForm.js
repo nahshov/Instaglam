@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styles from './SignUpForm.module.scss';
+import validator from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
@@ -14,6 +13,7 @@ import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
 import { register as registerAction } from 'actions/auth';
 import { setAlert as setAlertAction } from 'actions/alert';
+import styles from './SignUpForm.module.scss';
 
 const SignUpForm = ({
   register,
@@ -39,15 +39,13 @@ const SignUpForm = ({
     return result.length < 4 || signUpForm.password.length < 6;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const result = await register(signUpForm);
-      if (alert.length > 0) {
-        console.log(alert[0].message);
-      }
-    } catch (err) {
-      console.log(err);
+    if (!validator.isEmail(signUpForm.email)) {
+      setAlert('Please include a valid email', 'Error');
+    } else {
+      register(signUpForm);
+      setAlert('', null);
     }
   };
   if (isAuthenticated) {
@@ -94,7 +92,7 @@ const SignUpForm = ({
             icon={<CheckIcon />}
           />
           <Button text="Sign Up" disabled={checkDisabled()} />
-          {alert.length > 0 ? <Alert alerts={alert[0].message} /> : null}
+          {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />
@@ -108,9 +106,16 @@ const mapStateToProps = (state) => ({
 });
 
 SignUpForm.propTypes = {
-  showPass: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  alert: PropTypes.shape({
+    message: PropTypes.string.isRequired,
+    alertType: PropTypes.string.isRequired
+  }).isRequired,
+  setAlert: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 export default connect(mapStateToProps, {
