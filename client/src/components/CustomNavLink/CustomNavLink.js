@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 const CustomNavLink = ({ to, children, ...props }) => {
   const { pathname } = useLocation();
 
-  const myChild = cloneElement(children, { match: pathname === to });
+  // In case of multiple children - return just one
+  const singleChild = (children.length && children[0]) || children;
+  const myChild = cloneElement(singleChild, { match: pathname === to });
+
   return (
     <NavLink {...props} exact to={to}>
       {myChild}

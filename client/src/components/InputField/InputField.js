@@ -32,6 +32,10 @@ const InputField = ({
   </div>
 );
 
+InputField.defaultProps = {
+  icon: PropTypes.func
+};
+
 InputField.propTypes = {
   text: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -39,7 +43,8 @@ InputField.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   content: PropTypes.string.isRequired,
-  withButton: PropTypes.bool.isRequired
+  withButton: PropTypes.bool.isRequired,
+  icon: PropTypes.func
 };
 
 export default InputField;

@@ -1,5 +1,5 @@
 const {
-  getUser,
+  getUser: getUserService,
   deleteUser,
   editUser
 } = require('../services/user-services.js');
@@ -11,12 +11,12 @@ const { deleteFile, uploadFile } = require('../services/cloud-services');
 const serverResponse = require('../utils/serverResponse');
 const formatImage = require('../utils/formatMedia.js');
 
-// @route   GET '/api/users/:email'
-// @desc    Get user by email
+// @route   GET '/api/users/:userInfo'
+// @desc    Get user by email/username
 // @access  private
-const getUserByEmail = async (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const user = await getUser(req.params.email);
+    const user = await getUserService(req.params.userInfo);
 
     if (!user)
       return serverResponse(res, 404, {
@@ -25,6 +25,7 @@ const getUserByEmail = async (req, res) => {
 
     return serverResponse(res, 200, user);
   } catch (e) {
+    console.log(e);
     return serverResponse(res, 500);
   }
 };
@@ -34,7 +35,7 @@ const getUserByEmail = async (req, res) => {
 // @access  private
 const getProfile = async (req, res) => {
   try {
-    const user = await getUser(req.user.email);
+    const user = await getUserService(req.user.email);
     return serverResponse(res, 200, user);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -69,7 +70,7 @@ const editProfile = async (req, res) => {
 // @access  private
 const deleteProfile = async (req, res) => {
   try {
-    const user = await getUser(req.user.email);
+    const user = await getUserService(req.user.email);
     if (user) {
       await Promise.all([
         removeAllUserComments(req.user.sub),
@@ -118,7 +119,7 @@ const uploadProfilePic = async (req, res) => {
 // @access  private
 const getProfilePic = async (req, res) => {
   try {
-    const user = await getUser(req.user.email);
+    const user = await getUserService(req.user.email);
     if (!user.profilePic) {
       return serverResponse(res, 404, { message: 'No profile picture found' });
     }
@@ -135,7 +136,7 @@ const getProfilePic = async (req, res) => {
 // @access  private
 const deleteProfilePic = async (req, res) => {
   try {
-    const user = await getUser(req.user.email);
+    const user = await getUserService(req.user.email);
     if (!user.profilePic) {
       return serverResponse(res, 404, { message: 'No profile picture found' });
     }
@@ -157,7 +158,7 @@ const deleteProfilePic = async (req, res) => {
 };
 
 module.exports = {
-  getUserByEmail,
+  getUser,
   getProfile,
   editProfile,
   deleteProfile,

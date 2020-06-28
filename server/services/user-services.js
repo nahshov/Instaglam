@@ -1,3 +1,4 @@
+const { isEmail } = require('validator');
 const gravatar = require('gravatar');
 const User = require('../models/User.js');
 
@@ -15,8 +16,12 @@ function createUser(user) {
   return user.save();
 }
 
-function getUser(email) {
-  return User.findOne({ email });
+function getUser(userInfo) {
+  if (isEmail(userInfo)) {
+    return User.findOne({ email: userInfo });
+  }
+
+  return User.findOne({ username: userInfo });
 }
 
 async function editUser(email, newData) {

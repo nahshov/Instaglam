@@ -35,8 +35,11 @@ const ProtectedRoute = ({
 };
 
 ProtectedRoute.propTypes = {
-  auth: PropTypes.shape.isRequired,
-  component: PropTypes.element.isRequired,
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool,
+    loading: PropTypes.bool
+  }).isRequired,
+  component: PropTypes.func.isRequired,
   loadUser: PropTypes.func.isRequired
 };
 

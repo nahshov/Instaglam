@@ -13,6 +13,7 @@ const NavLinks = () => (
   <div className={styles.NavLinks}>
     <CustomNavLink to="/">
       <HomeIcon />
+      <HomeIcon />
     </CustomNavLink>
     <MobileSearchIcon />
     <CustomNavLink to="/direct/inbox" className={styles.chatLink}>
