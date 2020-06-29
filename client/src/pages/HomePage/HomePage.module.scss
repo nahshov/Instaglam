@@ -1,0 +1,8 @@
+@import '../../styles/mixins.scss';
+
+.postWrap{
+    width: 60%;
+    margin: 0 auto;
+    display:flex;
+    justify-content: start;
+}

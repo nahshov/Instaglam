@@ -1,0 +1,17 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/color-palette.scss';
+
+.postContainer{
+    @include flexCenter;
+    align-self: center;
+    border: 2px solid $primary-border-color;
+    border-bottom: 1px solid $secondary-border-color;
+    border-radius: 3px;
+    margin-top: 20px;
+    width: 60%;
+    height: 50px;
+}
+
+.postHeader{
+    @include flexCenter;
+}
