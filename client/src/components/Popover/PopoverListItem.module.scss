@@ -6,6 +6,8 @@
   padding: 10px;
   border-bottom: 1px solid $primary-border-color;
   flex: 1;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background: rgba($primary-border-color, 0.1);

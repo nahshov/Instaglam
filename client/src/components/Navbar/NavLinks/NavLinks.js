@@ -9,7 +9,7 @@ import ExploreIcon from 'components/Icons/ExploreIcon/ExploreIcon';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import MobileSearchIcon from 'components/Icons/MobileSearchIcon/MobileSearchIcon';
-import CustomNavLink from 'components/CustomNavLink/CustomNavLink';
+import CustomNavLink from 'components/Navbar/CustomNavLink/CustomNavLink';
 import Spinner from 'assets/img/spinner.gif';
 
 const NavLinks = ({ auth: { user, loading } }) => (

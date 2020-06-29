@@ -38,7 +38,9 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
         {!users.some(
           (user) => user.username.includes(value) || user.email.includes(value)
         ) ? (
-          <PopoverListItem>No results found</PopoverListItem>
+          <PopoverListItem style={{ justifyContent: 'center' }}>
+            <span className={styles.notFound}>No results found.</span>
+          </PopoverListItem>
         ) : (
           <PopoverList>
             {users.map((user) => (
