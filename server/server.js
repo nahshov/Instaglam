@@ -7,7 +7,12 @@ const connect = require('./db');
 const app = express();
 
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
 app.use(function (err, req, res, next) {
   // error handling logic
