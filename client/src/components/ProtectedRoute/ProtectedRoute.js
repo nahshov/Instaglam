@@ -16,21 +16,23 @@ const ProtectedRoute = ({
   }, []);
 
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!isAuthenticated && !loading) {
-          return <Redirect to="/accounts/login" />;
-        }
+    !loading && (
+      <Route
+        {...rest}
+        render={(props) => {
+          if (!isAuthenticated && !loading) {
+            return <Redirect to="/accounts/login" />;
+          }
 
-        return (
-          <>
-            <Navbar {...props} />
-            <Component {...props} />
-          </>
-        );
-      }}
-    />
+          return (
+            <>
+              <Navbar {...props} />
+              <Component {...props} />
+            </>
+          );
+        }}
+      />
+    )
   );
 };
 

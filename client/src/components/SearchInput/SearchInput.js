@@ -9,12 +9,13 @@ import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Spinner from 'assets/img/spinner.gif';
 
-const SearchInput = ({ users: { users, loading }, searchUser, history }) => {
+const SearchInput = ({ users: { users, loading }, searchUser }) => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const history = useHistory();
 
   const handleChange = (val) => {
     if (!val) {
@@ -109,17 +110,6 @@ SearchInput.propTypes = {
   users: PropTypes.shape({
     loading: PropTypes.bool,
     users: PropTypes.array
-  }).isRequired,
-  history: PropTypes.shape({
-    length: PropTypes.number.isRequired,
-    action: PropTypes.string.isRequired,
-    location: PropTypes.object.isRequired,
-    push: PropTypes.func.isRequired,
-    replace: PropTypes.func.isRequired,
-    go: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
-    goForward: PropTypes.func.isRequired,
-    block: PropTypes.func.isRequired
   }).isRequired
 };
 
