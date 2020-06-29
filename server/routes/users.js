@@ -2,6 +2,7 @@ const verifyUser = require('../middleware/verifyUser');
 const { upload } = require('../middleware/fileUpload');
 const {
   getUser,
+  getUsers,
   getProfile,
   editProfile,
   deleteProfile,
@@ -11,7 +12,9 @@ const {
 } = require('../controllers/users');
 
 module.exports = function (app) {
-  app.get('/api/users/:userInfo', verifyUser, getUser);
+  app
+    .get('/api/users/:userInfo', verifyUser, getUser)
+    .get('/api/users/search/:userInfo', verifyUser, getUsers);
 
   app
     .get('/api/me', verifyUser, getProfile)

@@ -24,6 +24,16 @@ function getUser(userInfo) {
   return User.findOne({ username: userInfo });
 }
 
+function getUsers(userInfo) {
+  const regex = new RegExp(userInfo, 'i');
+
+  if (isEmail(userInfo)) {
+    return User.find({ email: regex });
+  }
+
+  return User.find({ username: regex });
+}
+
 async function editUser(email, newData) {
   const user = await User.findOne({ email });
   Object.assign(user, newData);
@@ -55,6 +65,7 @@ async function setUserToken(user, identifier) {
 module.exports = {
   createUser,
   getUser,
+  getUsers,
   deleteUser,
   editUser,
   verifyPassword,

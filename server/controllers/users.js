@@ -1,5 +1,6 @@
 const {
   getUser: getUserService,
+  getUsers: getUsersService,
   deleteUser,
   editUser
 } = require('../services/user-services.js');
@@ -25,7 +26,24 @@ const getUser = async (req, res) => {
 
     return serverResponse(res, 200, user);
   } catch (e) {
-    console.log(e);
+    return serverResponse(res, 500);
+  }
+};
+
+// @route   GET '/api/users/search/:userInfo'
+// @desc    Get users by email/username
+// @access  private
+const getUsers = async (req, res) => {
+  try {
+    const user = await getUsersService(req.params.userInfo);
+
+    if (!user)
+      return serverResponse(res, 404, {
+        message: 'No user with requested email'
+      });
+
+    return serverResponse(res, 200, user);
+  } catch (e) {
     return serverResponse(res, 500);
   }
 };
@@ -99,7 +117,7 @@ const uploadProfilePic = async (req, res) => {
 
     const [imgUrl, user] = await Promise.all([
       uploadFile(req.file.originalname, buffer),
-      getUser(req.user.email)
+      getUserService(req.user.email)
     ]);
 
     user.profilePic = `${imgUrl}`;
@@ -159,6 +177,7 @@ const deleteProfilePic = async (req, res) => {
 
 module.exports = {
   getUser,
+  getUsers,
   getProfile,
   editProfile,
   deleteProfile,
