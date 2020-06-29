@@ -23,3 +23,10 @@
   border-bottom: 15px solid $color-white;
   filter: drop-shadow($primary-box-shadow);
 }
+
+.content {
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  max-height: 360px;
+}

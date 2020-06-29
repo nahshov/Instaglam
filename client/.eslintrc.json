@@ -26,6 +26,7 @@
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
+    "indent": "off",
     "prettier/prettier": "error",
     "react/jsx-indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],

@@ -5,13 +5,13 @@ import Logo from 'components/Logo/Logo';
 import SearchInput from 'components/SearchInput/SearchInput';
 import NavLinks from 'components/NavLinks/NavLinks';
 
-const Navbar = () => (
+const Navbar = ({ history }) => (
   <nav className={styles.Navbar}>
     <div className={styles.content}>
       <Link exact="true" to="/" className={styles.Link}>
         <Logo />
       </Link>
-      <SearchInput />
+      <SearchInput history={history} />
       <NavLinks />
     </div>
   </nav>

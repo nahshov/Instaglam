@@ -15,12 +15,6 @@
     display: none;
   }
 
-  &:hover {
-    .deleteIconWrapper {
-      visibility: visible;
-    }
-  }
-
   .SearchInput {
     background: transparent;
     width: 100%;
@@ -29,7 +23,12 @@
     outline: none;
     color: inherit;
 
+    &:hover ~ .deleteIconWrapper {
+      visibility: visible;
+    }
+
     &:valid:focus ~ .deleteIconWrapper {
+      visibility: visible;
       pointer-events: all;
       cursor: pointer;
       z-index: 3;
@@ -89,13 +88,9 @@
   }
 }
 
-.popover {
-  background: blue;
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  opacity: 0;
 }
-
-// input[type='search']::-webkit-search-decoration,
-// input[type='search']::-webkit-search-cancel-button,
-// input[type='search']::-webkit-search-results-button,
-// input[type='search']::-webkit-search-results-decoration {
-//   opacity: 0;
-// }

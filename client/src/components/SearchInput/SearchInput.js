@@ -12,7 +12,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { Link } from 'react-router-dom';
 import Spinner from 'assets/img/spinner.gif';
 
-const SearchInput = ({ users: { users, loading }, searchUser }) => {
+const SearchInput = ({ users: { users, loading }, searchUser, history }) => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -26,35 +26,46 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
     searchUser(val);
   };
 
+  const handleMouseDown = (user) => {
+    setValue('');
+    history.push(`/${user.username}`);
+  };
+
   return (
     <div className={styles.searchInputContainer}>
-      {loading && isPopoverOpen ? (
-        <img
-          src={Spinner}
-          alt="spinner"
-          style={{ width: '30px', height: '30px' }}
-        />
-      ) : (
-        <Popover isPopoverOpen={isPopoverOpen}>
-          {!users.some(
-            (user) =>
-              user.username.includes(value) || user.email.includes(value)
-          ) ? (
-            <PopoverListItem>No results found</PopoverListItem>
-          ) : (
-            <PopoverList>
-              {users.map((user) => (
-                <PopoverListItem key={user.created}>
-                  <Link to={`/${user.username}`}>
-                    <ProfilePic url={user.profilePic} />
+      <Popover isPopoverOpen={isPopoverOpen}>
+        {!users.some(
+          (user) => user.username.includes(value) || user.email.includes(value)
+        ) ? (
+          <PopoverListItem>No results found</PopoverListItem>
+        ) : (
+          <PopoverList>
+            {users.map((user) => (
+              <PopoverListItem key={user.created}>
+                {loading ? (
+                  <img
+                    src={Spinner}
+                    alt="spinner"
+                    style={{ width: '30px', height: '30px' }}
+                  />
+                ) : (
+                  <Link
+                    to={`/${user.username}`}
+                    onMouseDown={() => handleMouseDown(user)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <ProfilePic
+                      url={user.profilePic}
+                      style={{ position: 'static' }}
+                    />
                     <span>{user.username}</span>
                   </Link>
-                </PopoverListItem>
-              ))}
-            </PopoverList>
-          )}
-        </Popover>
-      )}
+                )}
+              </PopoverListItem>
+            ))}
+          </PopoverList>
+        )}
+      </Popover>
       <input
         id="searchInput"
         className={`${styles.SearchInput}`}
@@ -74,7 +85,8 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
       <button
         className={styles.deleteIconWrapper}
         type="button"
-        onClick={() => {
+        onMouseDown={() => {
+          setIsPopoverOpen(false);
           setValue('');
         }}
       >
@@ -97,6 +109,17 @@ SearchInput.propTypes = {
   users: PropTypes.shape({
     loading: PropTypes.bool,
     users: PropTypes.array
+  }).isRequired,
+  history: PropTypes.shape({
+    length: PropTypes.number.isRequired,
+    action: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
+    go: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
+    goForward: PropTypes.func.isRequired,
+    block: PropTypes.func.isRequired
   }).isRequired
 };
 
