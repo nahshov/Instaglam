@@ -7,8 +7,6 @@ export const searchUser = (userInfo) => async (dispatch) => {
     if (userInfo) {
       const res = await axios.get(`/api/users/search/${userInfo}`);
 
-      console.log(res.data);
-
       dispatch({
         type: SEARCH_USER_SUCCESS,
         payload: res.data

@@ -5,7 +5,12 @@ import styles from 'components/SearchInput/SearchInput.module.scss';
 import { searchUser as searchUserAction } from 'actions/users';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDelete } from 'react-icons/ti';
-import Popover, { ArrowContainer } from 'react-tiny-popover';
+import Popover from 'components/Popover/Popover';
+import PopoverList from 'components/Popover/PopoverList';
+import PopoverListItem from 'components/Popover/PopoverListItem';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
+import { Link } from 'react-router-dom';
+import Spinner from 'assets/img/spinner.gif';
 
 const SearchInput = ({ users: { users, loading }, searchUser }) => {
   const [value, setValue] = useState('');
@@ -23,27 +28,43 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
 
   return (
     <div className={styles.searchInputContainer}>
-      <Popover
-        isOpen={isPopoverOpen}
-        position="bottom"
-        disableReposition
-        onClickOutside={() => setIsPopoverOpen(false)}
-        content={() =>
-          users.map((user) => <div key={user.created}>{user.username}</div>)
-        }
-        className={styles.popover}
-      >
-        <input
-          id="searchInput"
-          className={styles.SearchInput}
-          type="search"
-          value={value}
-          onChange={(e) => handleChange(e.target.value)}
-          required
-          onFocus={() => value && setIsPopoverOpen(true)}
-          onBlur={() => setIsPopoverOpen(false)}
+      {loading && isPopoverOpen ? (
+        <img
+          src={Spinner}
+          alt="spinner"
+          style={{ width: '30px', height: '30px' }}
         />
-      </Popover>
+      ) : (
+        <Popover isPopoverOpen={isPopoverOpen}>
+          {!users.some(
+            (user) =>
+              user.username.includes(value) || user.email.includes(value)
+          ) ? (
+            <PopoverListItem>No results found</PopoverListItem>
+          ) : (
+            <PopoverList>
+              {users.map((user) => (
+                <PopoverListItem key={user.created}>
+                  <Link to={`/${user.username}`}>
+                    <ProfilePic url={user.profilePic} />
+                    <span>{user.username}</span>
+                  </Link>
+                </PopoverListItem>
+              ))}
+            </PopoverList>
+          )}
+        </Popover>
+      )}
+      <input
+        id="searchInput"
+        className={`${styles.SearchInput}`}
+        type="search"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        required
+        onFocus={() => value && setIsPopoverOpen(true)}
+        onBlur={() => setIsPopoverOpen(false)}
+      />
       <label htmlFor="searchInput" className={styles.searchLabel}>
         <div>
           <AiOutlineSearch className={styles.searchIcon} />
@@ -57,7 +78,15 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
           setValue('');
         }}
       >
-        <TiDelete className={styles.deleteIcon} />
+        {loading ? (
+          <img
+            src={Spinner}
+            alt="spinner"
+            style={{ width: '10px', height: '10px' }}
+          />
+        ) : (
+          <TiDelete className={styles.deleteIcon} />
+        )}
       </button>
     </div>
   );
