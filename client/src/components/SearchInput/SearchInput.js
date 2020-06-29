@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
 import { searchUser as searchUserAction } from 'actions/users';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -9,7 +10,6 @@ import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import { Link, useHistory } from 'react-router-dom';
 import Spinner from 'assets/img/spinner.gif';
 
 const SearchInput = ({ users: { users, loading }, searchUser }) => {
