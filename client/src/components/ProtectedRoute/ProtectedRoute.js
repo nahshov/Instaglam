@@ -39,7 +39,7 @@ ProtectedRoute.propTypes = {
     isAuthenticated: PropTypes.bool,
     loading: PropTypes.bool
   }).isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   loadUser: PropTypes.func.isRequired
 };
 

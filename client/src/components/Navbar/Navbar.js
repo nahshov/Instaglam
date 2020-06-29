@@ -8,7 +8,7 @@ import NavLinks from 'components/NavLinks/NavLinks';
 const Navbar = () => (
   <nav className={styles.Navbar}>
     <div className={styles.content}>
-      <Link exact="true" to="/">
+      <Link exact="true" to="/" className={styles.Link}>
         <Logo />
       </Link>
       <SearchInput />

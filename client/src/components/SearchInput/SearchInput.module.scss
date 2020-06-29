@@ -62,7 +62,7 @@
   }
   .searchLabel {
     @include flexCenter;
-    padding: 10px;
+    padding-left: 10px;
     position: absolute;
     width: 80%;
     z-index: 2;
@@ -70,7 +70,6 @@
 
     .searchIcon {
       font-size: 15px;
-      transform: translateY(2px);
     }
 
     .searchText {
@@ -88,6 +87,10 @@
     visibility: hidden;
     z-index: -3;
   }
+}
+
+.popover {
+  background: blue;
 }
 
 // input[type='search']::-webkit-search-decoration,

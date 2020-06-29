@@ -5,7 +5,9 @@ import { SEARCH_USER_SUCCESS, SEARCH_USER_FAIL } from './types';
 export const searchUser = (userInfo) => async (dispatch) => {
   try {
     if (userInfo) {
-      const res = await axios.get(`/api/users/${userInfo}`);
+      const res = await axios.get(`/api/users/search/${userInfo}`);
+
+      console.log(res.data);
 
       dispatch({
         type: SEARCH_USER_SUCCESS,
@@ -15,7 +17,8 @@ export const searchUser = (userInfo) => async (dispatch) => {
   } catch (error) {
     console.log(error.response.data);
     dispatch({
-      type: SEARCH_USER_FAIL
+      type: SEARCH_USER_FAIL,
+      payload: error.response.data.message
     });
   }
 };

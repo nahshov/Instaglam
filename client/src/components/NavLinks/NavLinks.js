@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styles from 'components/NavLinks/NavLinks.module.scss';
 import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
@@ -8,11 +10,11 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import MobileSearchIcon from 'components/Icons/MobileSearchIcon/MobileSearchIcon';
 import CustomNavLink from 'components/CustomNavLink/CustomNavLink';
+import Spinner from 'assets/img/spinner.gif';
 
-const NavLinks = () => (
+const NavLinks = ({ auth: { user, loading } }) => (
   <div className={styles.NavLinks}>
     <CustomNavLink to="/">
-      <HomeIcon />
       <HomeIcon />
     </CustomNavLink>
     <MobileSearchIcon />
@@ -29,9 +31,22 @@ const NavLinks = () => (
       className={styles.profilePicLink}
       activeClassName={styles.activeProfilePic}
     >
-      <ProfilePic />
+      {loading ? (
+        <img src={Spinner} alt="spinner" />
+      ) : (
+        <ProfilePic url={user.profilePic} />
+      )}
     </NavLink>
   </div>
 );
 
-export default NavLinks;
+NavLinks.propTypes = {
+  auth: PropTypes.shape({ user: PropTypes.object, loading: PropTypes.bool })
+    .isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(NavLinks);
