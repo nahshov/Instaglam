@@ -6,7 +6,8 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  SET_ALERT
 } from './types';
 import { setAlert } from './alert';
 
@@ -37,7 +38,20 @@ export const register = ({ fullName, email, username, password }) => async (
 
     if (errors) {
       // TODO@roiassa:  Create alert action instead of console log
+<<<<<<< HEAD
       errors.map((msg) => setAlert(msg.msg, 'Error'));
+=======
+      errors.map((msg) => {
+        dispatch({
+          type: SET_ALERT,
+          payload: {
+            message: msg.msg,
+            alertType: 'Error'
+          }
+        });
+        // setAlert(msg.msg, 'Error');
+      });
+>>>>>>> feature/form-alerts
     }
 
     dispatch({
