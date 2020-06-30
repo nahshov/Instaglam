@@ -94,11 +94,7 @@ const SignUpForm = ({
             icon={<CheckIcon />}
           />
           <Button text="Sign Up" disabled={checkDisabled()} />
-<<<<<<< HEAD
-          <Alert alerts="bla" />
-=======
           {alert.length > 0 ? <Alert alerts={alert[0].message} /> : null}
->>>>>>> feature/form-alerts
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />

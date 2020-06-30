@@ -38,9 +38,6 @@ export const register = ({ fullName, email, username, password }) => async (
 
     if (errors) {
       // TODO@roiassa:  Create alert action instead of console log
-<<<<<<< HEAD
-      errors.map((msg) => setAlert(msg.msg, 'Error'));
-=======
       errors.map((msg) => {
         dispatch({
           type: SET_ALERT,
@@ -51,7 +48,6 @@ export const register = ({ fullName, email, username, password }) => async (
         });
         // setAlert(msg.msg, 'Error');
       });
->>>>>>> feature/form-alerts
     }
 
     dispatch({
