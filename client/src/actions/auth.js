@@ -9,7 +9,6 @@ import {
   LOGOUT,
   SET_ALERT
 } from './types';
-import { setAlert } from './alert';
 
 export const register = ({ fullName, email, username, password }) => async (
   dispatch
@@ -34,20 +33,14 @@ export const register = ({ fullName, email, username, password }) => async (
       payload: res.data
     });
   } catch (error) {
-    const { errors } = error.response.data;
-    console.log(errors);
-
-    if (errors) {
-      // TODO@roiassa:  Create alert action instead of console log
-      errors.map((msg) => {
-        dispatch({
-          type: SET_ALERT,
-          payload: {
-            message: msg.msg,
-            alertType: 'Error'
-          }
-        });
-        // setAlert(msg.msg, 'Error');
+    const message = error.response.data.message;
+    if (message) {
+      dispatch({
+        type: SET_ALERT,
+        payload: {
+          message: message,
+          alertType: 'Error'
+        }
       });
     }
 

@@ -42,7 +42,9 @@ const SignUpForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validator.isEmail(signUpForm.email)) {
-      setAlert('Please include a valid email', 'Error');
+      setAlert('Enter a valid email address.', 'Error');
+    } else if (!validator.isLength(signUpForm.password, { min: 6 })) {
+      setAlert('Create a password at least 6 characters long.');
     } else {
       register(signUpForm);
       setAlert('', null);

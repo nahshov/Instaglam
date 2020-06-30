@@ -19,6 +19,10 @@ function getUser(email) {
   return User.findOne({ email });
 }
 
+function getUserByUsername(username) {
+  return User.findOne({ username });
+}
+
 async function editUser(email, newData) {
   const user = await User.findOne({ email });
   Object.assign(user, newData);
@@ -50,6 +54,7 @@ async function setUserToken(user, identifier) {
 module.exports = {
   createUser,
   getUser,
+  getUserByUsername,
   deleteUser,
   editUser,
   verifyPassword,

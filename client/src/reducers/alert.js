@@ -10,7 +10,6 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_ALERT:
-      console.log(type, payload.message, payload.alertType);
       return {
         message: payload.message,
         alertType: payload.alertType

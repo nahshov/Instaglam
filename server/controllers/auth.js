@@ -5,6 +5,7 @@ const { refreshTokenSecret } = require('../config');
 const {
   verifyPassword,
   getUser,
+  getUserByUsername,
   createUser
 } = require('../services/user-services');
 const { getTokens, setAuthCookie } = require('../services/auth-services');
@@ -60,9 +61,19 @@ const register = async (req, res) => {
       return serverResponse(res, 400, { errors: errors.array() });
 
     const exists = await getUser(req.body.email);
+    const existsUsername = await getUserByUsername(req.body.username);
 
-    if (exists)
-      return serverResponse(res, 400, { message: 'User already exists' });
+    if (exists) {
+      return serverResponse(res, 400, {
+        message: `Another account is using ${req.body.email}`
+      });
+    }
+
+    if (existsUsername) {
+      return serverResponse(res, 400, {
+        message: "This username isn't available. Please try another."
+      });
+    }
 
     const user = await createUser(req.body);
 
