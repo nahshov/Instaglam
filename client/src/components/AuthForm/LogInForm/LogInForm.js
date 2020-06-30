@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styles from './LogInForm.module.scss';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
 import ErrorMsg from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login as loginAction } from 'actions/auth';
+import styles from './LogInForm.module.scss';
 
 const LogInForm = ({ login, isAuthenticated, loading }) => {
   const [logInForm, setLoginForm] = useState({

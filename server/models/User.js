@@ -20,6 +20,8 @@ const UserSchema = new mongoose.Schema({
   },
   username: {
     type: String,
+    uniqe: true,
+    index: true,
     required: true
   },
   profilePic: {

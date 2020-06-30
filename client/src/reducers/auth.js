@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,

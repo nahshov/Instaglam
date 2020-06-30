@@ -10,9 +10,8 @@
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
 		"postinstall": "(npm run client:install) && (npm run server:install)",
-		"server:format": "cd server && npm run format",
-		"client:format": "cd client && npm run format",
-		"format": "(npm run server:format) && (npm run client:format)",
+		"lint": "eslint '**/*.js'",
+		"lint:fix": "(cd server && npm run lint:fix) && (cd client && npm run lint:fix)",
 		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
 	},
 	"repository": {

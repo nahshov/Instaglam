@@ -6,29 +6,31 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "format": "prettier-eslint --write $PWD/'**/*.js'"
+    "lint:fix": "npx eslint --fix ./"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "^5.0.1",
+    "@google-cloud/storage": "^5.1.1",
+    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-validator": "^6.5.0",
+    "express-validator": "^6.6.0",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.16",
+    "mongoose": "^5.9.20",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4",
-    "sharp": "^0.25.3",
-    "uuid": "^8.1.0"
+    "sharp": "^0.25.4",
+    "uuid": "^8.2.0",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^6.11.0",

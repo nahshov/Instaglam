@@ -33,12 +33,12 @@ export const register = ({ fullName, email, username, password }) => async (
       payload: res.data
     });
   } catch (error) {
-    const message = error.response.data.message;
-    if (message) {
+    const { errors } = errors.response.data;
+    if (error) {
       dispatch({
         type: SET_ALERT,
         payload: {
-          message: message,
+          message: error,
           alertType: 'Error'
         }
       });

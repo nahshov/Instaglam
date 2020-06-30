@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from 'components/Icons/ChatIcon/ChatIcon.module.scss';
 import { FaRegPaperPlane, FaPaperPlane } from 'react-icons/fa';
 
-const ChatIcon = ({ match }) => (
+const ChatIcon = ({ match = false }) => (
   <>
     {match ? (
       <FaPaperPlane className={styles.ChatIcon} />
@@ -13,8 +13,12 @@ const ChatIcon = ({ match }) => (
   </>
 );
 
+ChatIcon.defaultProps = {
+  match: false
+};
+
 ChatIcon.propTypes = {
-  match: PropTypes.bool.isRequired
+  match: PropTypes.bool
 };
 
 export default ChatIcon;

@@ -1,0 +1,24 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.listItem {
+  list-style-type: none;
+  padding: 10px;
+  border-bottom: 1px solid $primary-border-color;
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: rgba($primary-border-color, 0.1);
+  }
+}
+
+.listItem > * {
+  display: flex;
+  align-items: center;
+}
+
+.listItem span {
+  margin-left: 10px;
+}
