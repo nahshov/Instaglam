@@ -2,7 +2,8 @@ import { SEARCH_USER_SUCCESS, SEARCH_USER_FAIL } from 'actions/types';
 
 const initialState = {
   loading: true,
-  users: []
+  users: [],
+  error: ''
 };
 
 export default function (state = initialState, action) {
@@ -13,12 +14,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users: payload,
-        loading: false
+        loading: false,
+        error: ''
       };
     case SEARCH_USER_FAIL:
       return {
         ...state,
-        loading: false
+        loading: false,
+        users: [],
+        error: payload
       };
     default:
       return state;

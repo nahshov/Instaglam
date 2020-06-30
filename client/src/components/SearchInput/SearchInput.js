@@ -12,7 +12,7 @@ import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Spinner from 'assets/img/spinner.gif';
 
-const SearchInput = ({ users: { users, loading }, searchUser }) => {
+const SearchInput = ({ users: { users, loading, error }, searchUser }) => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const history = useHistory();
@@ -35,11 +35,9 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
   return (
     <div className={styles.searchInputContainer}>
       <Popover isPopoverOpen={isPopoverOpen}>
-        {!users.some(
-          (user) => user.username.includes(value) || user.email.includes(value)
-        ) ? (
+        {(!users.length || error) && !loading ? (
           <PopoverListItem style={{ justifyContent: 'center' }}>
-            <span className={styles.notFound}>No results found.</span>
+            <span className={styles.notFound}>{error}</span>
           </PopoverListItem>
         ) : (
           <PopoverList>
@@ -55,7 +53,7 @@ const SearchInput = ({ users: { users, loading }, searchUser }) => {
                   <Link
                     to={`/${user.username}`}
                     onMouseDown={() => handleMouseDown(user)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', width: '100%' }}
                   >
                     <ProfilePic
                       url={user.profilePic}
@@ -111,7 +109,8 @@ SearchInput.propTypes = {
   searchUser: PropTypes.func.isRequired,
   users: PropTypes.shape({
     loading: PropTypes.bool,
-    users: PropTypes.array
+    users: PropTypes.array,
+    error: PropTypes.string
   }).isRequired
 };
 

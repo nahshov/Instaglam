@@ -7,16 +7,19 @@ export const searchUser = (userInfo) => async (dispatch) => {
     if (userInfo) {
       const res = await axios.get(`/api/users/search/${userInfo}`);
 
+      if (!res.data.length) {
+        throw new Error('No results found.');
+      }
+
       dispatch({
         type: SEARCH_USER_SUCCESS,
         payload: res.data
       });
     }
   } catch (error) {
-    console.log(error.response.data);
     dispatch({
       type: SEARCH_USER_FAIL,
-      payload: error.response.data.message
+      payload: error.message
     });
   }
 };

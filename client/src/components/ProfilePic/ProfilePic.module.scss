@@ -2,6 +2,6 @@
 @import '../../styles/mixins.scss';
 
 .ProfilePic {
-  composes: profilePicLink from '../NavLinks/NavLinks.module.scss';
+  composes: profilePicLink from '../Navbar/NavLinks/NavLinks.module.scss';
   overflow: hidden;
 }

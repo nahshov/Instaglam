@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import styles from 'components/NavLinks/NavLinks.module.scss';
 import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
 import ChatIcon from 'components/Icons/ChatIcon/ChatIcon';
 import ExploreIcon from 'components/Icons/ExploreIcon/ExploreIcon';
@@ -11,6 +10,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import MobileSearchIcon from 'components/Icons/MobileSearchIcon/MobileSearchIcon';
 import CustomNavLink from 'components/Navbar/CustomNavLink/CustomNavLink';
 import Spinner from 'assets/img/spinner.gif';
+import styles from './NavLinks.module.scss';
 
 const NavLinks = ({ auth: { user, loading } }) => (
   <div className={styles.NavLinks}>
