@@ -34,10 +34,6 @@ function getUsers(userInfo) {
   return User.find({ username: regex });
 }
 
-function getUserByUsername(username) {
-  return User.findOne({ username });
-}
-
 async function editUser(email, newData) {
   const user = await User.findOne({ email });
   Object.assign(user, newData);
@@ -69,11 +65,7 @@ async function setUserToken(user, identifier) {
 module.exports = {
   createUser,
   getUser,
-<<<<<<< HEAD
-  getUserByUsername,
-=======
   getUsers,
->>>>>>> feature/search-by-user
   deleteUser,
   editUser,
   verifyPassword,
