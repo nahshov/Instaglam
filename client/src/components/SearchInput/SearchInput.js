@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUser as searchUserAction } from 'actions/users';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { TiDelete } from 'react-icons/ti';
+import { searchUser } from 'actions/users';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Spinner from 'assets/img/spinner.gif';
+import { TiDelete } from 'react-icons/ti';
+import { AiOutlineSearch } from 'react-icons/ai';
 
-const SearchInput = ({ users: { users, loading, error }, searchUser }) => {
+const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const { users, loading, error } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const handleChange = (val) => {
@@ -24,7 +25,7 @@ const SearchInput = ({ users: { users, loading, error }, searchUser }) => {
       setIsPopoverOpen(true);
     }
     setValue(val);
-    searchUser(val);
+    dispatch(searchUser(val));
   };
 
   const handleMouseDown = (user) => {
@@ -105,19 +106,4 @@ const SearchInput = ({ users: { users, loading, error }, searchUser }) => {
   );
 };
 
-SearchInput.propTypes = {
-  searchUser: PropTypes.func.isRequired,
-  users: PropTypes.shape({
-    loading: PropTypes.bool,
-    users: PropTypes.array,
-    error: PropTypes.string
-  }).isRequired
-};
-
-const mapStateToProps = (state) => ({
-  users: state.users
-});
-
-export default connect(mapStateToProps, { searchUser: searchUserAction })(
-  SearchInput
-);
+export default SearchInput;

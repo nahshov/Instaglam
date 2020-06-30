@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from 'components/Navbar/Navbar';
-import { loadUser as loadUserAction } from 'actions/auth';
+import { loadUser } from 'actions/auth';
 
-const ProtectedRoute = ({
-  component: Component,
-  auth: { isAuthenticated, loading },
-  loadUser,
-  ...rest
-}) => {
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadUser();
+    dispatch(loadUser());
   }, []);
 
   return (
@@ -37,18 +35,7 @@ const ProtectedRoute = ({
 };
 
 ProtectedRoute.propTypes = {
-  auth: PropTypes.shape({
-    isAuthenticated: PropTypes.bool,
-    loading: PropTypes.bool
-  }).isRequired,
-  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
-  loadUser: PropTypes.func.isRequired
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { loadUser: loadUserAction })(
-  ProtectedRoute
-);
+export default ProtectedRoute;
