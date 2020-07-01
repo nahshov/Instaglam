@@ -1,3 +1,4 @@
+const { isEmail } = require('validator');
 const gravatar = require('gravatar');
 const User = require('../models/User.js');
 
@@ -15,8 +16,22 @@ function createUser(user) {
   return user.save();
 }
 
-function getUser(email) {
-  return User.findOne({ email });
+function getUser(userInfo) {
+  if (isEmail(userInfo)) {
+    return User.findOne({ email: userInfo });
+  }
+
+  return User.findOne({ username: userInfo });
+}
+
+function getUsers(userInfo) {
+  const regex = new RegExp(userInfo, 'i');
+
+  if (isEmail(userInfo)) {
+    return User.find({ email: regex });
+  }
+
+  return User.find({ username: regex });
 }
 
 async function editUser(email, newData) {
@@ -50,6 +65,7 @@ async function setUserToken(user, identifier) {
 module.exports = {
   createUser,
   getUser,
+  getUsers,
   deleteUser,
   editUser,
   verifyPassword,

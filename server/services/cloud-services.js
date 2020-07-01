@@ -19,11 +19,9 @@ const uploadFile = (originalname, buffer) =>
     blobStream
       .on('finish', () => {
         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-
         resolve(publicUrl);
       })
-      .on('error', (e) => {
-        console.log(e);
+      .on('error', () => {
         reject(new Error(`Unable to upload media, something went wrong`));
       })
       .end(buffer);

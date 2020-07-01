@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import { Redirect } from 'react-router-dom';
 import { logout } from '../../actions/auth';
 
-const ProfilePage = ({ auth: { isAuthenticated, loading }, logout }) => {
+const ProfilePage = () => {
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   if (!isAuthenticated && !loading) {
     return <Redirect to="/accounts/login" />;
   }
@@ -16,7 +18,7 @@ const ProfilePage = ({ auth: { isAuthenticated, loading }, logout }) => {
       <button
         type="button"
         onClick={async () => {
-          logout();
+          dispatch(logout());
         }}
       >
         LOGOUT
@@ -25,13 +27,4 @@ const ProfilePage = ({ auth: { isAuthenticated, loading }, logout }) => {
   );
 };
 
-ProfilePage.propTypes = {
-  auth: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { logout })(ProfilePage);
+export default ProfilePage;

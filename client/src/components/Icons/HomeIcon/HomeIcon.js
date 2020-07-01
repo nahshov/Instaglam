@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from 'components/Icons/HomeIcon/HomeIcon.module.scss';
 import { AiFillHome, AiOutlineHome } from 'react-icons/ai';
 
-const HomeIcon = ({ match }) => (
+const HomeIcon = ({ match = false }) => (
   <>
     {match ? (
       <AiFillHome className={styles.HomeIcon} />
@@ -13,8 +13,12 @@ const HomeIcon = ({ match }) => (
   </>
 );
 
+HomeIcon.defaultProps = {
+  match: false
+};
+
 HomeIcon.propTypes = {
-  match: PropTypes.bool.isRequired
+  match: PropTypes.bool
 };
 
 export default HomeIcon;
