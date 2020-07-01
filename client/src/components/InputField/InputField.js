@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styles from 'components/InputField/InputField.module.scss';
 
 const InputField = ({
-  text,
-  type,
+  text = '',
+  type = '',
   name,
   onChange,
   onClick,
@@ -12,7 +12,7 @@ const InputField = ({
   content,
   classInput,
   classSpan,
-  withButton
+  withButton = false
 }) => (
   <div className={styles.fieldDiv}>
     <label className={styles.label}>
@@ -40,11 +40,10 @@ const InputField = ({
 );
 
 InputField.defaultProps = {
-  icon: PropTypes.func,
   type: '',
   onClick: PropTypes.func,
   content: '',
-  withButton: PropTypes.func
+  withButton: false
 };
 
 InputField.propTypes = {
@@ -55,7 +54,7 @@ InputField.propTypes = {
   onClick: PropTypes.func,
   content: PropTypes.string,
   withButton: PropTypes.bool,
-  icon: PropTypes.func
+  icon: PropTypes.element
 };
 
 export default InputField;
