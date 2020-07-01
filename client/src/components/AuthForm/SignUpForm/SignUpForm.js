@@ -22,7 +22,7 @@ const SignUpForm = () => {
     username: '',
     password: ''
   });
-  const [spinner, setSpinner] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     auth: { isAuthenticated, loading },
     alert
@@ -48,7 +48,7 @@ const SignUpForm = () => {
     } else if (signUpForm.fullName === '' || signUpForm.username === '') {
       dispatch(setAlert('Full Name/Username are required fields'));
     } else {
-      setSpinner(true);
+      setIsLoading(true);
       dispatch(register(signUpForm));
       dispatch(setAlert('', null));
     }
@@ -136,7 +136,7 @@ const SignUpForm = () => {
           <Button
             text="Sign Up"
             disabled={checkDisabled()}
-            spinner={!loading ? false : spinner}
+            isLoading={!loading ? false : isLoading}
             btnRole="primary btnBlock"
           />
           {alert.message === '' ? null : <Alert alerts={alert.message} />}
