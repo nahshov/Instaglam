@@ -25,7 +25,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  disabled: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
   btnRole: PropTypes.string,
   isLoading: PropTypes.bool
 };
