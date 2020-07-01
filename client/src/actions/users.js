@@ -1,15 +1,39 @@
 import axios from 'axios';
-import { SEARCH_USER_SUCCESS, SEARCH_USER_FAIL } from './types';
+import {
+  SEARCH_USERS_SUCCESS,
+  SEARCH_USERS_FAIL,
+  SEARCH_USER_SUCCESS,
+  SEARCH_USER_FAIL
+} from './types';
 
-// Search by email/username
-export const searchUser = (userInfo) => async (dispatch) => {
+// Search users by email/username
+export const searchUsers = (searchParam) => async (dispatch) => {
   try {
-    if (userInfo) {
-      const res = await axios.get(`/api/users/search/${userInfo}`);
+    if (searchParam) {
+      const res = await axios.get(`/api/users/search/${searchParam}`);
 
       if (!res.data.length) {
         throw new Error('No results found.');
       }
+
+      dispatch({
+        type: SEARCH_USERS_SUCCESS,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: SEARCH_USERS_FAIL,
+      payload: error.message
+    });
+  }
+};
+
+// Search single user by email/username
+export const searchUser = (searchParam) => async (dispatch) => {
+  try {
+    if (searchParam) {
+      const res = await axios.get(`/api/users/${searchParam}`);
 
       dispatch({
         type: SEARCH_USER_SUCCESS,

@@ -93,7 +93,11 @@ const SignUpForm = ({
             withButton
             icon={<CheckIcon />}
           />
-          <Button text="Sign Up" disabled={checkDisabled()} />
+          <Button
+            text="Sign Up"
+            disabled={checkDisabled()}
+            btnRole="primary btnBlock"
+          />
           {alert.length > 0 ? <Alert alerts={alert[0].message} /> : null}
         </form>
       </div>

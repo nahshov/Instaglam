@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUser } from 'actions/users';
+import { searchUsers } from 'actions/users';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -25,7 +25,7 @@ const SearchInput = () => {
       setIsPopoverOpen(true);
     }
     setValue(val);
-    dispatch(searchUser(val));
+    dispatch(searchUsers(val));
   };
 
   const handleMouseDown = (user) => {
@@ -58,7 +58,7 @@ const SearchInput = () => {
                   >
                     <ProfilePic
                       url={user.profilePic}
-                      style={{ position: 'static' }}
+                      className={!loading ? styles.searchProfilePic : ''}
                     />
                     <span>{user.username}</span>
                   </Link>

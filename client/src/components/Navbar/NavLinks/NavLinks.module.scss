@@ -68,3 +68,8 @@
     right: 20px;
   }
 }
+
+.ProfilePic {
+  composes: profilePicLink;
+  overflow: hidden;
+}
