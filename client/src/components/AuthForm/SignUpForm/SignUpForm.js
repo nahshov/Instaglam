@@ -137,6 +137,7 @@ const SignUpForm = () => {
             text="Sign Up"
             disabled={checkDisabled()}
             spinner={!loading ? false : spinner}
+            btnRole="primary btnBlock"
           />
           {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>

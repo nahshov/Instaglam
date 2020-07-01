@@ -99,6 +99,17 @@
   padding: 5px;
 }
 
+.searchProfilePic {
+  width: 40px;
+  overflow: hidden;
+  display: flex;
+
+  img {
+    width: 100%;
+    border-radius: 100%;
+  }
+}
+
 input[type='search']::-webkit-search-decoration,
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-results-button,

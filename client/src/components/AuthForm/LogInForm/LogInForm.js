@@ -94,8 +94,11 @@ const LogInForm = () => {
             }
             logInForm
           />
-
-          <Button text="Log In" disabled={checkDisabled()} />
+          <Button
+            text="Log In"
+            disabled={checkDisabled()}
+            btnRole="primary btnBlock"
+          />
           {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>
       </div>

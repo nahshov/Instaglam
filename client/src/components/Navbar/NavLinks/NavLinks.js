@@ -11,7 +11,7 @@ import CustomNavLink from 'components/Navbar/CustomNavLink/CustomNavLink';
 import styles from './NavLinks.module.scss';
 
 const NavLinks = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
 
   return (
     <div className={styles.NavLinks}>
@@ -28,11 +28,14 @@ const NavLinks = () => {
       <HeartIcon />
       <NavLink
         exact
-        to="/profile"
+        to={!loading && `/${user.username}`}
         className={styles.profilePicLink}
         activeClassName={styles.activeProfilePic}
       >
-        <ProfilePic url={user.profilePic} />
+        <ProfilePic
+          url={user.profilePic}
+          className={!loading ? styles.ProfilePic : ''}
+        />
       </NavLink>
     </div>
   );
