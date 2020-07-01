@@ -7,7 +7,7 @@ import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import Spinner from 'assets/img/spinner.gif';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
 
@@ -45,11 +45,7 @@ const SearchInput = () => {
             {users.map((user) => (
               <PopoverListItem key={user.created}>
                 {loading ? (
-                  <img
-                    src={Spinner}
-                    alt="spinner"
-                    style={{ width: '30px', height: '30px' }}
-                  />
+                  <LoadingSpinner />
                 ) : (
                   <Link
                     to={`/${user.username}`}
@@ -93,11 +89,7 @@ const SearchInput = () => {
         }}
       >
         {loading ? (
-          <img
-            src={Spinner}
-            alt="spinner"
-            style={{ width: '10px', height: '10px' }}
-          />
+          <LoadingSpinner />
         ) : (
           <TiDelete className={styles.deleteIcon} />
         )}

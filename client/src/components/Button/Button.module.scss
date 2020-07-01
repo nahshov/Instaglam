@@ -14,8 +14,13 @@
     outline: none;
     font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
     @include respond(phone) {
       font-size: 15px;
+    }
+
+    &:disabled {
+      cursor: initial;
     }
   }
 }
@@ -30,15 +35,15 @@
   button {
     background-color: $primary-color;
     color: $color-white;
-  }
 
-  &:active {
-    background-color: $primary-light;
-  }
+    &:active {
+      background-color: $primary-light;
+    }
 
-  & button:disabled {
-    background-color: $secondary-color;
-    color: $color-white;
+    &:disabled {
+      background-color: $secondary-color;
+      color: $color-white;
+    }
   }
 }
 

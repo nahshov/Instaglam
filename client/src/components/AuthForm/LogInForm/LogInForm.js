@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import validator from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
-import ErrorMsg from 'components/Alert/Alert';
+import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login as loginAction } from 'actions/auth';
+import { login } from 'actions/auth';
+import { setAlert } from 'actions/alert';
 import styles from './LogInForm.module.scss';
 
-const LogInForm = ({ login, isAuthenticated, loading }) => {
+const LogInForm = () => {
   const [logInForm, setLoginForm] = useState({
     email: '',
     password: ''
   });
   const [hasAccount] = useState(false);
   const [showPass, setShowPass] = useState(false);
+
+  const {
+    auth: { isAuthenticated, loading },
+    alert
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
 
   const checkDisabled = () => {
     const result = Object.values(logInForm).filter((value) => value !== '');
@@ -27,13 +35,15 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      login(logInForm);
-    } catch {
-      // @TODO: make error appear as a jsx element in error colors
-      throw new Error('Failed to log in');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validator.isEmail(logInForm.email)) {
+      dispatch(setAlert('Enter a valid email address.', 'Error'));
+    } else if (logInForm.password.length < 6 || logInForm.password === '') {
+      dispatch(setAlert('Enter a password at least 6 characters long.'));
+    } else {
+      dispatch(login(logInForm));
+      dispatch(setAlert('', null));
     }
   };
 
@@ -49,7 +59,19 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
       <div className={styles.authDiv}>
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
-          <InputField text="Email" name="email" onChange={handleChange} />
+          <InputField
+            text="Email"
+            name="email"
+            onChange={handleChange}
+            classInput={
+              logInForm.email !== '' ? styles.activeInput : styles.defaultInput
+            }
+            classSpan={
+              logInForm.email !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
+          />
           <InputField
             text="Password"
             type={inputType}
@@ -60,14 +82,24 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
               setShowPass(!showPass);
             }}
             content={buttonText}
+            classInput={
+              logInForm.password !== ''
+                ? styles.activeInput
+                : styles.defaultInput
+            }
+            classSpan={
+              logInForm.password !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
+            logInForm
           />
-
           <Button
             text="Log In"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
           />
-          <ErrorMsg errorMessage="bla bla bla" />
+          {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>
       </div>
       <AuthSwitch
@@ -78,15 +110,4 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.loading
-});
-
-LogInForm.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps, { login: loginAction })(LogInForm);
+export default LogInForm;

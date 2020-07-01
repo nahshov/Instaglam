@@ -10,12 +10,19 @@ const InputField = ({
   onClick,
   icon,
   content,
+  classInput,
+  classSpan,
   withButton
 }) => (
   <div className={styles.fieldDiv}>
     <label className={styles.label}>
-      <input type={type} name={name} onChange={onChange} required />
-      <span>{text}</span>
+      <input
+        type={type}
+        name={name}
+        onChange={onChange}
+        className={classInput}
+      />
+      <span className={classSpan}>{text}</span>
     </label>
     <div className={styles.insideInputDiv}>
       <div className={styles.iconDiv}>

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from 'components/Button/Button.module.scss';
 
-const Button = ({ text, disabled, btnRole = '' }) => {
+const Button = ({ text, spinner, btnRole = '', ...otherProps }) => {
   const classes = btnRole
     .split(' ')
     .map((btnClass) => styles[btnClass])
@@ -10,8 +11,8 @@ const Button = ({ text, disabled, btnRole = '' }) => {
 
   return (
     <div className={`${styles.btn} ${classes}`}>
-      <button type="submit" disabled={disabled}>
-        {text}
+      <button type="submit" {...otherProps}>
+        {spinner ? <LoadingSpinner /> : text}
       </button>
     </div>
   );
