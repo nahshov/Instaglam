@@ -11,7 +11,6 @@ const ProfilePic = ({ url = '', className = '' }) => (
 
 ProfilePic.defaultProps = {
   url: '',
-  // position: {},
   className: ''
 };
 

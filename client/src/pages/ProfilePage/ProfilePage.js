@@ -34,7 +34,7 @@ const ProfilePage = () => {
             url={!userLoading ? user.profilePic : ''}
             className={!authLoading ? styles.profilePageProfilePic : ''}
           />
-          <section className={styles.profileInfo}>.profile</section>
+          <section className={styles.profileInfo}>PROFILE</section>
         </header>
         <button type="button" onClick={() => dispatch(logout())}>
           Logout!
