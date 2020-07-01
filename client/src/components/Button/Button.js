@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from 'components/Button/Button.module.scss';
 
-const Button = ({ text, spinner, btnRole = '', ...otherProps }) => {
+const Button = ({ text, isLoading = false, btnRole = '', ...otherProps }) => {
   const classes = btnRole
     .split(' ')
     .map((btnClass) => styles[btnClass])
@@ -12,20 +12,22 @@ const Button = ({ text, spinner, btnRole = '', ...otherProps }) => {
   return (
     <div className={`${styles.btn} ${classes}`}>
       <button type="submit" {...otherProps}>
-        {spinner ? <LoadingSpinner /> : text}
+        {isLoading ? <LoadingSpinner /> : text}
       </button>
     </div>
   );
 };
 
 Button.defaultProps = {
-  btnRole: ''
+  btnRole: '',
+  isLoading: false
 };
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   disabled: PropTypes.func.isRequired,
-  btnRole: PropTypes.string
+  btnRole: PropTypes.string,
+  isLoading: PropTypes.bool
 };
 
 export default Button;

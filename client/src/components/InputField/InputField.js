@@ -40,17 +40,21 @@ const InputField = ({
 );
 
 InputField.defaultProps = {
-  icon: PropTypes.func
+  icon: PropTypes.func,
+  type: '',
+  onClick: PropTypes.func,
+  content: '',
+  withButton: PropTypes.func
 };
 
 InputField.propTypes = {
   text: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
-  withButton: PropTypes.bool.isRequired,
+  onClick: PropTypes.func,
+  content: PropTypes.string,
+  withButton: PropTypes.bool,
   icon: PropTypes.func
 };
 

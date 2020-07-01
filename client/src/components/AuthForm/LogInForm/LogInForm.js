@@ -18,6 +18,7 @@ const LogInForm = () => {
   });
   const [hasAccount] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     auth: { isAuthenticated, loading },
@@ -98,6 +99,7 @@ const LogInForm = () => {
             text="Log In"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
+            isLoading={!loading ? false : isLoading}
           />
           {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>
