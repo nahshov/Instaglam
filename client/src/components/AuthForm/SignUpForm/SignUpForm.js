@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import validator from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -10,17 +9,11 @@ import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
-import RefreshIcon from 'components/Icons/RefreshIcon/RefreshIcon';
-import { register as registerAction } from 'actions/auth';
-import { setAlert as setAlertAction } from 'actions/alert';
+import { register } from 'actions/auth';
+import { setAlert } from 'actions/alert';
 import styles from './SignUpForm.module.scss';
 
-const SignUpForm = ({
-  register,
-  auth: { isAuthenticated, loading },
-  alert,
-  setAlert
-}) => {
+const SignUpForm = () => {
   const [hasAccount] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [signUpForm, setSignUpForm] = useState({
@@ -29,6 +22,13 @@ const SignUpForm = ({
     username: '',
     password: ''
   });
+  const [spinner, setSpinner] = useState(false);
+  const {
+    auth: { isAuthenticated, loading },
+    alert
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
@@ -42,12 +42,15 @@ const SignUpForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validator.isEmail(signUpForm.email)) {
-      setAlert('Enter a valid email address.', 'Error');
-    } else if (!validator.isLength(signUpForm.password, { min: 6 })) {
-      setAlert('Create a password at least 6 characters long.');
+      dispatch(setAlert('Enter a valid email address.', 'Error'));
+    } else if (signUpForm.password.length < 6 || signUpForm.password === '') {
+      dispatch(setAlert('Create a password at least 6 characters long.'));
+    } else if (signUpForm.fullName === '' || signUpForm.username === '') {
+      dispatch(setAlert('Full Name/Username are required fields'));
     } else {
-      register(signUpForm);
-      setAlert('', null);
+      setSpinner(true);
+      dispatch(register(signUpForm));
+      dispatch(setAlert('', null));
     }
   };
   if (isAuthenticated) {
@@ -67,6 +70,14 @@ const SignUpForm = ({
             onChange={handleChange}
             withButton={false}
             icon={<ErrorIcon />}
+            classInput={
+              signUpForm.email !== '' ? styles.activeInput : styles.defaultInput
+            }
+            classSpan={
+              signUpForm.email !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
           />
           <InputField
             text="Full Name"
@@ -74,14 +85,33 @@ const SignUpForm = ({
             onChange={handleChange}
             withButton={false}
             icon={<CheckIcon />}
+            classInput={
+              signUpForm.fullName !== ''
+                ? styles.activeInput
+                : styles.defaultInput
+            }
+            classSpan={
+              signUpForm.fullName !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
           />
           <InputField
             text="Username"
             name="username"
             onChange={handleChange}
-            content={<RefreshIcon />}
-            withButton
+            withButton={false}
             icon={<ErrorIcon />}
+            classInput={
+              signUpForm.username !== ''
+                ? styles.activeInput
+                : styles.defaultInput
+            }
+            classSpan={
+              signUpForm.username !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
           />
           <InputField
             text="Password"
@@ -92,8 +122,22 @@ const SignUpForm = ({
             content={buttonText}
             withButton
             icon={<CheckIcon />}
+            classInput={
+              signUpForm.password !== ''
+                ? styles.activeInput
+                : styles.defaultInput
+            }
+            classSpan={
+              signUpForm.password !== ''
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
           />
-          <Button text="Sign Up" disabled={checkDisabled()} />
+          <Button
+            text="Sign Up"
+            disabled={checkDisabled()}
+            spinner={!loading ? false : spinner}
+          />
           {alert.message === '' ? null : <Alert alerts={alert.message} />}
         </form>
       </div>
@@ -102,25 +146,4 @@ const SignUpForm = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  alert: state.alert
-});
-
-SignUpForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  alert: PropTypes.shape({
-    message: PropTypes.string.isRequired,
-    alertType: PropTypes.string.isRequired
-  }).isRequired,
-  setAlert: PropTypes.func.isRequired,
-  auth: PropTypes.shape({
-    isAuthenticated: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired
-  }).isRequired
-};
-
-export default connect(mapStateToProps, {
-  register: registerAction,
-  setAlert: setAlertAction
-})(SignUpForm);
+export default SignUpForm;

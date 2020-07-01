@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from 'components/ProfilePic/ProfilePic.module.scss';
 
 const ProfilePic = ({ url = '', style = {} }) => (
   <div className={styles.ProfilePic}>
     <img
       alt="default profile pic"
-      src={url}
+      src={!url ? <LoadingSpinner /> : url}
       className={styles.profileImg}
       style={style || {}}
     />

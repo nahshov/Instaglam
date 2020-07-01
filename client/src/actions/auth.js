@@ -83,11 +83,16 @@ export const login = ({ email, password }) => async (dispatch) => {
       payload: res.data
     });
   } catch (error) {
-    const { message } = error.response.data;
+    const { errors } = error.response.data;
 
-    if (message) {
-      // @roiassa:TODO -> create an alert with the error message
-      message.forEach((msg) => console.log(msg));
+    if (errors) {
+      dispatch({
+        type: SET_ALERT,
+        payload: {
+          message: errors,
+          alertType: 'Error'
+        }
+      });
     }
 
     dispatch({

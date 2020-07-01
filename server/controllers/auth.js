@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-
 const { refreshTokenSecret } = require('../config');
 const {
   verifyPassword,
@@ -23,8 +22,19 @@ const login = async (req, res) => {
     const { email, password } = req.body || {};
     const user = await getUser(email);
 
-    if (!(user && verifyPassword(user, password)))
-      return serverResponse(res, 401, { message: 'Invalid credentials' });
+    if (!user) {
+      return serverResponse(res, 401, {
+        errors:
+          "The email you entered doesn't belong to an account. Please check your email and try again."
+      });
+    }
+
+    if (!verifyPassword(user, password)) {
+      return serverResponse(res, 401, {
+        errors:
+          'Sorry, your password was incorrect. Please double-check your password.'
+      });
+    }
 
     // TODO @roiassa @almoghr: add user agent as an identifier
     const userAgent = req.headers['user-agent'];
@@ -60,10 +70,17 @@ const register = async (req, res) => {
       return serverResponse(res, 400, { errors: errors.array() });
 
     const exists = await getUser(req.body.email);
+    const userNameExists = await getUser(req.body.username);
 
     if (exists) {
       return serverResponse(res, 400, {
         errors: `Another account is using ${req.body.email}`
+      });
+    }
+
+    if (userNameExists) {
+      return serverResponse(res, 400, {
+        errors: "This username isn't available. Please try another."
       });
     }
 
