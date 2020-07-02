@@ -13,8 +13,7 @@ import { setAlert } from './alert';
 
 export const register = ({ fullName, email, username, password }) => async (
   dispatch
-) =>
-{
+) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
