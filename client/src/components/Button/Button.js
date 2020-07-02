@@ -20,12 +20,13 @@ const Button = ({ text, isLoading = false, btnRole = '', ...otherProps }) => {
 
 Button.defaultProps = {
   btnRole: '',
-  isLoading: false
+  isLoading: false,
+  disabled: false
 };
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   btnRole: PropTypes.string,
   isLoading: PropTypes.bool
 };

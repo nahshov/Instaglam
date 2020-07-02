@@ -12,7 +12,7 @@
 .content {
   @include flexCenter;
   justify-content: space-between;
-  width: 60%;
+  width: 70%;
 
   @include respond(tab-port) {
     width: 90%;

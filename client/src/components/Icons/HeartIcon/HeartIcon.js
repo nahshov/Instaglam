@@ -1,7 +1,6 @@
 import React from 'react';
-import styles from 'components/Icons/HeartIcon/HeartIcon.module.scss';
 import { AiOutlineHeart } from 'react-icons/ai';
 
-const HeartIcon = () => <AiOutlineHeart className={styles.HeartIcon} />;
+const HeartIcon = ({ ...otherProps }) => <AiOutlineHeart {...otherProps} />;
 
 export default HeartIcon;

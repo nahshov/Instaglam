@@ -1,0 +1,6 @@
+@import '../../styles/mixins.scss';
+
+.container{
+    @include container;
+    padding-top:30px;
+}

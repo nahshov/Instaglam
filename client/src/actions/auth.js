@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
+  AUTHENTICATED_USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -32,7 +32,9 @@ export const register = ({ fullName, email, username, password }) => async (
       type: REGISTER_SUCCESS,
       payload: res.data
     });
+    console.log(res.data);
   } catch (error) {
+    console.log(error);
     const { errors } = error.response.data;
 
     if (errors) {
@@ -56,7 +58,7 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios.get('/api/me');
 
     dispatch({
-      type: USER_LOADED,
+      type: AUTHENTICATED_USER_LOADED,
       payload: res.data
     });
   } catch (error) {

@@ -53,7 +53,7 @@ const SearchInput = () => {
                     style={{ cursor: 'pointer', width: '100%' }}
                   >
                     <ProfilePic
-                      url={user.profilePic}
+                      url={!loading ? user.profilePic : ''}
                       className={!loading ? styles.searchProfilePic : ''}
                     />
                     <span>{user.username}</span>
