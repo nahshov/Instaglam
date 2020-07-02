@@ -19,12 +19,12 @@ export const register = ({ fullName, email, username, password }) => async (
     }
   };
 
-  const body = JSON.stringify({
+  const body = {
     fullName,
     email,
     username,
     password
-  });
+  };
 
   try {
     const res = await axios.post('/api/register', body, config);
@@ -75,7 +75,7 @@ export const login = ({ email, password }) => async (dispatch) => {
     }
   };
 
-  const body = JSON.stringify({ email, password });
+  const body = { email, password };
 
   try {
     const res = await axios.post('/api/login', body, config);
