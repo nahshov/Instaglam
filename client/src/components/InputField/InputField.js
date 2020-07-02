@@ -3,19 +3,26 @@ import PropTypes from 'prop-types';
 import styles from 'components/InputField/InputField.module.scss';
 
 const InputField = ({
-  text,
-  type,
+  text = '',
+  type = '',
   name,
   onChange,
   onClick,
   icon,
   content,
-  withButton
+  classInput,
+  classSpan,
+  withButton = false
 }) => (
   <div className={styles.fieldDiv}>
     <label className={styles.label}>
-      <input type={type} name={name} onChange={onChange} required />
-      <span>{text}</span>
+      <input
+        type={type}
+        name={name}
+        onChange={onChange}
+        className={classInput}
+      />
+      <span className={classSpan}>{text}</span>
     </label>
     <div className={styles.insideInputDiv}>
       <div className={styles.iconDiv}>
@@ -33,18 +40,21 @@ const InputField = ({
 );
 
 InputField.defaultProps = {
-  icon: PropTypes.func
+  type: '',
+  onClick: PropTypes.func,
+  content: '',
+  withButton: false
 };
 
 InputField.propTypes = {
   text: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
-  withButton: PropTypes.bool.isRequired,
-  icon: PropTypes.func
+  onClick: PropTypes.func,
+  content: PropTypes.string,
+  withButton: PropTypes.bool,
+  icon: PropTypes.element
 };
 
 export default InputField;

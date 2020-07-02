@@ -23,12 +23,16 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
-    "func-names": "off",
+    "linebreak-style": 0,
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
-    "indent": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "react/jsx-indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],
     "consistent-return": "off",

@@ -17,6 +17,12 @@
   align-items: center;
 }
 
+@mixin container {
+  width: 70%;
+  padding: 30px 20px 0;
+  margin: 0 auto;
+}
+
 /* MEDIA QUERY MANAGER
 
 phones: 0 - 600px

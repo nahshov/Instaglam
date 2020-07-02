@@ -27,59 +27,8 @@
   .label {
     display: flex;
     width: 100%;
-
-    span {
-      color: $secondary-text-color;
-      font-size: 16px;
-      line-height: 42px;
-      overflow: hidden;
-      position: absolute;
-      padding-left: 10px;
-      transition: all 0.2s ease-in-out;
-      text-align: center;
-      cursor: text;
-
-      @include respond(phone) {
-        font-size: 14px;
-      }
-    }
-
-    input {
-      padding-left: 8px;
-      padding-bottom: 7px;
-      padding-top: 9px;
-      width: 100%;
-      outline: none;
-      font-size: 20px;
-      border: none;
-      background-color: $primary-background;
-
-      &:valid {
-        padding-left: 8px;
-        padding-bottom: 5px;
-        padding-top: 20px;
-        outline: none;
-        width: 100%;
-        font-size: 12px;
-        border-radius: 5px;
-        border-radius: 5px;
-      }
-
-      &:valid ~ span {
-        color: $secondary-text-color;
-        font-size: 12px;
-        padding-left: 10px;
-        position: absolute;
-        letter-spacing: 1px;
-        line-height: 25px;
-        transition: all 0.1s ease-in-out;
-
-        @include respond(phone) {
-          font-size: 10px;
-        }
-      }
-    }
   }
+
   .insideInputDiv {
     display: flex;
     justify-content: flex-end;
