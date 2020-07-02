@@ -7,7 +7,9 @@
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb"
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -23,6 +25,7 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "import/no-unresolved": "off",
     "linebreak-style": 0,
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
@@ -59,8 +62,14 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["src"]
+      "webpack": {
+        "config": {
+          "resolve": {
+            "paths": ["src"],
+            "extensions": [".js", ".scss", "json"],
+            "modules": ["node_modules"]
+          }
+        }
       }
     }
   }
