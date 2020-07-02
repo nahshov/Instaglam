@@ -1,13 +1,13 @@
 @import '../../styles/mixins.scss';
 @import '../../styles/color-palette.scss';
 
+
+
 .postContainer{
-    margin: 0 auto;
     width: 60%;
     border: 2px solid $primary-border-color;
     border-bottom: 1px solid $secondary-border-color;
     border-radius: 3px;
-    margin-top: 20px;
     height: 50px;
 }
 

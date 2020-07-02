@@ -13,7 +13,6 @@ const AuthSwitch = ({ hasAccountText, linkText }) => {
     if (alert.message !== '') {
       dispatch(setAlert('', null));
     }
-    return;
   };
 
   return (
