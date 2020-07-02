@@ -62,7 +62,11 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
             content={buttonText}
           />
 
-          <Button text="Log In" disabled={checkDisabled()} />
+          <Button
+            text="Log In"
+            disabled={checkDisabled()}
+            btnRole="primary btnBlock"
+          />
           <ErrorMsg errorMessage="bla bla bla" />
         </form>
       </div>

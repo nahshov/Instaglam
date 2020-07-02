@@ -1,6 +1,6 @@
-@import '../../styles/color-palette.scss';
-@import '../../styles/mixins.scss';
-@import '../../styles/typography.scss';
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/typography.scss';
 
 .NavLinks {
   display: flex;
@@ -67,4 +67,9 @@
     top: 13px;
     right: 20px;
   }
+}
+
+.ProfilePic {
+  composes: profilePicLink;
+  overflow: hidden;
 }

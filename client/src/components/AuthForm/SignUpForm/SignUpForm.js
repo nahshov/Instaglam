@@ -43,6 +43,9 @@ const SignUpForm = ({
     e.preventDefault();
     try {
       const result = await register(signUpForm);
+      if (alert.length > 0) {
+        console.log(alert[0].message);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -90,8 +93,12 @@ const SignUpForm = ({
             withButton
             icon={<CheckIcon />}
           />
-          <Button text="Sign Up" disabled={checkDisabled()} />
-          <Alert alerts="bla" />
+          <Button
+            text="Sign Up"
+            disabled={checkDisabled()}
+            btnRole="primary btnBlock"
+          />
+          {alert.length > 0 ? <Alert alerts={alert[0].message} /> : null}
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />
@@ -101,7 +108,7 @@ const SignUpForm = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  alert: state.alert[0]
+  alert: state.alert
 });
 
 SignUpForm.propTypes = {

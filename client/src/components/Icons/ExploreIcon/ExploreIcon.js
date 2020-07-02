@@ -4,7 +4,7 @@ import styles from 'components/Icons/ExploreIcon/ExploreIcon.module.scss';
 import { FaCompass } from 'react-icons/fa';
 import { FiCompass } from 'react-icons/fi';
 
-const ExploreIcon = ({ match }) => (
+const ExploreIcon = ({ match = false }) => (
   <>
     {match ? (
       <FaCompass className={styles.ExploreIcon} />
@@ -14,8 +14,12 @@ const ExploreIcon = ({ match }) => (
   </>
 );
 
+ExploreIcon.defaultProps = {
+  match: false
+};
+
 ExploreIcon.propTypes = {
-  match: PropTypes.bool.isRequired
+  match: PropTypes.bool
 };
 
 export default ExploreIcon;

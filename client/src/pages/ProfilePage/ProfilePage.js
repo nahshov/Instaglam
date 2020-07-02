@@ -1,37 +1,47 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Redirect, useLocation } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
-import { Redirect } from 'react-router-dom';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { logout } from '../../actions/auth';
+import { searchUser } from '../../actions/users';
 
-const ProfilePage = ({ auth: { isAuthenticated, loading }, logout }) => {
-  if (!isAuthenticated && !loading) {
+const ProfilePage = () => {
+  const {
+    auth: { isAuthenticated, loading: authLoading },
+    users: { user, loading: userLoading }
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
+  const { pathname } = useLocation();
+
+  const username = pathname.split('/')[1];
+
+  useEffect(() => {
+    dispatch(searchUser(username));
+  }, [pathname]);
+
+  if (!isAuthenticated && !authLoading) {
     return <Redirect to="/accounts/login" />;
   }
 
   return (
-    <div>
-      ProfilePage
-      <button
-        type="button"
-        onClick={async () => {
-          logout();
-        }}
-      >
-        LOGOUT
-      </button>
-    </div>
+    <main>
+      <div className={styles.container}>
+        <header className={styles.profileHeader}>
+          <ProfilePic
+            url={!userLoading ? user.profilePic : ''}
+            className={!authLoading ? styles.profilePageProfilePic : ''}
+          />
+          <section className={styles.profileInfo}>.profile</section>
+        </header>
+        <button type="button" onClick={() => dispatch(logout())}>
+          Logout!
+        </button>
+      </div>
+    </main>
   );
 };
 
-ProfilePage.propTypes = {
-  auth: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { logout })(ProfilePage);
+export default ProfilePage;

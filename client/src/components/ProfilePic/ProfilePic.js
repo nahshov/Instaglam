@@ -1,26 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import styles from 'components/ProfilePic/ProfilePic.module.scss';
-import { loadUser } from 'actions/auth';
+import Spinner from 'assets/img/spinner.gif';
+import styles from './ProfilePic.module.scss';
 
-const ProfilePic = ({ auth: { user } }) => (
-  // Why profile pic is undefined when i try to assign it to img SRC
-
-  <div className={styles.ProfilePic}>
-    <img
-      alt="default profile pic"
-      src="https://orangesupplies.com/wp-content/uploads/2019/08/Author__Placeholder.png"
-      className={styles.profileImg}
-    />
+const ProfilePic = ({ url = '', className = '' }) => (
+  <div className={className}>
+    <img alt="default profile pic" src={url || Spinner} />
   </div>
 );
-ProfilePic.propTypes = {
-  auth: PropTypes.shape.isRequired
+
+ProfilePic.defaultProps = {
+  url: '',
+  // position: {},
+  className: ''
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
+ProfilePic.propTypes = {
+  url: PropTypes.string,
+  className: PropTypes.string
+};
 
-export default connect(mapStateToProps, { loadUser })(ProfilePic);
+export default ProfilePic;
