@@ -5,12 +5,13 @@ import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Button from 'components/Button/Button';
 import { logout } from '../../actions/auth';
-import { searchUser } from '../../actions/users';
+import { searchUser, loadPostsOfUser } from '../../actions/users';
 
 const ProfilePage = () => {
   const {
     auth: { isAuthenticated, loading: authLoading },
-    users: { user, loading: userLoading }
+    users: { user, loading: userLoading },
+    posts: { postsOfUser }
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const ProfilePage = () => {
   useEffect(() => {
     dispatch(searchUser(username));
   }, [pathname]);
+
+  useEffect(() => {
+    dispatch(loadPostsOfUser(user._id));
+  }, [user]);
 
   if (!isAuthenticated && !authLoading) {
     return <Redirect to="/accounts/login" />;
@@ -54,7 +59,7 @@ const ProfilePage = () => {
             </div>
             <ul className={styles.socialStatusList}>
               <li>
-                <span>{`${0} `}</span>
+                <span>{postsOfUser && `${postsOfUser.length} `}</span>
                 posts
               </li>
               <li>

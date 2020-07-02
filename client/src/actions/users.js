@@ -3,7 +3,11 @@ import {
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS_FAIL,
   SEARCH_USER_SUCCESS,
-  SEARCH_USER_FAIL
+  SEARCH_USER_FAIL,
+  POSTS_OF_USER_LOADED,
+  POSTS_OF_USER_LOADED_ERROR,
+  POSTS_LOADED,
+  POSTS_LOADED_ERROR
 } from './types';
 
 // Search users by email/username
@@ -44,6 +48,23 @@ export const searchUser = (searchParam) => async (dispatch) => {
     dispatch({
       type: SEARCH_USER_FAIL,
       payload: error.message
+    });
+  }
+};
+
+export const loadPostsOfUser = (userId) => async (dispatch) => {
+  try {
+    if (userId) {
+      const res = await axios.get(`/api/posts/${userId}`);
+
+      dispatch({
+        type: POSTS_OF_USER_LOADED,
+        payload: res.data
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: POSTS_OF_USER_LOADED_ERROR
     });
   }
 };
