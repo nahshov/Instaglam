@@ -1,21 +1,80 @@
+@import '../../styles/typography.scss';
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
 .container {
+  width: 70%;
   padding: 30px 20px 0;
-  margin: 0 4.5px;
-}
+  margin: 0 auto;
 
-.profileHeader {
-  display: flex;
-}
+  .profileHeader {
+    display: flex;
+    border-bottom: 1px solid $primary-border-color;
+    padding-bottom: 70px;
 
-.profilePageProfilePic {
-  width: 100px;
+    .profilePageProfilePic {
+      @include flexCenter;
+      flex: 2;
+      margin-right: 30px;
 
-  img {
-    width: 100%;
+      .changeProfilePicButton {
+        display: inline-block;
+        .profilePic {
+          display: inline-flex;
+          @include flexCenter;
+          height: auto;
+
+          img {
+            cursor: pointer;
+            width: 80%;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    .profileInfo {
+      display: flex;
+      flex-direction: column;
+      flex: 3;
+
+      .profileInfoHeader {
+        display: flex;
+        align-items: center;
+        font-size: $button-text;
+        margin-bottom: 20px;
+
+        .username {
+          font-size: $secondary-heading;
+          font-weight: 400;
+        }
+
+        .editLink {
+          display: flex;
+          align-items: center;
+          margin-left: 80px;
+        }
+
+        .logoutBtn {
+          padding: 3px 5px;
+          margin-left: 20px;
+        }
+      }
+
+      .socialStatusList {
+        display: flex;
+        margin-bottom: 20px;
+
+        & li {
+          margin-right: 40px;
+        }
+      }
+
+      .bioContainer {
+        .fullName {
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
-}
-
-.profileInfo {
-  display: flex;
-  flex-direction: column;
 }

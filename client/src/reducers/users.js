@@ -23,29 +23,28 @@ export default function (state = initialState, action) {
         loading: false,
         error: ''
       };
+    case SEARCH_USERS_FAIL:
+      return {
+        ...state,
+        users: [],
+        loading: false,
+        error: payload
+      };
     case SEARCH_USER_SUCCESS:
       return {
         ...state,
-        loading: false,
-        users: [],
         user: payload,
+        loading: false,
         error: ''
       };
     case SEARCH_USER_FAIL:
       return {
         ...state,
-        loading: false,
-        users: [],
         user: {},
-        error: payload
-      };
-    case SEARCH_USERS_FAIL:
-      return {
-        ...state,
         loading: false,
-        users: [],
         error: payload
       };
+
     default:
       return state;
   }

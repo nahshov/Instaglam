@@ -1,23 +1,21 @@
 @import '../../styles/color-palette.scss';
 @import '../../styles/mixins.scss';
+@import '../../styles/typography.scss';
 
 .btn {
   display: flex;
-  width: 100%;
   justify-content: center;
-  padding-top: 10px;
 
   & button {
-    border: none;
+    background: transparent;
+    font-weight: bold;
+    border: 1px solid $primary-border-color;
     border-radius: 4px;
+    padding: 5px 9px;
     height: 35px;
     outline: none;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: $button-text;
     cursor: pointer;
-    @include respond(phone) {
-      font-size: 15px;
-    }
 
     &:disabled {
       cursor: initial;
@@ -26,6 +24,7 @@
 }
 
 .btnBlock {
+  width: 100%;
   button {
     width: 100%;
   }
@@ -33,6 +32,7 @@
 
 .primary {
   button {
+    border: none;
     background-color: $primary-color;
     color: $color-white;
 
@@ -49,6 +49,7 @@
 
 .danger {
   & button {
+    border: none;
     background-color: $error-text-color;
     color: $color-white;
   }

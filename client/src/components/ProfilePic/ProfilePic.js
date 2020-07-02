@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
-import styles from 'components/ProfilePic/ProfilePic.module.scss';
 
 const ProfilePic = ({ url = '', className = '' }) => (
   <div className={className}>

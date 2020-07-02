@@ -33,7 +33,7 @@ const NavLinks = () => {
         activeClassName={styles.activeProfilePic}
       >
         <ProfilePic
-          url={user.profilePic}
+          url={!loading ? user.profilePic : ''}
           className={!loading ? styles.ProfilePic : ''}
         />
       </NavLink>
