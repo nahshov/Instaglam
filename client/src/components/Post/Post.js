@@ -6,7 +6,7 @@ const Post = () => (
   <article className={styles.postContainer}>
     <div className={styles.postHeader}>
       <div className={styles.userIdentifier}>
-        <profilePic />
+        <ProfilePic />
       </div>
     </div>
   </article>
