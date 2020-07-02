@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from 'components/Icons/ChatIcon/ChatIcon.module.scss';
 import { FaRegPaperPlane, FaPaperPlane } from 'react-icons/fa';
 
-const ChatIcon = ({ match = false }) => (
+const ChatIcon = ({ match = false, ...otherProps }) => (
   <>
     {match ? (
-      <FaPaperPlane className={styles.ChatIcon} />
+      <FaPaperPlane {...otherProps} />
     ) : (
-      <FaRegPaperPlane className={styles.ChatIcon} />
+      <FaRegPaperPlane {...otherProps} />
     )}
   </>
 );

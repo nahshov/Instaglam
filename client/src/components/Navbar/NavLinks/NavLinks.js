@@ -20,12 +20,12 @@ const NavLinks = () => {
       </CustomNavLink>
       <MobileSearchIcon />
       <CustomNavLink to="/direct/inbox" className={styles.chatLink}>
-        <ChatIcon />
+        <ChatIcon className={styles.ChatIcon} />
       </CustomNavLink>
       <CustomNavLink to="/explore">
         <ExploreIcon />
       </CustomNavLink>
-      <HeartIcon />
+      <HeartIcon className={styles.HeartIcon} />
       <NavLink
         exact
         to={!loading && `/${user.username}`}
