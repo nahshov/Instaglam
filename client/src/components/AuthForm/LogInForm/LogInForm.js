@@ -43,6 +43,7 @@ const LogInForm = () => {
     } else if (logInForm.password.length < 6 || logInForm.password === '') {
       dispatch(setAlert('Enter a password at least 6 characters long.'));
     } else {
+      setIsLoading(true);
       dispatch(login(logInForm));
       dispatch(setAlert('', null));
     }
