@@ -8,7 +8,7 @@ const InputField = ({
   name,
   onChange,
   onClick,
-  icon,
+  icon = '',
   content,
   classInput,
   classSpan,
@@ -44,7 +44,7 @@ InputField.defaultProps = {
   onClick: PropTypes.func,
   content: '',
   withButton: false,
-  icon: PropTypes.oneOfType([PropTypes.func, PropTypes.element])
+  icon: ''
 };
 
 InputField.propTypes = {
@@ -57,7 +57,7 @@ InputField.propTypes = {
   classInput: PropTypes.string.isRequired,
   classSpan: PropTypes.string.isRequired,
   withButton: PropTypes.bool,
-  icon: PropTypes.oneOfType([PropTypes.func, PropTypes.element])
+  icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
 };
 
 export default InputField;

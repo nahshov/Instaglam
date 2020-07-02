@@ -3,7 +3,7 @@
 .fieldDiv {
   width: 100%;
   min-height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -11,17 +11,13 @@
   border-radius: 5px;
   background-color: #fafafa;
 
+  @include respond(phone) {
+    height: 20px;
+  }
+
   &:focus-within {
     border: 1px solid $secondary-border-color;
     border-radius: 5px;
-
-    div {
-      display: none;
-    }
-
-    @include respond(phone) {
-      height: 20px;
-    }
   }
 
   .label {
