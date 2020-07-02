@@ -4,6 +4,7 @@
 
 .container {
   @include container;
+  padding: 30px 20px 0;
 
   .profileHeader {
     display: flex;
