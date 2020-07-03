@@ -110,3 +110,25 @@ export const logout = () => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const uploadProfilePic = (selectedFile) => async dispatch => {
+  try {
+    const fd = new FormData();
+    fd.append('profilePic', selectedFile);
+    await axios.post('/api/me/profilePic', fd);
+    dispatch(loadUser());
+    window.location.reload();
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const removeProfilePic = () => async dispatch => {
+  try {
+    await axios.delete('/api/me/profilePic');
+    dispatch(loadUser());
+    window.location.reload();
+  } catch (error) {
+    console.log(error.message);
+  }
+};

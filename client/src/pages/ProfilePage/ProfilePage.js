@@ -4,7 +4,7 @@ import { Redirect, useLocation, Link } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Button from 'components/Button/Button';
-import { logout } from 'actions/auth/authActions';
+import { logout, uploadProfilePic, removeProfilePic } from 'actions/auth/authActions';
 import { searchUser } from 'actions/users/userActions';
 import { loadPostsOfUser } from 'actions/posts/postActions';
 import Modal from 'components/Modals/Modal';
@@ -40,10 +40,23 @@ const ProfilePage = () => {
     return <Redirect to="/accounts/login" />;
   }
 
-  const handleProfilePicModalOpen = () => {
+  const toggleProfilePicModal = () => {
     if (username === authenticatedUser.username) {
       setSettingsModalOpen(!isSettingsModalOpen);
     }
+  };
+
+  const handleSelectedFile = (e) => {
+    if (e.target.files[0].size > 1000000) {
+      return console.log('The image is too large. The maximum size for an image is 1mb');
+    }
+    dispatch(uploadProfilePic(e.target.files[0]));
+    setSettingsModalOpen(false);
+  };
+
+  const removeCurrentPhoto = () => {
+    dispatch(removeProfilePic());
+    setSettingsModalOpen(false);
   };
 
   return (
@@ -52,22 +65,24 @@ const ProfilePage = () => {
         <ModalList>
           <h3>Change Profile Photo</h3>
           <ModalListItem>
+            <label htmlFor="profilePic" className={styles.uploadPhoto}>
+              {' '}
+              Upload Photo
+            </label>
+            <input type="file" id="profilePic" name="profilePic" onChange={handleSelectedFile} style={{ display: 'none' }} />
+          </ModalListItem>
+          <ModalListItem>
             <Button
-              btnRole="astext primary"
-              text="Upload Photo"
+              btnRole="astext danger btnBlock"
+              text="Remove Current Photo"
+              onClick={removeCurrentPhoto}
             />
           </ModalListItem>
           <ModalListItem>
             <Button
-              btnRole="astext danger"
-              text="Remove current photo"
-            />
-          </ModalListItem>
-          <ModalListItem>
-            <Button
-              btnRole="astext"
               text="Cancel"
-              onClick={() => handleProfilePicModalOpen()}
+              btnRole="astext btnBlock"
+              onClick={toggleProfilePicModal}
             />
           </ModalListItem>
         </ModalList>
@@ -78,7 +93,7 @@ const ProfilePage = () => {
             <button
               type="button"
               className={styles.changeProfilePicButton}
-              onClick={() => handleProfilePicModalOpen()}
+              onClick={toggleProfilePicModal}
             >
               {!userLoading && (
               <ProfilePic

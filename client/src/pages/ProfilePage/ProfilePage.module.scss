@@ -24,8 +24,9 @@
 
           img {
             cursor: pointer;
-            width: 80%;
             border-radius: 50%;
+            border: 1px solid $primary-border-color;
+            max-width: 150px;
           }
         }
       }
