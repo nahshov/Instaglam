@@ -1,4 +1,4 @@
-import { SET_ALERT } from '../actions/types';
+import { SET_ALERT } from 'actions/alerts/alertTypes';
 
 const initialState = {
   message: '',

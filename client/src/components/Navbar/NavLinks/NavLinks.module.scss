@@ -32,32 +32,32 @@
 }
 
 .profilePicLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 2px solid transparent;
+  @include flexCenter;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
   padding: 0;
 
-  & img {
+  .ProfilePic {
+    @include flexCenter;
+    flex: 1;
     width: inherit;
     height: inherit;
-    border-radius: 50%;
-    position: absolute;
+
+    img {
+      width: 28px;
+      height: 28px;
+      border-radius: 100%;
+      border: 2px solid transparent;
+    }
   }
 }
-
 .activeProfilePic {
-  composes: profilePicLink;
-  position: relative;
-
-  & img {
-    display: block;
-    border: 2px solid $color-black;
-    border-radius: 50%;
-    position: absolute;
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    border: 2px solid $color-black !important;
   }
 }
 
@@ -76,9 +76,4 @@
 .ChatIcon {
   font-size: $icon-medium-small;
   width: 23px;
-}
-
-.ProfilePic {
-  composes: profilePicLink;
-  overflow: hidden;
 }

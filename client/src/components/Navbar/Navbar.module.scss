@@ -10,9 +10,10 @@
 }
 
 .content {
-  @include flexCenter;
+  display: flex;
+  @include container;
+  align-items: center;
   justify-content: space-between;
-  width: 70%;
 
   @include respond(tab-port) {
     width: 90%;

@@ -1,9 +1,9 @@
 import {
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS_FAIL,
-  SEARCH_USER_SUCCESS,
-  SEARCH_USER_FAIL
-} from 'actions/types';
+  SEARCH_SINGLE_USER_SUCCESS,
+  SEARCH_SINGLE_USER_FAIL
+} from 'actions/users/userTypes';
 
 const initialState = {
   loading: true,
@@ -30,14 +30,14 @@ export default function (state = initialState, action) {
         loading: false,
         error: payload
       };
-    case SEARCH_USER_SUCCESS:
+    case SEARCH_SINGLE_USER_SUCCESS:
       return {
         ...state,
         user: payload,
         loading: false,
         error: ''
       };
-    case SEARCH_USER_FAIL:
+    case SEARCH_SINGLE_USER_FAIL:
       return {
         ...state,
         user: {},

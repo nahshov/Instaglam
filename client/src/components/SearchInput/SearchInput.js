@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUsers } from 'actions/users';
+import { searchUsers } from 'actions/users/userActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -45,7 +45,7 @@ const SearchInput = () => {
             {users.map((user) => (
               <PopoverListItem key={user.created}>
                 {loading ? (
-                  <LoadingSpinner />
+                  <LoadingSpinner className={styles.searchProfilePic} />
                 ) : (
                   <Link
                     to={`/${user.username}`}
@@ -53,8 +53,8 @@ const SearchInput = () => {
                     style={{ cursor: 'pointer', width: '100%' }}
                   >
                     <ProfilePic
-                      url={!loading ? user.profilePic : ''}
-                      className={!loading ? styles.searchProfilePic : ''}
+                      url={user.profilePic}
+                      className={styles.searchProfilePic}
                     />
                     <span>{user.username}</span>
                   </Link>

@@ -3,7 +3,7 @@ import {
   POSTS_LOADED_ERROR,
   POSTS_OF_USER_LOADED,
   POSTS_OF_USER_LOADED_ERROR
-} from 'actions/types';
+} from 'actions/posts/postTypes';
 
 const initialState = {
   loading: true,

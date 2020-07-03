@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setAlert } from 'actions/alert';
+import { setAlert } from 'actions/alerts/alertActions';
 import styles from 'components/AuthForm/AuthSwitch/AuthSwitch.module.scss';
 
 const AuthSwitch = ({ hasAccountText, linkText }) => {

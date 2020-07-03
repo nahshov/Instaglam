@@ -25,6 +25,8 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "no-useless-return": "off",
+    "arrow-parens": "off",
     "no-underscore-dangle": "off",
     "import/no-unresolved": "off",
     "linebreak-style": 0,

@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT
-} from '../actions/types';
+} from 'actions/auth/authTypes';
 
 const initialState = {
   isAuthenticated: false,
