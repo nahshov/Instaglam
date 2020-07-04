@@ -12,6 +12,8 @@ import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList';
 import ModalListItem from 'components/Modals/ModalListItem';
 import Alert from 'components/Alert/Alert';
+import { AiFillHeart } from 'react-icons/ai';
+import { BsChatFill } from 'react-icons/bs';
 
 const ProfilePage = () => {
   const {
@@ -151,7 +153,20 @@ const ProfilePage = () => {
           ) : (
             <div className={styles.profilePostsContainer}>
               {postsOfUser.map(post => (
-                <div key={post._id} className={styles.profilePost} style={{ background: `url(${post.media}) no-repeat center center / cover` }} />
+                <div key={post._id} className={styles.profilePost} style={{ background: `url(${post.media}) no-repeat center center / cover` }}>
+                  <div className={styles.profilePostOverlay}>
+                    <div className={styles.profilePostIconsContainer}>
+                      <div className={styles.profilePostLikes}>
+                        <AiFillHeart className={styles.profilePostLikeIcon} />
+                        <span className={styles.profilePostNumOfLikes}>{post.likes}</span>
+                      </div>
+                      <div className={styles.profilePostComments}>
+                        <BsChatFill className={styles.profilePostCommentsIcon} />
+                        <span className={styles.profilePostNumOfComments}>{post.comments}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           ) }

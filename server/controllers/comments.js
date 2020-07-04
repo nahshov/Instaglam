@@ -32,6 +32,9 @@ const addCommentToPost = async (req, res) => {
       user: req.user.sub,
       post: req.params.postId
     };
+    const post = await getPost(req.params.postId);
+    post.comments++;
+    await post.save();
     const response = await addComment(comment);
     return serverResponse(res, 200, response);
   } catch (error) {
@@ -47,6 +50,9 @@ const addCommentToPost = async (req, res) => {
 const removeCommentFromPost = async (req, res) => {
   try {
     const comment = await removeComment(req.params.commentId);
+    const post = await getPost(req.params.postId);
+    post.comments--;
+    await post.save();
     res.status(200).json(comment).end();
   } catch (error) {
     res
