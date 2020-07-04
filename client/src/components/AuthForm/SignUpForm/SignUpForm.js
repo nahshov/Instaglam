@@ -23,61 +23,61 @@ const SignUpForm = () => {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [emailIcon, setEmailIcon] = useState('');
-  const [fullNameIcon, setFullNameIcon] = useState('');
-  const [usernameIcon, setUsernameIcon] = useState('');
-  const [passwordIcon, setPasswordIcon] = useState('');
+  const [emailCheckOrError, setEmailCheckOrError] = useState('');
+  const [fullNameCheckOrError, setFullNameCheckOrError] = useState('');
+  const [usernameCheckOrError, setUsernameCheckOrError] = useState('');
+  const [passwordCheckOrError, setPasswordCheckOrError] = useState('');
   const {
     auth: { isAuthenticated, loading },
     alert
-  } = useSelector((state) => state);
+  } = useSelector(state => state);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!signUpForm.email) {
-      setEmailIcon('');
+      setEmailCheckOrError('');
     } else if (!isEmail(signUpForm.email)) {
-      setEmailIcon('Error');
+      setEmailCheckOrError('Error');
     } else {
-      setEmailIcon('Check');
+      setEmailCheckOrError('Check');
     }
 
     if (signUpForm.fullName) {
-      setFullNameIcon('Check');
+      setFullNameCheckOrError('Check');
     } else {
-      setFullNameIcon('');
+      setFullNameCheckOrError('');
     }
 
-    if (signUpForm.username.length && usernameIcon !== 'Error') {
-      setUsernameIcon('Check');
+    if (signUpForm.username.length && usernameCheckOrError !== 'Error') {
+      setUsernameCheckOrError('Check');
     } else {
-      setUsernameIcon('');
+      setUsernameCheckOrError('');
     }
 
     if (signUpForm.password.length >= 6) {
-      setPasswordIcon('Check');
+      setPasswordCheckOrError('Check');
     } else {
-      setPasswordIcon('');
+      setPasswordCheckOrError('');
     }
   }, [signUpForm]);
 
   const checkDisabled = () =>
     Object.values(signUpForm).some(
-      (value) => !value || signUpForm.password.length < 6
+      value => !value || signUpForm.password.length < 6
     );
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(signUpForm.email)) {
       dispatch(setAlert('Enter a valid email address.', 'Error'));
     } else if (signUpForm.password.length < 6) {
       dispatch(setAlert('Create a password at least 6 characters long.'));
-    } else if (signUpForm.fullName === '' || signUpForm.username === '') {
+    } else if (!signUpForm.fullName || !signUpForm.username) {
       dispatch(setAlert('Full Name/Username are required fields'));
     } else {
       setIsLoading(true);
@@ -92,17 +92,17 @@ const SignUpForm = () => {
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
-  const whichEmailIcon =
+  const emailValidationIcon =
     alert.message !== `Another account is using ${signUpForm.email}` &&
-    emailIcon === 'Check' ? (
+    emailCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
     );
 
-  const whichUsernameIcon =
+  const usernameValidationIcon =
     alert.message !== "This username isn't available. Please try another." &&
-    usernameIcon === 'Check' ? (
+    usernameCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
@@ -118,7 +118,7 @@ const SignUpForm = () => {
             name="email"
             onChange={handleChange}
             withButton={false}
-            inputFieldIcon={!emailIcon ? null : whichEmailIcon}
+            inputFieldIcon={emailCheckOrError && emailValidationIcon}
             classInput={
               signUpForm.email ? styles.activeInput : styles.defaultInput
             }
@@ -133,7 +133,7 @@ const SignUpForm = () => {
             name="fullName"
             onChange={handleChange}
             withButton={false}
-            inputFieldIcon={fullNameIcon === 'Check' ? <CheckIcon /> : null}
+            inputFieldIcon={fullNameCheckOrError === 'Check' && <CheckIcon />}
             classInput={
               signUpForm.fullName ? styles.activeInput : styles.defaultInput
             }
@@ -148,7 +148,7 @@ const SignUpForm = () => {
             name="username"
             onChange={handleChange}
             withButton={false}
-            inputFieldIcon={!usernameIcon ? null : whichUsernameIcon}
+            inputFieldIcon={usernameCheckOrError && usernameValidationIcon}
             classInput={
               signUpForm.username ? styles.activeInput : styles.defaultInput
             }
@@ -166,7 +166,7 @@ const SignUpForm = () => {
             onClick={() => setShowPass(!showPass)}
             btnText={buttonText}
             withButton
-            inputFieldIcon={passwordIcon === 'Check' ? <CheckIcon /> : null}
+            inputFieldIcon={passwordCheckOrError === 'Check' && <CheckIcon />}
             classInput={
               signUpForm.password ? styles.activeInput : styles.defaultInput
             }
@@ -178,11 +178,12 @@ const SignUpForm = () => {
           />
           <Button
             btnType="submit"
-            text="Sign Up"
             disabled={checkDisabled()}
             isLoading={!loading ? false : isLoading}
             btnRole="primary btnBlock"
-          />
+          >
+            Sign Up
+          </Button>
           {alert.message && <Alert alerts={alert.message} />}
         </form>
       </div>

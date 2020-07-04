@@ -97,16 +97,18 @@ const ProfilePage = () => {
           <ModalListItem>
             <Button
               btnRole="astext danger btnBlock"
-              text="Remove Current Photo"
               onClick={removeCurrentPhoto}
-            />
+            >
+              Remove Current Photo
+            </Button>
           </ModalListItem>
           <ModalListItem>
             <Button
-              text="Cancel"
               btnRole="astext btnBlock"
               onClick={toggleProfilePicModal}
-            />
+            >
+              Cancel
+            </Button>
           </ModalListItem>
         </ModalList>
       </Modal>
@@ -131,14 +133,15 @@ const ProfilePage = () => {
             <div className={styles.profileInfoHeader}>
               <h2 className={styles.username}>{searchedUser.username}</h2>
               <Link className={styles.editLink} to="/accounts/edit">
-                <Button text="Edit Profile" />
+                <Button>Edit Profile</Button>
               </Link>
               <Button
                 className={styles.logoutBtn}
                 btnRole="danger"
-                text="Logout"
                 onClick={() => dispatch(logout())}
-              />
+              >
+                Logout
+              </Button>
             </div>
             <ul className={styles.socialStatusList}>
               <li>

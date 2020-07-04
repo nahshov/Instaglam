@@ -23,19 +23,20 @@ const LogInForm = () => {
   const {
     auth: { isAuthenticated, loading },
     alert
-  } = useSelector((state) => state);
+  } = useSelector(state => state);
 
   const dispatch = useDispatch();
 
-  const checkDisabled = () => Object.values(logInForm).some(
-    (value) => !value || logInForm.password.length < 6
-  );
+  const checkDisabled = () =>
+    Object.values(logInForm).some(
+      value => !value || logInForm.password.length < 6
+    );
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(logInForm.email)) {
       dispatch(setAlert('Enter a valid email address.', 'Error'));
@@ -53,7 +54,7 @@ const LogInForm = () => {
   }
 
   const inputType = showPass ? 'text' : 'password';
-  const buttonText = showPass ? 'Hide' : 'Show';
+  const showPassBtn = showPass ? 'Hide' : 'Show';
 
   return (
     <div className={styles.authWrapper}>
@@ -80,7 +81,7 @@ const LogInForm = () => {
             onClick={() => {
               setShowPass(!showPass);
             }}
-            btnText={buttonText}
+            btnText={showPassBtn}
             classInput={
               logInForm.password ? styles.activeInput : styles.defaultInput
             }
@@ -93,12 +94,13 @@ const LogInForm = () => {
           />
           <Button
             btnType="submit"
-            text="Log In"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
             isLoading={!loading ? false : isLoading}
-          />
-          {!alert.message ? null : <Alert alerts={alert.message} />}
+          >
+            Log In
+          </Button>
+          {alert.message && <Alert alerts={alert.message} />}
         </form>
       </div>
       <AuthSwitch
