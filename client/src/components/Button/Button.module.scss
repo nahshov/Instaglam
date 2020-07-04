@@ -3,7 +3,15 @@
 @import '../../styles/typography.scss';
 
 .btn {
-@include flexCenter;
+  display: flex;
+  justify-content: center;
+
+  &.astext {
+    & button {
+      border: none;
+    }
+  }
+
   & button {
     background: transparent;
     font-weight: bold;
@@ -43,6 +51,13 @@
       color: $color-white;
     }
   }
+
+  &.astext {
+    & button {
+      background: none;
+      color: $primary-color;
+    }
+  }
 }
 
 .danger {
@@ -50,5 +65,12 @@
     border: none;
     background-color: $error-text-color;
     color: $color-white;
+  }
+
+  &.astext {
+    & button {
+      background: none;
+      color: $error-text-color;
+    }
   }
 }

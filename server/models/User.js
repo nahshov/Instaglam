@@ -65,7 +65,6 @@ UserSchema.methods.toJSON = function toJSON() {
   delete userObject.password;
   delete userObject.salt;
   delete userObject.refreshTokenIdentifier;
-  delete userObject._id;
 
   return userObject;
 };

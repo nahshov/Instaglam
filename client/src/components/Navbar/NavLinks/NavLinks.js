@@ -8,6 +8,7 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import MobileSearchIcon from 'components/Icons/MobileSearchIcon/MobileSearchIcon';
 import CustomNavLink from 'components/Navbar/CustomNavLink/CustomNavLink';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './NavLinks.module.scss';
 
 const NavLinks = () => {
@@ -32,10 +33,12 @@ const NavLinks = () => {
         className={styles.profilePicLink}
         activeClassName={styles.activeProfilePic}
       >
-        <ProfilePic
-          url={!loading ? user.profilePic : ''}
-          className={!loading ? styles.ProfilePic : ''}
-        />
+        {loading ? <LoadingSpinner /> : (
+          <ProfilePic
+            url={user.profilePic}
+            className={styles.ProfilePic}
+          />
+        ) }
       </NavLink>
     </div>
   );

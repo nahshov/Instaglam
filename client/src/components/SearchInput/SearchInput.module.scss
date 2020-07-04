@@ -19,7 +19,43 @@
     height: 100%;
     border: none;
     outline: none;
-    color: inherit;
+    caret-color: $color-black;
+    padding: 20px;
+
+    &:focus:not(:valid) {
+      + .searchLabel {
+        justify-content: space-between;
+
+        .searchIcon {
+          margin: 0 4px;
+        }
+      }
+    }
+
+    &:focus:valid {
+      color: $color-black;
+
+      + .searchLabel {
+        .searchText {
+          visibility: hidden;
+        }
+
+        .searchIcon {
+          margin: 0 4px;
+        }
+        justify-content: space-between;
+      }
+    }
+
+    &:not(:focus):valid {
+      color: transparent;
+
+      + .searchLabel {
+        .searchIcon {
+          transform: translateY(1px);
+        }
+      }
+    }
 
     &:hover ~ .deleteIconWrapper {
       visibility: visible;
@@ -31,45 +67,23 @@
       cursor: pointer;
       z-index: 3;
     }
-
-    &:focus {
-      padding-left: 25px;
-      color: $color-black;
-      + .searchLabel {
-        justify-content: space-between;
-      }
-    }
-
-    &:valid {
-      + .searchLabel .searchText {
-        opacity: 0;
-      }
-    }
-
-    &:not(:focus):valid {
-      text-align: center;
-
-      + .searchLabel {
-        justify-content: flex-start;
-        .searchText {
-          display: none;
-        }
-      }
-    }
   }
+
   .searchLabel {
     @include flexCenter;
-    padding-left: 10px;
     position: absolute;
-    width: 80%;
+    text-align: center;
+    width: 100%;
     z-index: 2;
     cursor: text;
 
+    > div {
+      @include flexCenter;
+      margin-right: 10px;
+    }
+
     .searchIcon {
-      font-size: 15px;
-      line-height: 20px;
-      transform: translateY(-1.5px) scale(0.9);
-      vertical-align: middle;
+      font-size: 12px;
     }
 
     .searchText {
@@ -89,6 +103,10 @@
     color: $secondary-text-color;
     opacity: 1;
     font-size: 20px;
+
+    img {
+      width: 15px;
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { SET_ALERT } from './types';
+import { SET_ALERT } from './alertTypes';
 
 export const setAlert = (message, alertType) => (dispatch) => {
   dispatch({

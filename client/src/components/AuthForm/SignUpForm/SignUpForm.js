@@ -9,8 +9,8 @@ import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
-import { register } from 'actions/auth';
-import { setAlert } from 'actions/alert';
+import { register } from 'actions/auth/authActions';
+import { setAlert } from 'actions/alerts/alertActions';
 import styles from './SignUpForm.module.scss';
 
 const SignUpForm = () => {

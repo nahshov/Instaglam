@@ -7,14 +7,14 @@ import ProfilePage from 'pages/ProfilePage/ProfilePage';
 import SignUpForm from 'components/AuthForm/SignUpForm/SignUpForm';
 import LogInForm from 'components/AuthForm/LogInForm/LogInForm';
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
-import { loadUser } from 'actions/auth';
+import { loadUser } from 'actions/auth/authActions';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>

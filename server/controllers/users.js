@@ -113,7 +113,8 @@ const deleteProfile = async (req, res) => {
 // @access  private
 const uploadProfilePic = async (req, res) => {
   try {
-    const buffer = await formatImage(req.file, 180);
+    if (!req.file) throw new Error('Could not receive file');
+    const buffer = await formatImage(req.file, 300);
 
     const [imgUrl, user] = await Promise.all([
       uploadFile(req.file.originalname, buffer),

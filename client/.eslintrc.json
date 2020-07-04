@@ -25,6 +25,10 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "no-nested-ternary": "off",
+    "no-useless-return": "off",
+    "arrow-parens": "off",
+    "no-underscore-dangle": "off",
     "import/no-unresolved": "off",
     "linebreak-style": 0,
     "import/prefer-default-export": "off",
