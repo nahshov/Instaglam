@@ -3,28 +3,35 @@ import PropTypes from 'prop-types';
 import styles from 'components/InputField/InputField.module.scss';
 
 const InputField = ({
-  text,
-  type,
+  placeHolderText = '',
+  type = '',
   name,
   onChange,
   onClick,
-  icon,
-  content,
-  withButton
+  inputFieldIcon = '',
+  btnText = '',
+  classInput,
+  classSpan,
+  withButton = false
 }) => (
   <div className={styles.fieldDiv}>
     <label className={styles.label}>
-      <input type={type} name={name} onChange={onChange} required />
-      <span>{text}</span>
+      <input
+        type={type}
+        name={name}
+        onChange={onChange}
+        className={classInput}
+      />
+      <span className={classSpan}>{placeHolderText}</span>
     </label>
     <div className={styles.insideInputDiv}>
       <div className={styles.iconDiv}>
-        <span>{icon}</span>
+        <span>{inputFieldIcon}</span>
       </div>
       {withButton && (
         <div className={styles.buttonDiv}>
           <button type="button" onClick={onClick}>
-            {content}
+            {btnText}
           </button>
         </div>
       )}
@@ -33,18 +40,24 @@ const InputField = ({
 );
 
 InputField.defaultProps = {
-  icon: PropTypes.func
+  type: '',
+  onClick: PropTypes.func,
+  btnText: '',
+  withButton: false,
+  inputFieldIcon: ''
 };
 
 InputField.propTypes = {
-  text: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  placeHolderText: PropTypes.string.isRequired,
+  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
-  withButton: PropTypes.bool.isRequired,
-  icon: PropTypes.func
+  onClick: PropTypes.func,
+  btnText: PropTypes.string,
+  classInput: PropTypes.string.isRequired,
+  classSpan: PropTypes.string.isRequired,
+  withButton: PropTypes.bool,
+  inputFieldIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
 };
 
 export default InputField;

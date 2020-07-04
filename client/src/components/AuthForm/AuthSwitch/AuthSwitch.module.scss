@@ -17,6 +17,7 @@
   @include respond(phone) {
     border: none;
     margin: 0;
+    height: 50px;
   }
 
   .paragraph {

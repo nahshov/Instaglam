@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from 'components/Navbar/Navbar';
-import { loadUser } from 'actions/auth';
+import { loadUser, logout } from 'actions/auth/authActions';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
@@ -11,14 +11,15 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     !loading && (
       <Route
         {...rest}
         render={(props) => {
-          if (!isAuthenticated && !loading) {
+          if (!isAuthenticated) {
+            dispatch(logout());
             return <Redirect to="/accounts/login" />;
           }
 

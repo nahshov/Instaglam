@@ -7,7 +7,9 @@
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb"
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -24,11 +26,15 @@
   "parser": "babel-eslint",
   "rules": {
     "func-names": "off",
+    "no-nested-ternary": "off",
+    "no-useless-return": "off",
+    "arrow-parens": "off",
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": "off",
+    "linebreak-style": 0,
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
-    "indent": "off",
-    "prettier/prettier": "error",
     "react/jsx-indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],
     "consistent-return": "off",
@@ -55,8 +61,14 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["src"]
+      "webpack": {
+        "config": {
+          "resolve": {
+            "paths": ["src"],
+            "extensions": [".js", ".scss", "json"],
+            "modules": ["node_modules"]
+          }
+        }
       }
     }
   }

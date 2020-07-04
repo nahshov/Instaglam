@@ -1,14 +1,19 @@
-import { SET_ALERT } from '../actions/types';
+import { SET_ALERT } from 'actions/alerts/alertTypes';
 
-const initialState = [];
+const initialState = {
+  message: '',
+  alertType: ''
+};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
     case SET_ALERT:
-      console.log(type, payload.message, payload.alertType);
-      return [...state, payload];
+      return {
+        message: payload.message,
+        alertType: payload.alertType
+      };
     default:
       return state;
   }

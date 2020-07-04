@@ -1,12 +1,12 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
+  AUTHENTICATED_USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT
-} from '../actions/types';
+} from 'actions/auth/authTypes';
 
 const initialState = {
   isAuthenticated: false,
@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case USER_LOADED:
+    case AUTHENTICATED_USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,

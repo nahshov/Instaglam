@@ -1,0 +1,8 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.enable": true,
+  "eslint.run": "onSave",
+  "eslint.validate": ["html", "javascript", "javascriptreact", "sass", "json"]
+}

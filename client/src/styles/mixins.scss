@@ -11,10 +11,27 @@
   align-items: center;
 }
 
+@mixin flexSpaceBetween{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flexStart{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
 @mixin flexColumn {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@mixin container {
+  width: 70%;
+  margin: 0 auto;
 }
 
 /* MEDIA QUERY MANAGER

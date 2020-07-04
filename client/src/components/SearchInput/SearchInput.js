@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUsers } from 'actions/users';
+import { searchUsers } from 'actions/users/userActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import Spinner from 'assets/img/spinner.gif';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
 
@@ -38,18 +38,14 @@ const SearchInput = () => {
       <Popover isPopoverOpen={isPopoverOpen}>
         {(!users.length || error) && !loading ? (
           <PopoverListItem style={{ justifyContent: 'center' }}>
-            <span className={styles.notFound}>{error}</span>
+            <span className={styles.notFound}>No results found.</span>
           </PopoverListItem>
         ) : (
           <PopoverList>
             {users.map((user) => (
               <PopoverListItem key={user.created}>
                 {loading ? (
-                  <img
-                    src={Spinner}
-                    alt="spinner"
-                    style={{ width: '30px', height: '30px' }}
-                  />
+                  <LoadingSpinner className={styles.searchProfilePic} />
                 ) : (
                   <Link
                     to={`/${user.username}`}
@@ -58,7 +54,7 @@ const SearchInput = () => {
                   >
                     <ProfilePic
                       url={user.profilePic}
-                      className={!loading ? styles.searchProfilePic : ''}
+                      className={styles.searchProfilePic}
                     />
                     <span>{user.username}</span>
                   </Link>
@@ -93,11 +89,7 @@ const SearchInput = () => {
         }}
       >
         {loading ? (
-          <img
-            src={Spinner}
-            alt="spinner"
-            style={{ width: '10px', height: '10px' }}
-          />
+          <LoadingSpinner className={styles.deleteIcon} />
         ) : (
           <TiDelete className={styles.deleteIcon} />
         )}

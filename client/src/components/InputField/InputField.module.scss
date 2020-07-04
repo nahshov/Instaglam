@@ -3,83 +3,31 @@
 .fieldDiv {
   width: 100%;
   min-height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 3px;
-  display: flex;
-  align-items: center;
+  @include flexCenter;
   border: 1px solid #dbdbdb;
   border-radius: 5px;
   background-color: #fafafa;
 
+  @include respond(phone) {
+    height: 20px;
+  }
+
   &:focus-within {
     border: 1px solid $secondary-border-color;
     border-radius: 5px;
+  }
 
-    div {
-      display: none;
-    }
-
-    @include respond(phone) {
-      height: 20px;
-    }
+  &:focus-within .iconDiv {
+    display: none;
   }
 
   .label {
-    display: flex;
+    display:flex;
     width: 100%;
-
-    span {
-      color: $secondary-text-color;
-      font-size: 16px;
-      line-height: 42px;
-      overflow: hidden;
-      position: absolute;
-      padding-left: 10px;
-      transition: all 0.2s ease-in-out;
-      text-align: center;
-      cursor: text;
-
-      @include respond(phone) {
-        font-size: 14px;
-      }
-    }
-
-    input {
-      padding-left: 8px;
-      padding-bottom: 7px;
-      padding-top: 9px;
-      width: 100%;
-      outline: none;
-      font-size: 20px;
-      border: none;
-      background-color: $primary-background;
-
-      &:valid {
-        padding-left: 8px;
-        padding-bottom: 5px;
-        padding-top: 20px;
-        outline: none;
-        width: 100%;
-        font-size: 12px;
-        border-radius: 5px;
-        border-radius: 5px;
-      }
-
-      &:valid ~ span {
-        color: $secondary-text-color;
-        font-size: 12px;
-        padding-left: 10px;
-        position: absolute;
-        letter-spacing: 1px;
-        line-height: 25px;
-        transition: all 0.1s ease-in-out;
-
-        @include respond(phone) {
-          font-size: 10px;
-        }
-      }
-    }
   }
+
   .insideInputDiv {
     display: flex;
     justify-content: flex-end;

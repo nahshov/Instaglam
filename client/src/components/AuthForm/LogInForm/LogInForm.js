@@ -1,39 +1,51 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { isEmail } from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
-import ErrorMsg from 'components/Alert/Alert';
+import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login as loginAction } from 'actions/auth';
+import { login } from 'actions/auth/authActions';
+import { setAlert } from 'actions/alerts/alertActions';
 import styles from './LogInForm.module.scss';
 
-const LogInForm = ({ login, isAuthenticated, loading }) => {
+const LogInForm = () => {
   const [logInForm, setLoginForm] = useState({
     email: '',
     password: ''
   });
   const [hasAccount] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const checkDisabled = () => {
-    const result = Object.values(logInForm).filter((value) => value !== '');
-    return result.length < 2 || logInForm.password.length < 6;
-  };
+  const {
+    auth: { isAuthenticated, loading },
+    alert
+  } = useSelector(state => state);
 
-  const handleChange = (e) => {
+  const dispatch = useDispatch();
+
+  const checkDisabled = () =>
+    Object.values(logInForm).some(
+      value => !value || logInForm.password.length < 6
+    );
+
+  const handleChange = e => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      login(logInForm);
-    } catch {
-      // @TODO: make error appear as a jsx element in error colors
-      throw new Error('Failed to log in');
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!isEmail(logInForm.email)) {
+      dispatch(setAlert('Enter a valid email address.', 'Error'));
+    } else if (logInForm.password.length < 6) {
+      dispatch(setAlert('Enter a password at least 6 characters long.'));
+    } else {
+      setIsLoading(true);
+      dispatch(login(logInForm));
+      dispatch(setAlert('', null));
     }
   };
 
@@ -42,16 +54,26 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
   }
 
   const inputType = showPass ? 'text' : 'password';
-  const buttonText = showPass ? 'Hide' : 'Show';
+  const showPassBtn = showPass ? 'Hide' : 'Show';
 
   return (
     <div className={styles.authWrapper}>
       <div className={styles.authDiv}>
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
-          <InputField text="Email" name="email" onChange={handleChange} />
           <InputField
-            text="Password"
+            placeHolderText="Email"
+            name="email"
+            onChange={handleChange}
+            classInput={
+              logInForm.email ? styles.activeInput : styles.defaultInput
+            }
+            classSpan={
+              logInForm.email ? styles.activeInputSpan : styles.defaultInputSpan
+            }
+          />
+          <InputField
+            placeHolderText="Password"
             type={inputType}
             name="password"
             onChange={handleChange}
@@ -59,15 +81,26 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
             onClick={() => {
               setShowPass(!showPass);
             }}
-            content={buttonText}
+            btnText={showPassBtn}
+            classInput={
+              logInForm.password ? styles.activeInput : styles.defaultInput
+            }
+            classSpan={
+              logInForm.password
+                ? styles.activeInputSpan
+                : styles.defaultInputSpan
+            }
+            logInForm
           />
-
           <Button
-            text="Log In"
+            btnType="submit"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
-          />
-          <ErrorMsg errorMessage="bla bla bla" />
+            isLoading={!loading ? false : isLoading}
+          >
+            Log In
+          </Button>
+          {alert.message && <Alert alerts={alert.message} />}
         </form>
       </div>
       <AuthSwitch
@@ -78,15 +111,4 @@ const LogInForm = ({ login, isAuthenticated, loading }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.loading
-});
-
-LogInForm.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps, { login: loginAction })(LogInForm);
+export default LogInForm;

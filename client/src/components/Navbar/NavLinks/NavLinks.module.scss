@@ -32,33 +32,35 @@
 }
 
 .profilePicLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 2px solid transparent;
+  @include flexCenter;
+  width: 24px;
+  height: 24px;
   border-radius: 100%;
   padding: 0;
 
-  & img {
+  .ProfilePic {
+    @include flexCenter;
+    flex: 1;
     width: inherit;
     height: inherit;
-    border-radius: 50%;
-    position: absolute;
+    border: 1px solid transparent;
+
+    img {
+      width: 22px;
+      height: 22px;
+      border-radius: 100%;
+      border: 1px solid transparent;
+    }
   }
 }
-
 .activeProfilePic {
-  composes: profilePicLink;
-  position: relative;
-
-  & img {
-    display: block;
-    border: 2px solid $color-black;
-    border-radius: 50%;
-    position: absolute;
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    border: 1px solid $color-black;
   }
+  border: 1px solid $color-black;
 }
 
 .chatLink {
@@ -69,7 +71,11 @@
   }
 }
 
-.ProfilePic {
-  composes: profilePicLink;
-  overflow: hidden;
+.HeartIcon {
+  font-size: $icon-medium-large;
+}
+
+.ChatIcon {
+  font-size: $icon-medium-small;
+  width: 23px;
 }

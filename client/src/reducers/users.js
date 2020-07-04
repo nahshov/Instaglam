@@ -1,9 +1,9 @@
 import {
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS_FAIL,
-  SEARCH_USER_SUCCESS,
-  SEARCH_USER_FAIL
-} from 'actions/types';
+  SEARCH_SINGLE_USER_SUCCESS,
+  SEARCH_SINGLE_USER_FAIL
+} from 'actions/users/userTypes';
 
 const initialState = {
   loading: true,
@@ -23,29 +23,28 @@ export default function (state = initialState, action) {
         loading: false,
         error: ''
       };
-    case SEARCH_USER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        users: [],
-        user: payload,
-        error: ''
-      };
-    case SEARCH_USER_FAIL:
-      return {
-        ...state,
-        loading: false,
-        users: [],
-        user: {},
-        error: payload
-      };
     case SEARCH_USERS_FAIL:
       return {
         ...state,
-        loading: false,
         users: [],
+        loading: false,
         error: payload
       };
+    case SEARCH_SINGLE_USER_SUCCESS:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+        error: ''
+      };
+    case SEARCH_SINGLE_USER_FAIL:
+      return {
+        ...state,
+        user: {},
+        loading: false,
+        error: payload
+      };
+
     default:
       return state;
   }

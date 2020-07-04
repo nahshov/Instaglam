@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Spinner from 'assets/img/spinner.gif';
-import styles from './ProfilePic.module.scss';
 
 const ProfilePic = ({ url = '', className = '' }) => (
   <div className={className}>
-    <img alt="default profile pic" src={url || Spinner} />
+    <img alt="default profile pic" src={url} />
   </div>
 );
 
 ProfilePic.defaultProps = {
   url: '',
-  // position: {},
   className: ''
 };
 

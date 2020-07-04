@@ -9,6 +9,7 @@ const {
 
 const Comment = require('../models/Comment');
 const serverResponse = require('../utils/serverResponse');
+const { getPost } = require('../services/post-services');
 
 // @route   GET '/api/posts/:postId/likes'
 // @desc    Get likes of a specific post
@@ -33,6 +34,9 @@ const addLikeToAPost = async (req, res) => {
       post: req.params.postId,
       user: req.user.sub
     });
+    const post = await getPost(req.params.postId);
+    post.likes++;
+    await post.save();
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -47,6 +51,9 @@ const addLikeToAPost = async (req, res) => {
 const deleteLikeFromAPost = async (req, res) => {
   try {
     const like = await removeLikeFromPost(req.user.sub);
+    const post = await getPost(req.params.postId);
+    post.likes--;
+    await post.save();
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 200, {
