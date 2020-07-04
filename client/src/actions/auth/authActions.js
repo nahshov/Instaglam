@@ -33,7 +33,6 @@ export const register = ({ fullName, email, username, password }) => async (
       payload: res.data
     });
   } catch (error) {
-    console.log(error);
     const { errors } = error.response.data;
 
     if (errors) {

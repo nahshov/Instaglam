@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
@@ -27,10 +27,9 @@ const LogInForm = () => {
 
   const dispatch = useDispatch();
 
-  const checkDisabled = () => {
-    const result = Object.values(logInForm).filter((value) => value !== '');
-    return result.length < 2 || logInForm.password.length < 6;
-  };
+  const checkDisabled = () => Object.values(logInForm).some(
+    (value) => !value || logInForm.password.length < 6
+  );
 
   const handleChange = (e) => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
@@ -38,9 +37,9 @@ const LogInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validator.isEmail(logInForm.email)) {
+    if (!isEmail(logInForm.email)) {
       dispatch(setAlert('Enter a valid email address.', 'Error'));
-    } else if (logInForm.password.length < 6 || logInForm.password === '') {
+    } else if (logInForm.password.length < 6) {
       dispatch(setAlert('Enter a password at least 6 characters long.'));
     } else {
       setIsLoading(true);
@@ -62,20 +61,18 @@ const LogInForm = () => {
         <AuthHeader hasAccount={hasAccount} />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
-            text="Email"
+            placeHolderText="Email"
             name="email"
             onChange={handleChange}
             classInput={
-              logInForm.email !== '' ? styles.activeInput : styles.defaultInput
+              logInForm.email ? styles.activeInput : styles.defaultInput
             }
             classSpan={
-              logInForm.email !== ''
-                ? styles.activeInputSpan
-                : styles.defaultInputSpan
+              logInForm.email ? styles.activeInputSpan : styles.defaultInputSpan
             }
           />
           <InputField
-            text="Password"
+            placeHolderText="Password"
             type={inputType}
             name="password"
             onChange={handleChange}
@@ -83,26 +80,25 @@ const LogInForm = () => {
             onClick={() => {
               setShowPass(!showPass);
             }}
-            content={buttonText}
+            btnText={buttonText}
             classInput={
-              logInForm.password !== ''
-                ? styles.activeInput
-                : styles.defaultInput
+              logInForm.password ? styles.activeInput : styles.defaultInput
             }
             classSpan={
-              logInForm.password !== ''
+              logInForm.password
                 ? styles.activeInputSpan
                 : styles.defaultInputSpan
             }
             logInForm
           />
           <Button
+            btnType="submit"
             text="Log In"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
             isLoading={!loading ? false : isLoading}
           />
-          {alert.message === '' ? null : <Alert alerts={alert.message} />}
+          {!alert.message ? null : <Alert alerts={alert.message} />}
         </form>
       </div>
       <AuthSwitch

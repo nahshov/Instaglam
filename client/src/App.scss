@@ -21,6 +21,10 @@ html {
   height: 100%;
   color: $primary-text-color;
   overflow: auto;
+
+  @media screen and (orientation: landscape) and (max-width: 850px) {
+    height: fit-content;
+  }
 }
 
 a {
