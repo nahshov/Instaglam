@@ -3,9 +3,7 @@
 @import '../../styles/typography.scss';
 
 .btn {
-  display: flex;
-  justify-content: center;
-
+@include flexCenter;
   & button {
     background: transparent;
     font-weight: bold;

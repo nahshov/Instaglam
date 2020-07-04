@@ -5,8 +5,7 @@
   min-height: 50px;
   margin-bottom: 10px;
   border-radius: 3px;
-  display: flex;
-  align-items: center;
+  @include flexCenter;
   border: 1px solid #dbdbdb;
   border-radius: 5px;
   background-color: #fafafa;
@@ -25,7 +24,7 @@
   }
 
   .label {
-    display: flex;
+    display:flex;
     width: 100%;
   }
 

@@ -8,7 +8,7 @@ import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import styles from './Post.module.scss';
 
 const Post = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  // const [isModalOpen, setIsModalOpen] = useState(true);
   return (
     <article className={styles.postContainer}>
       <header className={styles.headerPostContainer}>
@@ -31,6 +31,17 @@ const Post = () => {
         </div>
         <GrBookmark className={styles.bookMark} />
       </div>
+      <div className={styles.likesAmount}> **likes</div>
+      <div className={styles.postContentContainer}>
+        <span className={styles.username}> username </span>
+        <span>hey there i am using instaglam</span>
+      </div>
+      <a href="#" className={styles.postAge}>*** ***** AGO</a>
+      <section className={styles.commentContainer}>
+        <input className={styles.commentInput} />
+        <label className={styles.commentLabel}>Add a comment...</label>
+        <button type="submit" className={styles.postButton}>Post</button>
+      </section>
     </article>
   );
 };

@@ -2,9 +2,7 @@
 @import '../../styles/mixins.scss';
 
 .searchInputContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexSpaceBetween;
   position: relative;
   width: 215px;
   height: 25px;
