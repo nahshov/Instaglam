@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import styles from 'components/InputField/InputField.module.scss';
 
 const InputField = ({
-  text = '',
+  placeHolderText = '',
   type = '',
   name,
   onChange,
   onClick,
-  icon = '',
-  content,
+  inputFieldIcon = '',
+  btnText = '',
   classInput,
   classSpan,
   withButton = false
@@ -22,16 +22,16 @@ const InputField = ({
         onChange={onChange}
         className={classInput}
       />
-      <span className={classSpan}>{text}</span>
+      <span className={classSpan}>{placeHolderText}</span>
     </label>
     <div className={styles.insideInputDiv}>
       <div className={styles.iconDiv}>
-        <span>{icon}</span>
+        <span>{inputFieldIcon}</span>
       </div>
       {withButton && (
         <div className={styles.buttonDiv}>
           <button type="button" onClick={onClick}>
-            {content}
+            {btnText}
           </button>
         </div>
       )}
@@ -42,22 +42,22 @@ const InputField = ({
 InputField.defaultProps = {
   type: '',
   onClick: PropTypes.func,
-  content: '',
+  btnText: '',
   withButton: false,
-  icon: ''
+  inputFieldIcon: ''
 };
 
 InputField.propTypes = {
-  text: PropTypes.string.isRequired,
+  placeHolderText: PropTypes.string.isRequired,
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func,
-  content: PropTypes.string,
+  btnText: PropTypes.string,
   classInput: PropTypes.string.isRequired,
   classSpan: PropTypes.string.isRequired,
   withButton: PropTypes.bool,
-  icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
+  inputFieldIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
 };
 
 export default InputField;
