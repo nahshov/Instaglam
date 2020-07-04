@@ -12,7 +12,6 @@ import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList';
 import ModalListItem from 'components/Modals/ModalListItem';
 import Alert from 'components/Alert/Alert';
-import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 
 const ProfilePage = () => {
   const {
