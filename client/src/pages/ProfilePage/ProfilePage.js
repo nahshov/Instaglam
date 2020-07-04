@@ -5,17 +5,21 @@ import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Button from 'components/Button/Button';
 import { logout, uploadProfilePic, removeProfilePic } from 'actions/auth/authActions';
+import { setAlert } from 'actions/alerts/alertActions';
 import { searchUser } from 'actions/users/userActions';
 import { loadPostsOfUser } from 'actions/posts/postActions';
 import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList';
 import ModalListItem from 'components/Modals/ModalListItem';
+import Alert from 'components/Alert/Alert';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 
 const ProfilePage = () => {
   const {
     auth: { user: authenticatedUser, isAuthenticated, loading: authLoading },
     users: { user, loading: userLoading },
-    posts: { postsOfUser }
+    posts: { postsOfUser, loading: postsLoading },
+    alert: { message }
   } = useSelector((state) => state);
 
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
@@ -48,7 +52,11 @@ const ProfilePage = () => {
 
   const handleSelectedFile = (e) => {
     if (e.target.files[0].size > 1000000) {
-      return console.log('The image is too large. The maximum size for an image is 1mb');
+      dispatch(setAlert('The maximum size for a profile picture is 1mb', 'Error'));
+      setTimeout(() => {
+        dispatch(setAlert('', null));
+      }, 4500);
+      setSettingsModalOpen(false);
     }
     dispatch(uploadProfilePic(e.target.files[0]));
     setSettingsModalOpen(false);
@@ -60,13 +68,12 @@ const ProfilePage = () => {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <Modal isOpen={isSettingsModalOpen} setSettingsModalOpen={setSettingsModalOpen}>
         <ModalList>
           <h3>Change Profile Photo</h3>
           <ModalListItem>
             <label htmlFor="profilePic" className={styles.uploadPhoto}>
-              {' '}
               Upload Photo
             </label>
             <input type="file" id="profilePic" name="profilePic" onChange={handleSelectedFile} style={{ display: 'none' }} />
@@ -102,6 +109,7 @@ const ProfilePage = () => {
               />
               )}
             </button>
+            <Alert alerts={message} style={{ fontSize: '10px' }} />
           </div>
           <section className={styles.profileInfo}>
             <div className={styles.profileInfoHeader}>
@@ -136,6 +144,18 @@ const ProfilePage = () => {
             </div>
           </section>
         </header>
+        {!postsOfUser.length && !postsLoading
+          ? (
+            <div className={styles.noPostsUploaded}>
+              <h2>No posts uploaded yet...</h2>
+            </div>
+          ) : (
+            <div className={styles.profilePostsContainer}>
+              {postsOfUser.map(post => (
+                <div key={post._id} className={styles.profilePost} style={{ background: `url(${post.media}) no-repeat center center / cover` }} />
+              ))}
+            </div>
+          ) }
       </div>
     </main>
   );

@@ -52,21 +52,6 @@ export const register = ({ fullName, email, username, password }) => async (
   }
 };
 
-export const loadUser = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/api/me');
-
-    dispatch({
-      type: AUTHENTICATED_USER_LOADED,
-      payload: res.data
-    });
-  } catch (error) {
-    dispatch({
-      type: AUTH_ERROR
-    });
-  }
-};
-
 export const login = ({ email, password }) => async (dispatch) => {
   const config = {
     headers: {
@@ -108,6 +93,21 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/me');
+
+    dispatch({
+      type: AUTHENTICATED_USER_LOADED,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR
+    });
   }
 };
 

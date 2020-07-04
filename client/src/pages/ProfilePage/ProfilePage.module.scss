@@ -2,78 +2,111 @@
 @import '../../styles/color-palette.scss';
 @import '../../styles/mixins.scss';
 
-.container {
-  @include container;
-  padding: 40px 20px 0;
+.main {
+  height: 100%;
 
-  .profileHeader {
-    display: flex;
-    border-bottom: 1px solid $primary-border-color;
-    padding-bottom: 70px;
+  .container {
+    @include container;
+    padding: 40px 20px 0;
+    height: 80%;
+    margin-bottom: 20px;
 
-    .profilePageProfilePic {
-      @include flexCenter;
-      flex: 2;
-      margin-right: 30px;
+    .profileHeader {
+      display: flex;
+      border-bottom: 1px solid $primary-border-color;
+      padding-bottom: 40px;
 
-      .changeProfilePicButton {
-        display: inline-block;
-        .profilePic {
-          display: inline-flex;
-          @include flexCenter;
+      .profilePageProfilePic {
+        @include flexColumn;
+        align-items: center;
+        flex: 2;
+        margin-right: 30px;
+        min-height: 240px;
 
-          img {
-            cursor: pointer;
-            border-radius: 50%;
-            border: 1px solid $primary-border-color;
-            max-width: 150px;
+        .changeProfilePicButton {
+          display: inline-block;
+          .profilePic {
+            display: inline-flex;
+            @include flexCenter;
+
+            img {
+              cursor: pointer;
+              border-radius: 50%;
+              border: 1px solid $primary-border-color;
+              max-width: 150px;
+            }
+          }
+        }
+      }
+
+      .profileInfo {
+        display: flex;
+        flex-direction: column;
+        flex: 4;
+
+        .profileInfoHeader {
+          display: flex;
+          align-items: center;
+          font-size: $button-text;
+          margin-bottom: 20px;
+
+          .username {
+            font-size: $secondary-heading;
+            font-weight: 400;
+          }
+
+          .editLink {
+            display: flex;
+            align-items: center;
+            margin-left: 80px;
+          }
+
+          .logoutBtn {
+            padding: 3px 5px;
+            margin-left: 20px;
+          }
+        }
+
+        .socialStatusList {
+          display: flex;
+          margin-bottom: 20px;
+
+          & li {
+            margin-right: 40px;
+          }
+        }
+
+        .bioContainer {
+          .fullName {
+            margin-bottom: 10px;
           }
         }
       }
     }
 
-    .profileInfo {
-      display: flex;
-      flex-direction: column;
-      flex: 3;
-
-      .profileInfoHeader {
-        display: flex;
-        align-items: center;
-        font-size: $button-text;
-        margin-bottom: 20px;
-
-        .username {
-          font-size: $secondary-heading;
-          font-weight: 400;
-        }
-
-        .editLink {
-          display: flex;
-          align-items: center;
-          margin-left: 80px;
-        }
-
-        .logoutBtn {
-          padding: 3px 5px;
-          margin-left: 20px;
-        }
-      }
-
-      .socialStatusList {
-        display: flex;
-        margin-bottom: 20px;
-
-        & li {
-          margin-right: 40px;
-        }
-      }
-
-      .bioContainer {
-        .fullName {
-          margin-bottom: 10px;
-        }
-      }
+    .profilePostsContainer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 300px;
+      column-gap: 20px;
+      row-gap: 28px;
+      margin: 50px 0;
     }
+
+    .noPostsUploaded {
+      color: rgba($secondary-text-color, 0.7);
+      padding: 30px;
+      height: 70%;
+      background: rgba($secondary-background, 0.7);
+    }
+  }
+
+  .uploadPhoto {
+    height: 35px;
+    line-height: 35px;
+    font-weight: bold;
+    color: $primary-color;
+    cursor: pointer;
+    width: 100%;
   }
 }

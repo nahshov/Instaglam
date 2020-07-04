@@ -25,6 +25,7 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "rules": {
+    "no-nested-ternary": "off",
     "no-useless-return": "off",
     "arrow-parens": "off",
     "no-underscore-dangle": "off",

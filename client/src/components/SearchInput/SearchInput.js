@@ -38,7 +38,7 @@ const SearchInput = () => {
       <Popover isPopoverOpen={isPopoverOpen}>
         {(!users.length || error) && !loading ? (
           <PopoverListItem style={{ justifyContent: 'center' }}>
-            <span className={styles.notFound}>{error}</span>
+            <span className={styles.notFound}>No results found.</span>
           </PopoverListItem>
         ) : (
           <PopoverList>
@@ -89,7 +89,7 @@ const SearchInput = () => {
         }}
       >
         {loading ? (
-          <LoadingSpinner />
+          <LoadingSpinner className={styles.deleteIcon} />
         ) : (
           <TiDelete className={styles.deleteIcon} />
         )}

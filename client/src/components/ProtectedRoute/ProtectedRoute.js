@@ -11,7 +11,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     !loading && (
