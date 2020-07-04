@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { isEmail } from 'validator';
@@ -34,13 +34,10 @@ const SignUpForm = () => {
 
   const dispatch = useDispatch();
 
-  const checkDisabled = () => Object.values(signUpForm).some(
-    (value) => !value || signUpForm.password.length < 6
-  );
-
-  const handleChange = (e) => {
-    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
-    if (!isEmail(signUpForm.email)) {
+  useEffect(() => {
+    if (!signUpForm.email) {
+      setEmailIcon('');
+    } else if (!isEmail(signUpForm.email)) {
       setEmailIcon('Error');
     } else {
       setEmailIcon('Check');
@@ -52,17 +49,26 @@ const SignUpForm = () => {
       setFullNameIcon('');
     }
 
-    if (signUpForm.username.length) {
+    if (signUpForm.username.length && usernameIcon !== 'Error') {
       setUsernameIcon('Check');
     } else {
       setUsernameIcon('');
     }
 
-    if (signUpForm.password.length > 6) {
+    if (signUpForm.password.length >= 6) {
       setPasswordIcon('Check');
     } else {
       setPasswordIcon('');
     }
+  }, [signUpForm]);
+
+  const checkDisabled = () =>
+    Object.values(signUpForm).some(
+      (value) => !value || signUpForm.password.length < 6
+    );
+
+  const handleChange = (e) => {
+    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -79,20 +85,24 @@ const SignUpForm = () => {
       dispatch(setAlert('', null));
     }
   };
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
-  const whichEmailIcon = alert.message !== `Another account is using ${signUpForm.email}`
-    && emailIcon === 'Check' ? (
+  const whichEmailIcon =
+    alert.message !== `Another account is using ${signUpForm.email}` &&
+    emailIcon === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
     );
-  const whichUsernameIcon = alert.message !== "This username isn't available. Please try another."
-    && usernameIcon === 'Check' ? (
+
+  const whichUsernameIcon =
+    alert.message !== "This username isn't available. Please try another." &&
+    usernameIcon === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />

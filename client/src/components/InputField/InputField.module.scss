@@ -20,6 +20,10 @@
     border-radius: 5px;
   }
 
+  &:focus-within .iconDiv {
+    display: none;
+  }
+
   .label {
     display: flex;
     width: 100%;
