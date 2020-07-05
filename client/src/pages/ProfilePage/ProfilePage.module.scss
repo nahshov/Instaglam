@@ -3,8 +3,6 @@
 @import '../../styles/mixins.scss';
 
 .main {
-  height: 100%;
-
   .container {
     @include container;
     padding: 40px 20px 0;
@@ -87,7 +85,7 @@
     .profilePostsContainer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 300px;
+      grid-auto-rows: minmax(300px, 1fr);
       column-gap: 20px;
       row-gap: 28px;
       margin: 50px 0;

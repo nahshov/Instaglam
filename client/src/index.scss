@@ -1,5 +1,4 @@
 @import './styles/typography.scss';
-@import './styles/color-palette.scss';
 
 body {
   margin: 0;
@@ -7,14 +6,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  width: 100%;
-  height: auto;
-}
-
-#root {
-  width: 100%;
-  background: $primary-background;
-  height: auto;
 }
 
 code {

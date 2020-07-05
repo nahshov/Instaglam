@@ -17,7 +17,7 @@ html {
 
 .App {
   width: 100%;
-  height: auto;
+  height: 100%;
   color: $primary-text-color;
 
   @media screen and (orientation: landscape) and (max-width: 850px) {
