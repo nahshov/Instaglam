@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Alert.module.scss';
 
 const Alert = ({ alerts, ...otherProps }) => (
-  <div className={styles.msgDiv}>
+  <div className={styles.msgDiv} {...otherProps}>
     <p>{alerts}</p>
   </div>
 );

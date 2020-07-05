@@ -7,9 +7,9 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import styles from './Post.module.scss';
 
-const Post = () => {
+const Post = () =>
   // const [isModalOpen, setIsModalOpen] = useState(true);
-  return (
+  (
     <article className={styles.postContainer}>
       <header className={styles.headerPostContainer}>
         <div className={styles.postHeader}>
@@ -44,6 +44,4 @@ const Post = () => {
       </section>
     </article>
   );
-};
-
 export default Post;

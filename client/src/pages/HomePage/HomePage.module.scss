@@ -1,7 +1,7 @@
 @import '../../styles/mixins.scss';
 
-.container{
-    @include container;
-    padding-top:30px;
-    height: 100%;
+.container {
+  @include container;
+  padding-top: 30px;
+  height: auto;
 }
