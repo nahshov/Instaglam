@@ -4,7 +4,6 @@
     "es6": true
   },
   "extends": [
-    "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
     "airbnb",
@@ -22,7 +21,9 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react"
+  ],
   "parser": "babel-eslint",
   "rules": {
     "func-names": "off",
@@ -35,10 +36,24 @@
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
-    "react/jsx-indent": ["error", 2],
-    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ],
     "consistent-return": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
     "comma-dangle": [
       "error",
       {
@@ -52,9 +67,15 @@
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "labelComponents": ["CustomInputLabel"],
-        "labelAttributes": ["label"],
-        "controlComponents": ["CustomInput"],
+        "labelComponents": [
+          "CustomInputLabel"
+        ],
+        "labelAttributes": [
+          "label"
+        ],
+        "controlComponents": [
+          "CustomInput"
+        ],
         "depth": 3
       }
     ]
@@ -64,9 +85,17 @@
       "webpack": {
         "config": {
           "resolve": {
-            "paths": ["src"],
-            "extensions": [".js", ".scss", "json"],
-            "modules": ["node_modules"]
+            "paths": [
+              "src"
+            ],
+            "extensions": [
+              ".js",
+              ".scss",
+              "json"
+            ],
+            "modules": [
+              "node_modules"
+            ]
           }
         }
       }
