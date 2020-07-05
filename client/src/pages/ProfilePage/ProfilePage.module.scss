@@ -3,11 +3,12 @@
 @import '../../styles/mixins.scss';
 
 .main {
+  height: 100%;
+
   .container {
     @include container;
     padding: 40px 20px 0;
     height: 80%;
-    margin-bottom: 20px;
 
     .profileHeader {
       display: flex;
