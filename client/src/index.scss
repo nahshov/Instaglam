@@ -1,4 +1,5 @@
 @import './styles/typography.scss';
+@import './styles/color-palette.scss';
 
 *,
 *:before,
@@ -19,6 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+  background: $primary-background;
 }
 
 code {
