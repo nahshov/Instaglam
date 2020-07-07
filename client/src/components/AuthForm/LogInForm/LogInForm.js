@@ -27,10 +27,9 @@ const LogInForm = () => {
 
   const dispatch = useDispatch();
 
-  const checkDisabled = () =>
-    Object.values(logInForm).some(
-      value => !value || logInForm.password.length < 6
-    );
+  const checkDisabled = () => Object.values(logInForm).some(
+    value => !value || logInForm.password.length < 6
+  );
 
   const handleChange = e => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
@@ -93,7 +92,7 @@ const LogInForm = () => {
             logInForm
           />
           <Button
-            btnType="submit"
+            type="submit"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
             isLoading={!loading ? false : isLoading}
