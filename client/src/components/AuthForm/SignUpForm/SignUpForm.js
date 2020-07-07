@@ -92,15 +92,15 @@ const SignUpForm = () => {
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
   const emailValidationIcon = alert.message !== `Another account is using ${signUpForm.email}`
-  && emailCheckOrError === 'Check' ? (
-    <CheckIcon />
+    && emailCheckOrError === 'Check' ? (
+      <CheckIcon />
     ) : (
       <ErrorIcon />
     );
 
-  const usernameValidationIcon = alert.message !== 'This username isn\'t available. Please try another.'
-  && usernameCheckOrError === 'Check' ? (
-    <CheckIcon />
+  const usernameValidationIcon = alert.message !== "This username isn't available. Please try another."
+    && usernameCheckOrError === 'Check' ? (
+      <CheckIcon />
     ) : (
       <ErrorIcon />
     );
@@ -174,7 +174,7 @@ const SignUpForm = () => {
             }
           />
           <Button
-            btnType="submit"
+            type="submit"
             disabled={checkDisabled()}
             isLoading={!loading ? false : isLoading}
             btnRole="primary btnBlock"
