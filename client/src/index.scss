@@ -15,12 +15,19 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   font-family: $primary-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
   background: $primary-background;
+}
+
+body.modalOpen {
+  margin: 0;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 code {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useLocation, Link } from 'react-router-dom';
+import { Redirect, useLocation, Link, useHistory } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Button from 'components/Button/Button';
@@ -11,23 +11,27 @@ import {
 } from 'actions/auth/authActions';
 import { setAlert } from 'actions/alerts/alertActions';
 import { searchUser } from 'actions/users/userActions';
-import { loadPostsOfUser } from 'actions/posts/postActions';
-import Modal from 'components/Modals/Modal';
-import ModalList from 'components/Modals/ModalList';
-import ModalListItem from 'components/Modals/ModalListItem';
+import { loadPostsOfUser, searchPostById } from 'actions/posts/postActions';
+import SettingsModal from 'components/Modals/SettingsModal/SettingsModal';
+import SettingsModalList from 'components/Modals/SettingsModal/SettingsModalList';
+import SettingsModalListItem from 'components/Modals/SettingsModal/SettingsModalListItem';
 import Alert from 'components/Alert/Alert';
 import { AiFillHeart } from 'react-icons/ai';
 import { BsChatFill } from 'react-icons/bs';
+import PostModal from '../../components/Modals/PostModal/PostModal';
 
 const ProfilePage = () => {
   const {
     auth: { user: authenticatedUser, isAuthenticated, loading: authLoading },
     users: { user: searchedUser, loading: userLoading },
-    posts: { postsOfUser: postsOfSearchedUser, loading: postsLoading },
+    posts: { post: searchedPost, postsOfUser: postsOfSearchedUser, loading: postsLoading },
     alert: { message }
   } = useSelector(state => state);
 
+  const history = useHistory();
+
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [isPostModal, setIsPostModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,14 +40,11 @@ const ProfilePage = () => {
   const searchedUserUsername = pathname.split('/')[1];
 
   useEffect(() => {
-    dispatch(searchUser(searchedUserUsername));
-  }, [searchedUserUsername]);
-
-  useEffect(() => {
-    if (searchedUser) {
-      dispatch(loadPostsOfUser(searchedUser._id));
+    if ((!searchedUser._id || !postsOfSearchedUser.length)) {
+      dispatch(searchUser(searchedUserUsername));
+      dispatch(loadPostsOfUser(searchedUserUsername));
     }
-  }, [searchedUser]);
+  }, []);
 
   if (!isAuthenticated && !authLoading) {
     return <Redirect to="/accounts/login" />;
@@ -76,13 +77,13 @@ const ProfilePage = () => {
 
   return (
     <main className={styles.main}>
-      <Modal
+      <SettingsModal
         isOpen={isSettingsModalOpen}
-        setSettingsModalOpen={setSettingsModalOpen}
+        setModalOpen={setSettingsModalOpen}
       >
-        <ModalList>
+        <SettingsModalList>
           <h3>Change Profile Photo</h3>
-          <ModalListItem>
+          <SettingsModalListItem>
             <label htmlFor="profilePic" className={styles.uploadPhoto}>
               Upload Photo
             </label>
@@ -93,25 +94,25 @@ const ProfilePage = () => {
               onChange={handleSelectedFile}
               style={{ display: 'none' }}
             />
-          </ModalListItem>
-          <ModalListItem>
+          </SettingsModalListItem>
+          <SettingsModalListItem>
             <Button
               btnRole="astext danger btnBlock"
               onClick={removeCurrentPhoto}
             >
               Remove Current Photo
             </Button>
-          </ModalListItem>
-          <ModalListItem>
+          </SettingsModalListItem>
+          <SettingsModalListItem>
             <Button
               btnRole="astext btnBlock"
               onClick={toggleProfilePicModal}
             >
               Cancel
             </Button>
-          </ModalListItem>
-        </ModalList>
-      </Modal>
+          </SettingsModalListItem>
+        </SettingsModalList>
+      </SettingsModal>
       <div className={styles.container}>
         <header className={styles.profileHeader}>
           <div className={styles.profilePageProfilePic}>
@@ -178,8 +179,14 @@ const ProfilePage = () => {
                 style={{
                   background: `url(${post.media}) no-repeat center center / cover`
                 }}
+                onClick={() => {
+                  history.pushState({}, 'post modal path', `/p/${post._id}`);
+                  dispatch(searchPostById(post._id));
+                  setIsPostModal(!isPostModal);
+                }}
               >
                 <div className={styles.profilePostOverlay}>
+
                   <div className={styles.profilePostIconsContainer}>
                     <div className={styles.profilePostLikes}>
                       <AiFillHeart className={styles.profilePostLikeIcon} />
@@ -197,9 +204,19 @@ const ProfilePage = () => {
                 </div>
               </div>
             ))}
+            {searchedPost.media && (
+            <PostModal isOpen={isPostModal} setModalOpen={setIsPostModal}>
+              <div>
+                <img src={searchedPost.media} alt={searchedPost.content} />
+              </div>
+              <div />
+            </PostModal>
+            )}
           </div>
+
         )}
       </div>
+
     </main>
   );
 };
