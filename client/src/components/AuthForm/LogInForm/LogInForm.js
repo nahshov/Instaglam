@@ -92,7 +92,7 @@ const LogInForm = () => {
             logInForm
           />
           <Button
-            btnType="submit"
+            type="submit"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
             isLoading={!loading ? false : isLoading}
