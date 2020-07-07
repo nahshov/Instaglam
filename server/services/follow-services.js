@@ -1,11 +1,14 @@
 const Follow = require('../models/Follow.js');
 
 async function getUserFollowers(userId) {
-  const follows = await Follow.find({ user: userId }).populate(
-    'userFollowing',
-    'username'
-  );
-  const followersList = follows.map((follow) => follow.userFollowing.username);
+  const follows = await Follow.find({ user: userId }).populate('userFollowing');
+  const followersList = follows.map((follow) => {
+    return {
+      username: follow.userFollowing.username,
+      fullName: follow.userFollowing.fullName,
+      profilePic: follow.userFollowing.profilePic
+    };
+  });
   return followersList;
 }
 
