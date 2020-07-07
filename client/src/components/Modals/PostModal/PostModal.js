@@ -5,7 +5,7 @@ import styles from './PostModal.module.scss';
 
 const modalRoot = document.getElementById('modal');
 
-const PostModal = ({ children, setModalOpen, isOpen = false, ...otherProps }) => {
+const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherProps }) => {
   const node = useRef();
   const el = document.createElement('div');
 
@@ -20,6 +20,7 @@ const PostModal = ({ children, setModalOpen, isOpen = false, ...otherProps }) =>
 
     document.body.classList.remove('modalOpen');
 
+    window.history.pushState({}, 'post modal path', `/${username}`);
     setModalOpen(!isOpen);
   };
 
@@ -56,7 +57,8 @@ PostModal.propTypes = {
     PropTypes.node
   ]).isRequired,
   isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  setModalOpen: PropTypes.func.isRequired
+  setModalOpen: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default PostModal;

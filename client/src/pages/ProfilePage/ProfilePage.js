@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useLocation, Link, useHistory } from 'react-router-dom';
+import { Redirect, useLocation, Link } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Button from 'components/Button/Button';
@@ -27,8 +27,6 @@ const ProfilePage = () => {
     posts: { post: searchedPost, postsOfUser: postsOfSearchedUser, loading: postsLoading },
     alert: { message }
   } = useSelector(state => state);
-
-  const history = useHistory();
 
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
@@ -180,7 +178,7 @@ const ProfilePage = () => {
                   background: `url(${post.media}) no-repeat center center / cover`
                 }}
                 onClick={() => {
-                  history.pushState({}, 'post modal path', `/p/${post._id}`);
+                  window.history.pushState({}, 'post modal path', `/p/${post._id}`);
                   dispatch(searchPostById(post._id));
                   setIsPostModal(!isPostModal);
                 }}
@@ -204,16 +202,23 @@ const ProfilePage = () => {
                 </div>
               </div>
             ))}
-            {searchedPost.media && (
-            <PostModal isOpen={isPostModal} setModalOpen={setIsPostModal}>
-              <div>
-                <img src={searchedPost.media} alt={searchedPost.content} />
-              </div>
-              <div />
-            </PostModal>
+            {searchedPost._id === window.location.pathname.split('/p/')[1] && (
+              <PostModal
+                isOpen={isPostModal}
+                setModalOpen={setIsPostModal}
+                username={searchedUserUsername}
+              >
+                <div
+                  style={{
+                    background: `black url(${searchedPost.media}) no-repeat center center / cover`,
+                    width: '70%',
+                    height: '100%'
+                  }}
+                />
+                <div />
+              </PostModal>
             )}
           </div>
-
         )}
       </div>
 
