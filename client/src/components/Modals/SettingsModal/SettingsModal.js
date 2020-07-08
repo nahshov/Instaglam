@@ -11,9 +11,6 @@ const SettingsModal = ({
   isOpen = false,
   ...otherProps
 }) => {
-  if (isOpen) {
-    document.body.classList.add('modalOpen');
-  }
   const node = useRef();
   const el = document.createElement('div');
 
@@ -22,7 +19,7 @@ const SettingsModal = ({
       return;
     }
 
-    document.body.classList.remove('modalOpen');
+    document.body.style = '';
 
     setModalOpen(false);
   };

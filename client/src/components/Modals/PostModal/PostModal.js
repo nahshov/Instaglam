@@ -9,16 +9,12 @@ const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherP
   const node = useRef();
   const el = document.createElement('div');
 
-  if (isOpen) {
-    document.body.classList.add('modalOpen');
-  }
-
   const handleClose = (e) => {
     if (node.current.contains(e.target)) {
       return;
     }
 
-    document.body.classList.remove('modalOpen');
+    document.body.style = '';
 
     window.history.pushState({}, 'post modal path', `/${username}`);
     setModalOpen(!isOpen);
@@ -29,7 +25,6 @@ const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherP
     modalRoot.appendChild(el);
 
     return () => {
-      document.body.classList.remove('modalOpen');
       el.removeEventListener('mousedown', handleClose);
       modalRoot.removeChild(el);
     };

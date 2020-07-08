@@ -24,7 +24,11 @@ const ProfilePage = () => {
   const {
     auth: { user: authenticatedUser, isAuthenticated, loading: authLoading },
     users: { user: searchedUser, loading: userLoading },
-    posts: { post: searchedPost, postsOfUser: postsOfSearchedUser, loading: postsLoading },
+    posts: {
+      post: searchedPost,
+      postsOfUser: postsOfSearchedUser,
+      loading: postsLoading
+    },
     alert: { message }
   } = useSelector(state => state);
 
@@ -38,11 +42,9 @@ const ProfilePage = () => {
   const searchedUserUsername = pathname.split('/')[1];
 
   useEffect(() => {
-    if ((!searchedUser._id || !postsOfSearchedUser.length)) {
-      dispatch(searchUser(searchedUserUsername));
-      dispatch(loadPostsOfUser(searchedUserUsername));
-    }
-  }, []);
+    dispatch(searchUser(searchedUserUsername));
+    dispatch(loadPostsOfUser(searchedUserUsername));
+  }, [searchedUserUsername]);
 
   if (!isAuthenticated && !authLoading) {
     return <Redirect to="/accounts/login" />;
@@ -50,6 +52,7 @@ const ProfilePage = () => {
 
   const toggleProfilePicModal = () => {
     if (searchedUserUsername === authenticatedUser.username) {
+      document.body.style = 'overflow: hidden';
       setSettingsModalOpen(!isSettingsModalOpen);
     }
   };
@@ -102,10 +105,7 @@ const ProfilePage = () => {
             </Button>
           </SettingsModalListItem>
           <SettingsModalListItem>
-            <Button
-              btnRole="astext btnBlock"
-              onClick={toggleProfilePicModal}
-            >
+            <Button btnRole="astext btnBlock" onClick={toggleProfilePicModal}>
               Cancel
             </Button>
           </SettingsModalListItem>
@@ -178,13 +178,17 @@ const ProfilePage = () => {
                   background: `url(${post.media}) no-repeat center center / cover`
                 }}
                 onClick={() => {
-                  window.history.pushState({}, 'post modal path', `/p/${post._id}`);
+                  document.body.style = 'overflow: hidden';
+                  window.history.pushState(
+                    {},
+                    'post modal path',
+                    `/p/${post._id}`
+                  );
                   dispatch(searchPostById(post._id));
                   setIsPostModal(!isPostModal);
                 }}
               >
                 <div className={styles.profilePostOverlay}>
-
                   <div className={styles.profilePostIconsContainer}>
                     <div className={styles.profilePostLikes}>
                       <AiFillHeart className={styles.profilePostLikeIcon} />
@@ -221,7 +225,6 @@ const ProfilePage = () => {
           </div>
         )}
       </div>
-
     </main>
   );
 };

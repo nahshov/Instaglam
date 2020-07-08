@@ -33,10 +33,7 @@ const App = () => {
             path="/direct/inbox"
             component={() => <div>Chat!</div>}
           />
-          <ProtectedRoute
-            path="/:profile"
-            component={ProfilePage}
-          />
+          <ProtectedRoute exact path="/:profile" component={ProfilePage} />
           <ProtectedRoute exact path="/" component={HomePage} />
         </Switch>
       </div>
