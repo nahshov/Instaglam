@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from 'pages/HomePage/HomePage.module.scss';
-import Post from '../../components/Post/Post';
+import HomePagePost from 'components/HomePagePost/HomePagePost';
 
 const HomePage = () => (
   <div className={styles.container}>
-    <Post />
+    <HomePagePost />
   </div>
 );
 export default HomePage;
