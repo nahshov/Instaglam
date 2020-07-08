@@ -1,44 +1,95 @@
 const Follow = require('../models/Follow.js');
 
+async function getUserFollowing(userId) {
+  const follows = await Follow.find({ userDoingFollow: userId }).populate(
+    'userFollowingList'
+  );
+  const followingList = follows.map((follow) => {
+    return {
+      username: follow.userFollowingList.username,
+      fullName: follow.userFollowingList.fullName,
+      profilePic: follow.userFollowingList.profilePic
+    };
+  });
+  return followingList;
+}
+
 async function getUserFollowers(userId) {
-  const follows = await Follow.find({ user: userId }).populate('userFollowing');
+  const follows = await Follow.find({ userGettingFollowed: userId }).populate(
+    'userFollowersList'
+  );
   const followersList = follows.map((follow) => {
     return {
-      username: follow.userFollowing.username,
-      fullName: follow.userFollowing.fullName,
-      profilePic: follow.userFollowing.profilePic
+      username: follow.userFollowersList.username,
+      fullName: follow.userFollowersList.fullName,
+      profilePic: follow.userFollowersList.profilePic
     };
   });
   return followersList;
 }
 
-async function addFollowToUser(follow) {
-  const { user, userFollowing } = follow;
-  const doesFollowExist = await Follow.findOne({ user, userFollowing });
+async function addUserToFollowingList(following) {
+  const { userDoingFollow, userFollowingList } = following;
+  const doesFollowExist = await Follow.findOne({
+    userDoingFollow,
+    userFollowingList
+  });
   if (doesFollowExist) {
     return;
   }
-  if (follow.user === follow.userFollowing) {
+  if (following.userDoingFollow === following.userFollowingList) {
     return 'You cannot follow yourself.';
   }
-  follow = new Follow(follow);
-  return follow.save();
+  following = new Follow(following);
+  return following.save();
+}
+
+async function addFollowToUser(followed) {
+  const { userGettingFollowed, userFollowersList } = followed;
+  const doesFollowExist = await Follow.findOne({
+    userGettingFollowed,
+    userFollowersList
+  });
+  if (doesFollowExist) {
+    return;
+  }
+  if (followed.userGettingFollowed === followed.userFollowersList) {
+    return 'You cannot follow yourself.';
+  }
+  followed = new Follow(followed);
+
+  return followed.save();
+}
+
+function removeFromFollowingList(userId, userFollowingId) {
+  return Follow.findOneAndRemove({
+    userDoingFollow: userFollowingId,
+    userFollowingList: userId
+  });
 }
 
 function removeFollowFromUser(userId, userFollowingId) {
   return Follow.findOneAndRemove({
-    user: userId,
-    userFollowing: userFollowingId
+    userGettingFollowed: userId,
+    userFollowersList: userFollowingId
   });
 }
 
+function removeAllUserFollowings(userId) {
+  return Follow.deleteMany({ userFollowingList: userId });
+}
+
 function removeAllUserFollowers(userId) {
-  return Follow.deleteMany({ user: userId });
+  return Follow.deleteMany({ userFollowersList: userId });
 }
 
 module.exports = {
   getUserFollowers,
+  getUserFollowing,
+  addUserToFollowingList,
   addFollowToUser,
   removeFollowFromUser,
+  removeFromFollowingList,
+  removeAllUserFollowings,
   removeAllUserFollowers
 };
