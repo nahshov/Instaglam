@@ -11,6 +11,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const {
+    users: { loading: userLoading },
     auth: { isAuthenticated, loading: authLoading },
     posts: {
       postsOfUser: postsOfSearchedUser,
@@ -32,15 +33,12 @@ const ProfilePage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <ProfileHeader />
-        {
-          (!postsLoading)
-          && (
+        {!userLoading && <ProfileHeader />}
+        {!postsLoading && (
           <PostsGrid
             posts={postsOfSearchedUser}
           />
-          )
-        }
+        )}
       </div>
     </main>
   );
