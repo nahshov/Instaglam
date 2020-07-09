@@ -6,7 +6,8 @@ function getAllPosts(limit = 10, skip = 0) {
   return Post.find({})
     .limit(+limit)
     .skip(+skip)
-    .sort('-created');
+    .sort('-created')
+    .populate('user', 'profilePic username -_id');
 }
 
 async function getAllPostsOfUser(userInfo) {

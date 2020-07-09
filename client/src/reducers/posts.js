@@ -19,6 +19,13 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_POSTS:
+      return {
+        ...state,
+        posts: payload,
+        loading: false,
+        error: ''
+      };
     case GET_USER_POSTS:
       return {
         ...state,
@@ -30,6 +37,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+        error: '',
         post: payload
       };
     case USER_POSTS_ERROR:

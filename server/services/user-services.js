@@ -1,7 +1,7 @@
 const { isEmail } = require('validator');
 const gravatar = require('gravatar');
+const { isValid: isValidObjectId } = require('mongoose').Types.ObjectId;
 const User = require('../models/User.js');
-const { ObjectId } = require('mongoose').Types;
 
 function createUser(user) {
   user = new User(user);
@@ -22,7 +22,7 @@ function getUser(userInfo) {
     return User.findOne({ email: userInfo });
   }
 
-  if (userInfo instanceof ObjectId) {
+  if (isValidObjectId(userInfo)) {
     return User.findOne({ _id: userInfo });
   }
 

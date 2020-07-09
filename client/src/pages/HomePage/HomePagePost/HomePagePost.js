@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { RiChat3Line } from 'react-icons/ri';
 import { GrBookmark } from 'react-icons/gr';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
+import { getAllPosts } from 'actions/posts/postActions';
+import { searchUsers } from 'actions/users/userActions';
 import styles from './HomePagePost.module.scss';
 
 const HomePagePost = () => {
+  const { posts: { posts }, users: { user } } = useSelector(state => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
+
   const handleSubmit = e => {
     e.preventDefault();
   };

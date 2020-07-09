@@ -22,6 +22,7 @@ const formatImage = require('../utils/formatMedia.js');
 const getUser = async (req, res) => {
   try {
     const user = await getUserService(req.params.userInfo);
+    console.log(user);
 
     if (!user)
       return serverResponse(res, 404, {
@@ -39,14 +40,14 @@ const getUser = async (req, res) => {
 // @access  private
 const getUsers = async (req, res) => {
   try {
-    const user = await getUsersService(req.params.userInfo);
+    const users = await getUsersService(req.params.userInfo);
 
-    if (!user)
+    if (!users)
       return serverResponse(res, 404, {
         message: 'No user with requested email'
       });
 
-    return serverResponse(res, 200, user);
+    return serverResponse(res, 200, users);
   } catch (e) {
     return serverResponse(res, 500);
   }

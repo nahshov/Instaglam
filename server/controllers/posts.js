@@ -38,6 +38,7 @@ const submitPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const posts = await getAllPosts(req.query.limit, req.query.skip);
+
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -46,7 +47,7 @@ const getPosts = async (req, res) => {
   }
 };
 
-// @route  GET '/api/posts/:userId'
+// @route  GET '/api/posts/:userInfo'
 // @desc   Get posts of a user
 // @access private
 const getPostsOfAUser = async (req, res) => {
