@@ -49,35 +49,6 @@ export const getAllPosts = () => async dispatch => {
   try {
     const { data: posts } = await axios.get('/api/posts');
 
-    console.log(posts);
-
-    // const promisesArray = posts.map(post => {
-    //   const userId = post.user;
-    //   return axios.get(`/api/users/${userId}`);
-    // });
-    //
-    // const usersData = await Promise.all(promisesArray);
-    //
-    // const userDataForPost = usersData.map(res => {
-    //   const { profilePic, username, _id } = res.data;
-    //   return {
-    //     profilePic, username, _id
-    //   };
-    // });
-
-    // const finalPosts = posts.map(post => {
-    //   const user = userDataForPost.find(({ _id }) => _id === post.user);
-    //   const newPost = {
-    //     ...post,
-    //     ...user
-    //   };
-    //   delete newPost.user;
-    //   delete newPost._id;
-    //   delete newPost.email;
-    //
-    //   return newPost;
-    // });
-
     dispatch({
       type: GET_POSTS,
       payload: posts
