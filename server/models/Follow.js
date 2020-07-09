@@ -5,25 +5,13 @@ const FollowSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  userGettingFollowed: {
+  user: {
     type: mongoose.Types.ObjectId,
-    ref: 'User',
-    index: true
+    ref: 'User'
   },
-  userDoingFollow: {
+  following: {
     type: mongoose.Types.ObjectId,
-    ref: 'User',
-    index: true
-  },
-  userFollowersList: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
-    index: true
-  },
-  userFollowingList: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
-    index: true
+    ref: 'User'
   }
 });
 
