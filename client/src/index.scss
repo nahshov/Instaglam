@@ -1,4 +1,5 @@
 @import './styles/typography.scss';
+@import './styles/color-palette.scss';
 
 *,
 *:before,
@@ -14,11 +15,13 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   font-family: $primary-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+  background: $primary-background;
 }
 
 code {

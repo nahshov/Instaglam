@@ -1,5 +1,6 @@
 const Post = require('../models/Post.js');
 const { deleteFile } = require('./cloud-services');
+const { getUser } = require('./user-services');
 
 function getAllPosts(limit = 10, skip = 0) {
   return Post.find({})
@@ -8,8 +9,10 @@ function getAllPosts(limit = 10, skip = 0) {
     .sort('-created');
 }
 
-function getAllPostsOfUser(userId) {
-  return Post.find({ user: userId });
+async function getAllPostsOfUser(userInfo) {
+  const user = await getUser(userInfo);
+
+  return Post.find({ user: user._id });
 }
 
 function getPost(postId) {

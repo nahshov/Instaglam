@@ -5,9 +5,9 @@ import { RiChat3Line } from 'react-icons/ri';
 import { GrBookmark } from 'react-icons/gr';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
-import styles from './Post.module.scss';
+import styles from './HomePagePost.module.scss';
 
-const Post = () =>
+const HomePagePost = () =>
   // const [isModalOpen, setIsModalOpen] = useState(true);
   (
     <article className={styles.postContainer}>
@@ -44,4 +44,4 @@ const Post = () =>
       </section>
     </article>
   );
-export default Post;
+export default HomePagePost;

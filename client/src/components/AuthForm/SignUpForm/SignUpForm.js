@@ -62,10 +62,9 @@ const SignUpForm = () => {
     }
   }, [signUpForm]);
 
-  const checkDisabled = () =>
-    Object.values(signUpForm).some(
-      value => !value || signUpForm.password.length < 6
-    );
+  const checkDisabled = () => Object.values(signUpForm).some(
+    value => !value || signUpForm.password.length < 6
+  );
 
   const handleChange = e => {
     setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
@@ -92,17 +91,15 @@ const SignUpForm = () => {
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
-  const emailValidationIcon =
-    alert.message !== `Another account is using ${signUpForm.email}` &&
-    emailCheckOrError === 'Check' ? (
+  const emailValidationIcon = alert.message !== `Another account is using ${signUpForm.email}`
+    && emailCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
     );
 
-  const usernameValidationIcon =
-    alert.message !== "This username isn't available. Please try another." &&
-    usernameCheckOrError === 'Check' ? (
+  const usernameValidationIcon = alert.message !== "This username isn't available. Please try another."
+    && usernameCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
@@ -177,7 +174,7 @@ const SignUpForm = () => {
             }
           />
           <Button
-            btnType="submit"
+            type="submit"
             disabled={checkDisabled()}
             isLoading={!loading ? false : isLoading}
             btnRole="primary btnBlock"

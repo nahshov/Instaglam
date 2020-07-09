@@ -1,14 +1,17 @@
 import {
-  POSTS_LOADED,
-  POSTS_LOADED_ERROR,
-  POSTS_OF_USER_LOADED,
-  POSTS_OF_USER_LOADED_ERROR
+  GET_POSTS,
+  POSTS_ERROR,
+  GET_USER_POSTS,
+  USER_POSTS_ERROR,
+  GET_POST,
+  POST_ERROR
 } from 'actions/posts/postTypes';
 
 const initialState = {
   loading: true,
   posts: [],
   postsOfUser: [],
+  post: {},
   error: ''
 };
 
@@ -16,19 +19,32 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case POSTS_OF_USER_LOADED:
+    case GET_USER_POSTS:
       return {
         ...state,
         loading: false,
         postsOfUser: payload,
         error: ''
       };
-    case POSTS_OF_USER_LOADED_ERROR:
+    case GET_POST:
+      return {
+        ...state,
+        loading: false,
+        post: payload
+      };
+    case USER_POSTS_ERROR:
       return {
         ...state,
         loading: false,
         postsOfUser: [],
         error: 'No posts uploaded.'
+      };
+    case POST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        post: {},
+        error: 'No results found.'
       };
     default:
       return state;

@@ -23,16 +23,18 @@
         min-height: 240px;
 
         .changeProfilePicButton {
+          cursor: pointer;
+
           display: inline-block;
           .profilePic {
             display: inline-flex;
             @include flexCenter;
 
             img {
-              cursor: pointer;
               border-radius: 50%;
               border: 1px solid $primary-border-color;
-              max-width: 150px;
+              width: 150px;
+              height: 150px;
             }
           }
         }

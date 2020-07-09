@@ -11,23 +11,29 @@ import {
 } from 'actions/auth/authActions';
 import { setAlert } from 'actions/alerts/alertActions';
 import { searchUser } from 'actions/users/userActions';
-import { loadPostsOfUser } from 'actions/posts/postActions';
-import Modal from 'components/Modals/Modal';
-import ModalList from 'components/Modals/ModalList';
-import ModalListItem from 'components/Modals/ModalListItem';
+import { loadPostsOfUser, searchPostById } from 'actions/posts/postActions';
+import SettingsModal from 'components/Modals/SettingsModal/SettingsModal';
+import SettingsModalList from 'components/Modals/SettingsModal/SettingsModalList';
+import SettingsModalListItem from 'components/Modals/SettingsModal/SettingsModalListItem';
 import Alert from 'components/Alert/Alert';
 import { AiFillHeart } from 'react-icons/ai';
 import { BsChatFill } from 'react-icons/bs';
+import PostModal from '../../components/Modals/PostModal/PostModal';
 
 const ProfilePage = () => {
   const {
     auth: { user: authenticatedUser, isAuthenticated, loading: authLoading },
     users: { user: searchedUser, loading: userLoading },
-    posts: { postsOfUser: postsOfSearchedUser, loading: postsLoading },
+    posts: {
+      post: searchedPost,
+      postsOfUser: postsOfSearchedUser,
+      loading: postsLoading
+    },
     alert: { message }
   } = useSelector(state => state);
 
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [isPostModal, setIsPostModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,13 +43,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     dispatch(searchUser(searchedUserUsername));
+    dispatch(loadPostsOfUser(searchedUserUsername));
   }, [searchedUserUsername]);
-
-  useEffect(() => {
-    if (searchedUser) {
-      dispatch(loadPostsOfUser(searchedUser._id));
-    }
-  }, [searchedUser]);
 
   if (!isAuthenticated && !authLoading) {
     return <Redirect to="/accounts/login" />;
@@ -51,6 +52,7 @@ const ProfilePage = () => {
 
   const toggleProfilePicModal = () => {
     if (searchedUserUsername === authenticatedUser.username) {
+      document.body.style = 'overflow: hidden';
       setSettingsModalOpen(!isSettingsModalOpen);
     }
   };
@@ -76,13 +78,13 @@ const ProfilePage = () => {
 
   return (
     <main className={styles.main}>
-      <Modal
+      <SettingsModal
         isOpen={isSettingsModalOpen}
-        setSettingsModalOpen={setSettingsModalOpen}
+        setModalOpen={setSettingsModalOpen}
       >
-        <ModalList>
+        <SettingsModalList>
           <h3>Change Profile Photo</h3>
-          <ModalListItem>
+          <SettingsModalListItem>
             <label htmlFor="profilePic" className={styles.uploadPhoto}>
               Upload Photo
             </label>
@@ -93,25 +95,22 @@ const ProfilePage = () => {
               onChange={handleSelectedFile}
               style={{ display: 'none' }}
             />
-          </ModalListItem>
-          <ModalListItem>
+          </SettingsModalListItem>
+          <SettingsModalListItem>
             <Button
               btnRole="astext danger btnBlock"
               onClick={removeCurrentPhoto}
             >
               Remove Current Photo
             </Button>
-          </ModalListItem>
-          <ModalListItem>
-            <Button
-              btnRole="astext btnBlock"
-              onClick={toggleProfilePicModal}
-            >
+          </SettingsModalListItem>
+          <SettingsModalListItem>
+            <Button btnRole="astext btnBlock" onClick={toggleProfilePicModal}>
               Cancel
             </Button>
-          </ModalListItem>
-        </ModalList>
-      </Modal>
+          </SettingsModalListItem>
+        </SettingsModalList>
+      </SettingsModal>
       <div className={styles.container}>
         <header className={styles.profileHeader}>
           <div className={styles.profilePageProfilePic}>
@@ -178,6 +177,16 @@ const ProfilePage = () => {
                 style={{
                   background: `url(${post.media}) no-repeat center center / cover`
                 }}
+                onClick={() => {
+                  document.body.style = 'overflow: hidden';
+                  window.history.pushState(
+                    {},
+                    'post modal path',
+                    `/p/${post._id}`
+                  );
+                  dispatch(searchPostById(post._id));
+                  setIsPostModal(!isPostModal);
+                }}
               >
                 <div className={styles.profilePostOverlay}>
                   <div className={styles.profilePostIconsContainer}>
@@ -197,6 +206,22 @@ const ProfilePage = () => {
                 </div>
               </div>
             ))}
+            {searchedPost._id === window.location.pathname.split('/p/')[1] && (
+              <PostModal
+                isOpen={isPostModal}
+                setModalOpen={setIsPostModal}
+                username={searchedUserUsername}
+              >
+                <div
+                  style={{
+                    background: `black url(${searchedPost.media}) no-repeat center center / cover`,
+                    width: '70%',
+                    height: '100%'
+                  }}
+                />
+                <div />
+              </PostModal>
+            )}
           </div>
         )}
       </div>
