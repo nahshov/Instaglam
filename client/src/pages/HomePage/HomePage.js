@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from 'pages/HomePage/HomePage.module.scss';
-import HomePagePost from 'components/HomePagePost/HomePagePost';
+import HomePagePost from 'pages/HomePage/HomePagePost/HomePagePost';
 
 const HomePage = () => (
   <div className={styles.container}>

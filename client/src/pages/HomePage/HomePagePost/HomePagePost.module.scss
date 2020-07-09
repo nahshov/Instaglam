@@ -1,6 +1,6 @@
-@import '../../styles/mixins.scss';
-@import '../../styles/color-palette.scss';
-@import '../../styles/typography.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/typography.scss';
 
 
 .postContainer{
@@ -79,7 +79,7 @@
         width: 20%;
     }
     .commentContainer{
-        border-top: 2.4px solid #8e8e8e; opacity: 0.1;
+        border-top: 2.4px solid #8e8e8e57;
         height: 48px;
         @include flexSpaceBetween;
 

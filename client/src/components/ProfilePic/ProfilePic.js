@@ -18,3 +18,7 @@ ProfilePic.propTypes = {
 };
 
 export default ProfilePic;
+
+<ProfilePic>
+
+</ProfilePic>

@@ -7,9 +7,12 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import styles from './HomePagePost.module.scss';
 
-const HomePagePost = () =>
+const HomePagePost = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
   // const [isModalOpen, setIsModalOpen] = useState(true);
-  (
+  return (
     <article className={styles.postContainer}>
       <header className={styles.headerPostContainer}>
         <div className={styles.postHeader}>
@@ -37,11 +40,12 @@ const HomePagePost = () =>
         <span>hey there i am using instaglam</span>
       </div>
       <a href="#" className={styles.postAge}>*** ***** AGO</a>
-      <section className={styles.commentContainer}>
-        <input className={styles.commentInput} />
-        <label className={styles.commentLabel}>Add a comment...</label>
+      <form onSubmit={handleSubmit} className={styles.commentContainer}>
+        <textarea id="commentTextArea" className={styles.commentInput} />
+        <label htmlFor="commentTextArea" className={styles.commentLabel}>Add a comment...</label>
         <button type="submit" className={styles.postButton}>Post</button>
-      </section>
+      </form>
     </article>
   );
+};
 export default HomePagePost;
