@@ -2,25 +2,23 @@ const Follow = require('../models/Follow.js');
 
 async function getUserFollowing(userId) {
   const follows = await Follow.find({ user: userId }).populate('following');
-  const followingList = follows.map((user) => {
-    return {
-      username: user.following.username,
-      fullName: user.following.fullName,
-      profilePic: user.following.profilePic
-    };
-  });
+  const followingList = follows.map((follow) => ({
+    username: follow.following.username,
+    fullName: follow.following.fullName,
+    profilePic: follow.following.profilePic,
+    created: follow.created
+  }));
   return followingList;
 }
 
 async function getUserFollowers(userId) {
   const follows = await Follow.find({ following: userId }).populate('user');
-  const followerList = follows.map((follow) => {
-    return {
-      username: follow.user.username,
-      fullName: follow.user.fullName,
-      profilePic: follow.user.profilePic
-    };
-  });
+  const followerList = follows.map((follow) => ({
+    username: follow.user.username,
+    fullName: follow.user.fullName,
+    profilePic: follow.user.profilePic,
+    created: follow.created
+  }));
   return followerList;
 }
 
