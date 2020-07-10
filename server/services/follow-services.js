@@ -45,6 +45,10 @@ function removeFollowFromUser(userId, userFollowingId) {
   });
 }
 
+function removeAllUserFollowings(userId) {
+  return Follow.deleteMany({ following: userId });
+}
+
 function removeAllUserFollowers(userId) {
   return Follow.deleteMany({ user: userId });
 }
@@ -54,5 +58,6 @@ module.exports = {
   getUserFollowing,
   addFollowToUser,
   removeFollowFromUser,
+  removeAllUserFollowings,
   removeAllUserFollowers
 };
