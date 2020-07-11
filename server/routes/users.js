@@ -8,7 +8,7 @@ const {
   deleteProfile,
   uploadProfilePic,
   getProfilePic,
-  deleteProfilePic
+  deleteProfilePic,
 } = require('../controllers/users');
 
 module.exports = function (app) {
@@ -26,6 +26,6 @@ module.exports = function (app) {
       '/api/me/profilePic',
       verifyUser,
       upload('profilePic'),
-      uploadProfilePic
+      uploadProfilePic,
     );
 };

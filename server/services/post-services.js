@@ -27,7 +27,7 @@ function removePost(postId) {
 
 async function removeAllUserPosts(userId) {
   const posts = await getAllPostsOfUser(userId);
-  const postPromisesArray = posts.map((post) => deleteFile(post.media));
+  const postPromisesArray = posts.map(post => deleteFile(post.media));
   await Promise.all(postPromisesArray);
   return Post.deleteMany({ user: userId });
 }
@@ -43,5 +43,5 @@ module.exports = {
   removePost,
   removeAllUserPosts,
   updatePost,
-  getAllPosts
+  getAllPosts,
 };

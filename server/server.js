@@ -10,11 +10,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true
-  })
+    extended: true,
+  }),
 );
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // error handling logic
   res.status(400).send('Bad request');
 });

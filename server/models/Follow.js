@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const FollowSchema = new mongoose.Schema({
   created: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   user: {
     type: mongoose.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   following: {
     type: mongoose.Types.ObjectId,
-    ref: 'User'
-  }
+    ref: 'User',
+  },
 });
 
 const Follow = mongoose.model('Follow', FollowSchema);

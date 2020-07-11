@@ -1,32 +1,30 @@
 const Follow = require('../models/Follow.js');
 
 async function getUserFollowing(userId) {
-  const follows = await Follow.find({ user: userId }).populate('following');
-  const followingList = follows.map((follow) => ({
-    username: follow.following.username,
-    fullName: follow.following.fullName,
-    profilePic: follow.following.profilePic,
-    created: follow.created
+  const following = await Follow.find({ user: userId }).populate('following');
+  return following.map(followee => ({
+    username: followee.following.username,
+    fullName: followee.following.fullName,
+    profilePic: followee.following.profilePic,
+    created: followee.created,
   }));
-  return followingList;
 }
 
 async function getUserFollowers(userId) {
-  const follows = await Follow.find({ following: userId }).populate('user');
-  const followerList = follows.map((follow) => ({
-    username: follow.user.username,
-    fullName: follow.user.fullName,
-    profilePic: follow.user.profilePic,
-    created: follow.created
+  const followers = await Follow.find({ following: userId }).populate('user');
+  return followers.map(follower => ({
+    username: follower.user.username,
+    fullName: follower.user.fullName,
+    profilePic: follower.user.profilePic,
+    created: follower.created,
   }));
-  return followerList;
 }
 
 async function addFollowToUser(follow) {
   const { user, following } = follow;
   const doesFollowExist = await Follow.findOne({
     user,
-    following
+    following,
   });
   if (doesFollowExist) {
     return;
@@ -41,7 +39,7 @@ async function addFollowToUser(follow) {
 function removeFollowFromUser(userId, userFollowingId) {
   return Follow.findOneAndRemove({
     user: userFollowingId,
-    following: userId
+    following: userId,
   });
 }
 
@@ -59,5 +57,5 @@ module.exports = {
   addFollowToUser,
   removeFollowFromUser,
   removeAllUserFollowings,
-  removeAllUserFollowers
+  removeAllUserFollowers,
 };
