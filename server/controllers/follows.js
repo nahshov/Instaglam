@@ -5,7 +5,6 @@ const {
   removeFollowFromUser
 } = require('../services/follow-services');
 const serverResponse = require('../utils/serverResponse');
-const { getUser } = require('../services/user-services');
 
 // @route   GET '/api/users/:userId/follows/followers'
 // @desc    Get followers list of a user
@@ -36,7 +35,7 @@ const getUserFollowingList = async (req, res) => {
 };
 
 // @route   POST '/api/users/:userId/follows'
-// @desc    Add a follow to a user's followers list and to a user's following list
+// @desc    Add a follow to a user
 // @access  private
 const addFollowToAUser = async (req, res) => {
   try {
@@ -44,8 +43,7 @@ const addFollowToAUser = async (req, res) => {
       user: req.user.sub,
       following: req.params.userId
     });
-    const user = await getUser(req.user.email);
-    return serverResponse(res, 200, follow, user.username);
+    return serverResponse(res, 200, follow);
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a follow'
@@ -54,7 +52,7 @@ const addFollowToAUser = async (req, res) => {
 };
 
 // @route   DELETE '/api/users/:userId/follows'
-// @desc    Remove a follow from a user's followers list and from a user's following list
+// @desc    Remove a follow from a user
 // @access  private
 const removeFollow = async (req, res) => {
   try {
@@ -62,13 +60,7 @@ const removeFollow = async (req, res) => {
       req.params.userId,
       req.user.sub
     );
-    // const RemoveFromUserFollowingList = await removeFromFollowingList(
-    //   req.params.userId,
-    //   req.user.sub
-    // );
-    return serverResponse(res, 200, {
-      removeFollowFromAUser
-    });
+    return serverResponse(res, 200, { message: 'successfully removed follow' });
   } catch (error) {
     return serverResponse(res, 200, {
       message: 'Internal error while trying to remove a follow'

@@ -9,7 +9,7 @@ const { removeAllUserPosts } = require('../services/post-services.js');
 const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
 const {
-  // removeAllUserFollowings,
+  removeAllUserFollowings,
   removeAllUserFollowers
 } = require('../services/follow-services');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
@@ -99,6 +99,7 @@ const deleteProfile = async (req, res) => {
         removeAllUserComments(req.user.sub),
         removeAllUserLikes(req.user.sub),
         removeAllUserPosts(req.user.sub),
+        removeAllUserFollowings(req.user.sub),
         removeAllUserFollowers(req.user.sub),
         deleteUser(req.user.email)
       ]);
