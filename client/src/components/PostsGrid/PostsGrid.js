@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { AiFillHeart } from 'react-icons/ai';
-import { BsChatFill } from 'react-icons/bs';
 import styles from './PostsGrid.module.scss';
 import PostModal from '../Modals/PostModal/PostModal';
+import PostsGridItem from './PostsGridItem';
 
-const PostsGrid = ({ posts }) => {
+const PostsGrid = ({ posts, isLink = false }) => {
   const { user: searchedUser } = useSelector(state => state.users);
   const [searchedPost, setSearchedPost] = useState(null);
   const [isPostModal, setIsPostModal] = useState(false);
@@ -18,40 +17,14 @@ const PostsGrid = ({ posts }) => {
   ) : (
     <div className={styles.gridContainer}>
       {posts.map(post => (
-        <div
+        <PostsGridItem
           key={post._id}
-          className={styles.profilePost}
-          style={{
-            background: `url(${post.media}) no-repeat center center / cover`
-          }}
-          onClick={() => {
-            document.body.style = 'overflow: hidden';
-            window.history.pushState(
-              {},
-              'post modal path',
-              `/p/${post._id}`
-            );
-            setSearchedPost(posts.find(p => p._id === post._id));
-            setIsPostModal(!isPostModal);
-          }}
-        >
-          <div className={styles.profilePostOverlay}>
-            <div className={styles.profilePostIconsContainer}>
-              <div className={styles.profilePostLikes}>
-                <AiFillHeart className={styles.profilePostLikeIcon} />
-                <span className={styles.profilePostNumOfLikes}>
-                  {post.likes}
-                </span>
-              </div>
-              <div className={styles.profilePostComments}>
-                <BsChatFill className={styles.profilePostCommentsIcon} />
-                <span className={styles.profilePostNumOfComments}>
-                  {post.comments}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+          post={post}
+          posts={posts}
+          setSearchedPost={setSearchedPost}
+          setIsPostModal={setIsPostModal}
+          isLink={isLink}
+        />
       ))}
       {isPostModal && (
       <PostModal
@@ -73,6 +46,10 @@ const PostsGrid = ({ posts }) => {
   ));
 };
 
+PostsGrid.defaultProps = {
+  isLink: false
+};
+
 PostsGrid.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
     likes: PropTypes.number,
@@ -82,7 +59,8 @@ PostsGrid.propTypes = {
     user: PropTypes.string,
     media: PropTypes.string,
     created: PropTypes.string
-  })).isRequired
+  })).isRequired,
+  isLink: PropTypes.bool
 };
 
 export default PostsGrid;
