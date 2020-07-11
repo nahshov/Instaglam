@@ -7,7 +7,7 @@ function createUser(user) {
   const profilePic = gravatar.url(user.email, {
     s: '180',
     r: 'pg',
-    d: 'mm',
+    d: 'mm'
   });
   user.profilePic = profilePic.replace(/^\/\/www\./, 'http://');
   if (!user.bio) {
@@ -70,5 +70,5 @@ module.exports = {
   editUser,
   verifyPassword,
   setUserToken,
-  verifyToken,
+  verifyToken
 };

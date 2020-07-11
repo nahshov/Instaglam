@@ -1,7 +1,7 @@
 const verifyUser = require('../middleware/verifyUser');
 const { signupValidator, loginValidator } = require('../middleware/validators');
 const {
-  login, register, logout, refresh,
+  login, register, logout, refresh
 } = require('../controllers/auth');
 
 module.exports = app => {

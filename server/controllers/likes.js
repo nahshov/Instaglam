@@ -4,7 +4,7 @@ const {
   addLikeToPost,
   addLikeToComment,
   removeLikeFromPost,
-  removeLikeFromComment,
+  removeLikeFromComment
 } = require('../services/like-services');
 
 const Comment = require('../models/Comment');
@@ -20,7 +20,7 @@ const getLikesOfPost = async (req, res) => {
     return serverResponse(res, 200, likes);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get likes',
+      message: 'Internal error while trying to get likes'
     });
   }
 };
@@ -32,7 +32,7 @@ const addLikeToAPost = async (req, res) => {
   try {
     const like = await addLikeToPost({
       post: req.params.postId,
-      user: req.user.sub,
+      user: req.user.sub
     });
     const post = await getPost(req.params.postId);
     post.likes++;
@@ -40,7 +40,7 @@ const addLikeToAPost = async (req, res) => {
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to add a like',
+      message: 'Internal error while trying to add a like'
     });
   }
 };
@@ -57,7 +57,7 @@ const deleteLikeFromAPost = async (req, res) => {
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 200, {
-      message: 'Internal error while trying to remove a like',
+      message: 'Internal error while trying to remove a like'
     });
   }
 };
@@ -71,7 +71,7 @@ const getLikesOfComment = async (req, res) => {
     return serverResponse(res, 200, likes);
   } catch (error) {
     return serverResponse(res, 200, {
-      message: 'Internal error while trying to get likes',
+      message: 'Internal error while trying to get likes'
     });
   }
 };
@@ -82,17 +82,17 @@ const getLikesOfComment = async (req, res) => {
 const addLikeToAComment = async (req, res) => {
   try {
     const comment = await Comment.findOne({
-      _id: req.params.commentId,
+      _id: req.params.commentId
     });
     const like = await addLikeToComment({
       user: req.user.sub,
       comment: req.params.commentId,
-      post: comment.post,
+      post: comment.post
     });
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to add a like',
+      message: 'Internal error while trying to add a like'
     });
   }
 };
@@ -106,7 +106,7 @@ const deleteLikeFromAComment = async (req, res) => {
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to remove a like',
+      message: 'Internal error while trying to remove a like'
     });
   }
 };
@@ -117,5 +117,5 @@ module.exports = {
   deleteLikeFromAPost,
   getLikesOfComment,
   addLikeToAComment,
-  deleteLikeFromAComment,
+  deleteLikeFromAComment
 };

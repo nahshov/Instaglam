@@ -2,7 +2,7 @@ const {
   getUser: getUserService,
   getUsers: getUsersService,
   deleteUser,
-  editUser,
+  editUser
 } = require('../services/user-services.js');
 
 const { removeAllUserPosts } = require('../services/post-services.js');
@@ -10,7 +10,7 @@ const { removeAllUserComments } = require('../services/comment-services.js');
 const { removeAllUserLikes } = require('../services/like-services.js');
 const {
   removeAllUserFollowings,
-  removeAllUserFollowers,
+  removeAllUserFollowers
 } = require('../services/follow-services');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
 const serverResponse = require('../utils/serverResponse');
@@ -25,7 +25,7 @@ const getUser = async (req, res) => {
 
     if (!user) {
       return serverResponse(res, 404, {
-        message: 'No user with requested email',
+        message: 'No user with requested email'
       });
     }
 
@@ -44,7 +44,7 @@ const getUsers = async (req, res) => {
 
     if (!user) {
       return serverResponse(res, 404, {
-        message: 'No user with requested email',
+        message: 'No user with requested email'
       });
     }
 
@@ -63,7 +63,7 @@ const getProfile = async (req, res) => {
     return serverResponse(res, 200, user);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to find user',
+      message: 'Internal error while trying to find user'
     });
   }
 };
@@ -76,15 +76,15 @@ const editProfile = async (req, res) => {
     const user = await editUser(req.user.email, req.body);
     if (!user) {
       return serverResponse(res, 404, {
-        message: 'No user with requested email',
+        message: 'No user with requested email'
       });
     }
     return serverResponse(res, 200, {
-      message: 'Your changes were successfull',
+      message: 'Your changes were successfull'
     });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to update user',
+      message: 'Internal error while trying to update user'
     });
   }
 };
@@ -102,7 +102,7 @@ const deleteProfile = async (req, res) => {
         removeAllUserPosts(req.user.sub),
         removeAllUserFollowings(req.user.sub),
         removeAllUserFollowers(req.user.sub),
-        deleteUser(req.user.email),
+        deleteUser(req.user.email)
       ]);
 
       return serverResponse(res, 200, { message: 'User successfully deleted' });
@@ -111,7 +111,7 @@ const deleteProfile = async (req, res) => {
     return serverResponse(res, 404, { message: 'User not found' });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to delete user',
+      message: 'Internal error while trying to delete user'
     });
   }
 };
@@ -126,17 +126,17 @@ const uploadProfilePic = async (req, res) => {
 
     const [imgUrl, user] = await Promise.all([
       uploadFile(req.file.originalname, buffer),
-      getUserService(req.user.email),
+      getUserService(req.user.email)
     ]);
 
     user.profilePic = `${imgUrl}`;
     await user.save();
     return serverResponse(res, 200, {
-      message: 'Profile picture successfully uploaded!',
+      message: 'Profile picture successfully uploaded!'
     });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to upload profile picture',
+      message: 'Internal error while trying to upload profile picture'
     });
   }
 };
@@ -153,7 +153,7 @@ const getProfilePic = async (req, res) => {
     return serverResponse(res, 200, { profilePic: user.profilePic });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get profile picture',
+      message: 'Internal error while trying to get profile picture'
     });
   }
 };
@@ -174,11 +174,11 @@ const deleteProfilePic = async (req, res) => {
 
     await Promise.all([deleteFile(imgUrl), user.save()]);
     return serverResponse(res, 200, {
-      message: 'Successfully deleted profile picture',
+      message: 'Successfully deleted profile picture'
     });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to delete profile picture',
+      message: 'Internal error while trying to delete profile picture'
     });
   }
 };
@@ -191,5 +191,5 @@ module.exports = {
   deleteProfile,
   uploadProfilePic,
   getProfilePic,
-  deleteProfilePic,
+  deleteProfilePic
 };

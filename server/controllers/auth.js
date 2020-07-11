@@ -4,7 +4,7 @@ const { refreshTokenSecret } = require('../config');
 const {
   verifyPassword,
   getUser,
-  createUser,
+  createUser
 } = require('../services/user-services');
 const { getTokens, setAuthCookie } = require('../services/auth-services');
 const serverResponse = require('../utils/serverResponse');
@@ -24,14 +24,14 @@ const login = async (req, res) => {
     if (!user) {
       return serverResponse(res, 401, {
         errors:
-          "The email you entered doesn't belong to an account. Please check your email and try again.",
+          "The email you entered doesn't belong to an account. Please check your email and try again."
       });
     }
 
     if (!verifyPassword(user, password)) {
       return serverResponse(res, 401, {
         errors:
-          'Sorry, your password was incorrect. Please double-check your password.',
+          'Sorry, your password was incorrect. Please double-check your password.'
       });
     }
 
@@ -44,7 +44,7 @@ const login = async (req, res) => {
         .status(200)
         .cookie('token', cookieToken, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24 * 30,
+          maxAge: 60 * 60 * 24 * 30
         })
         .json({ message: 'Successfully logged in' })
         .end();
@@ -53,7 +53,7 @@ const login = async (req, res) => {
     return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal server error when trying to login',
+      message: 'Internal server error when trying to login'
     });
   }
 };
@@ -72,13 +72,13 @@ const register = async (req, res) => {
 
     if (exists) {
       return serverResponse(res, 400, {
-        errors: `Another account is using ${req.body.email}`,
+        errors: `Another account is using ${req.body.email}`
       });
     }
 
     if (userNameExists) {
       return serverResponse(res, 400, {
-        errors: "This username isn't available. Please try another.",
+        errors: "This username isn't available. Please try another."
       });
     }
 
@@ -92,7 +92,7 @@ const register = async (req, res) => {
         .status(200)
         .cookie('token', cookieToken, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24 * 30,
+          maxAge: 60 * 60 * 24 * 30
         })
         .json({ message: 'Successfully registered' })
         .end();
@@ -101,7 +101,7 @@ const register = async (req, res) => {
     return serverResponse(res, 200, { payload: getTokens(user) });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to create user',
+      message: 'Internal error while trying to create user'
     });
   }
 };
@@ -119,13 +119,13 @@ const logout = async (req, res) => {
 
     res.cookie('token', cookieToken, {
       httpOnly: true,
-      maxAge: 1,
+      maxAge: 1
     });
 
     return serverResponse(res, 200, { message: 'Successfully logged out' });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'internal error while trying to logout',
+      message: 'internal error while trying to logout'
     });
   }
 };
@@ -164,5 +164,5 @@ module.exports = {
   login,
   register,
   logout,
-  refresh,
+  refresh
 };

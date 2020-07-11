@@ -43,5 +43,5 @@ module.exports = {
   removePost,
   removeAllUserPosts,
   updatePost,
-  getAllPosts,
+  getAllPosts
 };

@@ -2,7 +2,7 @@ const {
   getUserFollowers,
   getUserFollowing,
   addFollowToUser,
-  removeFollowFromUser,
+  removeFollowFromUser
 } = require('../services/follow-services');
 const serverResponse = require('../utils/serverResponse');
 
@@ -15,7 +15,7 @@ const getUserFollowersList = async (req, res) => {
     return serverResponse(res, 200, follows);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get followers list',
+      message: 'Internal error while trying to get followers list'
     });
   }
 };
@@ -29,7 +29,7 @@ const getUserFollowingList = async (req, res) => {
     return serverResponse(res, 200, follows);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get following list',
+      message: 'Internal error while trying to get following list'
     });
   }
 };
@@ -41,12 +41,12 @@ const addFollowToAUser = async (req, res) => {
   try {
     const follow = await addFollowToUser({
       user: req.user.sub,
-      following: req.params.userId,
+      following: req.params.userId
     });
     return serverResponse(res, 200, follow);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to add a follow',
+      message: 'Internal error while trying to add a follow'
     });
   }
 };
@@ -58,12 +58,12 @@ const removeFollow = async (req, res) => {
   try {
     await removeFollowFromUser(
       req.params.userId,
-      req.user.sub,
+      req.user.sub
     );
     return serverResponse(res, 200, { message: 'successfully removed follow' });
   } catch (error) {
     return serverResponse(res, 200, {
-      message: 'Internal error while trying to remove a follow',
+      message: 'Internal error while trying to remove a follow'
     });
   }
 };
@@ -72,5 +72,5 @@ module.exports = {
   getUserFollowersList,
   getUserFollowingList,
   addFollowToAUser,
-  removeFollow,
+  removeFollow
 };

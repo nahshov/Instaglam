@@ -8,10 +8,10 @@ async function setAuthCookie(user) {
     {
       sub: user._id,
       email: user.email,
-      created,
+      created
     },
     cookieSecret,
-    { expiresIn: '30d' },
+    { expiresIn: '30d' }
   );
 
   await setUserToken(user, created);
@@ -25,31 +25,31 @@ function getTokens(user) {
   const accessToken = jwt.sign(
     {
       sub: user._id,
-      email: user.email,
+      email: user.email
     },
     tokenSecret,
-    { expiresIn: '1h' },
+    { expiresIn: '1h' }
   );
 
   const refreshToken = jwt.sign(
     {
       sub: user._id,
       email: user.email,
-      created,
+      created
     },
     refreshTokenSecret,
-    { expiresIn: '30d' },
+    { expiresIn: '30d' }
   );
 
   setUserToken(user, created);
 
   return {
     accessToken,
-    refreshToken,
+    refreshToken
   };
 }
 
 module.exports = {
   getTokens,
-  setAuthCookie,
+  setAuthCookie
 };

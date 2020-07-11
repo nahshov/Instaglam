@@ -2,7 +2,7 @@ const {
   getComments,
   addComment,
   removeComment,
-  updateComment,
+  updateComment
 } = require('../services/comment-services');
 
 const { getPost } = require('../services/post-services');
@@ -17,7 +17,7 @@ const getCommentsOfPost = async (req, res) => {
     return serverResponse(res, 200, comments);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get all comments for this post',
+      message: 'Internal error while trying to get all comments for this post'
     });
   }
 };
@@ -30,7 +30,7 @@ const addCommentToPost = async (req, res) => {
     const comment = {
       ...req.body,
       user: req.user.sub,
-      post: req.params.postId,
+      post: req.params.postId
     };
     const post = await getPost(req.params.postId);
     post.comments++;
@@ -39,7 +39,7 @@ const addCommentToPost = async (req, res) => {
     return serverResponse(res, 200, response);
   } catch (error) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to add a comment',
+      message: 'Internal error while trying to add a comment'
     });
   }
 };
@@ -58,7 +58,7 @@ const removeCommentFromPost = async (req, res) => {
     res
       .status(500)
       .json({
-        message: 'internal error while trying to remove a comment',
+        message: 'internal error while trying to remove a comment'
       })
       .end();
   }
@@ -72,7 +72,7 @@ const editCommentOfPost = async (req, res) => {
     res
       .status(500)
       .json({
-        message: 'internal error while trying to update comment',
+        message: 'internal error while trying to update comment'
       })
       .end();
   }
@@ -82,5 +82,5 @@ module.exports = {
   getCommentsOfPost,
   addCommentToPost,
   removeCommentFromPost,
-  editCommentOfPost,
+  editCommentOfPost
 };

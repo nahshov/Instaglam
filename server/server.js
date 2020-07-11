@@ -10,8 +10,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true,
-  }),
+    extended: true
+  })
 );
 
 app.use((err, req, res, next) => {

@@ -6,7 +6,7 @@ async function getUserFollowing(userId) {
     username: followee.following.username,
     fullName: followee.following.fullName,
     profilePic: followee.following.profilePic,
-    created: followee.created,
+    created: followee.created
   }));
 }
 
@@ -16,7 +16,7 @@ async function getUserFollowers(userId) {
     username: follower.user.username,
     fullName: follower.user.fullName,
     profilePic: follower.user.profilePic,
-    created: follower.created,
+    created: follower.created
   }));
 }
 
@@ -24,7 +24,7 @@ async function addFollowToUser(follow) {
   const { user, following } = follow;
   const doesFollowExist = await Follow.findOne({
     user,
-    following,
+    following
   });
   if (doesFollowExist) {
     return;
@@ -39,7 +39,7 @@ async function addFollowToUser(follow) {
 function removeFollowFromUser(userId, userFollowingId) {
   return Follow.findOneAndRemove({
     user: userFollowingId,
-    following: userId,
+    following: userId
   });
 }
 
@@ -57,5 +57,5 @@ module.exports = {
   addFollowToUser,
   removeFollowFromUser,
   removeAllUserFollowings,
-  removeAllUserFollowers,
+  removeAllUserFollowers
 };

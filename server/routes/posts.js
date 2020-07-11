@@ -6,7 +6,7 @@ const {
   getPostsOfAUser,
   getOnePost,
   deletePost,
-  editPost,
+  editPost
 } = require('../controllers/posts.js');
 
 module.exports = function (app) {

@@ -6,37 +6,37 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    index: true,
+    index: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
 
   salt: String,
   fullName: {
     type: String,
-    required: true,
+    required: true
   },
   username: {
     type: String,
     uniqe: true,
     index: true,
-    required: true,
+    required: true
   },
   profilePic: {
-    type: String,
+    type: String
   },
   city: String,
   bio: {
-    type: String,
+    type: String
   },
   refreshTokenIdentifier: String,
   birthDate: String,
   created: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 UserSchema.pre('save', function hashPassword() {
@@ -72,7 +72,7 @@ UserSchema.methods.toJSON = function toJSON() {
 UserSchema.statics.verifyToken = function (decoded) {
   return this.findOne({
     _id: decoded.sub,
-    refreshTokenIdentifier: decoded.created,
+    refreshTokenIdentifier: decoded.created
   });
 };
 

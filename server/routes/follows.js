@@ -4,7 +4,7 @@ const {
   getUserFollowersList,
   getUserFollowingList,
   addFollowToAUser,
-  removeFollow,
+  removeFollow
 } = require('../controllers/follows');
 
 module.exports = function (app) {
@@ -12,12 +12,12 @@ module.exports = function (app) {
     .get(
       '/api/users/:userId/follows/followers',
       verifyUser,
-      getUserFollowersList,
+      getUserFollowersList
     )
     .get(
       '/api/users/:userId/follows/following',
       verifyUser,
-      getUserFollowingList,
+      getUserFollowingList
     )
     .post('/api/users/:userId/follows', verifyUser, addFollowToAUser)
     .delete('/api/users/:userId/follows', verifyUser, removeFollow);

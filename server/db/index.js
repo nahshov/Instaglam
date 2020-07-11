@@ -12,7 +12,7 @@ module.exports = async function connect() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: false,
+      useFindAndModify: false
     });
   } catch (e) {
     // eslint-disable-next-line no-console

@@ -12,7 +12,7 @@ const uploadFile = (originalname, buffer) => new Promise((resolve, reject) => {
   const blob = bucket.file(filename);
 
   const blobStream = blob.createWriteStream({
-    resumable: false,
+    resumable: false
   });
 
   blobStream
@@ -34,5 +34,5 @@ const deleteFile = async url => {
 module.exports = {
   uploadFile,
   deleteFile,
-  bucket,
+  bucket
 };

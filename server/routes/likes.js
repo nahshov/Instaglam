@@ -6,7 +6,7 @@ const {
   deleteLikeFromAPost,
   getLikesOfComment,
   addLikeToAComment,
-  deleteLikeFromAComment,
+  deleteLikeFromAComment
 } = require('../controllers/likes');
 
 module.exports = function (app) {
@@ -21,6 +21,6 @@ module.exports = function (app) {
     .delete(
       '/api/comments/:commentId/likes',
       verifyUser,
-      deleteLikeFromAComment,
+      deleteLikeFromAComment
     );
 };
