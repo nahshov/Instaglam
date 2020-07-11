@@ -14,7 +14,7 @@ const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherP
       return;
     }
 
-    document.body.style = '';
+    document.body.removeAttribute('style');
 
     window.history.pushState({}, 'post modal path', `/${username}`);
     setModalOpen(!isOpen);
