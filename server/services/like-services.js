@@ -2,7 +2,7 @@ const Like = require('../models/Like.js');
 
 async function getPostLikes(postId) {
   const likes = await Like.find({ post: postId });
-  return likes.filter((like) => !like.comment);
+  return likes.filter(like => !like.comment);
 }
 
 function getCommentLikes(commentId) {
@@ -48,5 +48,5 @@ module.exports = {
   addLikeToComment,
   removeLikeFromPost,
   removeLikeFromComment,
-  removeAllUserLikes
+  removeAllUserLikes,
 };

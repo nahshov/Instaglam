@@ -4,4 +4,5 @@ module.exports = function (app) {
   require('./posts')(app);
   require('./likes')(app);
   require('./comments')(app);
+  require('./follows')(app);
 };

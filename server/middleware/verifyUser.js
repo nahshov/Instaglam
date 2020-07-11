@@ -14,7 +14,7 @@ async function verifyUser(req, res, next) {
         const { cookieToken } = await setAuthCookie(user);
         res.cookie('token', cookieToken, {
           httpOnly: true,
-          maxAge: 60 * 60 * 24 * 30
+          maxAge: 60 * 60 * 24 * 30,
         });
         next();
       } else {

@@ -4,7 +4,7 @@ const {
   getCommentsOfPost,
   addCommentToPost,
   removeCommentFromPost,
-  editCommentOfPost
+  editCommentOfPost,
 } = require('../controllers/comments');
 
 module.exports = function (app) {
@@ -14,11 +14,11 @@ module.exports = function (app) {
     .put(
       '/api/posts/:postId/comments/:commentId',
       verifyUser,
-      editCommentOfPost
+      editCommentOfPost,
     )
     .delete(
       '/api/posts/:postId/comments/:commentId',
       verifyUser,
-      removeCommentFromPost
+      removeCommentFromPost,
     );
 };

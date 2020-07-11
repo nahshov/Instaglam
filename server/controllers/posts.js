@@ -4,7 +4,7 @@ const {
   createPost,
   removePost,
   updatePost,
-  getAllPosts
+  getAllPosts,
 } = require('../services/post-services.js');
 const serverResponse = require('../utils/serverResponse');
 
@@ -21,13 +21,13 @@ const submitPost = async (req, res) => {
     const post = {
       ...req.body,
       user: req.user.sub,
-      media: mediaUrl
+      media: mediaUrl,
     };
     const newPost = await createPost(post);
     return serverResponse(res, 200, newPost);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to submit a post'
+      message: 'Internal error while trying to submit a post',
     });
   }
 };
@@ -41,7 +41,7 @@ const getPosts = async (req, res) => {
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to get posts`
+      message: 'internal error while trying to get posts',
     });
   }
 };
@@ -55,14 +55,14 @@ const getPostsOfAUser = async (req, res) => {
 
     if (!posts.length) {
       return serverResponse(res, 404, {
-        message: 'there are no posts with requested user id'
+        message: 'there are no posts with requested user id',
       });
     }
 
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: 'Internal error while trying to get posts'
+      message: 'Internal error while trying to get posts',
     });
   }
 };
@@ -83,7 +83,7 @@ const getOnePost = async (req, res) => {
   } catch (e) {
     res
       .status(500)
-      .json({ message: `internal error while trying to find post` })
+      .json({ message: 'internal error while trying to find post' })
       .end();
   }
 };
@@ -99,7 +99,7 @@ const deletePost = async (req, res) => {
     return serverResponse(res, 200, { message: 'File successfully deleted' });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to delete a post`
+      message: 'internal error while trying to delete a post',
     });
   }
 };
@@ -113,7 +113,7 @@ const editPost = async (req, res) => {
     return serverResponse(res, 200, post);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to update post`
+      message: 'internal error while trying to update post',
     });
   }
 };
@@ -124,5 +124,5 @@ module.exports = {
   getPostsOfAUser,
   getOnePost,
   deletePost,
-  editPost
+  editPost,
 };
