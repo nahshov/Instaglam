@@ -42,7 +42,7 @@ const getPosts = async (req, res) => {
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to get posts`
+      message: 'internal error while trying to get posts'
     });
   }
 };
@@ -84,7 +84,7 @@ const getOnePost = async (req, res) => {
   } catch (e) {
     res
       .status(500)
-      .json({ message: `internal error while trying to find post` })
+      .json({ message: 'internal error while trying to find post' })
       .end();
   }
 };
@@ -100,7 +100,7 @@ const deletePost = async (req, res) => {
     return serverResponse(res, 200, { message: 'File successfully deleted' });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to delete a post`
+      message: 'internal error while trying to delete a post'
     });
   }
 };
@@ -114,7 +114,7 @@ const editPost = async (req, res) => {
     return serverResponse(res, 200, post);
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to update post`
+      message: 'internal error while trying to update post'
     });
   }
 };

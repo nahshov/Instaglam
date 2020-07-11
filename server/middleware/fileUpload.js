@@ -13,9 +13,8 @@ const postSettings = {
   errorMessage: 'Please upload an image/video'
 };
 
-const upload = (propertyName) => {
-  const { fileSize, regex, errorMessage } =
-    propertyName === 'media' ? postSettings : profilePicSettings;
+const upload = propertyName => {
+  const { fileSize, regex, errorMessage } = propertyName === 'media' ? postSettings : profilePicSettings;
 
   return multer({
     storage: multer.memoryStorage(),
