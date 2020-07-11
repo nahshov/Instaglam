@@ -10,6 +10,7 @@ const serverResponse = require('../utils/serverResponse');
 
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 const formatImage = require('../utils/formatMedia.js');
+const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
 
 // @route  POST '/api/posts'
 // @desc   Submit a posts
@@ -95,6 +96,13 @@ const getOnePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
+
+    if (!requesterIsAuthenticatedUser(req.user.sub, post.user)) {
+      return serverResponse(res, 400, {
+        message: 'Unauthorized!'
+      });
+    }
+
     await deleteFile(post.media);
     await removePost(req.params.postId);
     return serverResponse(res, 200, { message: 'File successfully deleted' });
@@ -110,6 +118,12 @@ const deletePost = async (req, res) => {
 // @access private
 const editPost = async (req, res) => {
   try {
+    const postToEdit = await getPost(req.params.postId);
+    if (!requesterIsAuthenticatedUser(req.user.sub, postToEdit.user)) {
+      return serverResponse(res, 400, {
+        message: 'Unauthorized!'
+      });
+    }
     const post = await updatePost(req.params.postId, req.body);
     return serverResponse(res, 200, post);
   } catch (e) {

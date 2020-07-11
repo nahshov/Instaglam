@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styles from './PostsGrid.module.scss';
 import PostModal from '../Modals/PostModal/PostModal';
 import PostsGridItem from './PostsGridItem';
+import PostGallery from '../PostGallery/PostGallery';
 
 const PostsGrid = ({ posts, isLink = false }) => {
   const { user: searchedUser } = useSelector(state => state.users);
@@ -32,13 +33,7 @@ const PostsGrid = ({ posts, isLink = false }) => {
         setModalOpen={setIsPostModal}
         username={searchedUser.username}
       >
-        <div
-          style={{
-            background: `black url(${searchedPost.media}) no-repeat center center / cover`,
-            width: '70%',
-            height: '100%'
-          }}
-        />
+        <PostGallery post={searchedPost} />
         <div />
       </PostModal>
       )}

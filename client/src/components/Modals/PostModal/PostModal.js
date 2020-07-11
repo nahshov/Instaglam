@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { changeUrl } from 'utils/changeUrl';
 import styles from './PostModal.module.scss';
 
 const modalRoot = document.getElementById('modal');
@@ -16,7 +17,7 @@ const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherP
 
     document.body.removeAttribute('style');
 
-    window.history.pushState({}, 'post modal path', `/${username}`);
+    changeUrl(`/${username}`, 'post modal path');
     setModalOpen(!isOpen);
   };
 

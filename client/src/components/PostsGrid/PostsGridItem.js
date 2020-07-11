@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './PostsGrid.module.scss';
 import PostsGridItemContent from './PostsGridItemContent';
+import { changeUrl } from '../../utils/changeUrl';
 
 const PostsGridItem = (
   { post,
@@ -11,32 +12,43 @@ const PostsGridItem = (
     setSearchedPost,
     setIsPostModal
   }
-) => (
-  <div
-    key={post._id}
-    className={styles.profilePost}
-    style={{
-      background: `url(${post.media}) no-repeat center center / cover`
-    }}
-    onClick={() => {
-      if (!isLink) {
-        document.body.style = 'overflow: hidden';
-        window.history.pushState(
-          {},
-          'post modal path',
-          `/p/${post._id}`
-        );
+) => {
+  const isVideo = !post.media.endsWith('.jpeg');
+  const fileType = post.media.substring(post.media.lastIndexOf('.') + 1);
 
-        // Setting searched post in parent grid component, in order to access it in the modal.
-        // Dont want to render a modal for each post
-        setSearchedPost(posts.find(p => p._id === post._id));
-        setIsPostModal(!isPostModal);
-      }
-    }}
-  >
-    <PostsGridItemContent post={post} isLink={isLink} />
-  </div>
-);
+  return (
+    <div
+      key={post._id}
+      className={styles.profilePost}
+      style={!isVideo ? {
+        background: `url(${post.media}) no-repeat center center / cover`
+      } : {}}
+      onClick={() => {
+        if (!isLink) {
+          document.body.style = 'overflow: hidden';
+          changeUrl(`/p/${post._id}`, 'post modal path');
+
+          // Setting searched post in parent grid component, in order to access it in the modal.
+          // Dont want to render a modal for each post
+          setSearchedPost(posts.find(p => p._id === post._id));
+          setIsPostModal(!isPostModal);
+        }
+      }}
+    >
+      <PostsGridItemContent post={post} isLink={isLink} />
+      {' '}
+      {console.log(post.media)}
+      {isVideo && (
+      <video className={styles.videoPost}>
+        <source
+          src={post.media}
+          type={`video/${fileType}`}
+        />
+      </video>
+      )}
+    </div>
+  );
+};
 
 PostsGridItem.propTypes = {
   post: PropTypes.shape({
