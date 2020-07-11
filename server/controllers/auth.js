@@ -149,7 +149,9 @@ const refresh = async function (req, res) {
 
       const user = await getUser(email);
 
-      if (created === user.refreshTokenIdentifier) return serverResponse(res, 200, { payload: getTokens(user) });
+      if (created === user.refreshTokenIdentifier) {
+        return serverResponse(res, 200, { payload: getTokens(user) });
+      }
     }
 
     return serverResponse(res, 401, { message: 'Unauthorized' });

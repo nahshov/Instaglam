@@ -56,7 +56,7 @@ const addFollowToAUser = async (req, res) => {
 // @access  private
 const removeFollow = async (req, res) => {
   try {
-    const removeFollowFromAUser = await removeFollowFromUser(
+    await removeFollowFromUser(
       req.params.userId,
       req.user.sub,
     );
