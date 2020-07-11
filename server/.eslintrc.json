@@ -4,7 +4,9 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb-base"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -13,8 +15,15 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "comma-dangle": ["error", "never"],
-    "arrow-parens": ["error", "as-needed"],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "linebreak-style": 0,
     "no-underscore-dangle": 0,
     "no-param-reassign": 0,
     "func-names": 0,
