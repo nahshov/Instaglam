@@ -24,10 +24,11 @@ const getUser = async (req, res) => {
     const user = await getUserService(req.params.userInfo);
     console.log(user);
 
-    if (!user)
+    if (!user) {
       return serverResponse(res, 404, {
         message: 'No user with requested email'
       });
+    }
 
     return serverResponse(res, 200, user);
   } catch (e) {
@@ -42,10 +43,15 @@ const getUsers = async (req, res) => {
   try {
     const users = await getUsersService(req.params.userInfo);
 
+<<<<<<< HEAD
     if (!users)
+=======
+    if (!user) {
+>>>>>>> develop
       return serverResponse(res, 404, {
         message: 'No user with requested email'
       });
+    }
 
     return serverResponse(res, 200, users);
   } catch (e) {
@@ -169,8 +175,7 @@ const deleteProfilePic = async (req, res) => {
 
     const imgUrl = user.profilePic;
 
-    user.profilePic =
-      'https://www.gravatar.com/avatar/9e7800080252bd18b5a7cffe2f4d54a1?s=180&r=pg&d=mm';
+    user.profilePic = 'https://www.gravatar.com/avatar/9e7800080252bd18b5a7cffe2f4d54a1?s=180&r=pg&d=mm';
 
     await Promise.all([deleteFile(imgUrl), user.save()]);
     return serverResponse(res, 200, {

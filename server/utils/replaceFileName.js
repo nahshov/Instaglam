@@ -1,6 +1,6 @@
 const { v4: uuid } = require('uuid');
 
-const replaceFileNameWithUUID = (originalname) => {
+const replaceFileNameWithUUID = originalname => {
   let filename;
   const extension = originalname.substring(originalname.lastIndexOf('.'));
 

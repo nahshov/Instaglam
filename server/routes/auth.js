@@ -1,8 +1,10 @@
 const verifyUser = require('../middleware/verifyUser');
 const { signupValidator, loginValidator } = require('../middleware/validators');
-const { login, register, logout, refresh } = require('../controllers/auth');
+const {
+  login, register, logout, refresh
+} = require('../controllers/auth');
 
-module.exports = (app) => {
+module.exports = app => {
   app
     .post('/api/login', loginValidator(), login)
     .post('/api/register', signupValidator(), register)

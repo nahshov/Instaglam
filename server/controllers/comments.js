@@ -58,7 +58,7 @@ const removeCommentFromPost = async (req, res) => {
     res
       .status(500)
       .json({
-        message: `internal error while trying to remove a comment`
+        message: 'internal error while trying to remove a comment'
       })
       .end();
   }
@@ -72,7 +72,7 @@ const editCommentOfPost = async (req, res) => {
     res
       .status(500)
       .json({
-        message: `internal error while trying to update comment`
+        message: 'internal error while trying to update comment'
       })
       .end();
   }

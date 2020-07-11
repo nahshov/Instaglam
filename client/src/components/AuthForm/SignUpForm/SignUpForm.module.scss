@@ -1,5 +1,5 @@
-@import '../../../styles/color-palette.scss';
-@import '../../../styles/mixins.scss';
+@import "../../../styles/color-palette.scss";
+@import "../../../styles/mixins.scss";
 
 .authWrapper {
   display: flex;
@@ -21,6 +21,7 @@
     background: $color-white;
     max-width: 450px;
     width: 100%;
+    height: 730px;
     padding-top: 20px;
     border: 1px solid $primary-border-color;
     border-radius: 1px;

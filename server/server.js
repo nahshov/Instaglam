@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   // error handling logic
   res.status(400).send('Bad request');
 });

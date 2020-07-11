@@ -16,8 +16,7 @@ const login = async (req, res) => {
   try {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty())
-      return serverResponse(res, 400, { errors: errors.array() });
+    if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
     const { email, password } = req.body || {};
     const user = await getUser(email);
@@ -66,8 +65,7 @@ const register = async (req, res) => {
   try {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty())
-      return serverResponse(res, 400, { errors: errors.array() });
+    if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
     const exists = await getUser(req.body.email);
     const userNameExists = await getUser(req.body.username);
@@ -127,7 +125,7 @@ const logout = async (req, res) => {
     return serverResponse(res, 200, { message: 'Successfully logged out' });
   } catch (e) {
     return serverResponse(res, 500, {
-      message: `internal error while trying to logout`
+      message: 'internal error while trying to logout'
     });
   }
 };
@@ -151,8 +149,9 @@ const refresh = async function (req, res) {
 
       const user = await getUser(email);
 
-      if (created === user.refreshTokenIdentifier)
+      if (created === user.refreshTokenIdentifier) {
         return serverResponse(res, 200, { payload: getTokens(user) });
+      }
     }
 
     return serverResponse(res, 401, { message: 'Unauthorized' });
