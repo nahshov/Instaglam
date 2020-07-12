@@ -43,11 +43,7 @@ const getUsers = async (req, res) => {
   try {
     const users = await getUsersService(req.params.userInfo);
 
-<<<<<<< HEAD
-    if (!users)
-=======
     if (!user) {
->>>>>>> develop
       return serverResponse(res, 404, {
         message: 'No user with requested email'
       });

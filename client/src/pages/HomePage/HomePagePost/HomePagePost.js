@@ -1,24 +1,15 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { RiChat3Line } from 'react-icons/ri';
 import { GrBookmark } from 'react-icons/gr';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
-import { getAllPosts } from 'actions/posts/postActions';
-import { searchUsers } from 'actions/users/userActions';
 import styles from './HomePagePost.module.scss';
 
-const HomePagePost = () => {
-  const { posts: { posts }, users: { user } } = useSelector(state => state);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, []);
-
+const HomePagePost = ({ post }) => {
+  const { likes, comments, content, user: { username = '', profilePic = '' }, media, created } = post;
   const handleSubmit = e => {
     e.preventDefault();
   };
@@ -28,15 +19,19 @@ const HomePagePost = () => {
       <header className={styles.headerPostContainer}>
         <div className={styles.postHeader}>
           <div className={styles.userIdentifier}>
-            <div className={styles.circle} />
-            <a href="#" className={styles.username}>
-              name
-            </a>
+            <Link to={`/${username}`}>
+              <ProfilePic url={profilePic} className={styles.profilePicLink} />
+            </Link>
+            <Link to={`/${username}`}>
+              <button type="button" href="#" className={styles.username}>
+                {username}
+              </button>
+            </Link>
           </div>
           <FiMoreHorizontal className={styles.moreIcon} onClick={() => console.log('hello')} />
         </div>
       </header>
-      <div className={styles.postPicture} />
+      <img alt="post media" src={media} className={styles.postPicture} />
       <div className={styles.iconsWrapper}>
         <div className={styles.leftIconsWrapper}>
           <HeartIcon className={styles.heartIcon} />
@@ -45,16 +40,22 @@ const HomePagePost = () => {
         </div>
         <GrBookmark className={styles.bookMark} />
       </div>
-      <div className={styles.likesAmount}> **likes</div>
+      <div className={styles.likesAmount}>
+        {likes}
+        &nbsp;likes
+      </div>
       <div className={styles.postContentContainer}>
-        <span className={styles.username}> username </span>
-        <span>hey there i am using instaglam</span>
+        <Link to={`/${username}`}>
+          <span className={styles.username}>
+            {username}
+          </span>
+        </Link>
+        <span>{content}</span>
       </div>
       <a href="#" className={styles.postAge}>*** ***** AGO</a>
       <form onSubmit={handleSubmit} className={styles.commentContainer}>
-        <textarea id="commentTextArea" className={styles.commentInput} />
-        <label htmlFor="commentTextArea" className={styles.commentLabel}>Add a comment...</label>
-        <button type="submit" className={styles.postButton}>Post</button>
+        <textarea id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
+        <button type="submit" className={styles.postButton}>djaslkdjslksdjakldsajdaskl</button>
       </form>
     </article>
   );
