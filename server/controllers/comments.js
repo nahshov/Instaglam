@@ -6,6 +6,8 @@ const {
   updateComment
 } = require('../services/comment-services');
 
+const { removeLikesFromComment } = require('../services/like-services');
+
 const { getPost } = require('../services/post-services');
 const serverResponse = require('../utils/serverResponse');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
@@ -70,6 +72,7 @@ const removeCommentFromPost = async (req, res) => {
       });
     }
 
+    await removeLikesFromComment(req.params.commentId);
     const comment = await removeComment(req.params.commentId);
     const post = await getPost(req.params.postId);
     post.comments--;

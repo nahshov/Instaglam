@@ -6,6 +6,11 @@ const {
   updatePost,
   getAllPosts
 } = require('../services/post-services.js');
+
+const { removeLikesFromPost } = require('../services/like-services');
+
+const { removeAllPostComments } = require('../services/comment-services');
+
 const serverResponse = require('../utils/serverResponse');
 
 const { uploadFile, deleteFile } = require('../services/cloud-services');
@@ -102,6 +107,8 @@ const deletePost = async (req, res) => {
       });
     }
 
+    await removeLikesFromPost(req.params.postId);
+    await removeAllPostComments(req.params.postId);
     await deleteFile(post.media);
     await removePost(req.params.postId);
     return serverResponse(res, 200, { message: 'File successfully deleted' });

@@ -33,8 +33,16 @@ function removeLikeFromPost(userId) {
   return Like.findOneAndRemove({ user: userId });
 }
 
+function removeLikesFromPost(postId) {
+  return Like.deleteMany({ post: postId });
+}
+
 function removeLikeFromComment(userId) {
   return Like.findOneAndRemove({ user: userId });
+}
+
+function removeLikesFromComment(commentId) {
+  return Like.deleteMany({ comment: commentId });
 }
 
 function removeAllUserLikes(userId) {
@@ -47,6 +55,8 @@ module.exports = {
   addLikeToPost,
   addLikeToComment,
   removeLikeFromPost,
+  removeLikesFromPost,
   removeLikeFromComment,
+  removeLikesFromComment,
   removeAllUserLikes
 };

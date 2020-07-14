@@ -35,6 +35,11 @@ const addLikeToAPost = async (req, res) => {
       user: req.user.sub
     });
     const post = await getPost(req.params.postId);
+
+    if (!like) {
+      return serverResponse(res, 200, like);
+    }
+
     post.likes++;
     await post.save();
     return serverResponse(res, 200, like);
@@ -52,6 +57,11 @@ const deleteLikeFromAPost = async (req, res) => {
   try {
     const like = await removeLikeFromPost(req.user.sub);
     const post = await getPost(req.params.postId);
+
+    if (!like) {
+      return serverResponse(res, 200, like);
+    }
+
     post.likes--;
     await post.save();
     return serverResponse(res, 200, like);
