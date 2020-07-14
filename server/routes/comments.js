@@ -1,6 +1,7 @@
 const verifyUser = require('../middleware/verifyUser');
 
 const {
+  getASingleComment,
   getCommentsOfPost,
   addCommentToPost,
   removeCommentFromPost,
@@ -9,6 +10,7 @@ const {
 
 module.exports = function (app) {
   app
+    .get('/api/comments/:commentId', verifyUser, getASingleComment)
     .get('/api/posts/:postId/comments', verifyUser, getCommentsOfPost)
     .post('/api/posts/:postId/comments', verifyUser, addCommentToPost)
     .put(

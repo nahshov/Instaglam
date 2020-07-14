@@ -1,4 +1,5 @@
 const {
+  getSingleComment,
   getComments,
   addComment,
   removeComment,
@@ -7,6 +8,18 @@ const {
 
 const { getPost } = require('../services/post-services');
 const serverResponse = require('../utils/serverResponse');
+const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
+
+const getASingleComment = async (req, res) => {
+  try {
+    const comment = await getSingleComment(req.params.commentId);
+    return serverResponse(res, 200, comment);
+  } catch (e) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get a comment'
+    });
+  }
+};
 
 // @route   GET '/api/posts/:postId/comments'
 // @desc    get all comments of a specific post
@@ -49,6 +62,14 @@ const addCommentToPost = async (req, res) => {
 // @access  private
 const removeCommentFromPost = async (req, res) => {
   try {
+    const getComment = await getSingleComment(req.params.commentId);
+
+    if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
+      return serverResponse(res, 400, {
+        message: 'Unauthorized!'
+      });
+    }
+
     const comment = await removeComment(req.params.commentId);
     const post = await getPost(req.params.postId);
     post.comments--;
@@ -66,6 +87,14 @@ const removeCommentFromPost = async (req, res) => {
 
 const editCommentOfPost = async (req, res) => {
   try {
+    const getComment = await getSingleComment(req.params.commentId);
+
+    if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
+      return serverResponse(res, 400, {
+        message: 'Unauthorized!'
+      });
+    }
+
     const comment = await updateComment(req.params.commentId, req.body);
     res.status(200).json(comment).end();
   } catch (error) {
@@ -79,6 +108,7 @@ const editCommentOfPost = async (req, res) => {
 };
 
 module.exports = {
+  getASingleComment,
   getCommentsOfPost,
   addCommentToPost,
   removeCommentFromPost,

@@ -1,5 +1,9 @@
 const Comment = require('../models/Comment.js');
 
+function getSingleComment(commentId) {
+  return Comment.findOne({ _id: commentId });
+}
+
 function getComments(postId) {
   return Comment.find({ post: postId });
 }
@@ -28,6 +32,7 @@ async function updateComment(commentId, newContent) {
 }
 
 module.exports = {
+  getSingleComment,
   getComments,
   addComment,
   removeComment,
