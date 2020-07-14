@@ -59,14 +59,14 @@ const deleteLikeFromAPost = async (req, res) => {
     const post = await getPost(req.params.postId);
 
     if (!like) {
-      return serverResponse(res, 200, like);
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
 
     post.likes--;
     await post.save();
     return serverResponse(res, 200, like);
   } catch (error) {
-    return serverResponse(res, 200, {
+    return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a like'
     });
   }
@@ -80,7 +80,7 @@ const getLikesOfComment = async (req, res) => {
     const likes = await getCommentLikes(req.params.commentId);
     return serverResponse(res, 200, likes);
   } catch (error) {
-    return serverResponse(res, 200, {
+    return serverResponse(res, 500, {
       message: 'Internal error while trying to get likes'
     });
   }
