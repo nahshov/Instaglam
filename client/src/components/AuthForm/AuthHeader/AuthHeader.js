@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from 'components/AuthForm/AuthHeader/AuthHeader.module.scss';
 
-const AuthHeader = ({ hasAccount }) => (
-  <div className={styles.authHeader}>
+const AuthHeader = ({ hasAccount = false, style = {} }) => (
+  <div className={styles.authHeader} style={style}>
     <h1 className={styles.title}>Instaglam</h1>
     {hasAccount ? (
       <h2 className={styles.h2}>
@@ -13,7 +13,13 @@ const AuthHeader = ({ hasAccount }) => (
   </div>
 );
 
+AuthHeader.defaultProps = {
+  hasAccount: false,
+  style: {}
+};
+
 AuthHeader.propTypes = {
-  hasAccount: PropTypes.bool.isRequired
+  hasAccount: PropTypes.bool,
+  style: PropTypes.shape({})
 };
 export default AuthHeader;

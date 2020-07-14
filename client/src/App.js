@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'App.scss';
 import HomePage from 'pages/HomePage/HomePage';
 import ProfilePage from 'pages/ProfilePage/ProfilePage';
+import WelcomePage from 'pages/WelcomePage/WelcomePage';
 import SignUpForm from 'components/AuthForm/SignUpForm/SignUpForm';
 import LogInForm from 'components/AuthForm/LogInForm/LogInForm';
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
@@ -20,6 +21,7 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/accounts/welcomepage" component={WelcomePage} />
           <Route path="/accounts/emailsignup" exact component={SignUpForm} />
           <Route path="/accounts/login" exact component={LogInForm} />
           <ProtectedRoute

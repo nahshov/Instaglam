@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { isEmail } from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -33,6 +33,8 @@ const SignUpForm = () => {
   } = useSelector(state => state);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   useEffect(() => {
     if (!signUpForm.email) {
@@ -88,6 +90,8 @@ const SignUpForm = () => {
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
+
+  window.addEventListener('load', () => history.push('/accounts/welcomepage'));
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
