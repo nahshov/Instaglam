@@ -12,17 +12,16 @@ const CommentSchema = new mongoose.Schema({
   },
   post: {
     type: mongoose.Types.ObjectId,
-    ref: 'Post',
-    required: true
+    ref: 'Post'
   },
   like: Number,
   content: {
     type: String,
     required: true
   },
-  replies: {
+  reply: {
     type: mongoose.Types.ObjectId,
-    ref: 'Commnet'
+    ref: 'Comment'
   }
 });
 

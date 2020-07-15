@@ -24,12 +24,15 @@ const submitPost = async (req, res) => {
   try {
     const buffer = await formatImage(req.file, 600);
     const mediaUrl = await uploadFile(req.file.originalname, buffer);
+
     const post = {
       ...req.body,
       user: req.user.sub,
       media: mediaUrl
     };
+
     const newPost = await createPost(post);
+
     return serverResponse(res, 200, newPost);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -64,12 +67,6 @@ const getPostsOfAUser = async (req, res) => {
   try {
     const posts = await getAllPostsOfUser(req.params.userInfo);
 
-    if (!posts.length) {
-      return serverResponse(res, 404, {
-        message: "User doesn't have any posts"
-      });
-    }
-
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -90,6 +87,7 @@ const getOnePost = async (req, res) => {
         message: "Post doesn't exist"
       });
     }
+
     return serverResponse(res, 200, post);
   } catch (e) {
     res
@@ -136,12 +134,21 @@ const deletePost = async (req, res) => {
 const editPost = async (req, res) => {
   try {
     const postToEdit = await getPost(req.params.postId);
+
+    if (!postToEdit) {
+      return serverResponse(res, 404, {
+        message: "Post doesn't exist"
+      });
+    }
+
     if (!requesterIsAuthenticatedUser(req.user.sub, postToEdit.user)) {
       return serverResponse(res, 400, {
         message: 'Unauthorized!'
       });
     }
+
     const post = await updatePost(req.params.postId, req.body);
+
     return serverResponse(res, 200, post);
   } catch (e) {
     return serverResponse(res, 500, {

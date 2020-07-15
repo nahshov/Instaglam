@@ -4,8 +4,12 @@ function getSingleComment(commentId) {
   return Comment.findOne({ _id: commentId });
 }
 
-function getComments(postId) {
+function getCommentsOfPost(postId) {
   return Comment.find({ post: postId });
+}
+
+function getRepliesOfComment(commentId) {
+  return Comment.find({ reply: commentId });
 }
 
 function addComment(comment) {
@@ -21,6 +25,10 @@ function removeAllPostComments(postId) {
   return Comment.deleteMany({ post: postId });
 }
 
+function removeAllCommentReplies(commentId) {
+  return Comment.deleteMany({ reply: commentId });
+}
+
 function removeAllUserComments(userId) {
   return Comment.deleteMany({ user: userId });
 }
@@ -33,10 +41,12 @@ async function updateComment(commentId, newContent) {
 
 module.exports = {
   getSingleComment,
-  getComments,
+  getCommentsOfPost,
+  getRepliesOfComment,
   addComment,
   removeComment,
   removeAllPostComments,
+  removeAllCommentReplies,
   removeAllUserComments,
   updateComment
 };
