@@ -57,12 +57,12 @@ const getPosts = async (req, res) => {
   }
 };
 
-// @route  GET '/api/posts/:userId'
+// @route  GET '/api/posts/:userInfo'
 // @desc   Get posts of a user
 // @access private
 const getPostsOfAUser = async (req, res) => {
   try {
-    const posts = await getAllPostsOfUser(req.params.userId);
+    const posts = await getAllPostsOfUser(req.params.userInfo);
 
     if (!posts.length) {
       return serverResponse(res, 404, {

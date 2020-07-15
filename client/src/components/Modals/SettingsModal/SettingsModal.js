@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import styles from './Modal.module.scss';
+import styles from './SettingsModal.module.scss';
 
 const modalRoot = document.getElementById('modal');
 
-const Modal = ({ children, setSettingsModalOpen, isOpen = false, ...otherProps }) => {
+const SettingsModal = ({
+  children,
+  setModalOpen,
+  isOpen = false,
+  ...otherProps
+}) => {
   const node = useRef();
   const el = document.createElement('div');
 
@@ -14,7 +19,9 @@ const Modal = ({ children, setSettingsModalOpen, isOpen = false, ...otherProps }
       return;
     }
 
-    setSettingsModalOpen(false);
+    document.body.removeAttribute('style');
+
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -39,17 +46,17 @@ const Modal = ({ children, setSettingsModalOpen, isOpen = false, ...otherProps }
   );
 };
 
-Modal.defaultProps = {
+SettingsModal.defaultProps = {
   isOpen: false
 };
 
-Modal.propTypes = {
+SettingsModal.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
   isOpen: PropTypes.bool,
-  setSettingsModalOpen: PropTypes.func.isRequired
+  setModalOpen: PropTypes.func.isRequired
 };
 
-export default Modal;
+export default SettingsModal;

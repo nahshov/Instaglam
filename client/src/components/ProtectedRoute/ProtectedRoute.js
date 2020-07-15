@@ -22,13 +22,14 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
             dispatch(logout());
             return <Redirect to="/accounts/welcomepage" />;
           }
-
-          return (
-            <>
-              <Navbar {...props} />
-              <Component {...props} />
-            </>
-          );
+          if (Component) {
+            return (
+              <>
+                <Navbar {...props} />
+                <Component {...props} />
+              </>
+            );
+          }
         }}
       />
     )

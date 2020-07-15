@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ModalListItem = ({ children }) => (
-  <li>
+const SettingsModalList = ({ children }) => (
+  <ul>
     {children}
-  </li>
+  </ul>
 );
 
-ModalListItem.propTypes = {
+SettingsModalList.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired
 };
 
-export default ModalListItem;
+export default SettingsModalList;

@@ -3,7 +3,8 @@
 @import '../../styles/typography.scss';
 
 .btn {
-  @include flexCenter;
+  display: flex;
+  justify-content: center;
 
   &.astext {
     & button {

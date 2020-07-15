@@ -14,7 +14,7 @@ module.exports = function (app) {
   app
     .get('/api/posts', verifyUser, getPosts)
     .post('/api/posts', verifyUser, upload('media'), submitPost)
-    .get('/api/posts/:userId', verifyUser, getPostsOfAUser)
+    .get('/api/posts/:userInfo', verifyUser, getPostsOfAUser)
     .delete('/api/posts/:postId', verifyUser, deletePost)
     .put('/api/posts/:postId', verifyUser, editPost)
     .get('/api/posts/singlePost/:postId', verifyUser, getOnePost);

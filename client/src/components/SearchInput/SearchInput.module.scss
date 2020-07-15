@@ -9,6 +9,7 @@
   border: 1px solid $primary-border-color;
   background-color: $primary-background;
   color: $secondary-text-color;
+  border-radius: 3px;
   @include respond(phablet) {
     display: none;
   }

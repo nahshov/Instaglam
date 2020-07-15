@@ -8,7 +8,6 @@ const bucket = gc.bucket(googleStorage.bucketName);
 
 const uploadFile = (originalname, buffer) => new Promise((resolve, reject) => {
   const filename = replaceFileNameWithUUID(originalname);
-
   const blob = bucket.file(filename);
 
   const blobStream = blob.createWriteStream({
