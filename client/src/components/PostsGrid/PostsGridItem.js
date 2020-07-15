@@ -10,45 +10,41 @@ const PostsGridItem = (
     isLink,
     isPostModal,
     setSearchedPost,
-    setIsPostModal
+    setIsPostModal,
+    isVideo,
+    fileType
   }
-) => {
-  const isVideo = !post.media.endsWith('.jpeg');
-  const fileType = post.media.substring(post.media.lastIndexOf('.') + 1);
+) => (
+  <div
+    key={post._id}
+    className={styles.profilePost}
+    style={!isVideo ? {
+      background: `url(${post.media}) no-repeat center center / cover`
+    } : {}}
+    onClick={() => {
+      if (!isLink) {
+        document.body.style = 'overflow: hidden';
+        changeUrl(`/p/${post._id}`, 'post modal path');
 
-  return (
-    <div
-      key={post._id}
-      className={styles.profilePost}
-      style={!isVideo ? {
-        background: `url(${post.media}) no-repeat center center / cover`
-      } : {}}
-      onClick={() => {
-        if (!isLink) {
-          document.body.style = 'overflow: hidden';
-          changeUrl(`/p/${post._id}`, 'post modal path');
-
-          // Setting searched post in parent grid component, in order to access it in the modal.
-          // Dont want to render a modal for each post
-          setSearchedPost(posts.find(p => p._id === post._id));
-          setIsPostModal(!isPostModal);
-        }
-      }}
-    >
-      <PostsGridItemContent post={post} isLink={isLink} />
-      {' '}
-      {console.log(post.media)}
-      {isVideo && (
+        // Setting searched post in parent grid component, in order to access it in the modal.
+        // Dont want to render a modal for each post
+        setSearchedPost(posts.find(p => p._id === post._id));
+        setIsPostModal(!isPostModal);
+      }
+    }}
+  >
+    <PostsGridItemContent post={post} isLink={isLink} />
+    {' '}
+    {isVideo && (
       <video className={styles.videoPost}>
         <source
           src={post.media}
           type={`video/${fileType}`}
         />
       </video>
-      )}
-    </div>
-  );
-};
+    )}
+  </div>
+);
 
 PostsGridItem.propTypes = {
   post: PropTypes.shape({
@@ -70,7 +66,9 @@ PostsGridItem.propTypes = {
   isPostModal: PropTypes.bool.isRequired,
   setSearchedPost: PropTypes.func.isRequired,
   setIsPostModal: PropTypes.func.isRequired,
-  isLink: PropTypes.bool.isRequired
+  isLink: PropTypes.bool.isRequired,
+  isVideo: PropTypes.bool.isRequired,
+  fileType: PropTypes.string.isRequired
 };
 
 export default PostsGridItem;
