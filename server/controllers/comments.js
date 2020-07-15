@@ -15,6 +15,9 @@ const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
 const getASingleComment = async (req, res) => {
   try {
     const comment = await getSingleComment(req.params.commentId);
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
     return serverResponse(res, 200, comment);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -48,6 +51,11 @@ const addCommentToPost = async (req, res) => {
       post: req.params.postId
     };
     const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
     post.comments++;
     await post.save();
     const response = await addComment(comment);
@@ -65,6 +73,10 @@ const addCommentToPost = async (req, res) => {
 const removeCommentFromPost = async (req, res) => {
   try {
     const getComment = await getSingleComment(req.params.commentId);
+
+    if (!getComment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
 
     if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
       return serverResponse(res, 400, {
@@ -91,6 +103,10 @@ const removeCommentFromPost = async (req, res) => {
 const editCommentOfPost = async (req, res) => {
   try {
     const getComment = await getSingleComment(req.params.commentId);
+
+    if (!getComment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
 
     if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
       return serverResponse(res, 400, {

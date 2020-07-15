@@ -44,6 +44,11 @@ const submitPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const posts = await getAllPosts(req.query.limit, req.query.skip);
+
+    if (posts.length === 0) {
+      return serverResponse(res, 404, { message: 'No posts found' });
+    }
+
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -61,7 +66,7 @@ const getPostsOfAUser = async (req, res) => {
 
     if (!posts.length) {
       return serverResponse(res, 404, {
-        message: 'there are no posts with requested user id'
+        message: "User doesn't have any posts"
       });
     }
 
@@ -79,13 +84,13 @@ const getPostsOfAUser = async (req, res) => {
 const getOnePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
+
     if (!post) {
-      return res
-        .status(404)
-        .json({ message: 'no post with requested id' })
-        .end();
+      return serverResponse(res, 404, {
+        message: "Post doesn't exist"
+      });
     }
-    res.status(200).json(post).end();
+    return serverResponse(res, 200, post);
   } catch (e) {
     res
       .status(500)
@@ -101,6 +106,12 @@ const deletePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
 
+    if (!post) {
+      return serverResponse(res, 404, {
+        message: "Post doesn't exist"
+      });
+    }
+
     if (!requesterIsAuthenticatedUser(req.user.sub, post.user)) {
       return serverResponse(res, 400, {
         message: 'Unauthorized!'
@@ -111,7 +122,7 @@ const deletePost = async (req, res) => {
     await removeAllPostComments(req.params.postId);
     await deleteFile(post.media);
     await removePost(req.params.postId);
-    return serverResponse(res, 200, { message: 'File successfully deleted' });
+    return serverResponse(res, 200, { message: 'Post successfully deleted' });
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to delete a post'

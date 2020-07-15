@@ -36,8 +36,12 @@ const addLikeToAPost = async (req, res) => {
     });
     const post = await getPost(req.params.postId);
 
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
     if (!like) {
-      return serverResponse(res, 200, like);
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
 
     post.likes++;
@@ -57,6 +61,10 @@ const deleteLikeFromAPost = async (req, res) => {
   try {
     const like = await removeLikeFromPost(req.user.sub);
     const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
@@ -94,11 +102,17 @@ const addLikeToAComment = async (req, res) => {
     const comment = await Comment.findOne({
       _id: req.params.commentId
     });
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
     const like = await addLikeToComment({
       user: req.user.sub,
       comment: req.params.commentId,
       post: comment.post
     });
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -112,7 +126,20 @@ const addLikeToAComment = async (req, res) => {
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
+    const comment = await Comment.findOne({
+      _id: req.params.commentId
+    });
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
     const like = await removeLikeFromComment(req.user.sub);
+
+    if (!like) {
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
+    }
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {

@@ -19,6 +19,10 @@ const CommentSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  replies: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Commnet'
   }
 });
 
