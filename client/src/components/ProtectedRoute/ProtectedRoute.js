@@ -20,7 +20,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         render={(props) => {
           if (!isAuthenticated) {
             dispatch(logout());
-            return <Redirect to="/accounts/login" />;
+            return <Redirect to="/accounts/welcomepage" />;
           }
           if (Component) {
             return (
