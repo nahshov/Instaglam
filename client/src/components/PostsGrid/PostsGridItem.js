@@ -51,9 +51,7 @@ PostsGridItem.propTypes = {
   isPostModal: PropTypes.bool.isRequired,
   setSearchedPost: PropTypes.func.isRequired,
   setIsPostModal: PropTypes.func.isRequired,
-  isLink: PropTypes.bool.isRequired,
-  isVideo: PropTypes.bool.isRequired,
-  fileType: PropTypes.string.isRequired
+  isLink: PropTypes.bool.isRequired
 };
 
 export default PostsGridItem;
