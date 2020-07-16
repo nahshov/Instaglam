@@ -6,10 +6,10 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import { logout, removeProfilePic, uploadProfilePic } from 'actions/auth/authActions';
-import SettingsModal from '../../components/Modals/SettingsModal/SettingsModal';
-import SettingsModalList from '../../components/Modals/SettingsModal/SettingsModalList';
-import SettingsModalListItem from '../../components/Modals/SettingsModal/SettingsModalListItem';
-import { setAlert } from '../../actions/alerts/alertActions';
+import SettingsModal from 'components/Modals/SettingsModal/SettingsModal';
+import SettingsModalList from 'components/Modals/SettingsModal/SettingsModalList';
+import SettingsModalListItem from 'components/Modals/SettingsModal/SettingsModalListItem';
+import { setAlert } from 'actions/alerts/alertActions';
 
 const ProfileHeader = () => {
   const dispatch = useDispatch();

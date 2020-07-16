@@ -10,22 +10,27 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { users, loading, error } = useSelector((state) => state.users);
+  const { users, usersLoading, error } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { debounce } = useDebounce((val) => {
+    dispatch(searchUsers(val));
+    setIsPopoverOpen(true);
+  }, 2000);
+
   const handleChange = (val) => {
+    setValue(val);
     if (!val) {
       setIsPopoverOpen(false);
     } else {
-      setIsPopoverOpen(true);
+      debounce(val);
     }
-    setValue(val);
-    dispatch(searchUsers(val));
   };
 
   const handleMouseDown = (user) => {
@@ -36,7 +41,7 @@ const SearchInput = () => {
   return (
     <div className={styles.searchInputContainer}>
       <Popover isPopoverOpen={isPopoverOpen}>
-        {(!users.length || error) && !loading ? (
+        {(!users.length || error) && !usersLoading ? (
           <PopoverListItem style={{ justifyContent: 'center' }}>
             <span className={styles.notFound}>No results found.</span>
           </PopoverListItem>
@@ -44,7 +49,7 @@ const SearchInput = () => {
           <PopoverList>
             {users.map((user) => (
               <PopoverListItem key={user.created}>
-                {loading ? (
+                {usersLoading ? (
                   <LoadingSpinner className={styles.searchProfilePic} />
                 ) : (
                   <Link
@@ -88,7 +93,7 @@ const SearchInput = () => {
           setValue('');
         }}
       >
-        {loading ? (
+        {usersLoading ? (
           <LoadingSpinner className={styles.deleteIcon} />
         ) : (
           <TiDelete className={styles.deleteIcon} />

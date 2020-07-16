@@ -11,7 +11,6 @@ const PostModal = ({ children, setModalOpen, isOpen = false, postId, ...otherPro
   const { pathname: username } = useLocation();
 
   const node = useRef();
-  const el = document.createElement('div');
 
   const handleClose = (e) => {
     if (node.current.contains(e.target)) {
@@ -27,14 +26,12 @@ const PostModal = ({ children, setModalOpen, isOpen = false, postId, ...otherPro
   useEffect(() => {
     document.body.style = 'overflow: hidden';
     changeUrl(`/p/${postId}`, 'post modal path');
-    el.addEventListener('mousedown', handleClose);
-    modalRoot.appendChild(el);
+    modalRoot.addEventListener('mousedown', handleClose);
 
     return () => {
-      el.removeEventListener('mousedown', handleClose);
-      modalRoot.removeChild(el);
+      modalRoot.removeEventListener('mousedown', handleClose);
     };
-  }, [el]);
+  }, [modalRoot]);
 
   return (
     isOpen && createPortal(
@@ -43,7 +40,7 @@ const PostModal = ({ children, setModalOpen, isOpen = false, postId, ...otherPro
           {children}
         </div>
       </div>,
-      el
+      modalRoot
     )
   );
 };
