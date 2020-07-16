@@ -22,7 +22,7 @@ const SearchInput = () => {
   const { debounce } = useDebounce((val) => {
     dispatch(searchUsers(val));
     setIsPopoverOpen(true);
-  }, 2000);
+  }, 200);
 
   const handleChange = (val) => {
     setValue(val);
