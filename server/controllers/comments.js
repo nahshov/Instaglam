@@ -124,10 +124,7 @@ const removeAComment = async (req, res) => {
   try {
     const getComment = await getSingleComment(req.params.commentId);
     const replies = await getRepliesOfComment(req.params.commentId);
-    const post = await getPost(req.params.postId);
-    const postCommentsSum = post.comments - replies.length;
-    console.log(postCommentsSum);
-    bla;
+
     if (!getComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
@@ -142,6 +139,8 @@ const removeAComment = async (req, res) => {
     await removeAllCommentReplies(req.params.commentId);
 
     const comment = await removeComment(req.params.commentId);
+    const post = await getPost(req.params.postId);
+    post.comment--;
 
     await post.save();
 

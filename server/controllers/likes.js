@@ -120,8 +120,7 @@ const addLikeToAComment = async (req, res) => {
 
     const like = await addLikeToComment({
       user: req.user.sub,
-      comment: req.params.commentId,
-      post: comment.post
+      comment: req.params.commentId
     });
 
     return serverResponse(res, 200, like);

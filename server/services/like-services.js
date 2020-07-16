@@ -20,8 +20,8 @@ async function addLikeToPost(like) {
 }
 
 async function addLikeToComment(like) {
-  const { user, post, comment } = like;
-  const doesLikeExist = await Like.findOne({ user, post, comment });
+  const { user, comment } = like;
+  const doesLikeExist = await Like.findOne({ user, comment });
   if (doesLikeExist) {
     return;
   }
