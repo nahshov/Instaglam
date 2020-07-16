@@ -10,9 +10,9 @@ import {
 export const searchUsers = (searchParam) => async (dispatch) => {
   try {
     if (searchParam) {
-      // dispatch({
-      //   type: RESET_LOADING
-      // });
+      dispatch({
+        type: RESET_LOADING
+      });
       const res = await axios.get(`/api/users/search/${searchParam}`);
 
       if (!res.data.length) {
@@ -36,9 +36,9 @@ export const searchUsers = (searchParam) => async (dispatch) => {
 export const searchUser = (userInfo) => async (dispatch) => {
   try {
     if (userInfo) {
-      // dispatch({
-      //   type: RESET_LOADING
-      // });
+      dispatch({
+        type: RESET_LOADING
+      });
 
       const res = await axios.get(`/api/users/${userInfo}`);
 

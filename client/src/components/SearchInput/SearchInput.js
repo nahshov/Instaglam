@@ -10,7 +10,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
   const [value, setValue] = useState('');
@@ -19,7 +19,7 @@ const SearchInput = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { debounce } = useDebounce((val) => {
+  const [debounce, debounceCancel] = useDebouncedCallback((val) => {
     dispatch(searchUsers(val));
     setIsPopoverOpen(true);
   }, 200);
@@ -27,6 +27,7 @@ const SearchInput = () => {
   const handleChange = (val) => {
     setValue(val);
     if (!val) {
+      debounceCancel();
       setIsPopoverOpen(false);
     } else {
       debounce(val);
@@ -49,21 +50,21 @@ const SearchInput = () => {
           <PopoverList>
             {users.map((user) => (
               <PopoverListItem key={user.created}>
-                {usersLoading ? (
-                  <LoadingSpinner className={styles.searchProfilePic} />
-                ) : (
-                  <Link
-                    to={`/${user.username}`}
-                    onMouseDown={() => handleMouseDown(user)}
-                    style={{ cursor: 'pointer', width: '100%' }}
-                  >
+                <Link
+                  to={`/${user.username}`}
+                  onMouseDown={() => handleMouseDown(user)}
+                  style={{ cursor: 'pointer', width: '100%' }}
+                >
+                  {usersLoading ? (
+                    <LoadingSpinner className={styles.searchProfilePic} />
+                  ) : (
                     <ProfilePic
                       url={user.profilePic}
                       className={styles.searchProfilePic}
                     />
-                    <span>{user.username}</span>
-                  </Link>
-                )}
+                  )}
+                  <span>{user.username}</span>
+                </Link>
               </PopoverListItem>
             ))}
           </PopoverList>
