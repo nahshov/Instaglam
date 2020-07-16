@@ -1,5 +1,5 @@
 const {
-  getSingleComment,
+  getComment,
   getCommentsOfPost,
   getRepliesOfComment,
   addComment,
@@ -40,7 +40,7 @@ const getCommentsOfAPost = async (req, res) => {
 // @access  private
 const getRepliesOfAComment = async (req, res) => {
   try {
-    const comment = await getSingleComment(req.params.commentId);
+    const comment = await getComment(req.params.commentId);
 
     if (!comment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
@@ -92,7 +92,7 @@ const addCommentToPost = async (req, res) => {
 const addReplyToComment = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
-    const comment = await getSingleComment(req.params.commentId);
+    const comment = await getComment(req.params.commentId);
 
     if (!comment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
@@ -101,7 +101,7 @@ const addReplyToComment = async (req, res) => {
     const reply = {
       ...req.body,
       user: req.user.sub,
-      comment: req.params.commentId
+      replyToComment: req.params.commentId
     };
 
     post.comments++;
@@ -122,14 +122,14 @@ const addReplyToComment = async (req, res) => {
 // @access  private
 const removeAComment = async (req, res) => {
   try {
-    const getComment = await getSingleComment(req.params.commentId);
+    const getAComment = await getComment(req.params.commentId);
     const replies = await getRepliesOfComment(req.params.commentId);
 
     if (!getComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
 
-    if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
+    if (!requesterIsAuthenticatedUser(req.user.sub, getAComment.user)) {
       return serverResponse(res, 400, {
         message: 'Unauthorized!'
       });
@@ -140,7 +140,8 @@ const removeAComment = async (req, res) => {
 
     const comment = await removeComment(req.params.commentId);
     const post = await getPost(req.params.postId);
-    post.comment--;
+    post.comments - replies.length;
+    post.comments--;
 
     await post.save();
 
@@ -157,13 +158,13 @@ const removeAComment = async (req, res) => {
 // @access  private
 const editComment = async (req, res) => {
   try {
-    const getComment = await getSingleComment(req.params.commentId);
+    const getAComment = await getComment(req.params.commentId);
 
     if (!getComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
 
-    if (!requesterIsAuthenticatedUser(req.user.sub, getComment.user)) {
+    if (!requesterIsAuthenticatedUser(req.user.sub, getAComment.user)) {
       return serverResponse(res, 400, {
         message: 'Unauthorized!'
       });

@@ -14,12 +14,15 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: 'Post'
   },
-  like: Number,
+  likes: {
+    type: Number,
+    default: 0
+  },
   content: {
     type: String,
     required: true
   },
-  comment: {
+  replyToComment: {
     type: mongoose.Types.ObjectId,
     ref: 'Comment'
   }

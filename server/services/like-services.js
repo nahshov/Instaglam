@@ -29,16 +29,12 @@ async function addLikeToComment(like) {
   return like.save();
 }
 
-function removeLikeFromPost(userId) {
-  return Like.findOneAndRemove({ user: userId });
+function removeLike(likeId) {
+  return Like.findOneAndRemove({ _id: likeId });
 }
 
 function removeLikesFromPost(postId) {
   return Like.deleteMany({ post: postId });
-}
-
-function removeLikeFromComment(userId) {
-  return Like.findOneAndRemove({ user: userId });
 }
 
 function removeLikesFromComment(commentId) {
@@ -54,9 +50,8 @@ module.exports = {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLikeFromPost,
+  removeLike,
   removeLikesFromPost,
-  removeLikeFromComment,
   removeLikesFromComment,
   removeAllUserLikes
 };

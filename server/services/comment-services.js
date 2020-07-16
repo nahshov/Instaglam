@@ -1,6 +1,6 @@
 const Comment = require('../models/Comment.js');
 
-function getSingleComment(commentId) {
+function getComment(commentId) {
   return Comment.findOne({ _id: commentId });
 }
 
@@ -9,7 +9,7 @@ function getCommentsOfPost(postId) {
 }
 
 function getRepliesOfComment(commentId) {
-  return Comment.find({ comment: commentId });
+  return Comment.find({ replyToComment: commentId });
 }
 
 function addComment(comment) {
@@ -26,7 +26,7 @@ function removeAllPostComments(postId) {
 }
 
 function removeAllCommentReplies(commentId) {
-  return Comment.deleteMany({ comment: commentId });
+  return Comment.deleteMany({ replyToComment: commentId });
 }
 
 function removeAllUserComments(userId) {
@@ -40,7 +40,7 @@ async function updateComment(commentId, newContent) {
 }
 
 module.exports = {
-  getSingleComment,
+  getComment,
   getCommentsOfPost,
   getRepliesOfComment,
   addComment,
