@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { isEmail } from 'validator';
 import AuthHeader from 'components/AuthForm/AuthHeader/AuthHeader';
 import InputField from 'components/InputField/InputField';
@@ -27,6 +27,8 @@ const LogInForm = () => {
 
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const checkDisabled = () => Object.values(logInForm).some(
     value => !value || logInForm.password.length < 6
   );
@@ -51,6 +53,8 @@ const LogInForm = () => {
   if (isAuthenticated && !loading) {
     return <Redirect to="/" />;
   }
+
+  window.addEventListener('load', () => history.push('/accounts/welcomepage'));
 
   const inputType = showPass ? 'text' : 'password';
   const showPassBtn = showPass ? 'Hide' : 'Show';
