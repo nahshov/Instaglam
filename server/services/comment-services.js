@@ -9,7 +9,7 @@ function getCommentsOfPost(postId) {
 }
 
 function getRepliesOfComment(commentId) {
-  return Comment.find({ reply: commentId });
+  return Comment.find({ comment: commentId });
 }
 
 function addComment(comment) {
@@ -26,7 +26,7 @@ function removeAllPostComments(postId) {
 }
 
 function removeAllCommentReplies(commentId) {
-  return Comment.deleteMany({ reply: commentId });
+  return Comment.deleteMany({ comment: commentId });
 }
 
 function removeAllUserComments(userId) {

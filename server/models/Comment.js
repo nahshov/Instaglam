@@ -19,7 +19,7 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  reply: {
+  comment: {
     type: mongoose.Types.ObjectId,
     ref: 'Comment'
   }

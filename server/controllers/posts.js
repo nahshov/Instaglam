@@ -9,7 +9,7 @@ const {
 
 const { removeLikesFromPost } = require('../services/like-services');
 
-const { removeAllPostComments } = require('../services/comment-services');
+const { getCommentsOfPost, removeAllPostComments, removeAllCommentReplies } = require('../services/comment-services');
 
 const serverResponse = require('../utils/serverResponse');
 
@@ -104,6 +104,8 @@ const deletePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
 
+    const comments = await getCommentsOfPost(req.params.postId);
+
     if (!post) {
       return serverResponse(res, 404, {
         message: "Post doesn't exist"
@@ -115,6 +117,10 @@ const deletePost = async (req, res) => {
         message: 'Unauthorized!'
       });
     }
+
+    comments.forEach(async comment => {
+      await removeAllCommentReplies(comment._id);
+    });
 
     await removeLikesFromPost(req.params.postId);
     await removeAllPostComments(req.params.postId);
