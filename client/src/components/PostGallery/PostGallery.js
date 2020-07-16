@@ -5,7 +5,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import styles from './PostGallery.module.scss';
 import { changeUrl } from '../../utils/changeUrl';
 
-const PostGallery = ({ post, isVideo, fileType }) => {
+const PostGallery = ({ post }) => {
   const { postsOfUser } = useSelector(state => state.posts);
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = postsOfUser.indexOf(currentPost);
@@ -32,21 +32,13 @@ const PostGallery = ({ post, isVideo, fileType }) => {
     <div className={styles.Gallery}>
       <div
         className={styles.media}
-        style={isVideo ? {
+        style={{
           background: `url(${currentPost.media})`
-        } : {}}
+        }}
       />
-      {isVideo && (
-      <video className={styles.videoPost} style={{ position: 'absolute' }} controls>
-        <source
-          src={post.media}
-          type={`video/${fileType}`}
-        />
-      </video>
-      )}
       <div />
       <div className={styles.arrows}>
-        {currentPostIndex > 0 && (
+        {currentPostIndex && (
         <button className={styles.left} type="button" onClick={prev}>
           <FaChevronLeft />
         </button>
@@ -69,9 +61,7 @@ PostGallery.propTypes = {
     media: PropTypes.string,
     user: PropTypes.string,
     content: PropTypes.string
-  }).isRequired,
-  isVideo: PropTypes.bool.isRequired,
-  fileType: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default PostGallery;

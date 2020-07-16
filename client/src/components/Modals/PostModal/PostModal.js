@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { changeUrl } from 'utils/changeUrl';
 import styles from './PostModal.module.scss';
 
 const modalRoot = document.getElementById('modal');
 
-const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherProps }) => {
+const PostModal = ({ children, setModalOpen, isOpen = false, postId, ...otherProps }) => {
+  const { pathname: username } = useLocation();
+
   const node = useRef();
   const el = document.createElement('div');
 
@@ -17,11 +20,13 @@ const PostModal = ({ children, setModalOpen, isOpen = false, username, ...otherP
 
     document.body.removeAttribute('style');
 
-    changeUrl(`/${username}`, 'post modal path');
+    changeUrl(`${username}`, 'post modal path');
     setModalOpen(!isOpen);
   };
 
   useEffect(() => {
+    document.body.style = 'overflow: hidden';
+    changeUrl(`/p/${postId}`, 'post modal path');
     el.addEventListener('mousedown', handleClose);
     modalRoot.appendChild(el);
 
@@ -53,8 +58,7 @@ PostModal.propTypes = {
     PropTypes.node
   ]).isRequired,
   isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  setModalOpen: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired
+  setModalOpen: PropTypes.func.isRequired
 };
 
 export default PostModal;

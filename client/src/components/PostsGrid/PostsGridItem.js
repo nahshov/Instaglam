@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './PostsGrid.module.scss';
 import PostsGridItemContent from './PostsGridItemContent';
-import { changeUrl } from '../../utils/changeUrl';
 
 const PostsGridItem = (
   { post,
@@ -10,22 +9,17 @@ const PostsGridItem = (
     isLink,
     isPostModal,
     setSearchedPost,
-    setIsPostModal,
-    isVideo,
-    fileType
+    setIsPostModal
   }
 ) => (
   <div
     key={post._id}
     className={styles.profilePost}
-    style={!isVideo ? {
+    style={{
       background: `url(${post.media}) no-repeat center center / cover`
-    } : {}}
+    }}
     onClick={() => {
       if (!isLink) {
-        document.body.style = 'overflow: hidden';
-        changeUrl(`/p/${post._id}`, 'post modal path');
-
         // Setting searched post in parent grid component, in order to access it in the modal.
         // Dont want to render a modal for each post
         setSearchedPost(posts.find(p => p._id === post._id));
@@ -34,15 +28,6 @@ const PostsGridItem = (
     }}
   >
     <PostsGridItemContent post={post} isLink={isLink} />
-    {' '}
-    {isVideo && (
-      <video className={styles.videoPost}>
-        <source
-          src={post.media}
-          type={`video/${fileType}`}
-        />
-      </video>
-    )}
   </div>
 );
 

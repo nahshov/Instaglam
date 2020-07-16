@@ -7,11 +7,8 @@ import PostsGridItem from './PostsGridItem';
 import PostGallery from '../PostGallery/PostGallery';
 
 const PostsGrid = ({ posts, isLink = false }) => {
-  const { user: searchedUser } = useSelector(state => state.users);
   const [searchedPost, setSearchedPost] = useState(null);
   const [isPostModal, setIsPostModal] = useState(false);
-  const isVideo = (post) => !post.media.endsWith('.jpeg');
-  const fileType = searchedPost && searchedPost.media.substring(searchedPost.media.lastIndexOf('.') + 1);
 
   return (!posts.length ? (
     <div className={styles.noPostsUploaded}>
@@ -27,17 +24,15 @@ const PostsGrid = ({ posts, isLink = false }) => {
           setSearchedPost={setSearchedPost}
           setIsPostModal={setIsPostModal}
           isLink={isLink}
-          isVideo={isVideo(post)}
-          fileType={fileType}
         />
       ))}
       {isPostModal && (
       <PostModal
+        postId={searchedPost._id}
         isOpen={isPostModal}
         setModalOpen={setIsPostModal}
-        username={searchedUser.username}
       >
-        <PostGallery post={searchedPost} isVideo={isVideo(searchedPost)} fileType={fileType} />
+        <PostGallery post={searchedPost} />
         <div />
       </PostModal>
       )}
