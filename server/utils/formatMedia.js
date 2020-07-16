@@ -1,12 +1,14 @@
 const sharp = require('sharp');
 
-const formatImage = (file, size) => {
+const formatImage = async (file, size) => {
   if (file) {
     if (
       !(file.originalname.endsWith('mov') || file.originalname.endsWith('mp4'))
-    ) return sharp(file.buffer).resize(size, size).jpeg().toBuffer();
+    ) {
+      return sharp(file.buffer).resize(size, size).jpeg().toBuffer();
+    }
 
-    return file.buffer;
+    return Promise.resolve(file.buffer);
   }
 };
 

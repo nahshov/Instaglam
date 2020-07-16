@@ -19,7 +19,7 @@ const SettingsModal = ({
       return;
     }
 
-    document.body.style = '';
+    document.body.removeAttribute('style');
 
     setModalOpen(false);
   };

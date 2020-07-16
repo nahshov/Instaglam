@@ -1,0 +1,36 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/shadows.scss';
+@import '../../styles/mixins.scss';
+
+.Gallery {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  .media {
+    width: 600px;
+    height: 100%;
+  }
+
+  .arrows {
+
+    button {
+      @include flexCenter;
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      color: $secondary-text-color-light;
+      font-size: 35px;
+      cursor: pointer;
+      filter: drop-shadow($lightspread-box-shadow);
+    }
+
+    .left {
+      left: -40px;
+    }
+    .right {
+      right: -40px;
+
+    }
+  }
+}
