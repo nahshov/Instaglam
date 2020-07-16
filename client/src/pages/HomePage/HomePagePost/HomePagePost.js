@@ -55,7 +55,7 @@ const HomePagePost = ({ post }) => {
       <a href="#" className={styles.postAge}>*** ***** AGO</a>
       <form onSubmit={handleSubmit} className={styles.commentContainer}>
         <textarea id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
-        <button type="submit" className={styles.postButton}>djaslkdjslksdjakldsajdaskl</button>
+        <button type="submit" className={styles.postButton}>Post</button>
       </form>
     </article>
   );

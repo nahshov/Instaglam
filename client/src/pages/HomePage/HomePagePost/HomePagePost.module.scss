@@ -6,7 +6,6 @@
 .postContainer{
     width: 600px;
     border: 2px solid $primary-border-color;
-    border-bottom: 1px solid $secondary-border-color;
     border-radius: 3px;
     height: 100%; 
     display: flex;
@@ -26,7 +25,6 @@
                     height: 30px;
                     width: 30px;
                     border-radius: 100%;
-                    background-color:red;
                     margin-right: 10px;
                     margin-left: 10px;
                   }
@@ -95,19 +93,25 @@
     .commentContainer{
         border-top: 2.4px solid #8e8e8e57;
         height: 48px;
-        @include flexSpaceBetween;
-
+        display: flex;
+        justify-content: space-between;
         .commentInput{
-            position: absolute;
+            width: 95%;
+            resize: none;
+            overflow: auto;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;        
+            outline: none;
             border: none;
-            width: 20%;
-        }
-        .commentLabel{
-            position: relative;
-            margin: 0px 0px 3px 11px;
+            padding: 12px;
+            &::-webkit-input-placeholder{
+              margin-left: 5px;
+            }
         }
         .postButton{
             margin: 0px 11px 3px 0px;
+            width: 5%;
             z-index: 100;
             &:hover{
                 cursor: pointer;
