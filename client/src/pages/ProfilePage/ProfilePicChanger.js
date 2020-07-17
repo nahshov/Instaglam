@@ -9,6 +9,7 @@ import ModalListItem from '../../components/Modals/ModalList/ModalListItem';
 import Button from '../../components/Button/Button';
 import { setAlert } from '../../actions/alerts/alertActions';
 import { removeProfilePic, uploadProfilePic } from '../../actions/auth/authActions';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const ProfilePicChanger = () => {
   const {
@@ -54,12 +55,16 @@ const ProfilePicChanger = () => {
           className={styles.changeProfilePicButton}
           onClick={toggleProfilePicModal}
         >
-          {!userLoading && (
-          <ProfilePic
-            url={searchedUser.profilePic}
-            className={styles.profilePic}
-          />
-          )}
+          {userLoading && !searchedUser.profilePic
+            ? <LoadingSpinner style={{ width: '150px', height: '150px' }} />
+            : (
+              <div className={styles.profilePic}>
+                <img
+                  alt="Change profile picture"
+                  src={searchedUser.profilePic}
+                />
+              </div>
+            )}
         </button>
         <Alert alerts={message} style={{ fontSize: '10px' }} />
       </div>

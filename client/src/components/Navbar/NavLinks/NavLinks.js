@@ -36,7 +36,7 @@ const NavLinks = () => {
         {user.profilePic && !loading ? (
           <ProfilePic
             url={user.profilePic}
-            className={styles.ProfilePic}
+            // className={styles.ProfilePic}
           />
         ) : (
           <LoadingSpinner className={styles.ProfilePic} />

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import PostGallery from '../../PostGallery/PostGallery';
-import Modal from '../Modal';
-import { changeUrl } from '../../../utils/changeUrl';
-import { postPropType } from '../../../customPropTypes';
+import PostGallery from 'components/PostGallery/PostGallery';
+import { changeUrl } from 'utils/changeUrl';
+import { postPropType } from 'customPropTypes';
+import Modal from 'components/Modals/Modal';
+import styles from './PostModal.module.scss';
 
 const PostModal = ({ post, isOpen, setModalOpen }) => {
   const { pathname: username } = useLocation();
@@ -20,6 +21,7 @@ const PostModal = ({ post, isOpen, setModalOpen }) => {
 
   return (
     <Modal
+      className={styles.PostModal}
       isOpen={isOpen}
       setModalOpen={setModalOpen}
     >

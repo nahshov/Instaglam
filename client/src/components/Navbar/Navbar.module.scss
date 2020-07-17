@@ -2,11 +2,14 @@
 @import '../../styles/mixins.scss';
 
 .Navbar {
+  position: sticky;
+  top: 0;
   @include flexCenter;
   height: 54px;
   width: 100%;
   border-bottom: 1px solid $primary-border-color;
   background: $color-white;
+  z-index: 4;
 }
 
 .content {
@@ -14,6 +17,7 @@
   @include container;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px;
 
   @include respond(tab-port) {
     width: 90%;

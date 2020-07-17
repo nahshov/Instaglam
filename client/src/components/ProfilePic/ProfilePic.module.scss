@@ -1,0 +1,25 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.ProfilePic {
+  @include flexCenter;
+  width: 24px;
+  height: 24px;
+
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+  }
+ }
+
+.ProfilePic.big {
+    width: 34px;
+    height: 34px;
+
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+    }
+}

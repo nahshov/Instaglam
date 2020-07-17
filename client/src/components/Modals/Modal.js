@@ -34,8 +34,8 @@ const Modal = (
 
   return (
     isOpen && createPortal(
-      <div className={styles.modalShadow} {...otherProps}>
-        <div className={`${isAnimated ? styles.showModal : ''}`} ref={node}>
+      <div className={styles.modalShadow}>
+        <div className={`${isAnimated ? styles.showModal : ''}`} {...otherProps} ref={node}>
           {children}
         </div>
       </div>,
