@@ -38,7 +38,7 @@ const PostGallery = ({ post }) => {
       />
       <div />
       <div className={styles.arrows}>
-        {currentPostIndex && (
+        {!!currentPostIndex && (
         <button className={styles.left} type="button" onClick={prev}>
           <FaChevronLeft />
         </button>

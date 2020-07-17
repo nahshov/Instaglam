@@ -33,11 +33,13 @@ const NavLinks = () => {
         className={styles.profilePicLink}
         activeClassName={styles.activeProfilePic}
       >
-        {loading ? <LoadingSpinner className={styles.ProfilePic} /> : (
+        {user.profilePic && !loading ? (
           <ProfilePic
             url={user.profilePic}
             className={styles.ProfilePic}
           />
+        ) : (
+          <LoadingSpinner className={styles.ProfilePic} />
         ) }
       </NavLink>
     </div>

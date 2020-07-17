@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ProfilePic = ({ url = '', className = '' }) => (
   <div className={className}>
-    <img alt="default profile pic" src={url} />
+    <img alt="user avatar" src={url} />
   </div>
 );
 
