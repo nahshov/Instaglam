@@ -14,7 +14,6 @@
 
   & button {
     background: transparent;
-    font-weight: bold;
     border: 1px solid $primary-border-color;
     border-radius: 4px;
     padding: 5px 9px;
@@ -63,6 +62,7 @@
 .danger {
   & button {
     border: none;
+    font-weight: bold;
     background-color: $error-text-color;
     color: $color-white;
   }

@@ -2,12 +2,10 @@
 @import '../../../styles/color-palette.scss';
 @import '../../../styles/typography.scss';
 
-
 .postContainer{
     width: 600px;
     border: 2px solid $primary-border-color;
     border-radius: 3px;
-    height: 100%; 
     display: flex;
     flex-direction: column;
     background: $color-white;
@@ -29,17 +27,13 @@
                     margin-left: 10px;
                   }
                 }
-                .username{
-                  &:hover{
-                    cursor: pointer;
-                  }
-                }
                 }
             }
             
             .moreIcon{
                 margin-right: 10px;
             }
+
         }
     }
     .postPicture{
@@ -61,8 +55,11 @@
             .chatIcon{
                 font-size: $icon-small
             }
+            .likeHeart{
+              color: red;
+            }   
             .ShareModalIcon{
-                font-size: $icon-small
+              font-size: $icon-small
             }
         }
         .bookMark{

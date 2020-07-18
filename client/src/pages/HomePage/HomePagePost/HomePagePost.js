@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -6,14 +6,20 @@ import { RiChat3Line } from 'react-icons/ri';
 import { GrBookmark } from 'react-icons/gr';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
+import Button from 'components/Button/Button';
+import SettingsModal from 'components/Modals/SettingsModal/SettingsModal';
+import SettingsModalList from 'components/Modals/SettingsModal/SettingsModalList';
+import SettingsModalListItem from 'components/Modals/SettingsModal/SettingsModalListItem';
 import styles from './HomePagePost.module.scss';
 
 const HomePagePost = ({ post }) => {
-  const { likes, comments, content, user: { username = '', profilePic = '' }, media, created } = post;
+  const { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } = post;
   const handleSubmit = e => {
     e.preventDefault();
   };
-  // const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isPostSettingsModalOpen, setPostSettingsModalOpen] = useState(false);
+  const [isHeartIconFilled, setHeartIconFilled] = useState(false);
+
   return (
     <article className={styles.postContainer}>
       <header className={styles.headerPostContainer}>
@@ -23,18 +29,45 @@ const HomePagePost = ({ post }) => {
               <ProfilePic url={profilePic} className={styles.profilePicLink} />
             </Link>
             <Link to={`/${username}`}>
-              <button type="button" href="#" className={styles.username}>
-                {username}
-              </button>
+              {username}
             </Link>
           </div>
-          <FiMoreHorizontal className={styles.moreIcon} onClick={() => console.log('hello')} />
+          <FiMoreHorizontal
+            className={styles.moreIcon}
+            onClick={() => setPostSettingsModalOpen(true)}
+          />
+          {isPostSettingsModalOpen && (
+          <SettingsModal
+            isOpen={isPostSettingsModalOpen}
+            setModalOpen={setPostSettingsModalOpen}
+          >
+            <SettingsModalList>
+              <SettingsModalListItem>
+                <Button btnRole="danger btnBlock astext">Unfollow</Button>
+              </SettingsModalListItem>
+              <SettingsModalListItem>
+                <Link to={`/p/${_id}`}>
+                  <Button btnRole="btnBlock astext">Go To Post</Button>
+                </Link>
+              </SettingsModalListItem>
+              <SettingsModalListItem>
+                <Button btnRole="btnBlock astext">Share</Button>
+              </SettingsModalListItem>
+              <SettingsModalListItem>
+                <Button btnRole="btnBlock astext">Copy Link</Button>
+              </SettingsModalListItem>
+              <SettingsModalListItem>
+                <Button btnRole="btnBlock astext" onClick={() => setPostSettingsModalOpen(false)}>Cancel</Button>
+              </SettingsModalListItem>
+            </SettingsModalList>
+          </SettingsModal>
+          )}
         </div>
       </header>
       <img alt="post media" src={media} className={styles.postPicture} />
       <div className={styles.iconsWrapper}>
         <div className={styles.leftIconsWrapper}>
-          <HeartIcon className={styles.heartIcon} />
+          <HeartIcon isActive={isHeartIconFilled} likedHeart onClick={() => setHeartIconFilled(!isHeartIconFilled)} />
           <RiChat3Line className={styles.chatIcon} />
           <ShareModalIcon className={styles.ShareModalIcon} />
         </div>
