@@ -1,63 +1,39 @@
-import React, { useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+import PostGallery from 'components/PostGallery/PostGallery';
 import { changeUrl } from 'utils/changeUrl';
+import { postPropType } from 'customPropTypes';
+import Modal from 'components/Modals/Modal';
 import styles from './PostModal.module.scss';
 
-const modalRoot = document.getElementById('modal');
-
-const PostModal = ({ children, setModalOpen, isOpen = false, postId, ...otherProps }) => {
+const PostModal = ({ post, isOpen, setModalOpen }) => {
   const { pathname: username } = useLocation();
 
-  const node = useRef();
-  const el = document.createElement('div');
-
-  const handleClose = (e) => {
-    if (node.current.contains(e.target)) {
-      return;
-    }
-
-    document.body.removeAttribute('style');
-
-    changeUrl(`${username}`, 'post modal path');
-    setModalOpen(!isOpen);
-  };
-
   useEffect(() => {
-    document.body.style = 'overflow: hidden';
-    changeUrl(`/p/${postId}`, 'post modal path');
-    el.addEventListener('mousedown', handleClose);
-    modalRoot.appendChild(el);
+    changeUrl(`/p/${post._id}`, 'post modal path');
 
     return () => {
-      el.removeEventListener('mousedown', handleClose);
-      modalRoot.removeChild(el);
+      setModalOpen(!isOpen);
+      changeUrl(`${username}`);
     };
-  }, [el]);
+  }, []);
 
   return (
-    isOpen && createPortal(
-      <div className={styles.modalShadow} {...otherProps}>
-        <div className={`${styles.mainModalContent}`} ref={node}>
-          {children}
-        </div>
-      </div>,
-      el
-    )
+    <Modal
+      className={styles.PostModal}
+      isOpen={isOpen}
+      setModalOpen={setModalOpen}
+    >
+      <PostGallery post={post} />
+      <div />
+    </Modal>
   );
 };
 
-PostModal.defaultProps = {
-  isOpen: false
-};
-
 PostModal.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired,
-  isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  post: PropTypes.shape(postPropType).isRequired,
+  isOpen: PropTypes.bool.isRequired,
   setModalOpen: PropTypes.func.isRequired
 };
 

@@ -5,6 +5,13 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin fixedCenter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @mixin flexCenter {
   display: flex;
   justify-content: center;
@@ -30,8 +37,10 @@
 }
 
 @mixin container {
+  max-width: 975px;
   width: 70%;
   margin: 0 auto;
+  padding: 40px 20px;
 }
 
 

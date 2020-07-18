@@ -1,0 +1,13 @@
+@import '../../../styles/color-palette';
+@import '../../../styles/mixins';
+
+.list {
+  border-radius: 10px;
+  background: $color-white;
+  min-width: 400px;
+  min-height: auto;
+  text-align: center;
+  font-size: 14px;
+  @include flexColumn;
+  justify-content: center;
+}

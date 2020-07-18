@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Post from 'components/Post/Post';
 import styles from './PostGallery.module.scss';
 import { changeUrl } from '../../utils/changeUrl';
 
@@ -30,15 +31,9 @@ const PostGallery = ({ post }) => {
 
   return (
     <div className={styles.Gallery}>
-      <div
-        className={styles.media}
-        style={{
-          background: `url(${currentPost.media})`
-        }}
-      />
-      <div />
+      <Post post={currentPost} />
       <div className={styles.arrows}>
-        {currentPostIndex && (
+        {!!currentPostIndex && (
         <button className={styles.left} type="button" onClick={prev}>
           <FaChevronLeft />
         </button>

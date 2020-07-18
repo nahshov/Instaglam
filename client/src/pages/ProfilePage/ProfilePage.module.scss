@@ -3,12 +3,11 @@
 @import '../../styles/mixins.scss';
 
 .main {
-  height: 100%;
 
   .container {
     @include container;
-    padding: 40px 20px 0;
-    height: 80%;
+    display: flex;
+    flex-direction: column;
 
     .profileHeader {
       display: flex;
@@ -21,11 +20,13 @@
         flex: 2;
         margin-right: 30px;
         min-height: 240px;
+        border-radius: 50%;
+
 
         .changeProfilePicButton {
           cursor: pointer;
-
           display: inline-block;
+
           .profilePic {
             display: inline-flex;
             @include flexCenter;

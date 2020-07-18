@@ -3,14 +3,11 @@
 @import '../../styles/mixins.scss';
 
 .Gallery {
+  display: flex;
   position: relative;
-  height: 100%;
-  width: 100%;
+  background: $color-white;
+  height: 600px;
 
-  .media {
-    width: 600px;
-    height: 100%;
-  }
 
   .arrows {
 
@@ -28,9 +25,9 @@
     .left {
       left: -40px;
     }
+
     .right {
       right: -40px;
-
     }
   }
 }

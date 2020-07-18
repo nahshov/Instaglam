@@ -1,28 +1,8 @@
-@import '../../../styles/color-palette';
 @import '../../../styles/mixins';
-@import '../../../styles/animations';
-
-.modalShadow {
-  @include flexCenter;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 200;
-  background-color: rgba($color-black, 0.3);
 
 
-  .mainModalContent {
-    background: $color-white;
-    width: 900px;
-    height: 600px;
-
-  }
-
-}
-
-.showModal {
-  z-index: 2;
-  opacity: 1;
+.PostModal {
+  @include fixedCenter;
+  @include container;
+  padding: 0;
 }
