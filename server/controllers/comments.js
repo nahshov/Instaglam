@@ -101,7 +101,8 @@ const addReplyToComment = async (req, res) => {
     const reply = {
       ...req.body,
       user: req.user.sub,
-      replyToComment: req.params.commentId
+      post: req.params.postId,
+      replyToComment: comment.replyToComment || req.params.commentId
     };
 
     post.comments++;
@@ -125,7 +126,7 @@ const removeAComment = async (req, res) => {
     const getAComment = await getComment(req.params.commentId);
     const replies = await getRepliesOfComment(req.params.commentId);
 
-    if (!getComment) {
+    if (!getAComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
 
@@ -136,11 +137,14 @@ const removeAComment = async (req, res) => {
     }
 
     await removeLikesFromComment(req.params.commentId);
+    replies.forEach(async reply => {
+      await removeLikesFromComment(reply._id);
+    });
     await removeAllCommentReplies(req.params.commentId);
 
     const comment = await removeComment(req.params.commentId);
     const post = await getPost(req.params.postId);
-    post.comments - replies.length;
+    post.comments -= replies.length;
     post.comments--;
 
     await post.save();
@@ -160,7 +164,7 @@ const editComment = async (req, res) => {
   try {
     const getAComment = await getComment(req.params.commentId);
 
-    if (!getComment) {
+    if (!getAComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
 

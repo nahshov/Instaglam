@@ -48,7 +48,7 @@ const addLikeToAPost = async (req, res) => {
     });
 
     if (!like) {
-      return serverResponse(res, 404, { message: "Like doesn't exist" });
+      return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
     post.likes++;
@@ -68,7 +68,6 @@ const addLikeToAPost = async (req, res) => {
 const deleteLikeFromAPost = async (req, res) => {
   try {
     const like = await removeLike(req.params.likeId);
-    console.log(like);
     const post = await getPost(req.params.postId);
 
     if (!like) {
@@ -113,7 +112,6 @@ const getLikesOfComment = async (req, res) => {
 const addLikeToAComment = async (req, res) => {
   try {
     const comment = await getComment(req.params.commentId);
-    console.log(comment);
 
     if (!comment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
@@ -124,7 +122,13 @@ const addLikeToAComment = async (req, res) => {
       comment: req.params.commentId
     });
 
+    if (!like) {
+      return serverResponse(res, 400, { message: 'Comment already liked' });
+    }
+
     comment.likes++;
+    comment.save();
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -146,6 +150,7 @@ const deleteLikeFromAComment = async (req, res) => {
     }
 
     comment.likes--;
+    comment.save();
 
     return serverResponse(res, 200, like);
   } catch (error) {

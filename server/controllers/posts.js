@@ -7,9 +7,11 @@ const {
   getAllPosts
 } = require('../services/post-services.js');
 
-const { removeLikesFromPost } = require('../services/like-services');
+const { removeLikesFromPost, removeLikesFromComment } = require('../services/like-services');
 
-const { getCommentsOfPost, removeAllPostComments, removeAllCommentReplies } = require('../services/comment-services');
+const {
+  getCommentsOfPost, removeAllPostComments
+} = require('../services/comment-services');
 
 const serverResponse = require('../utils/serverResponse');
 
@@ -119,7 +121,7 @@ const deletePost = async (req, res) => {
     }
 
     comments.forEach(async comment => {
-      await removeAllCommentReplies(comment._id);
+      await removeLikesFromComment(comment._id);
     });
 
     await removeLikesFromPost(req.params.postId);

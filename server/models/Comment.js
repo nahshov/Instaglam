@@ -12,7 +12,8 @@ const CommentSchema = new mongoose.Schema({
   },
   post: {
     type: mongoose.Types.ObjectId,
-    ref: 'Post'
+    ref: 'Post',
+    required: true
   },
   likes: {
     type: Number,
@@ -25,6 +26,10 @@ const CommentSchema = new mongoose.Schema({
   replyToComment: {
     type: mongoose.Types.ObjectId,
     ref: 'Comment'
+  },
+  isReply: {
+    type: Boolean,
+    default: false
   }
 });
 
