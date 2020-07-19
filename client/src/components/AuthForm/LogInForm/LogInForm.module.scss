@@ -1,12 +1,12 @@
-@import '../../../styles/color-palette.scss';
-@import '../../../styles/mixins.scss';
+@import "../../../styles/color-palette.scss";
+@import "../../../styles/mixins.scss";
 
 .authWrapper {
   @include flexColumn;
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding-top: 20px;
+  padding-top: 100px;
   overflow: hidden;
   position: relative;
 
