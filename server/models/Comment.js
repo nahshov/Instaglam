@@ -25,11 +25,8 @@ const CommentSchema = new mongoose.Schema({
   },
   replyToComment: {
     type: mongoose.Types.ObjectId,
-    ref: 'Comment'
-  },
-  isReply: {
-    type: Boolean,
-    default: false
+    ref: 'Comment',
+    default: null
   }
 });
 
