@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { postPropType } from 'customPropTypes';
 import styles from './Post.module.scss';
-import PostConversation from './PostConversation/PostConversation';
+// import PostConversation from './PostConversation/PostConversation';
 
 const Post = ({ post }) => (
   <div className={styles.container}>
@@ -12,7 +12,6 @@ const Post = ({ post }) => (
         background: `url(${post.media}) no-repeat center center / cover`
       }}
     />
-    <PostConversation isHorizontal />
   </div>
 );
 
