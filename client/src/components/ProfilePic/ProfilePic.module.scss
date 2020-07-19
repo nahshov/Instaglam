@@ -23,3 +23,13 @@
       border-radius: 100%;
     }
 }
+
+.ProfilePic.small{
+  img{
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

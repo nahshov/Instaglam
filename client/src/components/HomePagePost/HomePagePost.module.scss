@@ -10,32 +10,13 @@
     flex-direction: column;
     background: $color-white;
     margin-bottom: 40px;
-    .headerPostContainer{
-        margin-top: 5px;
-            
-        .postHeader{
-            @include flexSpaceBetween;
-            width: 100%;
-            .userIdentifier{
-                @include flexCenter;
-                .profilePicLink{
-                  img{
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 100%;
-                    margin-right: 10px;
-                    margin-left: 10px;
-                  }
-                }
-                }
-            }
             
             .moreIcon{
                 margin-right: 10px;
             }
 
         }
-    }
+    
     .postPicture{
         margin: 0 auto;
         width: 595px;
