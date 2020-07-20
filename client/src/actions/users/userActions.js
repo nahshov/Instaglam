@@ -29,11 +29,11 @@ export const searchUsers = (searchParam) => async (dispatch) => {
   }
 };
 
-// Search single user by email/username
-export const searchUser = (searchParam) => async (dispatch) => {
+// Search single user by email/username/userId
+export const searchUser = (userInfo) => async (dispatch) => {
   try {
-    if (searchParam) {
-      const res = await axios.get(`/api/users/${searchParam}`);
+    if (userInfo) {
+      const res = await axios.get(`/api/users/${userInfo}`);
 
       dispatch({
         type: SEARCH_SINGLE_USER_SUCCESS,
