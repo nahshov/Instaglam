@@ -27,20 +27,23 @@ const NavLinks = () => {
       <CustomNavLink to="/explore">
         <ExploreIcon />
       </CustomNavLink>
-      <HeartIcon className={styles.HeartIcon} isActive={isHeartIconFilled} onClick={() => setHeartIconFilled(!isHeartIconFilled)} />
+      <HeartIcon
+        className={styles.HeartIcon}
+        isActive={isHeartIconFilled}
+        onClick={() => setHeartIconFilled(!isHeartIconFilled)}
+      />
       <NavLink
         exact
         to={!loading && `/${user.username}`}
         className={styles.profilePicLink}
         activeClassName={styles.activeProfilePic}
       >
-        {user.profilePic && !loading ? (
+        { user.profilePic && !loading ? (
           <ProfilePic
             url={user.profilePic}
-            // className={styles.ProfilePic}
           />
         ) : (
-          <LoadingSpinner className={styles.ProfilePic} />
+          <LoadingSpinner style={{ width: '24px' }} />
         ) }
       </NavLink>
     </div>
