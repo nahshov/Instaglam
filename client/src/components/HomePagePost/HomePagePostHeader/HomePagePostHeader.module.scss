@@ -1,0 +1,15 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/typography.scss';
+
+.headerPostContainer{
+  margin-top: 5px;
+      
+  .postHeader{
+      @include flexSpaceBetween;
+      width: 100%;
+      .userIdentifier{
+        @include flexCenter;
+    }
+  }
+}

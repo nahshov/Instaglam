@@ -4,7 +4,7 @@ import styles from './ProfilePic.module.scss';
 
 const ProfilePic = ({ url = '', big = false, ...otherProps }) => (
   <div
-    className={`${styles.ProfilePic} ${big ? styles.big : ''}`}
+    className={`${styles.ProfilePic} ${big ? styles.big : 'styles.small'}`}
     {...otherProps}
   >
     <img alt="user avatar" src={url} />
