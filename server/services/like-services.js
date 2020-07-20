@@ -20,8 +20,8 @@ async function addLikeToPost(like) {
 }
 
 async function addLikeToComment(like) {
-  const { user, post, comment } = like;
-  const doesLikeExist = await Like.findOne({ user, post, comment });
+  const { user, comment } = like;
+  const doesLikeExist = await Like.findOne({ user, comment });
   if (doesLikeExist) {
     return;
   }
@@ -29,16 +29,12 @@ async function addLikeToComment(like) {
   return like.save();
 }
 
-function removeLikeFromPost(userId) {
-  return Like.findOneAndRemove({ user: userId });
+function removeLike(likeId) {
+  return Like.findOneAndRemove({ _id: likeId });
 }
 
 function removeLikesFromPost(postId) {
   return Like.deleteMany({ post: postId });
-}
-
-function removeLikeFromComment(userId) {
-  return Like.findOneAndRemove({ user: userId });
 }
 
 function removeLikesFromComment(commentId) {
@@ -54,9 +50,8 @@ module.exports = {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLikeFromPost,
+  removeLike,
   removeLikesFromPost,
-  removeLikeFromComment,
   removeLikesFromComment,
   removeAllUserLikes
 };

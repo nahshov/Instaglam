@@ -3,11 +3,10 @@ const {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLikeFromPost,
-  removeLikeFromComment
+  removeLike
 } = require('../services/like-services');
 
-const Comment = require('../models/Comment');
+const { getComment } = require('../services/comment-services');
 const serverResponse = require('../utils/serverResponse');
 const { getPost } = require('../services/post-services');
 
@@ -16,7 +15,14 @@ const { getPost } = require('../services/post-services');
 // @access  private
 const getLikesOfPost = async (req, res) => {
   try {
+    const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
     const likes = await getPostLikes(req.params.postId);
+
     return serverResponse(res, 200, likes);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -30,18 +36,24 @@ const getLikesOfPost = async (req, res) => {
 // @access  private
 const addLikeToAPost = async (req, res) => {
   try {
+    const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
     const like = await addLikeToPost({
       post: req.params.postId,
       user: req.user.sub
     });
-    const post = await getPost(req.params.postId);
 
     if (!like) {
-      return serverResponse(res, 200, like);
+      return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
     post.likes++;
     await post.save();
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -50,20 +62,22 @@ const addLikeToAPost = async (req, res) => {
   }
 };
 
-// @route   DELETE '/api/posts/:postId/likes'
+// @route   DELETE '/api/posts/:postId/likes/:likeId'
 // @desc    Delete a like from a post
 // @access  private
 const deleteLikeFromAPost = async (req, res) => {
   try {
-    const like = await removeLikeFromPost(req.user.sub);
-    const post = await getPost(req.params.postId);
+    const like = await removeLike(req.params.likeId);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
 
+    const post = await getPost(req.params.postId);
+
     post.likes--;
     await post.save();
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -77,7 +91,14 @@ const deleteLikeFromAPost = async (req, res) => {
 // @access  private
 const getLikesOfComment = async (req, res) => {
   try {
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
     const likes = await getCommentLikes(req.params.commentId);
+
     return serverResponse(res, 200, likes);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -91,14 +112,24 @@ const getLikesOfComment = async (req, res) => {
 // @access  private
 const addLikeToAComment = async (req, res) => {
   try {
-    const comment = await Comment.findOne({
-      _id: req.params.commentId
-    });
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
     const like = await addLikeToComment({
       user: req.user.sub,
-      comment: req.params.commentId,
-      post: comment.post
+      comment: req.params.commentId
     });
+
+    if (!like) {
+      return serverResponse(res, 400, { message: 'Comment already liked' });
+    }
+
+    comment.likes++;
+    await comment.save();
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -107,12 +138,22 @@ const addLikeToAComment = async (req, res) => {
   }
 };
 
-// @route   DELETE '/api/comments/:commentId/likes'
+// @route   DELETE '/api/comments/:commentId/likes/likeId'
 // @desc    Remove like to a comment
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
-    const like = await removeLikeFromComment(req.user.sub);
+    const like = await removeLike(req.params.likeId);
+
+    if (!like) {
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
+    }
+
+    const comment = await getComment(req.params.commentId);
+
+    comment.likes--;
+    await comment.save();
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
