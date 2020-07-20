@@ -1,0 +1,107 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "func-names": "off",
+    "no-nested-ternary": "off",
+    "no-useless-return": "off",
+    "arrow-parens": "off",
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": "off",
+    "linebreak-style": 0,
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "object-curly-newline": "off",
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ],
+    "consistent-return": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelComponents": [
+          "CustomInputLabel"
+        ],
+        "labelAttributes": [
+          "label"
+        ],
+        "controlComponents": [
+          "CustomInput"
+        ],
+        "depth": 3
+      }
+    ],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": {
+          "resolve": {
+            "paths": [
+              "src"
+            ],
+            "extensions": [
+              ".js",
+              ".scss",
+              "json"
+            ],
+            "modules": [
+              "node_modules"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

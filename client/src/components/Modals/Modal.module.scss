@@ -1,0 +1,27 @@
+@import '../../styles/color-palette';
+@import '../../styles/mixins';
+@import '../../styles/animations';
+
+.modalShadow {
+  @include flexCenter;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  background-color: rgba($color-black, 0.3);
+
+  h3 {
+    width: 100%;
+    padding: 30px 0 30px 0;
+    font-size: 18px;
+  }
+
+}
+
+.showModal {
+  z-index: 2;
+  opacity: 1;
+  animation: popup 0.03s ease-in-out;
+}

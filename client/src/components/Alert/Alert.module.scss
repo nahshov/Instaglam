@@ -1,0 +1,11 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.msgDiv {
+  @include flexCenter;
+  width: 100%;
+  color: $error-text-color;
+  margin: 15px 40px;
+  font-size: 18px;
+  text-align: center;
+}

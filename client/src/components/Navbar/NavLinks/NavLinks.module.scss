@@ -1,0 +1,67 @@
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/typography.scss';
+
+.NavLinks {
+  display: flex;
+  align-items: center;
+
+  @include respond(phone) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: $secondary-background;
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid $primary-border-color;
+    padding: 10px;
+  }
+}
+
+.NavLinks * {
+  margin: 0 10px 0 10px;
+  cursor: pointer;
+
+  @include respond(phone) {
+    margin: 0;
+    padding: 0;
+    height: 27px;
+    width: 27px;
+  }
+}
+
+.profilePicLink {
+  @include flexCenter;
+  width: 26px;
+  height: 26px;
+  border-radius: 100%;
+  padding: 0;
+
+}
+.activeProfilePic {
+
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+  }
+  border: 1px solid $color-black;
+}
+
+.chatLink {
+  @include respond(phone) {
+    position: fixed;
+    top: 13px;
+    right: 20px;
+  }
+}
+
+.HeartIcon {
+  font-size: $icon-medium-large;
+}
+
+.ChatIcon {
+  font-size: $icon-medium-small;
+  width: 23px;
+}

@@ -1,0 +1,8 @@
+@import '../../../styles/mixins';
+
+
+.PostModal {
+  @include fixedCenter;
+  @include container;
+  padding: 0;
+}

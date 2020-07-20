@@ -1,0 +1,39 @@
+@import '../../../styles/color-palette.scss';
+@import '../../../styles/mixins.scss';
+
+.wrapper {
+  @include flexCenter;
+  box-sizing: border-box;
+  font-size: 15px;
+  height: 80px;
+  width: 100%;
+  max-width: 453px;
+  background: $color-white;
+  margin: 0 0 10px;
+  border: 1px solid $primary-border-color;
+  border-radius: 1px;
+  margin-top: 12px;
+
+  @include respond(phone) {
+    border: none;
+    margin: 0;
+    height: 50px;
+  }
+
+  .paragraph {
+    font-size: 18px;
+    text-align: center;
+
+    @include respond(phone) {
+      font-size: 15px;
+    }
+    span {
+      margin-right: 5px;
+    }
+    .link {
+      text-decoration: none;
+      margin-left: 3px;
+      color: $primary-color;
+    }
+  }
+}

@@ -1,0 +1,172 @@
+const {
+  getPostLikes,
+  getCommentLikes,
+  addLikeToPost,
+  addLikeToComment,
+  removeLike
+} = require('../services/like-services');
+
+const { getComment } = require('../services/comment-services');
+const serverResponse = require('../utils/serverResponse');
+const { getPost } = require('../services/post-services');
+
+// @route   GET '/api/posts/:postId/likes'
+// @desc    Get likes of a specific post
+// @access  private
+const getLikesOfPost = async (req, res) => {
+  try {
+    const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
+    const likes = await getPostLikes(req.params.postId);
+
+    return serverResponse(res, 200, likes);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get likes'
+    });
+  }
+};
+
+// @route   POST '/api/posts/:postId/likes'
+// @desc    Add a like to a post
+// @access  private
+const addLikeToAPost = async (req, res) => {
+  try {
+    const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
+    const like = await addLikeToPost({
+      post: req.params.postId,
+      user: req.user.sub
+    });
+
+    if (!like) {
+      return serverResponse(res, 400, { message: 'Post already liked' });
+    }
+
+    post.likes++;
+    await post.save();
+
+    return serverResponse(res, 200, like);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to add a like'
+    });
+  }
+};
+
+// @route   DELETE '/api/posts/:postId/likes/:likeId'
+// @desc    Delete a like from a post
+// @access  private
+const deleteLikeFromAPost = async (req, res) => {
+  try {
+    const like = await removeLike(req.params.likeId);
+
+    if (!like) {
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
+    }
+
+    const post = await getPost(req.params.postId);
+
+    post.likes--;
+    await post.save();
+
+    return serverResponse(res, 200, like);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to remove a like'
+    });
+  }
+};
+
+// @route   GET '/api/comments/:commentId/likes'
+// @desc    Get likes of a comment
+// @access  private
+const getLikesOfComment = async (req, res) => {
+  try {
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
+    const likes = await getCommentLikes(req.params.commentId);
+
+    return serverResponse(res, 200, likes);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get likes'
+    });
+  }
+};
+
+// @route   POST '/api/comments/:commentId/likes'
+// @desc    Add like to a comment
+// @access  private
+const addLikeToAComment = async (req, res) => {
+  try {
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
+    const like = await addLikeToComment({
+      user: req.user.sub,
+      comment: req.params.commentId
+    });
+
+    if (!like) {
+      return serverResponse(res, 400, { message: 'Comment already liked' });
+    }
+
+    comment.likes++;
+    await comment.save();
+
+    return serverResponse(res, 200, like);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to add a like'
+    });
+  }
+};
+
+// @route   DELETE '/api/comments/:commentId/likes/likeId'
+// @desc    Remove like to a comment
+// @access  private
+const deleteLikeFromAComment = async (req, res) => {
+  try {
+    const like = await removeLike(req.params.likeId);
+
+    if (!like) {
+      return serverResponse(res, 404, { message: "Like doesn't exist" });
+    }
+
+    const comment = await getComment(req.params.commentId);
+
+    comment.likes--;
+    await comment.save();
+
+    return serverResponse(res, 200, like);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to remove a like'
+    });
+  }
+};
+
+module.exports = {
+  getLikesOfPost,
+  addLikeToAPost,
+  deleteLikeFromAPost,
+  getLikesOfComment,
+  addLikeToAComment,
+  deleteLikeFromAComment
+};

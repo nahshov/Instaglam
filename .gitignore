@@ -1,7 +1,28 @@
 node_modules
 .idea
-.vscode
 .env
-dev1-263221-7258d8ee70b0.json
-download.png
-Me at the zoo.mov
+db-data
+/server/.env
+/client/.env
+
+
+# dependencies
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# production
+build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,11 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"eslint.enable": true,
+	"eslint.run": "onSave",
+	"eslint.validate": ["javascript", "javascriptreact", "html"],
+	"editor.insertSpaces": true,
+	"editor.tabSize": 2,
+	"editor.detectIndentation": false
+}

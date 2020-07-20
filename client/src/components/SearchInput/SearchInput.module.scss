@@ -1,0 +1,135 @@
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.searchInputContainer {
+  @include flexSpaceBetween;
+  position: relative;
+  width: 215px;
+  height: 25px;
+  border: 1px solid $primary-border-color;
+  background-color: $primary-background;
+  color: $secondary-text-color;
+  border-radius: 3px;
+  @include respond(phablet) {
+    display: none;
+  }
+
+  .SearchInput {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    caret-color: $color-black;
+    padding: 20px;
+
+    &:focus:not(:valid) {
+      + .searchLabel {
+        justify-content: space-between;
+
+        .searchIcon {
+          margin: 0 4px;
+        }
+      }
+    }
+
+    &:focus:valid {
+      color: $color-black;
+
+      + .searchLabel {
+        .searchText {
+          visibility: hidden;
+        }
+
+        .searchIcon {
+          margin: 0 4px;
+        }
+        justify-content: space-between;
+      }
+    }
+
+    &:not(:focus):valid {
+      color: transparent;
+
+      + .searchLabel {
+        .searchIcon {
+          transform: translateY(1px);
+        }
+      }
+    }
+
+    &:hover ~ .deleteIconWrapper {
+      visibility: visible;
+    }
+
+    &:valid:focus ~ .deleteIconWrapper {
+      visibility: visible;
+      pointer-events: all;
+      cursor: pointer;
+      z-index: 3;
+    }
+  }
+
+  .searchLabel {
+    @include flexCenter;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    cursor: text;
+
+    > div {
+      @include flexCenter;
+      margin-right: 10px;
+    }
+
+    .searchIcon {
+      font-size: 12px;
+    }
+
+    .searchText {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+
+  .deleteIconWrapper {
+    @include flexCenter;
+    background: transparent;
+    border: none;
+    pointer-events: none;
+    visibility: hidden;
+    z-index: -3;
+    color: $secondary-text-color;
+    opacity: 1;
+    font-size: 20px;
+
+    img {
+      width: 15px;
+    }
+  }
+}
+
+.notFound {
+  color: $secondary-text-color;
+  padding: 5px;
+}
+
+.searchProfilePic {
+  width: 40px;
+  overflow: hidden;
+  display: flex;
+
+  img {
+    width: 100%;
+    border-radius: 100%;
+  }
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  opacity: 0;
+}
