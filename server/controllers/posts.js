@@ -6,6 +6,11 @@ const {
   updatePost,
   getAllPosts
 } = require('../services/post-services.js');
+
+const { removeLikesFromPost } = require('../services/like-services');
+
+const { removeAllPostComments } = require('../services/comment-services');
+
 const serverResponse = require('../utils/serverResponse');
 
 const { uploadFile, deleteFile } = require('../services/cloud-services');
@@ -39,7 +44,6 @@ const submitPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const posts = await getAllPosts(req.query.limit, req.query.skip);
-
     return serverResponse(res, 200, posts);
   } catch (e) {
     return serverResponse(res, 500, {
@@ -48,12 +52,12 @@ const getPosts = async (req, res) => {
   }
 };
 
-// @route  GET '/api/posts/:userInfo'
+// @route  GET '/api/posts/:userId'
 // @desc   Get posts of a user
 // @access private
 const getPostsOfAUser = async (req, res) => {
   try {
-    const posts = await getAllPostsOfUser(req.params.userInfo);
+    const posts = await getAllPostsOfUser(req.params.userId);
 
     if (!posts.length) {
       return serverResponse(res, 404, {
@@ -103,6 +107,8 @@ const deletePost = async (req, res) => {
       });
     }
 
+    await removeLikesFromPost(req.params.postId);
+    await removeAllPostComments(req.params.postId);
     await deleteFile(post.media);
     await removePost(req.params.postId);
     return serverResponse(res, 200, { message: 'File successfully deleted' });
