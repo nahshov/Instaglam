@@ -91,7 +91,9 @@ export const logout = () => async (dispatch) => {
     await axios.post('/api/logout');
     dispatch({ type: LOGOUT });
   } catch (error) {
-    console.error(error);
+    dispatch({
+      type: AUTH_ERROR
+    });
   }
 };
 

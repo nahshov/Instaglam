@@ -33,7 +33,7 @@ const ProfileHeader = () => {
             Logout
           </Button>
         </div>
-        <SocialStatusList userId={searchedUser._id} postCount={postsOfSearchedUser.length} />
+        <SocialStatusList userId={searchedUser._id || ''} postCount={postsOfSearchedUser.length} />
         <div className={styles.bioContainer}>
           <h1 className={styles.fullName}>{searchedUser.fullName}</h1>
           <p className={styles.bio}>{searchedUser.bio}</p>
