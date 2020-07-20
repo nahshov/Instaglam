@@ -21,6 +21,7 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
+          <ProtectedRoute exact path="/" component={HomePage} />
           <Route path="/accounts/welcomepage" component={WelcomePage} />
           <Route path="/accounts/emailsignup" exact component={SignUpForm} />
           <Route path="/accounts/login" exact component={LogInForm} />
@@ -35,8 +36,7 @@ const App = () => {
             path="/direct/inbox"
             component={() => <div>Chat!</div>}
           />
-          <ProtectedRoute exact path="/:profile" component={ProfilePage} />
-          <ProtectedRoute exact path="/" component={HomePage} />
+          <ProtectedRoute path="/:profile" component={ProfilePage} />
         </Switch>
       </div>
     </Router>
