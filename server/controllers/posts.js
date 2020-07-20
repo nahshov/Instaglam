@@ -106,8 +106,6 @@ const deletePost = async (req, res) => {
   try {
     const post = await getPost(req.params.postId);
 
-    const comments = await getCommentsOfPost(req.params.postId);
-
     if (!post) {
       return serverResponse(res, 404, {
         message: "Post doesn't exist"
@@ -120,14 +118,15 @@ const deletePost = async (req, res) => {
       });
     }
 
-    comments.forEach(async comment => {
-      await removeLikesFromComment(comment._id);
-    });
+    const comments = await getCommentsOfPost(req.params.postId);
 
-    await removeLikesFromPost(req.params.postId);
-    await removeAllPostComments(req.params.postId);
-    await deleteFile(post.media);
-    await removePost(req.params.postId);
+    const removeLikesFromCommentPromises = comments.map(async comment => removeLikesFromComment(comment._id));
+
+    await Promise.all([removeLikesFromPost(req.params.postId),
+      removeAllPostComments(req.params.postId),
+      deleteFile(post.media),
+      removePost(req.params.postId),
+      ...removeLikesFromCommentPromises]);
     return serverResponse(res, 200, { message: 'Post successfully deleted' });
   } catch (e) {
     return serverResponse(res, 500, {

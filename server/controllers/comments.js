@@ -74,9 +74,8 @@ const addCommentToPost = async (req, res) => {
     };
 
     post.comments++;
-    await post.save();
 
-    const response = await addComment(comment);
+    const [response] = await Promise.all([addComment(comment), post.save()]);
 
     return serverResponse(res, 200, response);
   } catch (error) {
@@ -91,12 +90,13 @@ const addCommentToPost = async (req, res) => {
 // @access  private
 const addReplyToComment = async (req, res) => {
   try {
-    const post = await getPost(req.params.postId);
     const comment = await getComment(req.params.commentId);
 
     if (!comment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
     }
+
+    const post = await getPost(req.params.postId);
 
     const reply = {
       ...req.body,
@@ -106,9 +106,8 @@ const addReplyToComment = async (req, res) => {
     };
 
     post.comments++;
-    await post.save();
 
-    const response = await addComment(reply);
+    const [response] = await Promise.all([addComment(reply), post.save()]);
 
     return serverResponse(res, 200, response);
   } catch (error) {
@@ -124,7 +123,6 @@ const addReplyToComment = async (req, res) => {
 const removeAComment = async (req, res) => {
   try {
     const getAComment = await getComment(req.params.commentId);
-    const replies = await getRepliesOfComment(req.params.commentId);
 
     if (!getAComment) {
       return serverResponse(res, 404, { message: "Comment doesn't exist" });
@@ -136,18 +134,20 @@ const removeAComment = async (req, res) => {
       });
     }
 
-    await removeLikesFromComment(req.params.commentId);
-    replies.forEach(async reply => {
-      await removeLikesFromComment(reply._id);
-    });
-    await removeAllCommentReplies(req.params.commentId);
+    const replies = await getRepliesOfComment(req.params.commentId);
 
-    const comment = await removeComment(req.params.commentId);
+    const removeLikesFromReplyPromises = replies.map(reply => removeLikesFromComment(reply));
+
     const post = await getPost(req.params.postId);
     post.comments -= replies.length;
     post.comments--;
 
-    await post.save();
+    const [comment] = await Promise.all([removeComment(req.params.commentId),
+      removeLikesFromComment(req.params.commentId),
+      removeAllCommentReplies(req.params.commentId),
+      removeLikesFromComment(req.params.commentId),
+      ...removeLikesFromReplyPromises,
+      post.save()]);
 
     return serverResponse(res, 200, comment);
   } catch (error) {

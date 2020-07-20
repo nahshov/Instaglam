@@ -68,11 +68,12 @@ const addLikeToAPost = async (req, res) => {
 const deleteLikeFromAPost = async (req, res) => {
   try {
     const like = await removeLike(req.params.likeId);
-    const post = await getPost(req.params.postId);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
+
+    const post = await getPost(req.params.postId);
 
     post.likes--;
     await post.save();
@@ -127,7 +128,7 @@ const addLikeToAComment = async (req, res) => {
     }
 
     comment.likes++;
-    comment.save();
+    await comment.save();
 
     return serverResponse(res, 200, like);
   } catch (error) {
@@ -142,15 +143,16 @@ const addLikeToAComment = async (req, res) => {
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
-    const comment = await getComment(req.params.commentId);
     const like = await removeLike(req.params.likeId);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
 
+    const comment = await getComment(req.params.commentId);
+
     comment.likes--;
-    comment.save();
+    await comment.save();
 
     return serverResponse(res, 200, like);
   } catch (error) {
