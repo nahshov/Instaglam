@@ -4,7 +4,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
 import Button from 'components/Button/Button';
-import styles from './HomePagePostHeader/HomePagePostHeader.module.scss'
+import styles from './HomePagePostHeader.module.scss';
 
 const HomePagePostHeader = ({ username, profilePic, _id }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -30,7 +30,7 @@ const HomePagePostHeader = ({ username, profilePic, _id }) => {
         <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} _id={_id} />)}
       </div>
     </header>
-    );
+  );
 };
 
-export default HomePagePostHeader
+export default HomePagePostHeader;
