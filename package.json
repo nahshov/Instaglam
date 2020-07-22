@@ -7,6 +7,7 @@
 		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
 		"start:frontend": "cd client && npm start",
 		"start:backend": "cd server && npm run dev",
+		"start": "npm run start:*",
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
 		"postinstall": "(npm run client:install) && (npm run server:install)",
