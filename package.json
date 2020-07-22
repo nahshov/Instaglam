@@ -12,7 +12,8 @@
 		"postinstall": "(npm run client:install) && (npm run server:install)",
 		"lint": "eslint '**/*.js'",
 		"lint:fix": "(cd server && npm run lint:fix) && (cd client && npm run lint:fix)",
-		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client:install && npm run build"
 	},
 	"repository": {
 		"type": "git",
