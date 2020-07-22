@@ -9,7 +9,7 @@ import { logout, removeProfilePic, uploadProfilePic } from 'actions/auth/authAct
 import SettingsModal from '../../components/Modals/SettingsModal/SettingsModal';
 import SettingsModalList from '../../components/Modals/SettingsModal/SettingsModalList';
 import SettingsModalListItem from '../../components/Modals/SettingsModal/SettingsModalListItem';
-import { setAlert } from '../../actions/alerts/alertActions';
+import { setProfilePicAlert } from '../../actions/alerts/alertActions';
 
 const ProfileHeader = () => {
   const dispatch = useDispatch();
@@ -33,12 +33,13 @@ const ProfileHeader = () => {
   const handleSelectedFile = e => {
     if (e.target.files[0].size > 1000000) {
       dispatch(
-        setAlert('The maximum size for a profile picture is 1mb', 'Error')
+        setProfilePicAlert('The maximum size for a profile picture is 1mb', 'Error')
       );
       setTimeout(() => {
-        dispatch(setAlert('', null));
+        dispatch(setProfilePicAlert('', null));
       }, 4500);
       setSettingsModalOpen(false);
+      return;
     }
     dispatch(uploadProfilePic(e.target.files[0]));
     setSettingsModalOpen(false);
@@ -64,7 +65,7 @@ const ProfileHeader = () => {
           />
           )}
         </button>
-        <Alert alerts={message} style={{ fontSize: '10px' }} />
+        <Alert style={{ fontSize: '10px' }}>{message}</Alert>
       </div>
       <section className={styles.profileInfo}>
         <div className={styles.profileInfoHeader}>

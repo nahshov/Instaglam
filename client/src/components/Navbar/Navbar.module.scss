@@ -1,5 +1,5 @@
-@import '../../styles/color-palette.scss';
-@import '../../styles/mixins.scss';
+@import "../../styles/color-palette.scss";
+@import "../../styles/mixins.scss";
 
 .Navbar {
   @include flexCenter;
@@ -22,6 +22,14 @@
   @include respond(phone) {
     position: relative;
   }
+}
+
+.cameraAndLogoDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 180px;
 }
 
 .Link {

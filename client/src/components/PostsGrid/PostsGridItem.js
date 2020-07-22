@@ -37,7 +37,6 @@ const PostsGridItem = (
     >
       <PostsGridItemContent post={post} isLink={isLink} />
       {' '}
-      {console.log(post.media)}
       {isVideo && (
       <video className={styles.videoPost}>
         <source
