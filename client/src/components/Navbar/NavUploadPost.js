@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import CameraIcon from 'components/Icons/CameraIcon/CameraIcon';
 import UploadPostModal from 'components/Modals/UploadPostModal/UploadPostModal';
-import SettingsModalList from 'components/Modals/SettingsModal/SettingsModalList';
-import SettingsModalListItem from 'components/Modals/SettingsModal/SettingsModalListItem';
+import ModalList from 'components/Modals/ModalList/ModalList';
+import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import { submitAPost } from 'actions/posts/postActions';
@@ -15,7 +15,7 @@ const NavPostUpload = () => {
   const [postCaption, setPostCaption] = useState('');
   const [postMedia, setPostMedia] = useState('');
 
-  const { alert: { message } } = useSelector(state => state);
+  const { alert: { message }, posts: { uploadPostLoadingProgress } } = useSelector(state => state);
 
   const dispatch = useDispatch();
 
@@ -61,18 +61,18 @@ const NavPostUpload = () => {
         <Alert style={{ margin: '0', paddingBottom: '20px' }}>{message}</Alert>
         )}
         <form className={styles.uploadPostForm} onSubmit={handleSubmit}>
-          <SettingsModalList>
-            <SettingsModalListItem>
+          <ModalList>
+            <ModalListItem>
               <input
                 type="text"
                 placeholder="Write a caption..."
                 className={styles.captionInput}
                 onChange={(e) => setPostCaption(e.target.value)}
               />
-            </SettingsModalListItem>
-            <SettingsModalListItem>
+            </ModalListItem>
+            <ModalListItem>
               <label htmlFor="media" className={styles.uploadPhoto}>
-                Upload photo
+                {postMedia ? <span>Photo Selected &#10003;</span> : 'Upload Photo'}
               </label>
               <input
                 type="file"
@@ -83,16 +83,18 @@ const NavPostUpload = () => {
                 onChange={(e) => setPostMedia(e.target.files[0])}
                 style={{ display: 'none' }}
               />
-            </SettingsModalListItem>
-            <SettingsModalListItem>
+            </ModalListItem>
+            <ModalListItem>
               <Button
                 btnRole="astext btnBlock"
                 type="submit"
               >
                 Submit post
+                {' '}
+                {uploadPostLoadingProgress && `${uploadPostLoadingProgress}%`}
               </Button>
-            </SettingsModalListItem>
-            <SettingsModalListItem>
+            </ModalListItem>
+            <ModalListItem>
               <Button
                 btnRole="astext btnBlock"
                 type="button"
@@ -100,8 +102,8 @@ const NavPostUpload = () => {
               >
                 Cancel
               </Button>
-            </SettingsModalListItem>
-          </SettingsModalList>
+            </ModalListItem>
+          </ModalList>
         </form>
       </UploadPostModal>
       )}

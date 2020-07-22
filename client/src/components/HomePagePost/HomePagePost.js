@@ -8,7 +8,7 @@ import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomeP
 import { postPropType } from 'customPropTypes';
 import styles from './HomePagePost.module.scss';
 
-const HomePagePost = ({ likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id }) => {
+const HomePagePost = ({ post: { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } }) => {
   const handleSubmit = e => {
     e.preventDefault();
   };
