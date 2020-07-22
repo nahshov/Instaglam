@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loadUser } from 'actions/auth/authActions';
 import {
   GET_USER_POSTS,
   USER_POSTS_ERROR,
@@ -57,5 +58,16 @@ export const getAllPosts = () => async dispatch => {
     dispatch({
       type: POSTS_ERROR
     });
+  }
+};
+
+export const submitAPost = (fd) => async dispatch => {
+  try {
+    await axios.post('/api/posts', fd);
+    dispatch(loadUser());
+    window.location.reload();
+  } catch (error) {
+    const { message } = error.response.data;
+    console.log(message);
   }
 };
