@@ -32,10 +32,12 @@ const addCommentToPost = async (req, res) => {
       user: req.user.sub,
       post: req.params.postId
     };
+
     const post = await getPost(req.params.postId);
     post.comments++;
     await post.save();
     const response = await addComment(comment);
+    const [response] = await Promise.all([response, post])
     return serverResponse(res, 200, response);
   } catch (error) {
     return serverResponse(res, 500, {

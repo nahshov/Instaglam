@@ -4,6 +4,8 @@ const {
   addFollowToUser,
   removeFollowFromUser
 } = require('../services/follow-services');
+const { addActivity } = require('../services/activity-services');
+const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 
 // @route   GET '/api/users/:userId/follows/followers'
@@ -43,6 +45,7 @@ const addFollowToAUser = async (req, res) => {
       user: req.user.sub,
       following: req.params.userId
     });
+    activityEmitter.emit('follow', { followee: req.user.sub, follower: req.params.userId, created: new Date() });
     return serverResponse(res, 200, follow);
   } catch (error) {
     return serverResponse(res, 500, {
