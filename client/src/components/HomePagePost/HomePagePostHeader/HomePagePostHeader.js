@@ -4,7 +4,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
 import Button from 'components/Button/Button';
-import styles from './HomePagePostHeader/HomePagePostHeader.module.scss'
+import styles from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader.module.scss';
 
 const HomePagePostHeader = ({ username, profilePic, _id }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -14,7 +14,7 @@ const HomePagePostHeader = ({ username, profilePic, _id }) => {
       <div className={styles.postHeader}>
         <div className={styles.userIdentifier}>
           <Link to={`/${username}`}>
-            <ProfilePic url={profilePic} />
+            <ProfilePic url={profilePic} size="medium" />
           </Link>
           <Link to={`/${username}`}>
             {username}
