@@ -55,7 +55,7 @@ export const getAllPosts = () => async dispatch => {
     });
   } catch (e) {
     dispatch({
-      type: POST_ERROR
+      type: POSTS_ERROR
     });
   }
 };

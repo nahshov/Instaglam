@@ -15,7 +15,7 @@ const Modal = (
   const node = useRef();
 
   const handleClose = (e) => {
-    if (node.current.contains(e.target)) {
+    if (node.current && node.current.contains(e.target)) {
       return;
     }
     document.body.removeAttribute('style');

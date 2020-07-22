@@ -16,8 +16,7 @@
 
       .profilePageProfilePic {
         @include flexColumn;
-        align-items: center;
-        flex: 2;
+        width: 30%;
         margin-right: 30px;
         min-height: 240px;
         border-radius: 50%;
@@ -44,13 +43,13 @@
       .profileInfo {
         display: flex;
         flex-direction: column;
-        flex: 4;
+        width: 35%;
 
         .profileInfoHeader {
           display: flex;
           align-items: center;
           font-size: $button-text;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
 
           .username {
             font-size: $secondary-heading;
@@ -60,20 +59,23 @@
           .editLink {
             display: flex;
             align-items: center;
-            margin-left: 80px;
+            margin-left: 15px;
           }
 
           .logoutBtn {
             padding: 3px 5px;
-            margin-left: 20px;
+            margin-left: 5px;
           }
         }
 
         .socialStatusList {
           display: flex;
+          align-items: center;
+          justify-content: space-between;
           margin-bottom: 20px;
 
-          & li {
+          & li > {
+            display: flex;
             margin-right: 40px;
           }
         }

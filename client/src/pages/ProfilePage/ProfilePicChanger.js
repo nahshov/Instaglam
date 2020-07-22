@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './ProfilePage.module.scss';
-import ProfilePic from '../../components/ProfilePic/ProfilePic';
 import Alert from '../../components/Alert/Alert';
 import Modal from '../../components/Modals/Modal';
 import ModalList from '../../components/Modals/ModalList/ModalList';

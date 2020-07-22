@@ -15,13 +15,11 @@ const HeartIcon = ({ isActive = false, isLike = false, ...otherProps }) => (
 
 HeartIcon.defaultProps = {
   isActive: false,
-  activeStyle: {},
   isLike: false
 };
 
 HeartIcon.propTypes = {
   isActive: PropTypes.bool,
-  activeStyle: PropTypes.shape({}),
   isLike: PropTypes.bool
 };
 

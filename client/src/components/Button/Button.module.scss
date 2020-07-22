@@ -13,13 +13,14 @@
   }
 
   & button {
+    font-family: inherit;
     background: transparent;
     border: 1px solid $primary-border-color;
     border-radius: 4px;
     padding: 5px 9px;
     height: 35px;
     outline: none;
-    font-size: $button-text;
+    font-size: inherit;
     cursor: pointer;
 
     &:disabled {

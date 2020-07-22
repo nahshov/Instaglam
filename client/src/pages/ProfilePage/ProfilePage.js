@@ -11,7 +11,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
-  const searchedUserUsername = pathname.split('/')[1];
+  const searchedUserUsername = pathname.replace('/', '');
 
   useEffect(() => {
     dispatch(searchUser(searchedUserUsername));

@@ -5,6 +5,7 @@ import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
+import SocialStatusList from './SocialStatusList';
 
 const ProfileHeader = () => {
   const dispatch = useDispatch();
@@ -32,23 +33,7 @@ const ProfileHeader = () => {
             Logout
           </Button>
         </div>
-        <ul className={styles.socialStatusList}>
-          <li>
-            <span>
-              {postsOfSearchedUser.length}
-            </span>
-            &nbsp;
-            posts
-          </li>
-          <li>
-            <span>{`${0} `}</span>
-            followers
-          </li>
-          <li>
-            <span>{`${0} `}</span>
-            following
-          </li>
-        </ul>
+        <SocialStatusList userId={searchedUser._id || ''} postCount={postsOfSearchedUser.length} />
         <div className={styles.bioContainer}>
           <h1 className={styles.fullName}>{searchedUser.fullName}</h1>
           <p className={styles.bio}>{searchedUser.bio}</p>

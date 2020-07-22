@@ -16,7 +16,7 @@ const WelcomePage = () => (
           linkText="Log in"
         />
         <AuthSwitch
-          hasAccountText={"Don't have an account?"}
+          hasAccountText="Don't have an account?"
           linkText="Sign up"
         />
       </div>
