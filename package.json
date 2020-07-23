@@ -7,14 +7,14 @@
 		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
 		"start:frontend": "cd client && npm start",
 		"start:backend": "cd server && npm run dev",
-		"start": "npm run start:*",
+		"start": "node server/server.js",
 		"client:install": "cd client && npm install",
 		"server:install": "cd server && npm install",
 		"postinstall": "(npm run client:install) && (npm run server:install)",
 		"lint": "eslint '**/*.js'",
 		"lint:fix": "(cd server && npm run lint:fix) && (cd client && npm run lint:fix)",
 		"dev": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client:install && npm run build"
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i && npm run build"
 	},
 	"repository": {
 		"type": "git",
