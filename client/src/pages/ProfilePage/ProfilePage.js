@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import { searchUser } from 'actions/users/userActions';
 import { loadPostsOfUser } from 'actions/posts/postActions';
