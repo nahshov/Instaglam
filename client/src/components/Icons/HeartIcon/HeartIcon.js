@@ -3,10 +3,10 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 import styles from './HeartIcon.module.scss';
 
-const HeartIcon = ({ isActive = false, isLike = false, ...otherProps }) => (
+const HeartIcon = ({ isFilled = false, isRed = false, ...otherProps }) => (
   <>
-    {isActive ? (
-      <AiFillHeart className={(isLike && styles.likeHeart)} {...otherProps} />
+    {isFilled ? (
+      <AiFillHeart className={(isRed && styles.likeHeart)} {...otherProps} />
     ) : (
       <AiOutlineHeart {...otherProps} />
     )}
@@ -14,13 +14,13 @@ const HeartIcon = ({ isActive = false, isLike = false, ...otherProps }) => (
 );
 
 HeartIcon.defaultProps = {
-  isActive: false,
-  isLike: false
+  isFilled: false,
+  isRed: false
 };
 
 HeartIcon.propTypes = {
-  isActive: PropTypes.bool,
-  isLike: PropTypes.bool
+  isFilled: PropTypes.bool,
+  isRed: PropTypes.bool
 };
 
 export default HeartIcon;

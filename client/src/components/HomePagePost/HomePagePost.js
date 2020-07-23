@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RiChat3Line } from 'react-icons/ri';
-import { GrBookmark } from 'react-icons/gr';
-import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
-import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
 import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
+import HomePagePostIconBar from 'components/HomePagePost/HomePagePostIconsBar/HomePagePostIconBar';
+import PostLikes from 'components/HomePagePost/PostLikes/PostLikes'
 import { postPropType } from 'customPropTypes';
+import {loadLikesOfPost, addLikeToPost} from 'actions/likes/likeActions'
 import styles from './HomePagePost.module.scss';
 
-const HomePagePost = ({ post: { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } }) => {
+const HomePagePost = ({ 
+  post: 
+    { likesOfPost,
+      comments,
+      content,
+      user: { 
+        username = '',
+        profilePic = ''
+      }, 
+      media, 
+      created, 
+      _id, 
+      isUserliked
+      }
+   }) => {
+  const { likes: { likes, fetchLikesLoading, isLikeLoading, isLike }, auth: { user } } = useSelector(state => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch((loadLikesOfPost));
+  }, [likes]);
+
   const handleSubmit = e => {
     e.preventDefault();
   };
-  const [isHeartIconFilled, setHeartIconFilled] = useState(false);
+  const userLike = likes.find((like) => like.user === user._id) || false;
 
   return (
 
     <article className={styles.postContainer}>
-      <HomePagePostHeader username={username} profilePic={profilePic} _id={_id} />
-      <HomePagePostMedia media={media} />
-      <div className={styles.iconsWrapper}>
-        <div className={styles.leftIconsWrapper}>
-          <HeartIcon
-            isActive={isHeartIconFilled}
-            isLike
-            onClick={() => setHeartIconFilled(!isHeartIconFilled)}
-          />
-          <RiChat3Line className={styles.chatIcon} />
-          <ShareModalIcon className={styles.ShareModalIcon} />
-        </div>
-        <GrBookmark className={styles.bookMark} />
-      </div>
-      <div className={styles.likesAmount}>
-        {likes}
-        &nbsp;likes
-      </div>
+      <HomePagePostHeader username={username} profilePic={profilePic} postId={_id} />
+      <HomePagePostMedia media={media} onToggleLike />
+      <HomePagePostIconBar isLike={isLike} initialLikeState={isUserliked} isLikeLoading={isLikeLoading} postId={_id} likeId={userLike._id} />
+      <PostLikes likes={likesOfPost} />
       <div className={styles.postContentContainer}>
         <Link to={`/${username}`}>
           <span className={styles.username}>

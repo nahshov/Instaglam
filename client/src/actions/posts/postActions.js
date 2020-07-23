@@ -80,8 +80,8 @@ export const submitAPost = (fd) => async dispatch => {
     });
     dispatch(loadUser());
     window.location.reload();
-  } catch (error) {
-    const { message } = error.response.data;
+  } catch (e) {
+    const { message } = e.response.data;
     console.log(message);
   }
 };
