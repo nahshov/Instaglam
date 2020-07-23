@@ -19,7 +19,8 @@ const uploadFile = (originalname, buffer) => new Promise((resolve, reject) => {
       const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
       resolve(publicUrl);
     })
-    .on('error', () => {
+    .on('error', e => {
+      console.log(e);
       reject(new Error('Unable to upload media, something went wrong'));
     })
     .end(buffer);
