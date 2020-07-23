@@ -37,6 +37,7 @@ const submitPost = async (req, res) => {
 
     return serverResponse(res, 200, newPost);
   } catch (e) {
+    console.log(e);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to submit a post'
     });
