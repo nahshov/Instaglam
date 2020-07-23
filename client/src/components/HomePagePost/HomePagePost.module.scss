@@ -10,20 +10,8 @@
     flex-direction: column;
     background: $color-white;
     margin-bottom: 40px;
-            
-            .moreIcon{
-                margin-right: 10px;
-            }
-
-        }
-    
-    .postPicture{
-        margin: 0 auto;
-        width: 595px;
-        margin-top:5px;
-        margin-bottom:5px;
-        border-top: 2.4px solid #8e8e8e10;
     }
+    
     .iconsWrapper{
         width: 96%;
         @include flexSpaceBetween;

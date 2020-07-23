@@ -5,6 +5,8 @@ import { GrBookmark } from 'react-icons/gr';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
+import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
+
 // import Button from 'components/Button/Button';
 import styles from './HomePagePost.module.scss';
 
@@ -19,7 +21,7 @@ const HomePagePost = ({ post }) => {
 
     <article className={styles.postContainer}>
       <HomePagePostHeader username={username} profilePic={profilePic} _id={_id} />
-      <img alt="post media" src={media} className={styles.postPicture} />
+      <HomePagePostMedia media={media} />
       <div className={styles.iconsWrapper}>
         <div className={styles.leftIconsWrapper}>
           <HeartIcon isActive={isHeartIconFilled} isLike onClick={() => setHeartIconFilled(!isHeartIconFilled)} />

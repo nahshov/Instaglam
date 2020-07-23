@@ -16,7 +16,7 @@ const HomePagePostHeader = ({ username, profilePic, _id }) => {
           <Link to={`/${username}`}>
             <ProfilePic url={profilePic} size="medium" />
           </Link>
-          <Link to={`/${username}`}>
+          <Link className={styles.username} to={`/${username}`}>
             {username}
           </Link>
         </div>

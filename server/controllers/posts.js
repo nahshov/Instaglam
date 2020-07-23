@@ -7,7 +7,7 @@ const {
   getAllPosts
 } = require('../services/post-services.js');
 
-const { removeLikesFromPost, removeLikesFromComment } = require('../services/like-services');
+const { removeLikesFromPost, removeLikesFromComment, getPostLikes, userHasLikes, whereUserLiked } = require('../services/like-services');
 
 const {
   getCommentsOfPost, removeAllPostComments
@@ -48,13 +48,18 @@ const submitPost = async (req, res) => {
 // @access private
 const getPosts = async (req, res) => {
   try {
-    const posts = await getAllPosts(req.query.limit, req.query.skip);
+    const {limit, skip} = req.query || {};
+    const userId = req.user.sub
+  
+    const posts = await getAllPosts(limit, skip);
+    const postLikes = await whereUserLiked(userId, posts.map(p => p._id))
 
     if (posts.length === 0) {
       return serverResponse(res, 404, { message: 'No posts found' });
     }
 
-    return serverResponse(res, 200, posts);
+
+    return serverResponse(res, 200, posts.map(post => ({...post.toObject(), isUserliked: !!postLikes[post._id]})));
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to get posts'
@@ -81,16 +86,21 @@ const getPostsOfAUser = async (req, res) => {
 // @desc   Get one post, with post id
 // @access private
 const getOnePost = async (req, res) => {
+  const postId = req.params.postId
+  const userId = req.user.sub
   try {
-    const post = await getPost(req.params.postId);
+    const [post, isUserLike] = await Promise.all([
+      getPost(postId),
+      userHasLikes(userId, postId)
+    ]);
 
     if (!post) {
       return serverResponse(res, 404, {
         message: "Post doesn't exist"
       });
     }
-
-    return serverResponse(res, 200, post);
+    
+    return serverResponse(res, 200, {...post.toObject(), isUserliked: isUserLike });
   } catch (e) {
     res
       .status(500)
