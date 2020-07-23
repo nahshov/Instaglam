@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiChat3Line } from 'react-icons/ri';
 import { GrBookmark } from 'react-icons/gr';
@@ -6,12 +6,10 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
 import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
-
-// import Button from 'components/Button/Button';
+import { postPropType } from 'customPropTypes';
 import styles from './HomePagePost.module.scss';
 
-const HomePagePost = ({ post }) => {
-  const { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } = post;
+const HomePagePost = ({ post: { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } }) => {
   const handleSubmit = e => {
     e.preventDefault();
   };
@@ -24,7 +22,11 @@ const HomePagePost = ({ post }) => {
       <HomePagePostMedia media={media} />
       <div className={styles.iconsWrapper}>
         <div className={styles.leftIconsWrapper}>
-          <HeartIcon isActive={isHeartIconFilled} isLike onClick={() => setHeartIconFilled(!isHeartIconFilled)} />
+          <HeartIcon
+            isActive={isHeartIconFilled}
+            isLike
+            onClick={() => setHeartIconFilled(!isHeartIconFilled)}
+          />
           <RiChat3Line className={styles.chatIcon} />
           <ShareModalIcon className={styles.ShareModalIcon} />
         </div>
@@ -42,7 +44,7 @@ const HomePagePost = ({ post }) => {
         </Link>
         <span>{content}</span>
       </div>
-      <a href="#" className={styles.postAge}>*** ***** AGO</a>
+      <Link to="/" className={styles.postAge}>*** ***** AGO</Link>
       <form onSubmit={handleSubmit} className={styles.commentContainer}>
         <textarea id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
         <button type="submit" className={styles.postButton}>Post</button>
@@ -50,4 +52,9 @@ const HomePagePost = ({ post }) => {
     </article>
   );
 };
+
+HomePagePost.propTypes = {
+  ...postPropType
+};
+
 export default HomePagePost;

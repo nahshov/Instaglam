@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { loadUser } from 'actions/auth/authActions';
 import {
   GET_USER_POSTS,
   USER_POSTS_ERROR,
   GET_POST,
   POST_ERROR,
   GET_POSTS,
-  POSTS_ERROR
+  POSTS_ERROR,
+  UPLOAD_POST_LOADING
 } from './postTypes';
 
 // load all posts of a user
@@ -57,5 +59,29 @@ export const getAllPosts = () => async dispatch => {
     dispatch({
       type: POSTS_ERROR
     });
+  }
+};
+
+export const submitAPost = (fd) => async dispatch => {
+  try {
+    dispatch({
+      type: UPLOAD_POST_LOADING,
+      payload: ''
+    });
+
+    await axios.post('/api/posts', fd, {
+      onUploadProgress: event => {
+        dispatch({
+          type: UPLOAD_POST_LOADING,
+          // eslint-disable-next-line no-mixed-operators
+          payload: `${Math.round((event.loaded / event.total * 100))}%`
+        });
+      }
+    });
+    dispatch(loadUser());
+    window.location.reload();
+  } catch (error) {
+    const { message } = error.response.data;
+    console.log(message);
   }
 };
