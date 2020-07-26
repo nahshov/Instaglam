@@ -59,7 +59,8 @@ console.log(isUserLiked)
       />
       <PostLikes likesOfPost={likes} />
       <HomePagePostContent username={username} content={content} />
-      <Link to="/" className={styles.postAge}>*** ***** AGO</Link>
+      <Link to={`/p/${_id}`} className={styles.postAge}>*** ***** AGO</Link>
+      
       <form onSubmit={handleSubmit} className={styles.commentContainer}>
         <textarea id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
         <button type="submit" className={styles.postButton}>Post</button>
