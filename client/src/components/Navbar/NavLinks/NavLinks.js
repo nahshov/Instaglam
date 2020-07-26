@@ -29,7 +29,7 @@ const NavLinks = () => {
       </CustomNavLink>
       <HeartIcon
         className={styles.HeartIcon}
-        isActive={isHeartIconFilled}
+        isFilled={isHeartIconFilled}
         onClick={() => setHeartIconFilled(!isHeartIconFilled)}
       />
       <NavLink

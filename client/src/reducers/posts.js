@@ -5,7 +5,8 @@ import {
   USER_POSTS_ERROR,
   GET_POST,
   POST_ERROR,
-  UPLOAD_POST_LOADING
+  UPLOAD_POST_LOADING,
+  TOGGLE_POST_LIKE
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -60,6 +61,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         uploadPostLoadingPercentage: payload
+      };
+    case TOGGLE_POST_LIKE:
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts
+          .map(post => (
+            post._id === payload.postId
+              ? { ...post, isUserLiked: payload.isLike, likes: state.likes + payload.likes }
+              : post))
       };
     default:
       return state;

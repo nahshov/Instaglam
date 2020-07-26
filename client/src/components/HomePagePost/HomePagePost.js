@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
@@ -12,7 +12,7 @@ import styles from './HomePagePost.module.scss';
 
 const HomePagePost = ({
   post:
-    { likes,
+    { likes: numOfLikes,
       comments,
       content,
       user: {
@@ -21,43 +21,35 @@ const HomePagePost = ({
       },
       media,
       created,
-      _id,
+      _id: postId,
       isUserLiked
     }
 }) => {
   const {
     likes:
-    { likesReferences,
-      fetchLikesLoading,
-      isLikeLoading,
-      hasUserLiked
-    },
+    { likesOfPost },
     auth: {
       user
     } } = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadLikesOfPost(_id));
+    dispatch(loadLikesOfPost(postId));
   }, []);
-console.log(isUserLiked)
+
   const handleSubmit = e => {
     e.preventDefault();
   };
-  const userLike = likesReferences.find((like) => like.user === user._id) || false;
 
   return (
     <article className={styles.postContainer}>
-      <HomePagePostHeader username={username} profilePic={profilePic} postId={_id} />
+      <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} />
       <HomePagePostMedia media={media} onToggleLike />
       <HomePagePostIconBar
         isLike={isUserLiked}
-        initialLikeState={hasUserLiked}
-        isLikeLoading={isLikeLoading}
-        postId={_id}
-        likeId={userLike._id}
+        postId={postId}
       />
-      <PostLikes likesOfPost={likes} />
+      <PostLikes likesOfPost={numOfLikes} />
       <HomePagePostContent username={username} content={content} />
       <Link to="/" className={styles.postAge}>*** ***** AGO</Link>
       <form onSubmit={handleSubmit} className={styles.commentContainer}>

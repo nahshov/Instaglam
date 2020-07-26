@@ -7,8 +7,11 @@ import {
   POST_ERROR,
   GET_POSTS,
   POSTS_ERROR,
-  UPLOAD_POST_LOADING
+  UPLOAD_POST_LOADING,
+  TOGGLE_POST_LIKE
 } from './postTypes';
+import { appJSONHeader } from '../../utils/httpHeaderConfig';
+import { TOGGLE_LIKE_ID } from '../likes/likeTypes';
 
 // load all posts of a user
 export const loadPostsOfUser = (userInfo) => async dispatch => {
@@ -82,5 +85,36 @@ export const submitAPost = (fd) => async dispatch => {
     window.location.reload();
   } catch (e) {
     const { message } = e.response.data;
+  }
+};
+
+export const toggleLike = (postId, isLike) => async dispatch => {
+  try {
+    let newLike = null;
+    if (postId) {
+      if (isLike) {
+        await axios.delete(`/api/posts/${postId}/likes`);
+        dispatch({
+          type: TOGGLE_POST_LIKE,
+          payload: { postId, isLike: !isLike, likes: -1 }
+        });
+      } else {
+        const {
+          data
+        } = await axios.post(`/api/posts/${postId}/likes`, null, appJSONHeader);
+        newLike = data;
+        dispatch({
+          type: TOGGLE_POST_LIKE,
+          payload: { postId, isLike: !isLike, likes: 1 }
+        });
+      }
+
+      dispatch({
+        type: TOGGLE_LIKE_ID,
+        payload: { newLike }
+      });
+    }
+  } catch (e) {
+    console.log(e);
   }
 };

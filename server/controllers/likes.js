@@ -68,7 +68,7 @@ const addLikeToAPost = async (req, res) => {
 // @access  private
 const deleteLikeFromAPost = async (req, res) => {
   try {
-    const like = await removeLike(req.params.likeId);
+    const like = await removeLike(req.params.postId, req.user.sub);
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
@@ -78,7 +78,7 @@ const deleteLikeFromAPost = async (req, res) => {
     post.likes--;
     await post.save();
 
-    return serverResponse(res, 200, like);
+    return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
     console.log(error);
     return serverResponse(res, 500, {

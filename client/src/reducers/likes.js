@@ -1,14 +1,10 @@
 import {
-  GET_LIKES_OF_POST,
-  // GET_LIKES_OF_COMMENT,
-  TOGGLE_LIKE
+  TOGGLE_LIKE_ID,
+  GET_LIKES_OF_POST
 } from 'actions/likes/likeTypes';
 
 const initialState = {
-  likesReferences: [],
-  fetchLikesLoading: true,
-  hasUserLiked: false,
-  isLikeLoading: true
+  likesOfPost: []
 };
 
 export default function (state = initialState, action) {
@@ -18,14 +14,21 @@ export default function (state = initialState, action) {
     case GET_LIKES_OF_POST:
       return {
         ...state,
-        likesReferences: payload,
-        fetchLikesLoading: false
+        likesOfPost: payload
       };
-    case TOGGLE_LIKE:
+    case TOGGLE_LIKE_ID:
       return {
         ...state,
-        hasUserLiked: !state.hasUserLiked,
-        isLikeLoading: false
+        likesOfPost: state.likesOfPost.map(like => {
+          if (!payload.newLike) {
+            return { ...like, _id: null };
+          }
+          if (payload.oldLikeId === like._id) {
+            return { ...like, _id: payload.newLike._id };
+          }
+
+          return like;
+        })// newLike oldLikeId
       };
     default:
       return state;
