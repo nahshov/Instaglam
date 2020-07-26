@@ -1,7 +1,7 @@
 require('dotenv').config({ encoding: 'utf8' });
 
 module.exports = {
-  mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/instaglam',
+  mongoUri: process.env.NODE_ENV === 'production' ? process.env.MONGO_URI : 'mongodb://localhost:27017/instaglam',
   port: process.env.PORT || 4000,
   tokenSecret: process.env.TOKEN_SECRET || 'mySecret',
   refreshTokenSecret: process.env.REFRESH_TOKEN || 'myRefresh',
