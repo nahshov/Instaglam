@@ -82,6 +82,5 @@ export const submitAPost = (fd) => async dispatch => {
     window.location.reload();
   } catch (e) {
     const { message } = e.response.data;
-    console.log(message);
   }
 };

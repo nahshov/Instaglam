@@ -59,7 +59,7 @@ const getPosts = async (req, res) => {
     }
 
 
-    return serverResponse(res, 200, posts.map(post => ({...post.toObject(), isUserliked: !!postLikes[post._id]})));
+    return serverResponse(res, 200, posts.map(post => ({...post.toObject(), isUserLiked: !!postLikes[post._id]})));
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to get posts'
@@ -100,7 +100,7 @@ const getOnePost = async (req, res) => {
       });
     }
     
-    return serverResponse(res, 200, {...post.toObject(), isUserliked: isUserLike });
+    return serverResponse(res, 200, {...post.toObject(), isUserLiked: isUserLike });
   } catch (e) {
     res
       .status(500)

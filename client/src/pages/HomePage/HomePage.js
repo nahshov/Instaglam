@@ -12,10 +12,13 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getAllPosts());
   }, []);
-
   return (
     <div className={styles.container}>
-      {posts.length && !loading && posts.map(post => <HomePagePost key={post._id} post={post} />)}
+      {posts.length && !loading && posts.map(post => {
+        dispatch(setLikes(post.isUserLiked))
+
+      return <HomePagePost key={post._id} post={post} />
+      } )}
     </div>
   );
 };

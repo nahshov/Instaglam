@@ -1,14 +1,19 @@
 import React from 'react';
-import styles from './PostLikes'
-import PropTypes from 'prop-types';
+import { postPropType } from 'customPropTypes';
 
-const PostLikes = ({likes}) => {
+import styles from './PostLikes.module.scss';
+
+const PostLikes = ({ likesOfPost }) => {
   return (
     <div className={styles.likesAmount}>
-      {likes}
+      {likesOfPost}
       &nbsp; likes
     </div>
   );
+};
+
+PostLikes.propTypes = {
+  ...postPropType
 };
 
 export default PostLikes;

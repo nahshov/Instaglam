@@ -1,0 +1,13 @@
+.postContentContainer{
+  margin: 0px 0px 3px 11px;
+
+  .username{
+      font-size: 18px;
+      font-weight: 600;
+      margin-right: 10px;
+      &:hover{
+        cursor: pointer;
+      }
+
+  }
+}
