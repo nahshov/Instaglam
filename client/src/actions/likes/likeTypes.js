@@ -1,3 +1,0 @@
-export const GET_LIKES_OF_POST = 'GET_LIKES_OF_POST';
-export const GET_LIKES_OF_COMMENT = 'GET_LIKES_OF_COMMENT';
-export const TOGGLE_LIKE_ID = 'TOGGLE_LIKE_ID';
