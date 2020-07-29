@@ -1,10 +1,6 @@
-import { defaultMemoize, createSelectorCreator } from 'reselect';
-import isEqual from 'lodash.isequal';
+import { createSelector } from 'reselect';
+import { createDeepEqualSelector } from '../createDeepEqualSelector';
 
-const createDeepEqualSelector = createSelectorCreator(
-  defaultMemoize,
-  isEqual
-);
 const usersSelector = state => state.users;
 
 export const userSelector = createDeepEqualSelector(
@@ -12,7 +8,7 @@ export const userSelector = createDeepEqualSelector(
   users => users.user
 );
 
-export const userLoadingSelector = createDeepEqualSelector(
+export const userLoadingSelector = createSelector(
   [usersSelector],
   user => user.userLoading
 );

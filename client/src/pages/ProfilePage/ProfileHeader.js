@@ -11,7 +11,7 @@ import { userSelector, userLoadingSelector } from 'actions/users/userSelectors';
 import SocialStatusList from './SocialStatusList';
 import { authenticatedUserSelector } from '../../actions/auth/authSelectors';
 
-const postsAndUserSelector = createStructuredSelector({
+const profileHeaderSelector = createStructuredSelector({
   postsOfUser: postsOfUserSelector,
   postsOfUserLoading: postsOfUserLoadingSelector,
   searchedUser: userSelector,
@@ -27,7 +27,7 @@ const ProfileHeader = () => {
     searchedUser,
     searchedUserLoading,
     authenticatedUser
-  } = useSelector(postsAndUserSelector);
+  } = useSelector(profileHeaderSelector);
 
   return (
     <header className={styles.profileHeader}>

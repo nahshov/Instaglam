@@ -1,4 +1,4 @@
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { createDeepEqualSelector } from '../createDeepEqualSelector';
 
 const postsSelector = state => state.posts;
@@ -7,7 +7,7 @@ export const postsOfUserSelector = createDeepEqualSelector(
   [postsSelector],
   posts => posts.postsOfUser
 );
-export const postsOfUserLoadingSelector = createDeepEqualSelector(
+export const postsOfUserLoadingSelector = createSelector(
   [postsSelector],
   posts => posts.postsOfUserLoading
 );
