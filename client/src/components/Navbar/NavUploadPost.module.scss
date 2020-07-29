@@ -45,6 +45,17 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    h3 {
+      padding: 0;
+      padding-bottom: 10px;
+    }
+
+    video {
+      object-fit: initial;
+      width: 600px;
+      height: 600px;
+    }
   }
 
   li {
