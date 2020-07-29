@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setAlert } from 'actions/alerts/alertActions';
+import { setFormAlert } from 'actions/alerts/alertActions';
 import styles from 'components/AuthForm/AuthSwitch/AuthSwitch.module.scss';
 
 const AuthSwitch = ({ hasAccountText, linkText }) => {
@@ -11,7 +11,7 @@ const AuthSwitch = ({ hasAccountText, linkText }) => {
 
   const handleClick = () => {
     if (alert.message !== '') {
-      dispatch(setAlert('', null));
+      dispatch(setFormAlert('', null));
     }
   };
 

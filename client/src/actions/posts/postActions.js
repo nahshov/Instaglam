@@ -65,20 +65,7 @@ export const getAllPosts = () => async dispatch => {
 
 export const submitAPost = (fd) => async dispatch => {
   try {
-    dispatch({
-      type: UPLOAD_POST_LOADING,
-      payload: ''
-    });
-
-    await axios.post('/api/posts', fd, {
-      onUploadProgress: event => {
-        dispatch({
-          type: UPLOAD_POST_LOADING,
-          // eslint-disable-next-line no-mixed-operators
-          payload: `${Math.round((event.loaded / event.total * 100))}%`
-        });
-      }
-    });
+    await axios.post('/api/posts', fd);
     dispatch(loadUser());
     window.location.reload();
   } catch (e) {

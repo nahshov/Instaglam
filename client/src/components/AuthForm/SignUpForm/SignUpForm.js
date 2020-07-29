@@ -10,7 +10,7 @@ import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import { register } from 'actions/auth/authActions';
-import { setAlert } from 'actions/alerts/alertActions';
+import { setFormAlert } from 'actions/alerts/alertActions';
 import styles from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
@@ -29,7 +29,7 @@ const SignUpForm = () => {
   const [passwordCheckOrError, setPasswordCheckOrError] = useState('');
   const {
     auth: { isAuthenticated, loading },
-    alert
+    alert: { message, alertLocation }
   } = useSelector(state => state);
 
   const dispatch = useDispatch();
@@ -75,15 +75,15 @@ const SignUpForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(signUpForm.email)) {
-      dispatch(setAlert('Enter a valid email address.', 'Error'));
+      dispatch(setFormAlert('Enter a valid email address.', 'Error', 'Forms'));
     } else if (signUpForm.password.length < 6) {
-      dispatch(setAlert('Create a password at least 6 characters long.'));
+      dispatch(setFormAlert('Create a password at least 6 characters long.', 'Error', 'Forms'));
     } else if (!signUpForm.fullName || !signUpForm.username) {
-      dispatch(setAlert('Full Name/Username are required fields'));
+      dispatch(setFormAlert('Full Name/Username are required fields', 'Error', 'Forms'));
     } else {
       setIsLoading(true);
       dispatch(register(signUpForm));
-      dispatch(setAlert('', null));
+      dispatch(setFormAlert('', null, ''));
     }
   };
 
@@ -95,14 +95,14 @@ const SignUpForm = () => {
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
-  const emailValidationIcon = alert.message !== `Another account is using ${signUpForm.email}`
+  const emailValidationIcon = message !== `Another account is using ${signUpForm.email}`
     && emailCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
     );
 
-  const usernameValidationIcon = alert.message !== "This username isn't available. Please try another."
+  const usernameValidationIcon = message !== "This username isn't available. Please try another."
     && usernameCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
@@ -185,7 +185,7 @@ const SignUpForm = () => {
           >
             Sign Up
           </Button>
-          {alert.message && <Alert alerts={alert.message} />}
+          {message && alertLocation === 'Forms' && <Alert alert={message} />}
         </form>
       </div>
       <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />

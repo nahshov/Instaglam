@@ -10,7 +10,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useDebouncedCallback } from 'use-debounce';
+// import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
   const [value, setValue] = useState('');
@@ -19,19 +19,19 @@ const SearchInput = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [debounce, debounceCancel] = useDebouncedCallback((val) => {
-    dispatch(searchUsers(val));
-    setIsPopoverOpen(true);
-  }, 200);
+  // const [debounce, debounceCancel] = useDebouncedCallback((val) => {
+  //   dispatch(searchUsers(val));
+  //   setIsPopoverOpen(true);
+  // }, 200);
 
   const handleChange = (val) => {
-    setValue(val);
-    if (!val) {
-      debounceCancel();
-      setIsPopoverOpen(false);
-    } else {
-      debounce(val);
-    }
+    // setValue(val);
+    // if (!val) {
+    //   debounceCancel();
+    //   setIsPopoverOpen(false);
+    // } else {
+    //   debounce(val);
+    // }
   };
 
   const handleMouseDown = (user) => {
