@@ -6,14 +6,14 @@ import Modal from '../../components/Modals/Modal';
 import ModalList from '../../components/Modals/ModalList/ModalList';
 import ModalListItem from '../../components/Modals/ModalList/ModalListItem';
 import Button from '../../components/Button/Button';
-import { setAlert } from '../../actions/alerts/alertActions';
+import { setProfilePicAlert } from '../../actions/alerts/alertActions';
 import { removeProfilePic, uploadProfilePic } from '../../actions/auth/authActions';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const ProfilePicChanger = () => {
   const {
     auth: { user: authenticatedUser },
-    alert: { message },
+    alert: { message, alertLocation },
     users: { userLoading, user: searchedUser }
   } = useSelector(state => state);
 
@@ -30,10 +30,10 @@ const ProfilePicChanger = () => {
   const handleSelectedFile = e => {
     if (e.target.files[0].size > 1000000) {
       dispatch(
-        setAlert('The maximum size for a profile picture is 1mb', 'Error')
+        setProfilePicAlert('The maximum size for a profile picture is 1mb', 'Error', 'Profile')
       );
       setTimeout(() => {
-        dispatch(setAlert('', null));
+        dispatch(setProfilePicAlert('', null, ''));
       }, 4500);
       setSettingsModalOpen(false);
     }
@@ -65,7 +65,7 @@ const ProfilePicChanger = () => {
               </div>
             )}
         </button>
-        <Alert alerts={message} style={{ fontSize: '10px' }} />
+        {alertLocation === 'Profile' && <Alert alert={message} style={{ fontSize: '10px' }} />}
       </div>
       {isSettingsModalOpen && (
       <Modal

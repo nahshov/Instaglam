@@ -1,31 +1,34 @@
-import { SET_ALERT, SET_PROFILEPIC_ALERT, SET_POSTPIC_ALERT } from './alertTypes';
+import { SET_FORM_ALERT, SET_PROFILEPIC_ALERT, SET_POSTPIC_ALERT } from './alertTypes';
 
-export const setAlert = (message, alertType) => (dispatch) => {
+export const setFormAlert = (message, alertType, alertLocation) => (dispatch) => {
   dispatch({
-    type: SET_ALERT,
+    type: SET_FORM_ALERT,
     payload: {
       message,
-      alertType
+      alertType,
+      alertLocation
     }
   });
 };
 
-export const setProfilePicAlert = (message, alertType) => (dispatch) => {
+export const setProfilePicAlert = (message, alertType, alertLocation) => (dispatch) => {
   dispatch({
     type: SET_PROFILEPIC_ALERT,
     payload: {
       message,
-      alertType
+      alertType,
+      alertLocation
     }
   });
 };
 
-export const setPostPicAlert = (message, alertType) => (dispatch) => {
+export const setPostPicAlert = (message, alertType, alertLocation) => (dispatch) => {
   dispatch({
     type: SET_POSTPIC_ALERT,
     payload: {
       message,
-      alertType
+      alertType,
+      alertLocation
     }
   });
 };

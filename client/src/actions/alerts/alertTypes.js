@@ -1,3 +1,3 @@
-export const SET_ALERT = 'SET_ALERT';
+export const SET_FORM_ALERT = 'SET_FORM_ALERT';
 export const SET_PROFILEPIC_ALERT = 'SET_PROFILEPIC_ALERT';
 export const SET_POSTPIC_ALERT = 'SET_POSTPIC_ALERT';

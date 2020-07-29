@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_ALERT } from 'actions/alerts/alertTypes';
+import { SET_FORM_ALERT } from 'actions/alerts/alertTypes';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -37,10 +37,11 @@ export const register = ({ fullName, email, username, password }) => async (
 
     if (errors) {
       dispatch({
-        type: SET_ALERT,
+        type: SET_FORM_ALERT,
         payload: {
           message: errors,
-          alertType: 'Error'
+          alertType: 'Error',
+          alertLocation: 'Forms'
         }
       });
     }
@@ -72,10 +73,11 @@ export const login = ({ email, password }) => async (dispatch) => {
 
     if (errors) {
       dispatch({
-        type: SET_ALERT,
+        type: SET_FORM_ALERT,
         payload: {
           message: errors,
-          alertType: 'Error'
+          alertType: 'Error',
+          alertLocation: 'Forms'
         }
       });
     }

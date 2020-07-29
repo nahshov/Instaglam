@@ -1,11 +1,9 @@
 import {
   GET_POSTS,
-  POSTS_ERROR,
   GET_USER_POSTS,
   USER_POSTS_ERROR,
   GET_POST,
-  POST_ERROR,
-  UPLOAD_POST_LOADING
+  POST_ERROR
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -13,7 +11,6 @@ const initialState = {
   posts: [],
   postsOfUser: [],
   post: {},
-  uploadPostLoadingProgress: '',
   error: ''
 };
 
@@ -55,11 +52,6 @@ export default function (state = initialState, action) {
         loading: false,
         post: {},
         error: 'No results found.'
-      };
-    case UPLOAD_POST_LOADING:
-      return {
-        ...state,
-        uploadPostLoadingPercentage: payload
       };
     default:
       return state;

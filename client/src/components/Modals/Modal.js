@@ -10,6 +10,8 @@ const Modal = (
     setModalOpen,
     isOpen = false,
     isAnimated = false,
+    isUploadPost = false,
+    handleUploadPostOnClose,
     ...otherProps }
 ) => {
   const node = useRef();
@@ -19,7 +21,6 @@ const Modal = (
       return;
     }
     document.body.removeAttribute('style');
-
     setModalOpen(!isOpen);
   };
 
@@ -29,6 +30,9 @@ const Modal = (
 
     return () => {
       modalRoot.removeEventListener('mousedown', handleClose);
+      if (isUploadPost) {
+        handleUploadPostOnClose();
+      }
     };
   }, [modalRoot]);
 
@@ -46,6 +50,7 @@ const Modal = (
 
 Modal.defaultProps = {
   isOpen: false,
+  isUploadPost: false,
   isAnimated: false
 };
 
