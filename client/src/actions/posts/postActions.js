@@ -7,14 +7,16 @@ import {
   POST_ERROR,
   GET_POSTS,
   POSTS_ERROR,
-  UPLOAD_POST_LOADING,
-  TOGGLE_POST_LIKE
+  TOGGLE_POST_LIKE, RESET_POSTS_OF_USER_LOADING
 } from './postTypes';
 
 // load all posts of a user
 export const loadPostsOfUser = (userInfo) => async dispatch => {
   try {
     if (userInfo) {
+      dispatch({
+        type: RESET_POSTS_OF_USER_LOADING
+      });
       const res = await axios.get(`/api/posts/${userInfo}`);
 
       dispatch({

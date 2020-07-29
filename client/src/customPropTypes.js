@@ -10,7 +10,7 @@ export const postPropType = {
   comments: PropTypes.number,
   _id: PropTypes.string,
   media: PropTypes.string,
-  user: PropTypes.shape(userPropType),
+  user: PropTypes.string,
   content: PropTypes.string,
   profilePic: PropTypes.string,
   isUserliked: PropTypes.bool
@@ -18,4 +18,15 @@ export const postPropType = {
 
 export const likePropType = {
   likes: PropTypes.string
+};
+
+export const searchedUserPropType = {
+  bio: PropTypes.string,
+  created: PropTypes.string,
+  email: PropTypes.string,
+  fullName: PropTypes.string,
+  profilePic: PropTypes.string,
+  username: PropTypes.string,
+  __v: PropTypes.number,
+  _id: PropTypes.string
 };

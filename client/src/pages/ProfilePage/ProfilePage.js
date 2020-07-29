@@ -16,7 +16,7 @@ const ProfilePage = () => {
   useEffect(() => {
     dispatch(searchUser(searchedUserUsername));
     dispatch(loadPostsOfUser(searchedUserUsername));
-  }, [searchedUserUsername]);
+  }, []);
 
   return (
     <main className={styles.main}>
