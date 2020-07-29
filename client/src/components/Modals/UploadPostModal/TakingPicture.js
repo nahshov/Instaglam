@@ -10,7 +10,7 @@ const TakingPicture = ({ videoRef, setPostMedia, setIsTakingPicture }) => {
 
   const handleTakePhotoClick = () => {
     const context = canvas.current.getContext('2d');
-    context.drawImage(videoRef.current, 0, 0, 640, 480);
+    context.drawImage(videoRef.current, 0, 0, 600, 600);
     canvas.current.toBlob((blob) => {
       const blobToFile = new File([blob], `${Date.now()}.jpeg`, { type: 'image/jpeg' });
       setPostMedia(blobToFile);
@@ -29,7 +29,7 @@ const TakingPicture = ({ videoRef, setPostMedia, setIsTakingPicture }) => {
         <ModalListItem>
           <div className={styles.videoDiv}>
             <h3>Your photo</h3>
-            <canvas ref={canvas} width="640px" height="480px" />
+            <canvas ref={canvas} width="600px" height="600px" />
           </div>
         </ModalListItem>
       </div>
