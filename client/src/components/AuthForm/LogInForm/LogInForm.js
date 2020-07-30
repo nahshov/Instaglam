@@ -8,7 +8,7 @@ import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login } from 'actions/auth/authActions';
-import { setAlert } from 'actions/alerts/alertActions';
+import { setFormAlert } from 'actions/alerts/alertActions';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {
@@ -22,7 +22,7 @@ const LogInForm = () => {
 
   const {
     auth: { isAuthenticated, loading },
-    alert
+    alert: { message, alertLocation }
   } = useSelector(state => state);
 
   const dispatch = useDispatch();
@@ -40,13 +40,13 @@ const LogInForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(logInForm.email)) {
-      dispatch(setAlert('Enter a valid email address.', 'Error'));
+      dispatch(setFormAlert('Enter a valid email address.', 'Error', 'Forms'));
     } else if (logInForm.password.length < 6) {
-      dispatch(setAlert('Enter a password at least 6 characters long.'));
+      dispatch(setFormAlert('Enter a password at least 6 characters long.', 'Error', 'Forms'));
     } else {
       setIsLoading(true);
       dispatch(login(logInForm));
-      dispatch(setAlert('', null));
+      dispatch(setFormAlert('', null, ''));
     }
   };
 
@@ -103,7 +103,7 @@ const LogInForm = () => {
           >
             Log In
           </Button>
-          {alert.message && <Alert alerts={alert.message} />}
+          {message && alertLocation === 'Forms' && <Alert alert={message} />}
         </form>
       </div>
       <AuthSwitch

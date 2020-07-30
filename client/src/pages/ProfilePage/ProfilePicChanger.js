@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from 'components/Alert/Alert';
+import Modal from 'components/Modals/Modal';
+import ModalList from 'components/Modals/ModalList/ModalList';
+import ModalListItem from 'components/Modals/ModalList/ModalListItem';
+import Button from 'components/Button/Button';
+import { setProfilePicAlert } from 'actions/alerts/alertActions';
+import { removeProfilePic, uploadProfilePic } from 'actions/auth/authActions';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import { searchedUserPropType } from 'customPropTypes';
 import styles from './ProfilePage.module.scss';
-import Alert from '../../components/Alert/Alert';
-import Modal from '../../components/Modals/Modal';
-import ModalList from '../../components/Modals/ModalList/ModalList';
-import ModalListItem from '../../components/Modals/ModalList/ModalListItem';
-import Button from '../../components/Button/Button';
-import { setAlert } from '../../actions/alerts/alertActions';
-import { removeProfilePic, uploadProfilePic } from '../../actions/auth/authActions';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
-const ProfilePicChanger = () => {
+const ProfilePicChanger = (
+  { authenticatedUsername,
+    searchedUserLoading,
+    searchedUser
+  }
+) => {
   const {
-    auth: { user: authenticatedUser },
-    alert: { message },
-    users: { userLoading, user: searchedUser }
-  } = useSelector(state => state);
+    message, alertLocation
+  } = useSelector(state => state.alert);
 
   const dispatch = useDispatch();
 
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
 
   const toggleProfilePicModal = () => {
-    if (!userLoading && (searchedUser.username === authenticatedUser.username)) {
+    if (!searchedUserLoading && (searchedUser.username === authenticatedUsername)) {
       setSettingsModalOpen(!isSettingsModalOpen);
     }
   };
@@ -30,10 +35,10 @@ const ProfilePicChanger = () => {
   const handleSelectedFile = e => {
     if (e.target.files[0].size > 1000000) {
       dispatch(
-        setAlert('The maximum size for a profile picture is 1mb', 'Error')
+        setProfilePicAlert('The maximum size for a profile picture is 1mb', 'Error', 'Profile')
       );
       setTimeout(() => {
-        dispatch(setAlert('', null));
+        dispatch(setProfilePicAlert('', null, ''));
       }, 4500);
       setSettingsModalOpen(false);
     }
@@ -54,18 +59,18 @@ const ProfilePicChanger = () => {
           className={styles.changeProfilePicButton}
           onClick={toggleProfilePicModal}
         >
-          {userLoading && !searchedUser.profilePic
+          {searchedUserLoading && !searchedUser.profilePic
             ? <LoadingSpinner style={{ width: '150px', height: '150px' }} />
             : (
               <div className={styles.profilePic}>
                 <img
-                  alt="Change profile picture"
+                  alt="Change avatar"
                   src={searchedUser.profilePic}
                 />
               </div>
             )}
         </button>
-        <Alert alerts={message} style={{ fontSize: '10px' }} />
+        {alertLocation === 'Profile' && <Alert alert={message} style={{ fontSize: '10px' }} />}
       </div>
       {isSettingsModalOpen && (
       <Modal
@@ -105,6 +110,12 @@ const ProfilePicChanger = () => {
       )}
     </>
   );
+};
+
+ProfilePicChanger.propTypes = {
+  authenticatedUsername: PropTypes.string.isRequired,
+  searchedUserLoading: PropTypes.bool.isRequired,
+  searchedUser: PropTypes.shape(searchedUserPropType).isRequired
 };
 
 export default ProfilePicChanger;

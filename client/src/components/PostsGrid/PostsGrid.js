@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './PostsGrid.module.scss';
 import PostsGridItem from './PostsGridItem';
 import PostModal from '../Modals/PostModal/PostModal';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import { postPropType } from '../../customPropTypes';
 
-const PostsGrid = ({ isLink = false }) => {
-  const {
-    postsOfUser: posts,
-    loading: postsLoading
-  } = useSelector(state => state.posts);
-
+const PostsGrid = ({ isLink = false, postsOfUserLoading = true, posts = [] }) => {
   const [searchedPost, setSearchedPost] = useState(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   return (
-    postsLoading
+    postsOfUserLoading
       ? (<LoadingSpinner style={{ display: 'block', width: '20%', margin: '20px auto' }} />)
       : !posts.length ? (
         <div className={styles.noPostsUploaded}>
@@ -47,11 +42,15 @@ const PostsGrid = ({ isLink = false }) => {
 };
 
 PostsGrid.defaultProps = {
-  isLink: false
+  isLink: false,
+  posts: [],
+  postsOfUserLoading: true
 };
 
 PostsGrid.propTypes = {
-  isLink: PropTypes.bool
+  isLink: PropTypes.bool,
+  posts: PropTypes.arrayOf(PropTypes.shape(postPropType)),
+  postsOfUserLoading: PropTypes.bool
 };
 
 export default PostsGrid;

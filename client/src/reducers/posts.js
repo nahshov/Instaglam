@@ -1,18 +1,18 @@
 import {
   GET_POSTS,
-  POSTS_ERROR,
   GET_USER_POSTS,
   USER_POSTS_ERROR,
   GET_POST,
   POST_ERROR,
-  UPLOAD_POST_LOADING,
-  TOGGLE_POST_LIKE
+  TOGGLE_POST_LIKE,
+  RESET_POSTS_OF_USER_LOADING
 } from 'actions/posts/postTypes';
 
 const initialState = {
   loading: true,
   posts: [],
   postsOfUser: [],
+  postsOfUserLoading: true,
   post: {},
   uploadPostLoadingProgress: '',
   error: ''
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
     case GET_USER_POSTS:
       return {
         ...state,
-        loading: false,
+        postsOfUserLoading: false,
         postsOfUser: payload,
         error: ''
       };
@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
     case USER_POSTS_ERROR:
       return {
         ...state,
-        loading: false,
+        postsOfUserLoading: false,
         postsOfUser: [],
         error: 'No posts uploaded.'
       };
@@ -57,11 +57,6 @@ export default function (state = initialState, action) {
         post: {},
         error: 'No results found.'
       };
-    case UPLOAD_POST_LOADING:
-      return {
-        ...state,
-        uploadPostLoadingPercentage: payload
-      };
     case TOGGLE_POST_LIKE:
       return {
         ...state,
@@ -71,6 +66,11 @@ export default function (state = initialState, action) {
             post._id === payload.postId
               ? { ...post, isUserLiked: payload.isLike, likes: post.likes + payload.likes }
               : post))
+      };
+    case RESET_POSTS_OF_USER_LOADING:
+      return {
+        ...state,
+        postsOfUserLoading: true
       };
     default:
       return state;
