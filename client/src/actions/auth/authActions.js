@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { SET_FORM_ALERT } from 'actions/alerts/alertTypes';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -10,7 +9,7 @@ import {
   LOGOUT
 } from './authTypes';
 
-export const register = ({ fullName, email, username, password }) => async (
+export const register = ({ fullName, email, username, password }, setAlert) => async (
   dispatch
 ) => {
   const config = {
@@ -36,14 +35,7 @@ export const register = ({ fullName, email, username, password }) => async (
     const { errors } = error.response.data;
 
     if (errors) {
-      dispatch({
-        type: SET_FORM_ALERT,
-        payload: {
-          message: errors,
-          alertType: 'Error',
-          alertLocation: 'Forms'
-        }
-      });
+      setAlert(errors);
     }
 
     dispatch({
@@ -52,7 +44,7 @@ export const register = ({ fullName, email, username, password }) => async (
   }
 };
 
-export const login = ({ email, password }) => async (dispatch) => {
+export const login = ({ email, password }, setAlert) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -72,14 +64,7 @@ export const login = ({ email, password }) => async (dispatch) => {
     const { errors } = error.response.data;
 
     if (errors) {
-      dispatch({
-        type: SET_FORM_ALERT,
-        payload: {
-          message: errors,
-          alertType: 'Error',
-          alertLocation: 'Forms'
-        }
-      });
+      setAlert(errors);
     }
 
     dispatch({

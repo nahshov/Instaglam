@@ -6,8 +6,7 @@ import {
   GET_POST,
   POST_ERROR,
   GET_POSTS,
-  POSTS_ERROR,
-  UPLOAD_POST_LOADING
+  POSTS_ERROR
 } from './postTypes';
 
 // load all posts of a user

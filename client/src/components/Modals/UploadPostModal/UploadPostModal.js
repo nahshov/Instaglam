@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList/ModalList';
@@ -8,18 +8,14 @@ import TakingPicture from 'components/Modals//UploadPostModal/TakingPicture';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import { submitAPost } from 'actions/posts/postActions';
-import { setPostPicAlert } from 'actions/alerts/alertActions';
 import styles from 'components/Navbar/NavUploadPost.module.scss';
 
 const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) => {
   const [isTakingPicture, setIsTakingPicture] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadAlert, setUploadAlert] = useState('');
   const [postCaption, setPostCaption] = useState('');
   const [postMedia, setPostMedia] = useState('');
-
-  const {
-    alert: { message, alertLocation }
-  } = useSelector(state => state);
 
   const dispatch = useDispatch();
 
@@ -32,7 +28,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
     setIsUploadPostModalOpen(false);
     setIsTakingPicture(false);
     setPostMedia('');
-    dispatch(setPostPicAlert('', null, ''));
+    setUploadAlert('');
   };
 
   const handleOpenCamClick = async () => {
@@ -52,21 +48,17 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
     e.preventDefault();
 
     if (!postMedia) {
-      dispatch(setPostPicAlert('Must select a photo', 'Error', 'Upload Post'));
+      setUploadAlert('Must select a photo');
       return;
     }
 
     if (postMedia.size > 5000000) {
-      dispatch(
-        setPostPicAlert('The maximum size for a post picture is 5mb', 'Error', 'Upload Post')
-      );
+      setUploadAlert('The maximum size for a post picture is 5mb');
       return;
     }
 
     if (!postMedia.type.startsWith('image')) {
-      dispatch(
-        setPostPicAlert('Please upload an image', 'Error', 'Upload Post')
-      );
+      setUploadAlert('Please upload an image');
       return;
     }
 
@@ -100,9 +92,8 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
               <div className={styles.uploadPostHeader}>
                 <h3 style={{ padding: '0' }}>New Post</h3>
               </div>
-              {message && alertLocation === 'Upload Post' && (
-              <Alert alert={message} style={{ margin: '0', paddingBottom: '20px' }} />
-              )}
+              {uploadAlert
+              && <Alert style={{ margin: '0', paddingBottom: '20px' }}>{uploadAlert}</Alert>}
               <ModalListItem>
                 <input
                   type="text"

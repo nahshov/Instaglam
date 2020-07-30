@@ -8,7 +8,6 @@ import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login } from 'actions/auth/authActions';
-import { setFormAlert } from 'actions/alerts/alertActions';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {
@@ -16,13 +15,13 @@ const LogInForm = () => {
     email: '',
     password: ''
   });
+  const [logInAlert, setLogInAlert] = useState('');
   const [hasAccount] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    auth: { isAuthenticated, loading },
-    alert: { message, alertLocation }
+    auth: { isAuthenticated, loading }
   } = useSelector(state => state);
 
   const dispatch = useDispatch();
@@ -40,13 +39,13 @@ const LogInForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(logInForm.email)) {
-      dispatch(setFormAlert('Enter a valid email address.', 'Error', 'Forms'));
+      setLogInAlert('Enter a valid email address.');
     } else if (logInForm.password.length < 6) {
-      dispatch(setFormAlert('Enter a password at least 6 characters long.', 'Error', 'Forms'));
+      setLogInAlert('Enter a password at least 6 characters long.');
     } else {
       setIsLoading(true);
-      dispatch(login(logInForm));
-      dispatch(setFormAlert('', null, ''));
+      dispatch(login(logInForm, setLogInAlert));
+      setLogInAlert('');
     }
   };
 
@@ -103,12 +102,13 @@ const LogInForm = () => {
           >
             Log In
           </Button>
-          {message && alertLocation === 'Forms' && <Alert alert={message} />}
+          {logInAlert && <Alert>{logInAlert}</Alert>}
         </form>
       </div>
       <AuthSwitch
         hasAccountText={"Don't have an account?"}
         linkText="Sign up"
+        onClick={() => setLogInAlert('')}
       />
     </div>
   );

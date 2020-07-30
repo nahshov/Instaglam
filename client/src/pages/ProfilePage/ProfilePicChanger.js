@@ -6,20 +6,18 @@ import Modal from '../../components/Modals/Modal';
 import ModalList from '../../components/Modals/ModalList/ModalList';
 import ModalListItem from '../../components/Modals/ModalList/ModalListItem';
 import Button from '../../components/Button/Button';
-import { setProfilePicAlert } from '../../actions/alerts/alertActions';
 import { removeProfilePic, uploadProfilePic } from '../../actions/auth/authActions';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 const ProfilePicChanger = () => {
+  const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [profilePicAlert, setProfilePicAlert] = useState('');
   const {
     auth: { user: authenticatedUser },
-    alert: { message, alertLocation },
     users: { userLoading, user: searchedUser }
   } = useSelector(state => state);
 
   const dispatch = useDispatch();
-
-  const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
 
   const toggleProfilePicModal = () => {
     if (!userLoading && (searchedUser.username === authenticatedUser.username)) {
@@ -29,11 +27,9 @@ const ProfilePicChanger = () => {
 
   const handleSelectedFile = e => {
     if (e.target.files[0].size > 1000000) {
-      dispatch(
-        setProfilePicAlert('The maximum size for a profile picture is 1mb', 'Error', 'Profile')
-      );
+      setProfilePicAlert('The maximum size for a profile picture is 1mb');
       setTimeout(() => {
-        dispatch(setProfilePicAlert('', null, ''));
+        setProfilePicAlert('');
       }, 4500);
       setSettingsModalOpen(false);
     }
@@ -59,13 +55,13 @@ const ProfilePicChanger = () => {
             : (
               <div className={styles.profilePic}>
                 <img
-                  alt="Change profile picture"
+                  alt="Change profile pic"
                   src={searchedUser.profilePic}
                 />
               </div>
             )}
         </button>
-        {alertLocation === 'Profile' && <Alert alert={message} style={{ fontSize: '10px' }} />}
+        {profilePicAlert && <Alert style={{ fontSize: '10px' }}>{profilePicAlert}</Alert>}
       </div>
       {isSettingsModalOpen && (
       <Modal
