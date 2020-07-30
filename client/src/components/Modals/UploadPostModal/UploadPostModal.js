@@ -77,18 +77,18 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
       isAnimated
       handleUploadPostOnClose={handleUploadPostOnClose}
     >
-      {isTakingPicture
-        ? (
-          <TakingPicture
-            videoRef={video}
-            setPostMedia={setPostMedia}
-            handleUploadPostOnClose={handleUploadPostOnClose}
-            setIsTakingPicture={setIsTakingPicture}
-          />
-        )
-        : (
-          <form className={styles.uploadPostForm} onSubmit={handleSubmit}>
-            <ModalList>
+      <ModalList>
+        {isTakingPicture
+          ? (
+            <TakingPicture
+              videoRef={video}
+              setPostMedia={setPostMedia}
+              handleUploadPostOnClose={handleUploadPostOnClose}
+              setIsTakingPicture={setIsTakingPicture}
+            />
+          )
+          : (
+            <form className={styles.uploadPostForm} onSubmit={handleSubmit}>
               <div className={styles.uploadPostHeader}>
                 <h3 style={{ padding: '0' }}>New Post</h3>
               </div>
@@ -144,9 +144,9 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
                   Cancel
                 </Button>
               </ModalListItem>
-            </ModalList>
-          </form>
-        )}
+            </form>
+          )}
+      </ModalList>
     </Modal>
   );
 };

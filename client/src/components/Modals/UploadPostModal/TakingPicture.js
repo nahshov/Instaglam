@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import ModalList from 'components/Modals/ModalList/ModalList';
 import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import Button from 'components/Button/Button';
 import styles from 'components/Navbar/NavUploadPost.module.scss';
@@ -18,7 +17,7 @@ const TakingPicture = ({ videoRef, setPostMedia, setIsTakingPicture }) => {
   };
 
   return (
-    <ModalList>
+    <>
       <div className={styles.videoWrapper}>
         <ModalListItem>
           <div className={styles.videoDiv}>
@@ -56,7 +55,7 @@ const TakingPicture = ({ videoRef, setPostMedia, setIsTakingPicture }) => {
           </Button>
         </ModalListItem>
       </div>
-    </ModalList>
+    </>
   );
 };
 

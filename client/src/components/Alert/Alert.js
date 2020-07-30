@@ -9,7 +9,6 @@ const Alert = ({ children, ...otherProps }) => (
 );
 
 Alert.propTypes = {
-  alert: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

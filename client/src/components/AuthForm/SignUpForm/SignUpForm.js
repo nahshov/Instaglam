@@ -13,7 +13,6 @@ import { register } from 'actions/auth/authActions';
 import styles from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
-  const [hasAccount] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [signUpForm, setSignUpForm] = useState({
     email: '',
@@ -21,7 +20,6 @@ const SignUpForm = () => {
     username: '',
     password: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
   const [signUpAlert, setSignUpAlert] = useState('');
   const [emailCheckOrError, setEmailCheckOrError] = useState('');
   const [fullNameCheckOrError, setFullNameCheckOrError] = useState('');
@@ -29,8 +27,8 @@ const SignUpForm = () => {
   const [passwordCheckOrError, setPasswordCheckOrError] = useState('');
 
   const {
-    auth: { isAuthenticated, loading }
-  } = useSelector(state => state);
+    isAuthenticated, loading
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -81,7 +79,6 @@ const SignUpForm = () => {
     } else if (!signUpForm.fullName || !signUpForm.username) {
       setSignUpAlert('Full Name/Username are required fields');
     } else {
-      setIsLoading(true);
       dispatch(register(signUpForm, setSignUpAlert));
       setSignUpAlert('');
     }
@@ -112,7 +109,7 @@ const SignUpForm = () => {
   return (
     <div className={styles.authWrapper}>
       <div className={styles.authDiv}>
-        <AuthHeader hasAccount={hasAccount} />
+        <AuthHeader hasAccount />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
             placeHolderText="Email"
@@ -180,7 +177,7 @@ const SignUpForm = () => {
           <Button
             type="submit"
             disabled={checkDisabled()}
-            isLoading={!loading ? false : isLoading}
+            isLoading={loading}
             btnRole="primary btnBlock"
           >
             Sign Up

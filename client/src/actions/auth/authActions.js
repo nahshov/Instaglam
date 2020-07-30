@@ -6,26 +6,31 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  RESET_AUTH_LOADING
 } from './authTypes';
 
 export const register = ({ fullName, email, username, password }, setAlert) => async (
   dispatch
 ) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const body = {
-    fullName,
-    email,
-    username,
-    password
-  };
-
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = {
+      fullName,
+      email,
+      username,
+      password
+    };
+
     const res = await axios.post('/api/register', body, config);
     dispatch({
       type: REGISTER_SUCCESS,
@@ -45,15 +50,17 @@ export const register = ({ fullName, email, username, password }, setAlert) => a
 };
 
 export const login = ({ email, password }, setAlert) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const body = { email, password };
-
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = { email, password };
     const res = await axios.post('/api/login', body, config);
 
     dispatch({
@@ -75,6 +82,10 @@ export const login = ({ email, password }, setAlert) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
     await axios.post('/api/logout');
     dispatch({ type: LOGOUT });
   } catch (error) {
@@ -86,6 +97,10 @@ export const logout = () => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
     const res = await axios.get('/api/me');
 
     dispatch({

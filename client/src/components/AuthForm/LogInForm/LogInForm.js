@@ -16,13 +16,11 @@ const LogInForm = () => {
     password: ''
   });
   const [logInAlert, setLogInAlert] = useState('');
-  const [hasAccount] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
-    auth: { isAuthenticated, loading }
-  } = useSelector(state => state);
+    isAuthenticated, loading
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -43,7 +41,6 @@ const LogInForm = () => {
     } else if (logInForm.password.length < 6) {
       setLogInAlert('Enter a password at least 6 characters long.');
     } else {
-      setIsLoading(true);
       dispatch(login(logInForm, setLogInAlert));
       setLogInAlert('');
     }
@@ -61,7 +58,7 @@ const LogInForm = () => {
   return (
     <div className={styles.authWrapper}>
       <div className={styles.authDiv}>
-        <AuthHeader hasAccount={hasAccount} />
+        <AuthHeader />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
             placeHolderText="Email"
@@ -98,7 +95,7 @@ const LogInForm = () => {
             type="submit"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
-            isLoading={!loading ? false : isLoading}
+            isLoading={loading}
           >
             Log In
           </Button>
