@@ -1,0 +1,24 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/typography.scss';
+
+.iconsWrapper{
+  width: 96%;
+  @include flexSpaceBetween;
+  margin: 0 auto;
+  font-size: $icon-medium-small;
+
+  .leftIconsWrapper{
+      width: 14%;
+      @include flexSpaceBetween;
+      .chatIcon{
+          font-size: $icon-small
+      }
+      .likeHeart{
+        color: red;
+      }   
+      .ShareModalIcon{
+        font-size: $icon-small
+      }
+  }
+}
+

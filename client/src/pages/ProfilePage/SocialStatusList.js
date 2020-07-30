@@ -6,7 +6,7 @@ import FollowModal from 'components/Modals/FollowModal/FollowModal';
 import { getFollowers, getFollowing } from 'actions/follows/followActions';
 import styles from './ProfilePage.module.scss';
 
-const SocialStatusList = ({ postCount, userId = '' }) => {
+const SocialStatusList = ({ postCount = '', userId = '' }) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [follow, setFollow] = useState({
@@ -17,10 +17,17 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getFollowers(userId));
-      dispatch(getFollowing(userId));
+      if (!followers.length) {
+        dispatch(getFollowers(userId));
+      }
+
+      if (!following.length) {
+        dispatch(getFollowing(userId));
+      }
     }
   }, [userId]);
+
+  console.log('render', postCount, userId);
 
   return (
     <ul className={styles.socialStatusList}>
@@ -41,7 +48,7 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
             setIsModalOpen(true);
           }}
         >
-          {`${followers.length || ''} `}
+          {`${followers.length || 0} `}
           {' '}
           followers
         </Button>
@@ -56,7 +63,7 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
             setIsModalOpen(true);
           }}
         >
-          {`${following.length || ''}`}
+          {`${following.length || 0}`}
           {' '}
           following
         </Button>
@@ -66,6 +73,7 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
           title={follow.title}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          isAnimated
         />
       )}
     </ul>
@@ -73,11 +81,12 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
 };
 
 SocialStatusList.defaultProps = {
-  userId: PropTypes.string
+  userId: '',
+  postCount: ''
 };
 
 SocialStatusList.propTypes = {
-  postCount: PropTypes.number.isRequired,
+  postCount: PropTypes.string,
   userId: PropTypes.string
 };
 

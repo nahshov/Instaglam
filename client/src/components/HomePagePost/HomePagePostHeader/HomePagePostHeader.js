@@ -6,7 +6,7 @@ import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
 import Button from 'components/Button/Button';
 import styles from './HomePagePostHeader.module.scss';
 
-const HomePagePostHeader = ({ username, profilePic, _id }) => {
+const HomePagePostHeader = ({ username, profilePic, postId }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   return (
@@ -14,9 +14,9 @@ const HomePagePostHeader = ({ username, profilePic, _id }) => {
       <div className={styles.postHeader}>
         <div className={styles.userIdentifier}>
           <Link to={`/${username}`}>
-            <ProfilePic url={profilePic} />
+            <ProfilePic url={profilePic} size="medium" />
           </Link>
-          <Link to={`/${username}`}>
+          <Link className={styles.username} to={`/${username}`}>
             {username}
           </Link>
         </div>
@@ -27,7 +27,7 @@ const HomePagePostHeader = ({ username, profilePic, _id }) => {
           />
         </Button>
         {isModalOpen && (
-        <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} _id={_id} />)}
+        <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
       </div>
     </header>
   );

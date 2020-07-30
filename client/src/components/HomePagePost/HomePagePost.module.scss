@@ -10,59 +10,8 @@
     flex-direction: column;
     background: $color-white;
     margin-bottom: 40px;
-            
-            .moreIcon{
-                margin-right: 10px;
-            }
-
-        }
+    }
     
-    .postPicture{
-        margin: 0 auto;
-        width: 595px;
-        margin-top:5px;
-        margin-bottom:5px;
-        border-top: 2.4px solid #8e8e8e10;
-    }
-    .iconsWrapper{
-        width: 96%;
-        @include flexSpaceBetween;
-        margin: 0 auto;
-        font-size: $icon-medium-small;
-
-        .leftIconsWrapper{
-            width: 14%;
-            @include flexSpaceBetween;
-            .chatIcon{
-                font-size: $icon-small
-            }
-            .likeHeart{
-              color: red;
-            }   
-            .ShareModalIcon{
-              font-size: $icon-small
-            }
-        }
-        .bookMark{
-            font-size: $icon-small;
-        }
-    }
-    .likesAmount{
-        margin: 3px 0px 0px 11px;
-    }
-    .postContentContainer{
-        margin: 0px 0px 3px 11px;
-
-        .username{
-            font-size: 18px;
-            font-weight: 600;
-            margin-right: 10px;
-            &:hover{
-              cursor: pointer;
-            }
-
-        }
-    }
     .postAge{
         margin: 0px 0px 3px 11px;
         color: #8e8e8e;

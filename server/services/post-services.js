@@ -12,13 +12,14 @@ function getAllPosts(limit = 10, skip = 0) {
 
 async function getAllPostsOfUser(userInfo) {
   const user = await getUser(userInfo);
-
   return Post.find({ user: user._id }).sort('-created');
 }
 
 function getPost(postId) {
   return Post.findOne({ _id: postId });
+
 }
+
 
 function createPost(post) {
   post = new Post(post);

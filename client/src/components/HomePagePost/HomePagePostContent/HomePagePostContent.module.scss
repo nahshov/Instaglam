@@ -1,0 +1,32 @@
+.postContent{
+  margin: 0px 0px 3px 11px;
+  a{
+    max-height: 24px;
+  }
+  .username{
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 10px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+.postContentContainerAfterBtn{
+  display: inline-block;
+  .shownContent{
+    white-space: break-spaces;
+    width: 90%;
+    overflow: hidden;
+  }
+}
+
+.postContentContainer{
+  display: flex;
+  .contentWrapper{
+    white-space: nowrap;
+    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
+}

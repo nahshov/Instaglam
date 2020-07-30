@@ -6,7 +6,7 @@ import ModalList from '../ModalList/ModalList';
 import ModalListItem from '../ModalList/ModalListItem';
 import Button from '../../Button/Button';
 
-const HomePageModal = ({ _id = '', isModalOpen, setModalOpen }) => {
+const HomePageModal = ({ postId = '', isModalOpen, setModalOpen }) => {
 
   return (
 
@@ -19,7 +19,7 @@ const HomePageModal = ({ _id = '', isModalOpen, setModalOpen }) => {
           <Button btnRole="danger btnBlock astext">Unfollow</Button>
         </ModalListItem>
         <ModalListItem>
-          <Link to={`/p/${_id}`}>
+          <Link to={`/p/${postId}`}>
             <Button btnRole="btnBlock astext">Go To Post</Button>
           </Link>
         </ModalListItem>

@@ -13,7 +13,7 @@ module.exports = function (app) {
   app
     .get('/api/posts/:postId/likes', verifyUser, getLikesOfPost)
     .post('/api/posts/:postId/likes', verifyUser, addLikeToAPost)
-    .delete('/api/posts/:postId/likes/:likeId', verifyUser, deleteLikeFromAPost);
+    .delete('/api/posts/:postId/likes/', verifyUser, deleteLikeFromAPost);
 
   app
     .get('/api/comments/:commentId/likes', verifyUser, getLikesOfComment)

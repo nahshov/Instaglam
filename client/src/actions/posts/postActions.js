@@ -6,13 +6,18 @@ import {
   GET_POST,
   POST_ERROR,
   GET_POSTS,
-  POSTS_ERROR
+  POSTS_ERROR,
+  TOGGLE_POST_LIKE,
+  RESET_POSTS_OF_USER_LOADING
 } from './postTypes';
 
 // load all posts of a user
 export const loadPostsOfUser = (userInfo) => async dispatch => {
   try {
     if (userInfo) {
+      dispatch({
+        type: RESET_POSTS_OF_USER_LOADING
+      });
       const res = await axios.get(`/api/posts/${userInfo}`);
 
       dispatch({
@@ -66,8 +71,29 @@ export const submitAPost = (fd) => async dispatch => {
     await axios.post('/api/posts', fd);
     dispatch(loadUser());
     window.location.reload();
-  } catch (error) {
-    const { message } = error.response.data;
-    console.log(message);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const toggleLike = (postId, isLike) => async dispatch => {
+  try {
+    if (postId) {
+      if (isLike) {
+        await axios.delete(`/api/posts/${postId}/likes`);
+        dispatch({
+          type: TOGGLE_POST_LIKE,
+          payload: { postId, isLike: false, likes: -1 }
+        });
+      } else {
+        await axios.post(`/api/posts/${postId}/likes`);
+        dispatch({
+          type: TOGGLE_POST_LIKE,
+          payload: { postId, isLike: true, likes: 1 }
+        });
+      }
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
