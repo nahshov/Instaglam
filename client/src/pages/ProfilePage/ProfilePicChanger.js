@@ -64,7 +64,7 @@ const ProfilePicChanger = (
             : (
               <div className={styles.profilePic}>
                 <img
-                  alt="Change profile picture"
+                  alt="Change avatar"
                   src={searchedUser.profilePic}
                 />
               </div>

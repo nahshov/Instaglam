@@ -10,5 +10,5 @@ export const userSelector = createDeepEqualSelector(
 
 export const userLoadingSelector = createSelector(
   [usersSelector],
-  user => user.userLoading
+  users => users.userLoading
 );

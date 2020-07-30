@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -6,24 +7,19 @@ import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
-import { postsOfUserSelector, postsOfUserLoadingSelector } from 'actions/posts/postSelectors';
 import { userSelector, userLoadingSelector } from 'actions/users/userSelectors';
+import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import SocialStatusList from './SocialStatusList';
-import { authenticatedUserSelector } from '../../actions/auth/authSelectors';
 
 const profileHeaderSelector = createStructuredSelector({
-  postsOfUser: postsOfUserSelector,
-  postsOfUserLoading: postsOfUserLoadingSelector,
   searchedUser: userSelector,
   searchedUserLoading: userLoadingSelector,
   authenticatedUser: authenticatedUserSelector
 });
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
   const dispatch = useDispatch();
   const {
-    postsOfUser,
-    postsOfUserLoading,
     searchedUser,
     searchedUserLoading,
     authenticatedUser
@@ -50,7 +46,13 @@ const ProfileHeader = () => {
             Logout
           </Button>
         </div>
-        <SocialStatusList userId={searchedUser._id || ''} postCount={!postsOfUserLoading ? postsOfUser.length.toString() : ''} />
+        {!postsOfUserLoading && searchedUser._id && postsCount
+          && (
+          <SocialStatusList
+            userId={searchedUser._id}
+            postCount={postsCount}
+          />
+          )}
         <div className={styles.bioContainer}>
           <h1 className={styles.fullName}>{searchedUser.fullName}</h1>
           <p className={styles.bio}>{searchedUser.bio}</p>
@@ -58,6 +60,16 @@ const ProfileHeader = () => {
       </section>
     </header>
   );
+};
+
+ProfileHeader.defaultProps = {
+  postsCount: '',
+  postsOfUserLoading: true
+};
+
+ProfileHeader.propTypes = {
+  postsCount: PropTypes.string,
+  postsOfUserLoading: PropTypes.bool
 };
 
 export default ProfileHeader;

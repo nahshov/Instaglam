@@ -27,6 +27,8 @@ const SocialStatusList = ({ postCount = '', userId = '' }) => {
     }
   }, [userId]);
 
+  console.log('render', postCount, userId);
+
   return (
     <ul className={styles.socialStatusList}>
       <li>
