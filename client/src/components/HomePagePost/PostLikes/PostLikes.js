@@ -5,6 +5,7 @@ import styles from './PostLikes.module.scss';
 
 const PostLikes = ({ likesOfPost }) => {
   return (
+
     <div className={styles.likesAmount}>
       {likesOfPost}
       &nbsp; likes

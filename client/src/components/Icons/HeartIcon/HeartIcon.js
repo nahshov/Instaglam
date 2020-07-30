@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import styles from './HeartIcon.module.scss';
 
 const HeartIcon = ({ isFilled = false, isRed = false, ...otherProps }) => {
-  
-  return(
-  <>
-    {isFilled ? (
-      <AiFillHeart className={(isRed && styles.likeHeart)} {...otherProps} />
-    ) : (
-      <AiOutlineHeart {...otherProps} />
-    )}
-  </>
-)};
+
+  return (
+    <>
+      {isFilled ? (
+        <AiFillHeart className={(isRed && styles.likeHeart)} {...otherProps} />
+      ) : (
+        <AiOutlineHeart {...otherProps} />
+      )}
+    </>
+  )};
 
 HeartIcon.defaultProps = {
   isFilled: false,
