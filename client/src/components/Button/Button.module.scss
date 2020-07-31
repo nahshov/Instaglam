@@ -1,6 +1,6 @@
-@import '../../styles/color-palette.scss';
-@import '../../styles/mixins.scss';
-@import '../../styles/typography.scss';
+@import "../../styles/color-palette.scss";
+@import "../../styles/mixins.scss";
+@import "../../styles/typography.scss";
 
 .btn {
   display: flex;
@@ -59,7 +59,7 @@
     }
   }
   &.morebtn {
-    & button{
+    & button {
       padding: 0px 0px 0px 3px;
       height: 13px;
       display: inline-block;
@@ -80,5 +80,15 @@
       background: none;
       color: $error-text-color;
     }
+  }
+}
+
+.buttonLoadingSpinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 21px;
   }
 }
