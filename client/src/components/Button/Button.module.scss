@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
 
+  
   &.astext {
     & button {
       border: none;
@@ -35,6 +36,8 @@
     width: 100%;
   }
 }
+
+
 
 .primary {
   button {
@@ -81,5 +84,12 @@
       background: none;
       color: $error-text-color;
     }
+  }
+}
+
+.bold{
+  & button{
+    font-weight: 600;
+
   }
 }

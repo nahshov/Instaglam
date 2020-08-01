@@ -1,0 +1,13 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette.scss';
+
+.modalProperties{
+  height: 500px;
+  overflow: auto;
+  .LikeModalItem{
+    padding: 2px 10px 2px 10px;
+    width: 100%;
+    @include flexSpaceBetween;
+  }
+
+}

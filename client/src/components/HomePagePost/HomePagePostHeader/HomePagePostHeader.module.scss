@@ -8,12 +8,6 @@
   .postHeader{
       @include flexSpaceBetween;
       width: 100%;
-      .userIdentifier{
-        @include flexCenter;
-    }
-      .username{
-        margin-left: 10px;
-      }
   }
   .moreIcon{
     font-size: 22px;

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
+import UserIdentifier from 'components/UserIdentifier/UserIdentifier';
 import Button from 'components/Button/Button';
+import { postPropType, userPropType } from 'customPropTypes';
 import styles from './HomePagePostHeader.module.scss';
 
 const HomePagePostHeader = ({ username, profilePic, postId }) => {
@@ -12,14 +12,7 @@ const HomePagePostHeader = ({ username, profilePic, postId }) => {
   return (
     <header className={styles.headerPostContainer}>
       <div className={styles.postHeader}>
-        <div className={styles.userIdentifier}>
-          <Link to={`/${username}`}>
-            <ProfilePic url={profilePic} size="medium" />
-          </Link>
-          <Link className={styles.username} to={`/${username}`}>
-            {username}
-          </Link>
-        </div>
+        <UserIdentifier profilePic={profilePic} username={username} />
         <Button btnRole="astext">
           <FiMoreHorizontal
             className={styles.moreIcon}
@@ -31,6 +24,11 @@ const HomePagePostHeader = ({ username, profilePic, postId }) => {
       </div>
     </header>
   );
+};
+
+HomePagePostHeader.propTypes = {
+  ...postPropType,
+  ...userPropType
 };
 
 export default HomePagePostHeader;
