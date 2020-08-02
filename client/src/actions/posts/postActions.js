@@ -9,7 +9,8 @@ import {
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
   RESET_POSTS_OF_USER_LOADING,
-  GET_ALL_LIKES_OF_A_POST
+  GET_ALL_LIKES_OF_A_POST,
+  GET_ALL_COMMENTS_OF_A_POST
 } from './postTypes';
 
 // load all posts of a user
@@ -67,6 +68,7 @@ export const getAllPosts = () => async dispatch => {
   }
 };
 
+// submit a post
 export const submitAPost = (fd) => async dispatch => {
   try {
     await axios.post('/api/posts', fd);
@@ -77,6 +79,7 @@ export const submitAPost = (fd) => async dispatch => {
   }
 };
 
+// toggle like of a post
 export const toggleLike = (postId, isLike) => async dispatch => {
   try {
     if (postId) {
@@ -98,7 +101,7 @@ export const toggleLike = (postId, isLike) => async dispatch => {
     console.log(e);
   }
 };
-
+// get all likes of a post for like modal
 export const getAllLikesOfAPost = (postId) => async dispatch => {
   try {
     if (postId) {
@@ -112,3 +115,18 @@ export const getAllLikesOfAPost = (postId) => async dispatch => {
     console.log(e);
   }
 };
+// get all comments of a post
+export const getAllCommentsOfAPost = (postId) => async dispatch => {
+  try {
+    if (postId) {
+      const commentsOfPost = await axios.get(`/api/posts/${postId}/Comments`);
+      dispatch({
+        type: GET_ALL_COMMENTS_OF_A_POST,
+        payload: commentsOfPost.data
+      });
+      console.log(commentsOfPost)
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}

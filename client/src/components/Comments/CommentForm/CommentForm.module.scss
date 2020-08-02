@@ -1,3 +1,5 @@
+@import '../../../styles/color-palette.scss';
+
 .commentContainer{
   border-top: 2.4px solid #8e8e8e57;
   height: 48px;
@@ -17,12 +19,15 @@
         margin-left: 5px;
       }
   }
-  .postButton{
+  .postButton, .grayPostButton{
       margin: 0px 11px 3px 0px;
       width: 5%;
       z-index: 100;
       &:hover{
           cursor: pointer;
       }
+  }
+  .grayPostButton{
+    color: $secondary-text-color;
   }
 }

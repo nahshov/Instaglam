@@ -18,11 +18,11 @@ const profilePageSelector = createStructuredSelector({
 });
 
 const ProfilePage = () => {
+  
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
   const searchedUserUsername = pathname.replace('/', '');
-
   const {
     postsOfUser,
     postsOfUserLoading

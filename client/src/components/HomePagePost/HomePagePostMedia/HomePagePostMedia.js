@@ -11,7 +11,7 @@ const HomePagePostMedia = ({ media, postId, isLike }) => {
   };
 
   return (
-    <img alt="post media" src={media} className={styles.postPicture} onDoubleClick={() => handleLike()} />
+    <img alt="post media" src={media} className={styles.postPicture} onDoubleClick={handleLike} />
   );
 };
 
