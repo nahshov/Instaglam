@@ -10,11 +10,13 @@ import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
 import { userSelector, userLoadingSelector } from 'actions/users/userSelectors';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import SocialStatusList from './SocialStatusList';
+import { userIdSelector } from '../../actions/users/userSelectors';
 
 const profileHeaderSelector = createStructuredSelector({
   searchedUser: userSelector,
   searchedUserLoading: userLoadingSelector,
-  authenticatedUser: authenticatedUserSelector
+  authenticatedUser: authenticatedUserSelector,
+  userId: userIdSelector
 });
 
 const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
@@ -22,8 +24,11 @@ const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
   const {
     searchedUser,
     searchedUserLoading,
-    authenticatedUser
+    authenticatedUser,
+    userId
   } = useSelector(profileHeaderSelector);
+
+  console.log('aba');
 
   return (
     <header className={styles.profileHeader}>
@@ -46,10 +51,10 @@ const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
             Logout
           </Button>
         </div>
-        {!postsOfUserLoading && searchedUser._id && postsCount
+        {!postsOfUserLoading && userId && postsCount
           && (
           <SocialStatusList
-            userId={searchedUser._id}
+            userId={userId}
             postCount={postsCount}
           />
           )}
