@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import FollowModal from 'components/Modals/FollowModal/FollowModal';
 import { getFollowers, getFollowing } from 'actions/follows/followActions';
+import { followersSelector, followingSelector } from 'actions/follows/followSelectors';
 import styles from './ProfilePage.module.scss';
+
+const SocialStatusListSelector = createStructuredSelector({
+  following: followingSelector,
+  followers: followersSelector
+});
 
 const SocialStatusList = ({ postCount = '', userId = '' }) => {
   const dispatch = useDispatch();
@@ -13,7 +20,7 @@ const SocialStatusList = ({ postCount = '', userId = '' }) => {
     title: ''
   });
 
-  const { followers, following } = useSelector(state => state.follow);
+  const { followers, following } = useSelector(SocialStatusListSelector);
 
   useEffect(() => {
     if (userId) {
@@ -27,7 +34,7 @@ const SocialStatusList = ({ postCount = '', userId = '' }) => {
     }
   }, [userId]);
 
-  console.log('render', postCount, userId);
+  console.log('render', followers, following);
 
   return (
     <ul className={styles.socialStatusList}>
