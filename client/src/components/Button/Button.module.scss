@@ -1,12 +1,11 @@
-@import '../../styles/color-palette.scss';
-@import '../../styles/mixins.scss';
-@import '../../styles/typography.scss';
+@import "../../styles/color-palette.scss";
+@import "../../styles/mixins.scss";
+@import "../../styles/typography.scss";
 
 .btn {
   display: flex;
   justify-content: center;
 
-  
   &.astext {
     & button {
       border: none;
@@ -37,8 +36,6 @@
   }
 }
 
-
-
 .primary {
   button {
     border: none;
@@ -62,11 +59,10 @@
     }
   }
   &.morebtn {
-    & button{
+    & button {
       padding: 0px 0px 0px 3px;
       height: 13px;
       display: inline-block;
-      color: #8e8e8e;
     }
   }
 }
@@ -87,9 +83,12 @@
   }
 }
 
-.bold{
-  & button{
-    font-weight: 600;
+.buttonLoadingSpinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
+  img {
+    width: 21px;
   }
 }

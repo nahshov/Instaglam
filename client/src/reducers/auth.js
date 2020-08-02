@@ -5,7 +5,8 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  RESET_AUTH_LOADING
 } from 'actions/auth/authTypes';
 
 const initialState = {
@@ -41,6 +42,11 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: false,
         loading: false
+      };
+    case RESET_AUTH_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;
