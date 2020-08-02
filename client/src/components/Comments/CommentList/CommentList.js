@@ -3,11 +3,16 @@ import { useDispatch } from 'react-redux';
 import PostModal from 'components/Modals/PostModal/PostModal';
 import Button from 'components/Button/Button';
 import { postPropType } from 'customPropTypes';
+import { getAllCommentsOfAPost } from 'actions/posts/postActions';
+
 import styles from './CommentList.module.scss';
 
 const CommentList = ({ post }) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const commentHandler = () => {
+    dispatch(getAllCommentsOfAPost(post._id));
+  }
   return (
     <div>
       {post.comments > 2 ? (
