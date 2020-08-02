@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from 'components/HomePagePost/HomePagePostContent/HomePagePostContent.module.scss';
 import { postPropType } from 'customPropTypes';
-import Button from 'components/Button/Button'
+import Button from 'components/Button/Button';
 
 const HomePagePostContent = ({ username, content }) => {
   const [isMoreBtnPressed, setMoreBtnPressed] = useState(false);
 
   return (
     <div className={styles.postContent}>
-      <div className={isMoreBtnPressed ? styles.postContentContainerAfterBtn : styles.postContentContainer}>
+      <div className={isMoreBtnPressed
+        ? styles.postContentContainerAfterBtn : styles.postContentContainer}
+      >
         <Link to={`/${username}`}>
           <span className={styles.username}>
             {username}

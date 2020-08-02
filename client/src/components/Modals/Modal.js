@@ -20,7 +20,6 @@ const Modal = (
     if (node.current && node.current.contains(e.target)) {
       return;
     }
-    document.body.removeAttribute('style');
     setModalOpen(!isOpen);
   };
 
@@ -29,6 +28,7 @@ const Modal = (
     modalRoot.addEventListener('mousedown', handleClose);
 
     return () => {
+      document.body.removeAttribute('style');
       modalRoot.removeEventListener('mousedown', handleClose);
       if (isUploadPost) {
         handleUploadPostOnClose();

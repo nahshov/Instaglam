@@ -7,7 +7,9 @@ import {
   POST_ERROR,
   GET_POSTS,
   POSTS_ERROR,
-  TOGGLE_POST_LIKE, RESET_POSTS_OF_USER_LOADING
+  TOGGLE_POST_LIKE,
+  RESET_POSTS_OF_USER_LOADING,
+  GET_ALL_LIKES_OF_A_POST
 } from './postTypes';
 
 // load all posts of a user
@@ -91,6 +93,20 @@ export const toggleLike = (postId, isLike) => async dispatch => {
           payload: { postId, isLike: true, likes: 1 }
         });
       }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getAllLikesOfAPost = (postId) => async dispatch => {
+  try {
+    if (postId) {
+      const LikesOfPost = await axios.get(`/api/posts/${postId}/likes`);
+      dispatch({
+        type: GET_ALL_LIKES_OF_A_POST,
+        payload: LikesOfPost.data
+      });
     }
   } catch (e) {
     console.log(e);

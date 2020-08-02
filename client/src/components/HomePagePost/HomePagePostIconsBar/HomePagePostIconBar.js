@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { RiChat3Line } from 'react-icons/ri';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';

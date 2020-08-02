@@ -8,7 +8,7 @@ const ProfilePic = ({ url = '', size = '', ...otherProps }) => (
     {...otherProps}
   >
     <img alt="user avatar" src={url} />
-  </div> 
+  </div>
 );
 
 ProfilePic.defaultProps = {

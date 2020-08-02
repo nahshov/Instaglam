@@ -17,7 +17,26 @@ export const postPropType = {
 };
 
 export const likePropType = {
-  likes: PropTypes.string
+  likes: PropTypes.string,
+  postLikes: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      post: PropTypes.string,
+      user: {
+        _id: PropTypes.string,
+        username: PropTypes.string,
+        profilePic: PropTypes.string
+      },
+      created: PropTypes.string,
+      __v: PropTypes.number
+    })
+  ),
+  loading: PropTypes.bool
+};
+
+export const modalPropType = {
+  isModalOpen: PropTypes.bool,
+  setModalOpen: PropTypes.bool
 };
 
 export const searchedUserPropType = {

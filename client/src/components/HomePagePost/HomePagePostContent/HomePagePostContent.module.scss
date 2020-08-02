@@ -12,21 +12,23 @@
     }
   }
 }
-.postContentContainerAfterBtn{
-  display: inline-block;
-  .shownContent{
-    white-space: break-spaces;
-    width: 90%;
-    overflow: hidden;
-  }
-}
 
 .postContentContainer{
   display: flex;
   .contentWrapper{
     white-space: nowrap;
-    width: 50%;
+    width: 30%;
     overflow: hidden;
     text-overflow: ellipsis; 
   }
 }
+
+.postContentContainerAfterBtn{
+  display: inline-block;
+  .shownContent{
+    white-space: break-spaces;
+    min-width: 90%;
+    overflow: hidden;
+  }
+}
+
