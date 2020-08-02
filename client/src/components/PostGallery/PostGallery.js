@@ -6,9 +6,8 @@ import Post from 'components/Post/Post';
 import styles from './PostGallery.module.scss';
 import { changeUrl } from '../../utils/changeUrl';
 
-const PostGallery = ({ post }) => {
-  
-  const { postsOfUser } = useSelector(state => state.posts);
+const PostGallery = ({ post, isGallery }) => {
+  const { postsOfUser } = useSelector(state => { return state.posts; });
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = postsOfUser.indexOf(currentPost);
 
@@ -33,6 +32,7 @@ const PostGallery = ({ post }) => {
   return (
     <div className={styles.Gallery}>
       <Post post={currentPost} />
+      {isGallery && (
       <div className={styles.arrows}>
         {!!currentPostIndex && (
         <button className={styles.left} type="button" onClick={prev}>
@@ -45,6 +45,7 @@ const PostGallery = ({ post }) => {
         </button>
         )}
       </div>
+      )}
     </div>
   );
 };
@@ -57,7 +58,8 @@ PostGallery.propTypes = {
     media: PropTypes.string,
     user: PropTypes.string,
     content: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  isGallery: PropTypes.bool.isRequired
 };
 
 export default PostGallery;

@@ -7,7 +7,7 @@ import { postPropType } from 'customPropTypes';
 import Modal from 'components/Modals/Modal';
 import styles from './PostModal.module.scss';
 
-const PostModal = ({ post, isOpen, setModalOpen, isGallery = false, children }) => {
+const PostModal = ({ post, isOpen, setModalOpen, isGallery = false }) => {
   const { pathname: username } = useLocation();
 
   useEffect(() => {
@@ -25,25 +25,17 @@ const PostModal = ({ post, isOpen, setModalOpen, isGallery = false, children }) 
       isOpen={isOpen}
       setModalOpen={setModalOpen}
     >
-      {isGallery ? <PostGallery post={post} /> : children}
+      <PostGallery post={post} isGallery={isGallery} />
       <div />
     </Modal>
   );
-};
-
-PostModal.defaultProps = {
-  isGallery: false
 };
 
 PostModal.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
   isOpen: PropTypes.bool.isRequired,
   setModalOpen: PropTypes.func.isRequired,
-  isGallery: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired
+  isGallery: PropTypes.bool.isRequired
 };
 
 export default PostModal;
