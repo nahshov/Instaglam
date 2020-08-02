@@ -5,42 +5,53 @@ import styles from './Modal.module.scss';
 
 const modalRoot = document.getElementById('modal');
 
-const Modal = ({ children, setSettingsModalOpen, isOpen = false, ...otherProps }) => {
+const Modal = (
+  { children,
+    setModalOpen,
+    isOpen = false,
+    isAnimated = false,
+    isUploadPost = false,
+    handleUploadPostOnClose,
+    ...otherProps }
+) => {
   const node = useRef();
-  const el = document.createElement('div');
 
   const handleClose = (e) => {
-    if (node.current.contains(e.target)) {
+    if (node.current && node.current.contains(e.target)) {
       return;
     }
-
-    setSettingsModalOpen(false);
+    document.body.removeAttribute('style');
+    setModalOpen(!isOpen);
   };
 
   useEffect(() => {
-    el.addEventListener('mousedown', handleClose);
-    modalRoot.appendChild(el);
+    document.body.style = 'overflow: hidden';
+    modalRoot.addEventListener('mousedown', handleClose);
 
     return () => {
-      el.removeEventListener('mousedown', handleClose);
-      modalRoot.removeChild(el);
+      modalRoot.removeEventListener('mousedown', handleClose);
+      if (isUploadPost) {
+        handleUploadPostOnClose();
+      }
     };
-  }, [el]);
+  }, [modalRoot]);
 
   return (
     isOpen && createPortal(
-      <div className={styles.modalShadow} {...otherProps}>
-        <div className={`${styles.mainModalContent} ${styles.showModal}`} ref={node}>
+      <div className={styles.modalShadow}>
+        <div className={`${isAnimated ? styles.showModal : ''}`} {...otherProps} ref={node}>
           {children}
         </div>
       </div>,
-      el
+      modalRoot
     )
   );
 };
 
 Modal.defaultProps = {
-  isOpen: false
+  isOpen: false,
+  isUploadPost: false,
+  isAnimated: false
 };
 
 Modal.propTypes = {
@@ -48,8 +59,9 @@ Modal.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  isOpen: PropTypes.bool,
-  setSettingsModalOpen: PropTypes.func.isRequired
+  isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  setModalOpen: PropTypes.func.isRequired,
+  isAnimated: PropTypes.bool
 };
 
 export default Modal;

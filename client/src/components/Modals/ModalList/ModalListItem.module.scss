@@ -1,0 +1,22 @@
+@import '../../../styles/color-palette';
+@import '../../../styles/mixins';
+
+.listItem {
+  @include flexCenter;
+  padding: 4px 8px;
+  width: 100%;
+  min-height: 44px;
+  border-bottom: 1px solid $primary-border-color;
+
+  button {
+    padding: 0;
+  }
+
+  &:first-of-type {
+    border-top: 1px solid $primary-border-color;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}

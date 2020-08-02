@@ -33,32 +33,18 @@
 
 .profilePicLink {
   @include flexCenter;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 100%;
   padding: 0;
 
-  .ProfilePic {
-    @include flexCenter;
-    flex: 1;
-    width: inherit;
-    height: inherit;
-    border: 1px solid transparent;
-
-    img {
-      width: 22px;
-      height: 22px;
-      border-radius: 100%;
-      border: 1px solid transparent;
-    }
-  }
 }
 .activeProfilePic {
+
   img {
     width: 22px;
     height: 22px;
     border-radius: 100%;
-    border: 1px solid $color-black;
   }
   border: 1px solid $color-black;
 }

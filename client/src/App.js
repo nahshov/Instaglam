@@ -21,21 +21,22 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
+          <ProtectedRoute exact path="/" component={HomePage} />
           <Route path="/accounts/welcomepage" component={WelcomePage} />
           <Route path="/accounts/emailsignup" exact component={SignUpForm} />
           <Route path="/accounts/login" exact component={LogInForm} />
+          <ProtectedRoute path="/p/:postId" component={() => <h1>Post page...</h1>} />
           <ProtectedRoute
             exact
             path="/explore"
             component={() => <div>Explore!</div>}
           />
-          <ProtectedRoute exact path="/:profile" component={ProfilePage} />
           <ProtectedRoute
             exact
             path="/direct/inbox"
             component={() => <div>Chat!</div>}
           />
-          <ProtectedRoute exact path="/" component={HomePage} />
+          <ProtectedRoute path="/:profile" component={ProfilePage} />
         </Switch>
       </div>
     </Router>

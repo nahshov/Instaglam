@@ -75,7 +75,7 @@ const removeFollow = async (req, res) => {
     );
     return serverResponse(res, 200, { message: 'successfully removed follow' });
   } catch (error) {
-    return serverResponse(res, 200, {
+    return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a follow'
     });
   }

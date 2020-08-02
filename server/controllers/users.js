@@ -31,6 +31,7 @@ const getUser = async (req, res) => {
 
     return serverResponse(res, 200, user);
   } catch (e) {
+    console.log(e);
     return serverResponse(res, 500);
   }
 };

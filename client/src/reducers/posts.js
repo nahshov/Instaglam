@@ -1,14 +1,20 @@
 import {
-  POSTS_LOADED,
-  POSTS_LOADED_ERROR,
-  POSTS_OF_USER_LOADED,
-  POSTS_OF_USER_LOADED_ERROR
+  GET_POSTS,
+  GET_USER_POSTS,
+  USER_POSTS_ERROR,
+  GET_POST,
+  POST_ERROR,
+  TOGGLE_POST_LIKE,
+  RESET_POSTS_OF_USER_LOADING
 } from 'actions/posts/postTypes';
 
 const initialState = {
   loading: true,
   posts: [],
   postsOfUser: [],
+  postsOfUserLoading: true,
+  post: {},
+  uploadPostLoadingProgress: '',
   error: ''
 };
 
@@ -16,19 +22,55 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case POSTS_OF_USER_LOADED:
+    case GET_POSTS:
       return {
         ...state,
+        posts: payload,
         loading: false,
+        error: ''
+      };
+    case GET_USER_POSTS:
+      return {
+        ...state,
+        postsOfUserLoading: false,
         postsOfUser: payload,
         error: ''
       };
-    case POSTS_OF_USER_LOADED_ERROR:
+    case GET_POST:
       return {
         ...state,
         loading: false,
+        error: '',
+        post: payload
+      };
+    case USER_POSTS_ERROR:
+      return {
+        ...state,
+        postsOfUserLoading: false,
         postsOfUser: [],
         error: 'No posts uploaded.'
+      };
+    case POST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        post: {},
+        error: 'No results found.'
+      };
+    case TOGGLE_POST_LIKE:
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts
+          .map(post => (
+            post._id === payload.postId
+              ? { ...post, isUserLiked: payload.isLike, likes: post.likes + payload.likes }
+              : post))
+      };
+    case RESET_POSTS_OF_USER_LOADING:
+      return {
+        ...state,
+        postsOfUserLoading: true
       };
     default:
       return state;

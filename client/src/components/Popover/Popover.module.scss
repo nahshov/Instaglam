@@ -1,17 +1,17 @@
 @import '../../styles/color-palette.scss';
+@import '../../styles/shadows.scss';
 @import '../../styles/mixins.scss';
 
 .Popover {
   position: absolute;
   width: 240px;
   height: auto;
-  top: 45px;
+  top: 50px;
   color: $primary-text-color;
   background: $color-white;
   box-shadow: $primary-box-shadow;
   border: 1px solid $primary-border-color;
   border-radius: 2px;
-  z-index: 200;
 }
 
 .triangle {

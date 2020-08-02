@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './ModalList.module.scss';
 
-const ModalList = ({ children }) => (
-  <ul>
+const ModalList = ({ children, ...otherProps }) => (
+  <ul className={styles.list} {...otherProps}>
     {children}
   </ul>
 );

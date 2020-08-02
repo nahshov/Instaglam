@@ -10,22 +10,28 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { TiDelete } from 'react-icons/ti';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useDebouncedCallback } from 'use-debounce';
 
 const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { users, loading, error } = useSelector((state) => state.users);
+  const { users, usersLoading, error } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [debounce, debounceCancel] = useDebouncedCallback((val) => {
+    dispatch(searchUsers(val));
+    setIsPopoverOpen(true);
+  }, 200);
+
   const handleChange = (val) => {
+    setValue(val);
     if (!val) {
+      debounceCancel();
       setIsPopoverOpen(false);
     } else {
-      setIsPopoverOpen(true);
+      debounce(val);
     }
-    setValue(val);
-    dispatch(searchUsers(val));
   };
 
   const handleMouseDown = (user) => {
@@ -36,7 +42,7 @@ const SearchInput = () => {
   return (
     <div className={styles.searchInputContainer}>
       <Popover isPopoverOpen={isPopoverOpen}>
-        {(!users.length || error) && !loading ? (
+        {(!users.length || error) && !usersLoading ? (
           <PopoverListItem style={{ justifyContent: 'center' }}>
             <span className={styles.notFound}>No results found.</span>
           </PopoverListItem>
@@ -44,21 +50,21 @@ const SearchInput = () => {
           <PopoverList>
             {users.map((user) => (
               <PopoverListItem key={user.created}>
-                {loading ? (
-                  <LoadingSpinner className={styles.searchProfilePic} />
-                ) : (
-                  <Link
-                    to={`/${user.username}`}
-                    onMouseDown={() => handleMouseDown(user)}
-                    style={{ cursor: 'pointer', width: '100%' }}
-                  >
+                <Link
+                  to={`/${user.username}`}
+                  onMouseDown={() => handleMouseDown(user)}
+                  style={{ cursor: 'pointer', width: '100%' }}
+                >
+                  {usersLoading ? (
+                    <LoadingSpinner className={styles.searchProfilePic} />
+                  ) : (
                     <ProfilePic
                       url={user.profilePic}
                       className={styles.searchProfilePic}
                     />
-                    <span>{user.username}</span>
-                  </Link>
-                )}
+                  )}
+                  <span>{user.username}</span>
+                </Link>
               </PopoverListItem>
             ))}
           </PopoverList>
@@ -88,7 +94,7 @@ const SearchInput = () => {
           setValue('');
         }}
       >
-        {loading ? (
+        {usersLoading ? (
           <LoadingSpinner className={styles.deleteIcon} />
         ) : (
           <TiDelete className={styles.deleteIcon} />

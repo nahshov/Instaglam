@@ -8,7 +8,6 @@ import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import { login } from 'actions/auth/authActions';
-import { setAlert } from 'actions/alerts/alertActions';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {
@@ -16,14 +15,12 @@ const LogInForm = () => {
     email: '',
     password: ''
   });
-  const [hasAccount] = useState(false);
+  const [logInAlert, setLogInAlert] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
-    auth: { isAuthenticated, loading },
-    alert
-  } = useSelector(state => state);
+    isAuthenticated, loading
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -40,13 +37,12 @@ const LogInForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(logInForm.email)) {
-      dispatch(setAlert('Enter a valid email address.', 'Error'));
+      setLogInAlert('Enter a valid email address.');
     } else if (logInForm.password.length < 6) {
-      dispatch(setAlert('Enter a password at least 6 characters long.'));
+      setLogInAlert('Enter a password at least 6 characters long.');
     } else {
-      setIsLoading(true);
-      dispatch(login(logInForm));
-      dispatch(setAlert('', null));
+      dispatch(login(logInForm, setLogInAlert));
+      setLogInAlert('');
     }
   };
 
@@ -62,7 +58,7 @@ const LogInForm = () => {
   return (
     <div className={styles.authWrapper}>
       <div className={styles.authDiv}>
-        <AuthHeader hasAccount={hasAccount} />
+        <AuthHeader />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
             placeHolderText="Email"
@@ -99,16 +95,17 @@ const LogInForm = () => {
             type="submit"
             disabled={checkDisabled()}
             btnRole="primary btnBlock"
-            isLoading={!loading ? false : isLoading}
+            isLoading={loading}
           >
             Log In
           </Button>
-          {alert.message && <Alert alerts={alert.message} />}
+          {logInAlert && <Alert>{logInAlert}</Alert>}
         </form>
       </div>
       <AuthSwitch
         hasAccountText={"Don't have an account?"}
         linkText="Sign up"
+        onClick={() => setLogInAlert('')}
       />
     </div>
   );

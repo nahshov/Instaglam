@@ -3,7 +3,8 @@
 @import '../../styles/typography.scss';
 
 .btn {
-  @include flexCenter;
+  display: flex;
+  justify-content: center;
 
   &.astext {
     & button {
@@ -12,14 +13,14 @@
   }
 
   & button {
+    font-family: inherit;
     background: transparent;
-    font-weight: bold;
     border: 1px solid $primary-border-color;
     border-radius: 4px;
     padding: 5px 9px;
     height: 35px;
     outline: none;
-    font-size: $button-text;
+    font-size: inherit;
     cursor: pointer;
 
     &:disabled {
@@ -57,11 +58,19 @@
       color: $primary-color;
     }
   }
+  &.morebtn {
+    & button{
+      padding: 0px 0px 0px 3px;
+      height: 13px;
+      display: inline-block;
+    }
+  }
 }
 
 .danger {
   & button {
     border: none;
+    font-weight: bold;
     background-color: $error-text-color;
     color: $color-white;
   }

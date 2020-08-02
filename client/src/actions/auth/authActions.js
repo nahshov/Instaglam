@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { SET_ALERT } from 'actions/alerts/alertTypes';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -7,26 +6,31 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  RESET_AUTH_LOADING
 } from './authTypes';
 
-export const register = ({ fullName, email, username, password }) => async (
+export const register = ({ fullName, email, username, password }, setAlert) => async (
   dispatch
 ) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const body = {
-    fullName,
-    email,
-    username,
-    password
-  };
-
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = {
+      fullName,
+      email,
+      username,
+      password
+    };
+
     const res = await axios.post('/api/register', body, config);
     dispatch({
       type: REGISTER_SUCCESS,
@@ -36,13 +40,7 @@ export const register = ({ fullName, email, username, password }) => async (
     const { errors } = error.response.data;
 
     if (errors) {
-      dispatch({
-        type: SET_ALERT,
-        payload: {
-          message: errors,
-          alertType: 'Error'
-        }
-      });
+      setAlert(errors);
     }
 
     dispatch({
@@ -51,16 +49,18 @@ export const register = ({ fullName, email, username, password }) => async (
   }
 };
 
-export const login = ({ email, password }) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const body = { email, password };
-
+export const login = ({ email, password }, setAlert) => async (dispatch) => {
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = { email, password };
     const res = await axios.post('/api/login', body, config);
 
     dispatch({
@@ -71,13 +71,7 @@ export const login = ({ email, password }) => async (dispatch) => {
     const { errors } = error.response.data;
 
     if (errors) {
-      dispatch({
-        type: SET_ALERT,
-        payload: {
-          message: errors,
-          alertType: 'Error'
-        }
-      });
+      setAlert(errors);
     }
 
     dispatch({
@@ -88,15 +82,25 @@ export const login = ({ email, password }) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
     await axios.post('/api/logout');
     dispatch({ type: LOGOUT });
   } catch (error) {
-    console.error(error);
+    dispatch({
+      type: AUTH_ERROR
+    });
   }
 };
 
 export const loadUser = () => async (dispatch) => {
   try {
+    dispatch({
+      type: RESET_AUTH_LOADING
+    });
+
     const res = await axios.get('/api/me');
 
     dispatch({

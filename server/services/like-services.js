@@ -5,6 +5,19 @@ async function getPostLikes(postId) {
   return likes.filter(like => !like.comment);
 }
 
+async function userHasLikes(userId, postId) {
+  const like = await Like.findOne({ post: postId, user: userId });
+  return !!like;
+}
+
+async function whereUserLiked(userId, postsIds) {
+  const likes = await Like.find({ user: userId, post: { $in: postsIds } });
+  return likes.reduce((result, like) => {
+    result[like.post] = true;
+    return result;
+  }, {});
+}
+
 function getCommentLikes(commentId) {
   return Like.find({ comment: commentId });
 }
@@ -20,8 +33,8 @@ async function addLikeToPost(like) {
 }
 
 async function addLikeToComment(like) {
-  const { user, post, comment } = like;
-  const doesLikeExist = await Like.findOne({ user, post, comment });
+  const { user, comment } = like;
+  const doesLikeExist = await Like.findOne({ user, comment });
   if (doesLikeExist) {
     return;
   }
@@ -29,12 +42,16 @@ async function addLikeToComment(like) {
   return like.save();
 }
 
-function removeLikeFromPost(userId) {
-  return Like.findOneAndRemove({ user: userId });
+function removeLike(postId, userId) {
+  return Like.deleteOne({ post: postId, user: userId });
 }
 
-function removeLikeFromComment(userId) {
-  return Like.findOneAndRemove({ user: userId });
+function removeLikesFromPost(postId) {
+  return Like.deleteMany({ post: postId });
+}
+
+function removeLikesFromComment(commentId) {
+  return Like.deleteMany({ comment: commentId });
 }
 
 function removeAllUserLikes(userId) {
@@ -46,7 +63,10 @@ module.exports = {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLikeFromPost,
-  removeLikeFromComment,
-  removeAllUserLikes
+  removeLike,
+  removeLikesFromPost,
+  removeLikesFromComment,
+  removeAllUserLikes,
+  userHasLikes,
+  whereUserLiked
 };

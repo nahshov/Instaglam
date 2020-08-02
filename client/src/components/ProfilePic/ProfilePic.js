@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './ProfilePic.module.scss';
 
-const ProfilePic = ({ url = '', className = '' }) => (
-  <div className={className}>
-    <img alt="default profile pic" src={url} />
-  </div>
+const ProfilePic = ({ url = '', size = '', ...otherProps }) => (
+  <div
+    className={`${styles.ProfilePic} ${styles[size]}`}
+    {...otherProps}
+  >
+    <img alt="user avatar" src={url} />
+  </div> 
 );
 
 ProfilePic.defaultProps = {
   url: '',
-  className: ''
+  size: ''
 };
 
 ProfilePic.propTypes = {
   url: PropTypes.string,
-  className: PropTypes.string
+  size: PropTypes.string
 };
 
 export default ProfilePic;

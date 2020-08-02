@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import HomeIcon from 'components/Icons/HomeIcon/HomeIcon';
@@ -13,6 +13,7 @@ import styles from './NavLinks.module.scss';
 
 const NavLinks = () => {
   const { user, loading } = useSelector((state) => state.auth);
+  const [isHeartIconFilled, setHeartIconFilled] = useState(false);
 
   return (
     <div className={styles.NavLinks}>
@@ -26,18 +27,23 @@ const NavLinks = () => {
       <CustomNavLink to="/explore">
         <ExploreIcon />
       </CustomNavLink>
-      <HeartIcon className={styles.HeartIcon} />
+      <HeartIcon
+        className={styles.HeartIcon}
+        isFilled={isHeartIconFilled}
+        onClick={() => setHeartIconFilled(!isHeartIconFilled)}
+      />
       <NavLink
         exact
         to={!loading && `/${user.username}`}
         className={styles.profilePicLink}
         activeClassName={styles.activeProfilePic}
       >
-        {loading ? <LoadingSpinner className={styles.ProfilePic} /> : (
+        { user.profilePic && !loading ? (
           <ProfilePic
             url={user.profilePic}
-            className={styles.ProfilePic}
           />
+        ) : (
+          <LoadingSpinner style={{ width: '24px' }} />
         ) }
       </NavLink>
     </div>
