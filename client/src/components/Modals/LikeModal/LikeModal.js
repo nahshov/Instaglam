@@ -12,20 +12,21 @@ const LikeModal = ({ isModalOpen, setModalOpen, postLikes, loading }) => {
   return (
     <Modal className={styles.modalProperties} isOpen={isModalOpen} setModalOpen={setModalOpen}>
       <ModalList>
-        <h1>Likes</h1>
-        {!loading && postLikes.map(like => (
-          <ModalListItem className={styles.LikeModalItem}>
-            <UserIdentifier
-              key={like._id}
-              username={like.user.username}
-              profilePic={like.user.profilePic}
-            />
-            {isFollowed ? <Button btnRole="primary bold"> Unfollow </Button> : <Button btnRole="primary bold"> Follow</Button>}
-          </ModalListItem>
-        ))}
-        <ModalListItem>
-          <Button btnRole="btnBlock astext" onClick={() => setModalOpen(false)}>Cancel</Button>
-        </ModalListItem>
+        <div className={styles.headerDesign}>
+          <h3>Likes</h3>
+        </div>
+        <div className={styles.listItemWrapper}>
+          {!loading && postLikes.map(like => (
+            <ModalListItem className={styles.LikeModalItem}>
+              <UserIdentifier
+                key={like._id}
+                username={like.user.username}
+                profilePic={like.user.profilePic}
+              />
+              {isFollowed ? <Button btnRole="primary bold"> Unfollow </Button> : <Button btnRole="primary bold"> Follow</Button>}
+            </ModalListItem>
+          ))}
+        </div>
       </ModalList>
     </Modal>
   );

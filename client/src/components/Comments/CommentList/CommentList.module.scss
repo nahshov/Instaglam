@@ -1,0 +1,7 @@
+@import '../../../styles/color-palette.scss';
+
+.commentListWrapper{
+  display: flex;
+  justify-content: start;
+  color: $secondary-text-color
+}

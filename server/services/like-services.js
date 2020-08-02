@@ -2,9 +2,7 @@ const Like = require('../models/Like.js');
 
 async function getPostLikes(postId) {
   const likes = await Like.find({ post: postId }).populate('user', 'username profilePic');
-  console.log(likes)
   return likes.filter(like => !like.comment);
-  
 }
 
 async function userHasLikes(userId, postId) {

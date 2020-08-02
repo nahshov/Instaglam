@@ -49,3 +49,14 @@ export const searchedUserPropType = {
   __v: PropTypes.number,
   _id: PropTypes.string
 };
+
+export const commentsPropType = {
+  likes: PropTypes.number,
+  replyToComment: PropTypes.string,
+  _id: PropTypes.string,
+  user: PropTypes.string,
+  post: PropTypes.string,
+  content: PropTypes.string,
+  created: PropTypes.string,
+  __v: PropTypes.number
+}

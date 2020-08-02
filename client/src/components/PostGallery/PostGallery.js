@@ -7,6 +7,7 @@ import styles from './PostGallery.module.scss';
 import { changeUrl } from '../../utils/changeUrl';
 
 const PostGallery = ({ post }) => {
+  
   const { postsOfUser } = useSelector(state => state.posts);
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = postsOfUser.indexOf(currentPost);
