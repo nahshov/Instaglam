@@ -1,4 +1,5 @@
-const activityEmitter = new require('events')();
+const activityEmitter = require('events')();
+
 module.exports = {
   activityEmitter
 };

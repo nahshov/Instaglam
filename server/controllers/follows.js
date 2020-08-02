@@ -45,7 +45,17 @@ const addFollowToAUser = async (req, res) => {
       user: req.user.sub,
       following: req.params.userId
     });
-    activityEmitter.emit('follow', { followee: req.user.sub, follower: req.params.userId, created: new Date() });
+
+    activityEmitter.emit('follow', {
+      following: req.params.userId,
+      referredeEntityType: 'user',
+      activityType: 'follow',
+      activity: [{
+        followee: req.user.sub
+      }],
+      created: new Date()
+    });
+
     return serverResponse(res, 200, follow);
   } catch (error) {
     return serverResponse(res, 500, {

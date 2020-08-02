@@ -5,20 +5,36 @@ const ActivitySchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  user: {
+  referredUser: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  text: String,
+  referredEntity: {
+    type: mongoose.Types.ObjectId
+  },
+  referredEntityType: {
+    type: String,
+    enum: ['user', 'post', 'comment'],
+    required: true
+  },
   activityType: {
     type: String,
-    enum: ['follow', 'like', 'comment']
+    enum: ['follow', 'like', 'comment', 'reply'],
+    required: true
   },
-  post: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Post'
-  }
+  activities: [
+    {
+      user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+      activityId: {
+        type: mongoose.Types.ObjectId
+      }
+    }
+  ]
 });
 
 const Activity = mongoose.model('Activity', ActivitySchema);
