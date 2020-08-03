@@ -48,18 +48,26 @@ const submitPost = async (req, res) => {
 // @access private
 const getPosts = async (req, res) => {
   try {
-    const {limit, skip} = req.query || {};
-    const userId = req.user.sub
+    const { limit, skip } = req.query || {};
+    const userId = req.user.sub;
   
     const posts = await getAllPosts(limit, skip);
-    const postLikes = await whereUserLiked(userId, posts.map(p => p._id))
+    const postsIds = posts.map(p => p._id);
+    const [postLikes, postsComments] = await Promise.all([
+      whereUserLiked(userId, postsIds),
+      Promise.all(postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined)))
+    ]);
 
     if (posts.length === 0) {
       return serverResponse(res, 404, { message: 'No posts found' });
     }
 
 
-    return serverResponse(res, 200, posts.map(post => ({...post.toObject(), isUserLiked: !!postLikes[post._id]})));
+    return serverResponse(res, 200, posts.map((post, index) => 
+      ({...post.toObject(),
+        isUserLiked: !!postLikes[post._id],
+        comments: postsComments[index]
+      })));
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to get posts'

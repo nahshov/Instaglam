@@ -6,8 +6,8 @@ export const userPropType = {
 };
 
 export const postPropType = {
-  likes: PropTypes.number,
-  comments: PropTypes.number,
+  numOfLikes: PropTypes.number,
+  numOfComments: PropTypes.number,
   _id: PropTypes.string,
   media: PropTypes.string,
   user: PropTypes.string,

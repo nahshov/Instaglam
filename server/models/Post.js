@@ -10,11 +10,11 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  likes: {
+  numOfLikes: {
     type: Number,
     default: 0
   },
-  comments: {
+  numOfComments: {
     type: Number,
     default: 0
   },

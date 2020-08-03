@@ -55,7 +55,7 @@ export const searchPostById = (postId) => async dispatch => {
 // getAll posts
 export const getAllPosts = () => async dispatch => {
   try {
-    const { data: posts } = await axios.get('/api/posts');
+    const { data: posts } = await axios.get('/api/posts', { params: { includeComments: 2 } });
 
     dispatch({
       type: GET_POSTS,
@@ -87,13 +87,13 @@ export const toggleLike = (postId, isLike) => async dispatch => {
         await axios.delete(`/api/posts/${postId}/likes`);
         dispatch({
           type: TOGGLE_POST_LIKE,
-          payload: { postId, isLike: false, likes: -1 }
+          payload: { postId, isLike: false, numOfLikes: -1 }
         });
       } else {
         await axios.post(`/api/posts/${postId}/likes`);
         dispatch({
           type: TOGGLE_POST_LIKE,
-          payload: { postId, isLike: true, likes: 1 }
+          payload: { postId, isLike: true, numOfLikes: 1 }
         });
       }
     }
@@ -124,7 +124,7 @@ export const getAllCommentsOfAPost = (postId) => async dispatch => {
         type: GET_ALL_COMMENTS_OF_A_POST,
         payload: commentsOfPost.data
       });
-      console.log(commentsOfPost)
+      console.log(commentsOfPost.data)
     }
   } catch (e) {
     console.log(e);

@@ -15,7 +15,7 @@ const HomePagePost = ({
   post
 }) => {
   const {
-    likes: numOfLikes,
+    numOfLikes,
     content,
     user: {
       username = '',

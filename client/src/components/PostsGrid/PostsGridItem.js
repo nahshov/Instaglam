@@ -32,11 +32,11 @@ const PostsGridItem = (
   >
     {isLink ? (
       <Link to={`/p/${post._id}`} className={styles.profilePostOverlay}>
-        <PostsGridItemContent likes={post.likes} comments={post.comments} />
+        <PostsGridItemContent likes={post.numOfLikes} comments={post.numOfComments} />
       </Link>
     ) : (
       <div className={styles.profilePostOverlay}>
-        <PostsGridItemContent likes={post.likes} comments={post.comments} />
+        <PostsGridItemContent likes={post.numOfLikes} comments={post.numOfComments} />
       </div>
     ) }
   </div>
