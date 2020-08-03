@@ -18,7 +18,13 @@ const Button = ({
   return (
     <div className={`${styles.btn} ${classes}`}>
       <button {...otherProps}>
-        {isLoading ? <LoadingSpinner /> : children}
+        {isLoading
+          ? (
+            <div className={styles.buttonLoadingSpinner}>
+              <LoadingSpinner />
+            </div>
+          )
+          : children}
       </button>
     </div>
   );
