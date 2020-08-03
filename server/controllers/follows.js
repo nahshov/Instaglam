@@ -48,11 +48,8 @@ const addFollowToAUser = async (req, res) => {
 
     activityEmitter.emit('follow', {
       following: req.params.userId,
-      referredeEntityType: 'user',
-      activityType: 'follow',
-      activity: [{
-        followee: req.user.sub
-      }],
+      follower: req.user.sub,
+      followId: follow._id,
       created: new Date()
     });
 

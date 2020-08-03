@@ -73,18 +73,10 @@ const addCommentToPost = async (req, res) => {
       post: req.params.postId
     };
 
-<<<<<<< HEAD
-    const post = await getPost(req.params.postId);
-    post.comments++;
-    await post.save();
-    const response = await addComment(comment);
-    const [response] = await Promise.all([response, post])
-=======
     post.comments++;
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
->>>>>>> feature/posts-upload
     return serverResponse(res, 200, response);
   } catch (error) {
     return serverResponse(res, 500, {

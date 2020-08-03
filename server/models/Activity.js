@@ -32,6 +32,10 @@ const ActivitySchema = new mongoose.Schema({
       },
       activityId: {
         type: mongoose.Types.ObjectId
+      },
+      created: {
+        type: Date,
+        default: Date.now
       }
     }
   ]
