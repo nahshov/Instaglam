@@ -6,7 +6,7 @@ function addActivity(activity) {
 }
 
 function getUserActivity(userId) {
-  return Activity.findOne({ user: userId });
+  return Activity.find({ referredUser: userId });
 }
 
 module.exports = {

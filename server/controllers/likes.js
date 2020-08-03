@@ -9,6 +9,8 @@ const {
 const { getComment } = require('../services/comment-services');
 const serverResponse = require('../utils/serverResponse');
 const { getPost } = require('../services/post-services');
+const { activityLikesOnPostListener, activityLikesOnCommentListener } = require('../emitters/activityEmitter');
+const { activityEmitter } = require('../events/events');
 
 // @route   GET '/api/posts/:postId/likes'
 // @desc    Get likes of a specific post
@@ -51,12 +53,21 @@ const addLikeToAPost = async (req, res) => {
       return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
+    await activityLikesOnPostListener;
+
+    activityEmitter.emit('postLike', {
+      post: req.params.postId,
+      postBy: post.user,
+      liker: req.user.sub,
+      likeId: like._id,
+      created: new Date()
+    });
+
     post.likes++;
     await post.save();
 
     return serverResponse(res, 200, like);
   } catch (error) {
-    console.log(error);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a like'
     });
@@ -127,6 +138,16 @@ const addLikeToAComment = async (req, res) => {
     if (!like) {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
+
+    await activityLikesOnCommentListener;
+
+    activityEmitter.emit('commentLike', {
+      comment: req.params.commentId,
+      commentBy: comment.user,
+      liker: req.user.sub,
+      likeId: like._id,
+      created: new Date()
+    });
 
     comment.likes++;
     await comment.save();
