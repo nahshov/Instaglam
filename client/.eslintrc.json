@@ -32,7 +32,7 @@
     "no-nested-ternary": "off",
     "no-useless-return": "off",
     "arrow-parens": "off",
-    "arrow-body-style": ["error", "always"],
+    "arrow-body-style": "off",
     "no-underscore-dangle": "off",
     "import/no-unresolved": "off",
     "linebreak-style": 0,

@@ -46,6 +46,8 @@ export const searchedUserPropType = {
   fullName: PropTypes.string,
   profilePic: PropTypes.string,
   username: PropTypes.string,
+  numOfFollowing: PropTypes.number,
+  numOfFollowers: PropTypes.number,
   __v: PropTypes.number,
   _id: PropTypes.string
 };
@@ -59,4 +61,4 @@ export const commentsPropType = {
   content: PropTypes.string,
   created: PropTypes.string,
   __v: PropTypes.number
-}
+};
