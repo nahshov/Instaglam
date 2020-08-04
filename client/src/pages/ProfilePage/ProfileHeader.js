@@ -17,8 +17,6 @@ const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
     dispatch(toggleFollow(searchedUser._id, searchedUser.isFollowed));
   };
 
-  console.log(searchedUser.isFollowed);
-
   return (
     <header className={styles.profileHeader}>
       <ProfilePicChanger
@@ -46,7 +44,7 @@ const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
             : (
               <>
                 <Button
-                  style={{ marginLeft: '20px', fontWeight: 'bold', background: `${searchedUser.isFollowed ? '#ccc' : ''}` }}
+                  style={{ marginLeft: '30px', fontWeight: 'bold', background: `${searchedUser.isFollowed ? '#ccc' : ''}` }}
                   btnRole="primary"
                   onClick={handleFollow}
                 >
