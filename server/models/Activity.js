@@ -11,7 +11,8 @@ const ActivitySchema = new mongoose.Schema({
     required: true
   },
   referredEntity: {
-    type: mongoose.Types.ObjectId
+    type: mongoose.Types.ObjectId,
+    required: true
   },
   referredEntityType: {
     type: String,
@@ -31,7 +32,8 @@ const ActivitySchema = new mongoose.Schema({
         required: true
       },
       activityId: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        required: true
       },
       created: {
         type: Date,

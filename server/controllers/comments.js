@@ -11,7 +11,8 @@ const {
 const { removeLikesFromComment } = require('../services/like-services');
 
 const { getPost } = require('../services/post-services');
-const { activityCommentListener, activityReplyListener } = require('../emitters/activityEmitter');
+const { commentListener } = require('../listeners/activityListeners/commentListener');
+const { replyListener } = require('../listeners/activityListeners/replyListener');
 const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
@@ -79,7 +80,7 @@ const addCommentToPost = async (req, res) => {
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
-    await activityCommentListener;
+    await commentListener;
 
     activityEmitter.emit('comment', {
       post: req.params.postId,
@@ -121,7 +122,7 @@ const addReplyToComment = async (req, res) => {
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
 
-    await activityReplyListener;
+    await replyListener;
 
     activityEmitter.emit('reply', {
       comment: req.params.commentId,

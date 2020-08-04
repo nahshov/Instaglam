@@ -9,7 +9,8 @@ const {
 const { getComment } = require('../services/comment-services');
 const serverResponse = require('../utils/serverResponse');
 const { getPost } = require('../services/post-services');
-const { activityLikesOnPostListener, activityLikesOnCommentListener } = require('../emitters/activityEmitter');
+const { likesOnPostListener } = require('../listeners/activityListeners/likesOnPostListener');
+const { likesOnCommentListener } = require('../listeners/activityListeners/likesOnCommentListener');
 const { activityEmitter } = require('../events/events');
 
 // @route   GET '/api/posts/:postId/likes'
@@ -53,7 +54,7 @@ const addLikeToAPost = async (req, res) => {
       return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
-    await activityLikesOnPostListener;
+    await likesOnPostListener;
 
     activityEmitter.emit('postLike', {
       post: req.params.postId,
@@ -91,7 +92,6 @@ const deleteLikeFromAPost = async (req, res) => {
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
-    console.log(error);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a like'
     });
@@ -139,7 +139,7 @@ const addLikeToAComment = async (req, res) => {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
 
-    await activityLikesOnCommentListener;
+    await likesOnCommentListener;
 
     activityEmitter.emit('commentLike', {
       comment: req.params.commentId,

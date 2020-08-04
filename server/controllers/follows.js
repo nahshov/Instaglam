@@ -4,7 +4,7 @@ const {
   addFollowToUser,
   removeFollowFromUser
 } = require('../services/follow-services');
-const { activityFollowListener } = require('../emitters/activityEmitter');
+const { followListener } = require('../listeners/activityListeners/followListener');
 const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 
@@ -46,7 +46,7 @@ const addFollowToAUser = async (req, res) => {
       following: req.params.userId
     });
 
-    await activityFollowListener;
+    await followListener;
 
     activityEmitter.emit('follow', {
       following: req.params.userId,

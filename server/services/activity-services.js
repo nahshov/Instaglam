@@ -9,7 +9,17 @@ function getUserActivity(userId) {
   return Activity.find({ referredUser: userId });
 }
 
+function removeAllUserActivitiesFeed(userId) {
+  return Activity.deleteMany({ referredUser: userId });
+}
+
+function removeAllUserActivities(userId) {
+  return Activity.deleteMany({ activities: { $in: userId } });
+}
+
 module.exports = {
   addActivity,
-  getUserActivity
+  getUserActivity,
+  removeAllUserActivitiesFeed,
+  removeAllUserActivities
 };
