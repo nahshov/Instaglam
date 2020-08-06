@@ -7,50 +7,54 @@ import {
 } from './userTypes';
 
 // Search users by email/username
-export const searchUsers = (searchParam) => async (dispatch) => {
-  try {
-    if (searchParam) {
-      dispatch({
-        type: RESET_LOADING
-      });
-      const res = await axios.get(`/api/users/search/${searchParam}`);
+export const searchUsers = (searchParam) => {
+  return async (dispatch) => {
+    try {
+      if (searchParam) {
+        dispatch({
+          type: RESET_LOADING
+        });
+        const res = await axios.get(`/api/users/search/${searchParam}`);
 
-      if (!res.data.length) {
-        throw new Error('No results found.');
+        if (!res.data.length) {
+          throw new Error('No results found.');
+        }
+
+        dispatch({
+          type: SEARCH_USERS_SUCCESS,
+          payload: res.data
+        });
       }
-
+    } catch (error) {
       dispatch({
-        type: SEARCH_USERS_SUCCESS,
-        payload: res.data
+        type: SEARCH_USERS_FAIL,
+        payload: error.message
       });
     }
-  } catch (error) {
-    dispatch({
-      type: SEARCH_USERS_FAIL,
-      payload: error.message
-    });
-  }
+  };
 };
 
 // Search single user by email/username/userId
-export const searchUser = (userInfo) => async (dispatch) => {
-  try {
-    if (userInfo) {
-      dispatch({
-        type: RESET_LOADING
-      });
+export const searchUser = (userInfo) => {
+  return async (dispatch) => {
+    try {
+      if (userInfo) {
+        dispatch({
+          type: RESET_LOADING
+        });
 
-      const res = await axios.get(`/api/users/${userInfo}`);
+        const res = await axios.get(`/api/users/${userInfo}`);
 
+        dispatch({
+          type: SEARCH_SINGLE_USER_SUCCESS,
+          payload: res.data
+        });
+      }
+    } catch (error) {
       dispatch({
-        type: SEARCH_SINGLE_USER_SUCCESS,
-        payload: res.data
+        type: SEARCH_SINGLE_USER_FAIL,
+        payload: error.message
       });
     }
-  } catch (error) {
-    dispatch({
-      type: SEARCH_SINGLE_USER_FAIL,
-      payload: error.message
-    });
-  }
+  };
 };

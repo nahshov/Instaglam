@@ -12,7 +12,7 @@ import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './NavLinks.module.scss';
 
 const NavLinks = () => {
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => { return state.auth; });
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
 
   return (
@@ -30,7 +30,7 @@ const NavLinks = () => {
       <HeartIcon
         className={styles.HeartIcon}
         isFilled={isHeartIconFilled}
-        onClick={() => setHeartIconFilled(!isHeartIconFilled)}
+        onClick={() => { return setHeartIconFilled(!isHeartIconFilled); }}
       />
       <NavLink
         exact

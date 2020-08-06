@@ -13,31 +13,33 @@ const InputField = ({
   classInput,
   classSpan,
   withButton = false
-}) => (
-  <div className={styles.fieldDiv}>
-    <label className={styles.label}>
-      <input
-        type={type}
-        name={name}
-        onChange={onChange}
-        className={classInput}
-      />
-      <span className={classSpan}>{placeHolderText}</span>
-    </label>
-    <div className={styles.insideInputDiv}>
-      <div className={styles.iconDiv}>
-        <span>{inputFieldIcon}</span>
-      </div>
-      {withButton && (
+}) => {
+  return (
+    <div className={styles.fieldDiv}>
+      <label className={styles.label}>
+        <input
+          type={type}
+          name={name}
+          onChange={onChange}
+          className={classInput}
+        />
+        <span className={classSpan}>{placeHolderText}</span>
+      </label>
+      <div className={styles.insideInputDiv}>
+        <div className={styles.iconDiv}>
+          <span>{inputFieldIcon}</span>
+        </div>
+        {withButton && (
         <div className={styles.buttonDiv}>
           <button type="button" onClick={onClick}>
             {btnText}
           </button>
         </div>
-      )}
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 InputField.defaultProps = {
   type: '',

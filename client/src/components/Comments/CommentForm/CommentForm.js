@@ -4,7 +4,7 @@ import styles from './CommentForm.module.scss';
 const CommentForm = () => {
   const [disableButton, setDisableButton] = useState(true);
   const textAreaRef = useRef();
-  const inputValueChanges = (() => !textAreaRef.current.value ? setDisableButton(true) : setDisableButton(false));
+  const inputValueChanges = (() => { return (!textAreaRef.current.value ? setDisableButton(true) : setDisableButton(false)); });
   const handleSubmit = e => {
     e.preventDefault();
   };

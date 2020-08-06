@@ -66,10 +66,14 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         posts: state.posts
-          .map(post => (
-            post._id === payload.postId
-              ? { ...post, isUserLiked: payload.isLike, numOfLikes: post.numOfLikes + payload.numOfLikes }
-              : post))
+          .map(post => {
+            return (
+              post._id === payload.postId
+                ? { ...post,
+                  isUserLiked: payload.isLike,
+                  numOfLikes: post.numOfLikes + payload.numOfLikes }
+                : post);
+          })
       };
     case RESET_POSTS_OF_USER_LOADING:
       return {

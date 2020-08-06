@@ -7,9 +7,9 @@ const BookMarkIcon = () => {
   return (
     <>
       {isBookMarkIconfilled ? (
-        <BsBookmarkFill className={styles.bookMark} onClick={() => setBookMarkIconfilled(!isBookMarkIconfilled)} />
+        <BsBookmarkFill className={styles.bookMark} onClick={() => { return setBookMarkIconfilled(!isBookMarkIconfilled); }} />
       ) : (
-        <BsBookmark className={styles.bookMark} onClick={() => setBookMarkIconfilled(!isBookMarkIconfilled)} />
+        <BsBookmark className={styles.bookMark} onClick={() => { return setBookMarkIconfilled(!isBookMarkIconfilled); }} />
       )}
     </>
   );

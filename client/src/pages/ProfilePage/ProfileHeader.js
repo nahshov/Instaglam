@@ -46,7 +46,7 @@ const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
           <Button
             className={styles.logoutBtn}
             btnRole="danger"
-            onClick={() => dispatch(logout())}
+            onClick={() => { return dispatch(logout()); }}
           >
             Logout
           </Button>

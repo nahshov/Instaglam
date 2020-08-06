@@ -34,7 +34,6 @@ const SocialStatusList = ({ postCount = '', userId = '' }) => {
     }
   }, [userId]);
 
-  console.log('render', followers, following);
 
   return (
     <ul className={styles.socialStatusList}>

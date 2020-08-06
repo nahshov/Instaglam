@@ -59,4 +59,4 @@ export const commentsPropType = {
   content: PropTypes.string,
   created: PropTypes.string,
   __v: PropTypes.number
-}
+};

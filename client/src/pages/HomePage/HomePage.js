@@ -5,7 +5,7 @@ import HomePagePost from 'components/HomePagePost/HomePagePost';
 import { getAllPosts } from 'actions/posts/postActions';
 
 const HomePage = () => {
-  const { posts: { posts, loading } } = useSelector(state => state);
+  const { posts: { posts, loading } } = useSelector(state => { return state; });
 
   const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ const HomePage = () => {
   }, []);
   return (
     <div className={styles.container}>
-      {posts.length && !loading && posts.map(post => <HomePagePost key={post._id} post={post} />)}
+      {posts.length && !loading && posts.map(post => { return <HomePagePost key={post._id} post={post} />; })}
     </div>
   );
 };

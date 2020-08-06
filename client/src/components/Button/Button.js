@@ -12,7 +12,7 @@ const Button = ({
 }) => {
   const classes = btnRole
     .split(' ')
-    .map((btnClass) => styles[btnClass])
+    .map((btnClass) => { return styles[btnClass]; })
     .join(' ');
 
   return (

@@ -1,18 +1,18 @@
 import { createSelector } from 'reselect';
 import { createDeepEqualSelector } from '../createDeepEqualSelector';
 
-const usersSelector = state => state.users;
+const usersSelector = state => { return state.users; };
 
 export const userSelector = createDeepEqualSelector(
   [usersSelector],
-  users => users.user
+  users => { return users.user; }
 );
 export const userIdSelector = createSelector(
   [userSelector],
-  user => user._id
+  user => { return user._id; }
 );
 
 export const userLoadingSelector = createSelector(
   [usersSelector],
-  users => users.userLoading
+  users => { return users.userLoading; }
 );

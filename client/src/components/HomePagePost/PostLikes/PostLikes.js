@@ -6,7 +6,7 @@ import { getAllLikesOfAPost } from 'actions/posts/postActions';
 import styles from './PostLikes.module.scss';
 
 const PostLikes = ({ likesOfPost, postId }) => {
-  const { postLikes, loading } = useSelector(state => state.posts);
+  const { postLikes, loading } = useSelector(state => { return state.posts; });
   const [isModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const fetchLikes = () => {

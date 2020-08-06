@@ -1,19 +1,19 @@
 import { createSelector } from 'reselect';
 import { createDeepEqualSelector } from '../createDeepEqualSelector';
 
-const auth = state => state.auth;
+const auth = state => { return state.auth; };
 
 export const isAuthenticatedSelector = createSelector(
   [auth],
-  auth => auth.isAuthenticated
+  auth => { return auth.isAuthenticated; }
 );
 
 export const authLoadingSelector = createSelector(
   [auth],
-  auth => auth.loading
+  auth => { return auth.loading; }
 );
 
 export const authenticatedUserSelector = createDeepEqualSelector(
   [auth],
-  auth => auth.user
+  auth => { return auth.user; }
 );

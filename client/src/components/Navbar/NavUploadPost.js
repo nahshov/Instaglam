@@ -10,7 +10,7 @@ const NavPostUpload = () => {
     <>
       <CameraIcon
         className={styles.cameraIcon}
-        onClick={() => setIsUploadPostModalOpen(true)}
+        onClick={() => { return setIsUploadPostModalOpen(true); }}
       />
       {isUploadPostModalOpen
       && (

@@ -23,7 +23,7 @@ const HomePagePostContent = ({ username, content }) => {
             {content}
           </span>
         </div>
-        {content.length >= 37 && !isMoreBtnPressed ? <Button className={styles.btnDisplay} btnRole="astext primary morebtn" onClick={() => setMoreBtnPressed(!isMoreBtnPressed)}> more </Button> : ''}
+        {content.length >= 37 && !isMoreBtnPressed ? <Button className={styles.btnDisplay} btnRole="astext primary morebtn" onClick={() => { return setMoreBtnPressed(!isMoreBtnPressed); }}> more </Button> : ''}
       </div>
     </div>
   );

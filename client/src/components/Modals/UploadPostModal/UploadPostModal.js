@@ -23,7 +23,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
 
   const handleUploadPostOnClose = () => {
     if (video.current) {
-      video.current.srcObject.getTracks().forEach((media) => media.stop());
+      video.current.srcObject.getTracks().forEach((media) => { return media.stop(); });
     }
     setIsUploadPostModalOpen(false);
     setIsTakingPicture(false);
@@ -99,7 +99,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
                   type="text"
                   placeholder="Write a caption..."
                   className={styles.captionInput}
-                  onChange={(e) => setPostCaption(e.target.value)}
+                  onChange={(e) => { return setPostCaption(e.target.value); }}
                 />
               </ModalListItem>
               <ModalListItem>
@@ -122,7 +122,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
                   name="media"
                   accept="image/png, image/jpg, image/jpeg"
                   id="media"
-                  onChange={(e) => setPostMedia(e.target.files[0])}
+                  onChange={(e) => { return setPostMedia(e.target.files[0]); }}
                   style={{ display: 'none' }}
                 />
               </ModalListItem>
