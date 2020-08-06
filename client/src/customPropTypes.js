@@ -46,6 +46,8 @@ export const searchedUserPropType = {
   fullName: PropTypes.string,
   profilePic: PropTypes.string,
   username: PropTypes.string,
+  numOfFollowing: PropTypes.number,
+  numOfFollowers: PropTypes.number,
   __v: PropTypes.number,
   _id: PropTypes.string
 };

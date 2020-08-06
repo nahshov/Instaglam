@@ -1,13 +1,13 @@
-import { createDeepEqualSelector } from '../createDeepEqualSelector';
+import { createSelector } from 'reselect';
 
 const followSelector = state => { return state.follow; };
 
-export const followingSelector = createDeepEqualSelector(
+export const followingSelector = createSelector(
   [followSelector],
   follow => { return follow.following; }
 );
 
-export const followersSelector = createDeepEqualSelector(
+export const followersSelector = createSelector(
   [followSelector],
   follow => { return follow.followers; }
 );
