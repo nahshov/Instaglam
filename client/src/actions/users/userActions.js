@@ -18,22 +18,21 @@ export const searchUsers = (searchParam) => async (dispatch) => {
       });
       const res = await axios.get(`/api/users/search/${searchParam}`);
 
-        if (!res.data.length) {
-          throw new Error('No results found.');
-        }
-
-        dispatch({
-          type: SEARCH_USERS_SUCCESS,
-          payload: res.data
-        });
+      if (!res.data.length) {
+        throw new Error('No results found.');
       }
-    } catch (error) {
+
       dispatch({
-        type: SEARCH_USERS_FAIL,
-        payload: error.message
+        type: SEARCH_USERS_SUCCESS,
+        payload: res.data
       });
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: SEARCH_USERS_FAIL,
+      payload: error.message
+    });
+  }
 };
 
 // Search single user by email/username/userId
@@ -44,20 +43,18 @@ export const searchUser = (userInfo) => async (dispatch) => {
         type: RESET_LOADING_USER_LOADING
       });
 
-        const res = await axios.get(`/api/users/${userInfo}`);
-
-        dispatch({
-          type: SEARCH_SINGLE_USER_SUCCESS,
-          payload: res.data
-        });
-      }
-    } catch (error) {
+      const res = await axios.get(`/api/users/${userInfo}`);
       dispatch({
-        type: SEARCH_SINGLE_USER_FAIL,
-        payload: error.message
+        type: SEARCH_SINGLE_USER_SUCCESS,
+        payload: res.data
       });
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: SEARCH_SINGLE_USER_FAIL,
+      payload: error.message
+    });
+  }
 };
 
 // Add a follow to a user

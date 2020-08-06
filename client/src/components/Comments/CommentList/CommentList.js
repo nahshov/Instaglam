@@ -22,7 +22,7 @@ const CommentList = ({ post }) => {
     <div>
       {post.numOfComments > 2 ? (
         <div className={styles.commentListWrapper}>
-          <Button btnRole="astext disabled" onClick={handleClick}>
+          <Button btnRole="astext" onClick={handleClick}>
             View all
             {' '}
             {post.numOfComments}

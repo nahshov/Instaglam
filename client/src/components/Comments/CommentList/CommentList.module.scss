@@ -3,5 +3,7 @@
 .commentListWrapper{
   display: flex;
   justify-content: start;
-  color: $secondary-text-color
+  button{
+    color: $secondary-text-color;
+  }
 }
