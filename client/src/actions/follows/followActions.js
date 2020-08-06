@@ -5,7 +5,8 @@ import {
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
-  FOLLOWING_ERROR
+  FOLLOWING_ERROR,
+  RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
 export const getFollowers = userId => {
@@ -48,4 +49,10 @@ export const getFollowing = userId => {
       });
     }
   };
+};
+
+export const resetFollows = (dispatch) => {
+  dispatch({
+    type: RESET_FOLLOWS
+  });
 };

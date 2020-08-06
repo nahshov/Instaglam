@@ -21,7 +21,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   }, [dispatch]);
 
   return (
-    !loading && (
+    // !loading && (
       <Route
         {...rest}
         render={(props) => {
@@ -40,7 +40,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         }}
       />
     )
-  );
+  // );
 };
 
 ProtectedRoute.propTypes = {

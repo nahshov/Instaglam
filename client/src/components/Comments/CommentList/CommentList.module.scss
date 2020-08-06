@@ -1,7 +1,7 @@
 @import '../../../styles/color-palette.scss';
 
 .commentListWrapper{
-  display: flex;
+  display: flex-start;
   justify-content: start;
   button{
     color: $secondary-text-color;

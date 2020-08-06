@@ -5,12 +5,13 @@ import {
   USER_POSTS_ERROR,
   GET_POST,
   POST_ERROR,
-  GET_POSTS,
+  SET_POSTS,
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
-  GET_ALL_COMMENTS_OF_A_POST
+  GET_ALL_COMMENTS_OF_A_POST,
+  RESET_POSTS
 } from './postTypes';
 
 // load all posts of a user
@@ -57,13 +58,12 @@ export const searchPostById = (postId) => {
 };
 
 // getAll posts
-export const getAllPosts = () => {
+export const getAllPosts = (page) => {
   return async dispatch => {
     try {
-      const { data: posts } = await axios.get('/api/posts', { params: { includeComments: 2 } });
-
+      const { data: posts } = await axios.get('/api/posts', { params: { includeComments: 2, page } });
       dispatch({
-        type: GET_POSTS,
+        type: SET_POSTS,
         payload: posts
       });
     } catch (e) {
@@ -143,4 +143,10 @@ export const getAllCommentsOfAPost = (postId) => {
       console.log(e);
     }
   };
+};
+
+export const resetPosts = (dispatch) => {
+  dispatch({
+    type: RESET_POSTS
+  });
 };

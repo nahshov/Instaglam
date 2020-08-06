@@ -4,7 +4,8 @@ import {
   SEARCH_SINGLE_USER_SUCCESS,
   SEARCH_SINGLE_USER_FAIL,
   RESET_LOADING_USER_LOADING,
-  RESET_LOADING_USERS_LOADING, TOGGLE_FOLLOW
+  RESET_LOADING_USERS_LOADING, TOGGLE_FOLLOW,
+  RESET_USERS
 } from 'actions/users/userTypes';
 
 const initialState = {
@@ -66,6 +67,14 @@ export default function (state = initialState, action) {
         ...state,
         usersLoading: true
       };
+    case RESET_USERS:
+      return {
+        users: [],
+        usersLoading: true,
+        user: {},
+        userLoading: true,
+        error: ''
+      }
     default:
       return state;
   }

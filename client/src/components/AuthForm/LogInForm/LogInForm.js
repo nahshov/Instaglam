@@ -7,7 +7,7 @@ import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login } from 'actions/auth/authActions';
+import { login, loadUser } from 'actions/auth/authActions';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {

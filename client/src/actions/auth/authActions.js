@@ -7,8 +7,18 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  RESET_AUTH_LOADING
+  RESET_AUTH_LOADING,
+  RESET_AUTH
 } from './authTypes';
+import {
+  RESET_POSTS
+} from '../posts/postTypes';
+import {
+  RESET_FOLLOWS
+} from '../follows/followTypes';
+import {
+  RESET_USERS
+} from '../users/userTypes';
 
 export const register = ({ fullName, email, username, password }, setAlert) => {
   return async (
@@ -146,4 +156,19 @@ export const removeProfilePic = () => {
       console.log(error.message);
     }
   };
+};
+
+export const resetState = (dispatch) => {
+  dispatch({
+    type: RESET_AUTH
+  });
+  dispatch({
+    type: RESET_POSTS
+  });
+  dispatch({
+    type: RESET_FOLLOWS
+  });
+  dispatch({
+    type: RESET_USERS
+  });
 };

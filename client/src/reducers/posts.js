@@ -1,5 +1,5 @@
 import {
-  GET_POSTS,
+  SET_POSTS,
   GET_USER_POSTS,
   USER_POSTS_ERROR,
   GET_POST,
@@ -7,7 +7,8 @@ import {
   TOGGLE_POST_LIKE,
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
-  GET_ALL_COMMENTS_OF_A_POST
+  GET_ALL_COMMENTS_OF_A_POST,
+  RESET_POSTS
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -26,10 +27,10 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_POSTS:
+    case SET_POSTS:
       return {
         ...state,
-        posts: payload,
+        posts: [...state.posts, ...payload],
         loading: false,
         error: ''
       };
@@ -91,6 +92,18 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         postComments: payload
+      };
+    case RESET_POSTS:
+      return {
+        loading: true,
+        posts: [],
+        postsOfUser: [],
+        postsOfUserLoading: true,
+        post: {},
+        uploadPostLoadingProgress: '',
+        postLikes: [],
+        postComments: [],
+        error: ''
       };
     default:
       return state;

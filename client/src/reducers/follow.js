@@ -3,7 +3,8 @@ import {
   GET_FOLLOWING,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
-  FOLLOWERS_ERROR, FOLLOWING_ERROR
+  FOLLOWERS_ERROR, FOLLOWING_ERROR,
+  RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
 const initialState = {
@@ -53,6 +54,14 @@ export default function (state = initialState, action) {
         followingLoading: false,
         following: []
       };
+    case RESET_FOLLOWS:
+      return{
+        followersLoading: true,
+        followers: [],
+        followingLoading: true,
+        following: [],
+        error: ''      
+      }
     default:
       return state;
   }

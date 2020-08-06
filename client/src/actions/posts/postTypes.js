@@ -1,4 +1,4 @@
-export const GET_POSTS = 'GET_POSTS';
+export const SET_POSTS = 'SET_POSTS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 export const GET_POST = 'GET_POST';
 export const POST_ERROR = 'POST_ERROR';
@@ -8,3 +8,4 @@ export const TOGGLE_POST_LIKE = 'TOGGLE_POST_LIKE';
 export const RESET_POSTS_OF_USER_LOADING = 'RESET_POSTS_OF_USER_LOADING';
 export const GET_ALL_LIKES_OF_A_POST = 'GET_ALL_LIKES_OF_A_POST';
 export const GET_ALL_COMMENTS_OF_A_POST = 'GET_ALL_COMMENTS_OF_A_POST';
+export const RESET_POSTS = 'RESET_POSTS';

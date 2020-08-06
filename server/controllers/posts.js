@@ -54,8 +54,9 @@ const submitPost = async (req, res) => {
 // @access private
 const getPosts = async (req, res) => {
   try {
-    const { limit, skip } = req.query || {};
     const userId = req.user.sub;
+    const limit = 2;
+    const skip = limit * +req.query.page;
     const posts = await getAllPosts(limit, skip);
     const postsIds = posts.map(p => p._id);
     const [postLikes, postsComments] = await Promise.all([

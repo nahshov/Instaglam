@@ -32,6 +32,12 @@ const ProfilePage = () => {
     searchedUser,
     searchedUserLoading
   } = useSelector(profilePageSelector);
+  console.log('postsOfuser:', postsOfUser)
+  console.log('postsOfuserloading:', postsOfUserLoading)
+  console.log('authenticateduser:', authenticatedUser)
+  console.log('searcheduser:', searchedUser)
+  console.log('searcheduserloading:', searchedUserLoading)
+  console.log('-----------------------------------------')
 
   const [searchedUserUsername, setSearchedUserUsername] = useState(pathname.replace('/', ''));
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -41,8 +47,6 @@ const ProfilePage = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       dispatch(searchUser(searchedUserUsername));
-    } else {
-      setIsAuthenticated(true);
     }
     dispatch(loadPostsOfUser(searchedUserUsername));
   }, [isAuthenticated]);
@@ -52,9 +56,9 @@ const ProfilePage = () => {
     setIsAuthenticated(pathname.replace('/', '') === authenticatedUser.username);
   }, [pathname]);
 
-  console.log(`%cpathname: ${pathname}`, 'background: #fff; color: black');
-  console.log(`%cIs authenticated: ${searchedUserUsername === authenticatedUser.username}`, `background: #333; color: ${isAuthenticated ? 'green' : 'red'}`);
-  console.log(`%cSearched user loading: ${searchedUserLoading}`, `background: #333; color: ${searchedUserLoading ? 'orange' : 'yellow'}`);
+  // console.log(`%cpathname: ${pathname}`, 'background: #fff; color: black');
+  // console.log(`%cIs authenticated: ${searchedUserUsername === authenticatedUser.username}`, `background: #333; color: ${isAuthenticated ? 'green' : 'red'}`);
+  // console.log(`%cSearched user loading: ${searchedUserLoading}`, `background: #333; color: ${searchedUserLoading ? 'orange' : 'yellow'}`);
 
   return (
     <main className={styles.main}>

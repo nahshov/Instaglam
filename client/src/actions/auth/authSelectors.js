@@ -3,7 +3,7 @@ import { createDeepEqualSelector } from '../createDeepEqualSelector';
 
 const auth = state => { return state.auth; };
 
-export const isAuthenticatedSelector = createSelector(
+export const isAuthenticatedSelector = createDeepEqualSelector(
   [auth],
   auth => { return auth.isAuthenticated; }
 );

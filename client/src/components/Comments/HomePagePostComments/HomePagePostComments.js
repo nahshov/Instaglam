@@ -4,7 +4,6 @@ import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import styles from './HomePagePostComments.module.scss';
 
 const HomePagePostComments = ({ postComments }) => {
-  console.log(postComments);
   return (
     <div className={styles.homePagePostCommentUserIdentifier}>
       {postComments.map((comment) => {
