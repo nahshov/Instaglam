@@ -6,7 +6,7 @@ function addActivity(activity) {
 }
 
 function getUserActivity(userId) {
-  return Activity.find({ referredUser: userId });
+  return Activity.find({ referredUser: userId }).populate('activities.user', 'username profilePic');
 }
 
 function removeAllUserActivitiesFeed(userId) {
@@ -14,7 +14,7 @@ function removeAllUserActivitiesFeed(userId) {
 }
 
 function removeAllUserActivities(userId) {
-  return Activity.deleteMany({ activities: { $in: userId } });
+  return Activity.deleteMany({ activites: activities.user(userId) });
 }
 
 module.exports = {
