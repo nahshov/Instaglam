@@ -17,9 +17,7 @@ async function getAllPostsOfUser(userInfo) {
 
 function getPost(postId) {
   return Post.findOne({ _id: postId });
-
 }
-
 
 function createPost(post) {
   post = new Post(post);
