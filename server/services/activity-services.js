@@ -14,7 +14,7 @@ function removeAllUserActivitiesFeed(userId) {
 }
 
 function removeAllUserActivities(userId) {
-  return Activity.deleteMany({ activites: activities.user(userId) });
+  return Activity.deleteMany([{ activities: { $elemMatch: { user: userId } } }]);
 }
 
 module.exports = {

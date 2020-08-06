@@ -7,6 +7,7 @@ import { getUserActivitiesFeed } from 'actions/activities/activitiesFeedActions'
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
+import ActivityItem from 'components/ActivityFeed/ActivityItem';
 import PropTypes from 'prop-types';
 import styles from './ActivityFeed.module.scss';
 
@@ -23,7 +24,6 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
   useEffect(() => {
     if (isActivityFeedOpen) {
       dispatch(getUserActivitiesFeed(user._id));
-      userActivities.map(activity => console.log(activity.activities[0]));
     }
   }, [isActivityFeedOpen]);
 
@@ -42,19 +42,14 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
         style={{ top: '60px', right: '173px', zIndex: '5' }}
       >
         <PopoverListItem>
-          {!userActivities.length ? <span className={styles.notFound}>No activities found.</span> : userActivities.map(activity => (
-            <div>
-              <img src={activity.activities[0].user.profilePic} alt="):" />
-              <span>{activity.activities.map((activity2, index) => (activity2.user.username))}</span>
-            </div>
-            // activity.activities.map((activity2, index) => (
-            //   <div key={index}>
-            //     <span>
-            //       {activity2.user.username}
-            //     </span>
-            //   </div>
-            // ))
-          ))}
+          {!userActivities.length ? <span className={styles.notFound}>No activities found.</span>
+            : userActivities.map(activity => (
+              <ActivityItem
+                profilePic={activity.activities[activity.activities.length - 1].user.profilePic}
+                usernames={[activity.activities[0].user.username, activity.activities[1].user.username]}
+                activityLength={activity.activities.length}
+              />
+            ))}
         </PopoverListItem>
       </Popover>
     </div>
