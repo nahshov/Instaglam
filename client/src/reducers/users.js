@@ -74,7 +74,7 @@ export default function (state = initialState, action) {
         user: {},
         userLoading: true,
         error: ''
-      }
+      };
     default:
       return state;
   }

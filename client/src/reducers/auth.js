@@ -50,11 +50,11 @@ export default function (state = initialState, action) {
         loading: true
       };
     case RESET_AUTH:
-      return{
+      return {
         isAuthenticated: false,
         loading: true,
-        user: {}        
-      }
+        user: {}
+      };
     default:
       return state;
   }

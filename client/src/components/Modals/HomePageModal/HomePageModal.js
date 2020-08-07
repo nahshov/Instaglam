@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal';
@@ -37,9 +37,9 @@ const HomePageModal = ({ postId = '', isModalOpen, setModalOpen }) => {
 };
 
 HomePageModal.defaultProps = {
-  _id: ''
+  postId: ''
 };
 HomePageModal.propTypes = {
-  _id: PropTypes.string
+  postId: PropTypes.string
 };
 export default HomePageModal;

@@ -55,13 +55,13 @@ export default function (state = initialState, action) {
         following: []
       };
     case RESET_FOLLOWS:
-      return{
+      return {
         followersLoading: true,
         followers: [],
         followingLoading: true,
         following: [],
-        error: ''      
-      }
+        error: ''
+      };
     default:
       return state;
   }
