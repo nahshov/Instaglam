@@ -6,26 +6,26 @@ import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
-import { searchedUserPropType } from 'customPropTypes';
-import { toggleFollow } from 'actions/users/userActions';
+import { profilePropType } from 'customPropTypes';
+import { toggleFollow } from 'actions/profile/profileActions';
 import SocialStatusList from './SocialStatusList';
 
-const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
+const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
 
   const handleFollow = () => {
-    dispatch(toggleFollow(searchedUser._id, searchedUser.isFollowed));
+    dispatch(toggleFollow(profile._id, profile.isFollowed));
   };
 
   return (
     <header className={styles.profileHeader}>
       <ProfilePicChanger
-        searchedUser={searchedUser}
+        searchedUser={profile}
         isAuthenticatedUser={isAuthenticatedUser}
       />
       <section className={styles.profileInfo}>
         <div className={styles.profileInfoHeader}>
-          <h2 className={styles.username}>{searchedUser.username}</h2>
+          <h2 className={styles.username}>{profile.username}</h2>
           {isAuthenticatedUser
             ? (
               <>
@@ -44,24 +44,24 @@ const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
             : (
               <>
                 <Button
-                  style={{ marginLeft: '30px', fontWeight: 'bold', background: `${searchedUser.isFollowed ? '#ccc' : ''}` }}
+                  style={{ marginLeft: '30px', fontWeight: 'bold', background: `${profile.isFollowed ? '#ccc' : ''}` }}
                   btnRole="primary"
                   onClick={handleFollow}
                 >
-                  {searchedUser.isFollowed ? 'Unfollow' : 'Follow'}
+                  {profile.isFollowed ? 'Unfollow' : 'Follow'}
                 </Button>
               </>
             )}
         </div>
         <SocialStatusList
-          userId={searchedUser._id}
+          userId={profile._id}
           postCount={postsCount}
-          followersCount={searchedUser.numOfFollowers}
-          followingCount={searchedUser.numOfFollowing}
+          followersCount={profile.numOfFollowers}
+          followingCount={profile.numOfFollowing}
         />
         <div className={styles.bioContainer}>
-          <h1 className={styles.fullName}>{searchedUser.fullName}</h1>
-          <p className={styles.bio}>{searchedUser.bio}</p>
+          <h1 className={styles.fullName}>{profile.fullName}</h1>
+          <p className={styles.bio}>{profile.bio}</p>
         </div>
       </section>
     </header>
@@ -71,7 +71,7 @@ const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
 ProfileHeader.propTypes = {
   postsCount: PropTypes.number.isRequired,
   isAuthenticatedUser: PropTypes.bool.isRequired,
-  searchedUser: PropTypes.shape(searchedUserPropType).isRequired
+  profile: PropTypes.shape(profilePropType).isRequired
 };
 
 export default ProfileHeader;

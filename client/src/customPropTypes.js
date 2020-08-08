@@ -39,7 +39,7 @@ export const modalPropType = {
   setModalOpen: PropTypes.bool
 };
 
-export const searchedUserPropType = {
+export const profilePropType = {
   bio: PropTypes.string,
   created: PropTypes.string,
   email: PropTypes.string,

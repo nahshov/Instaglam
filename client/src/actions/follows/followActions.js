@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
+  SET_FOLLOWERS,
+  SET_FOLLOWING,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
@@ -18,16 +18,15 @@ export const getFollowers = userId => {
 
       const { data: followers } = await axios.get(`/api/users/${userId}/follows/followers`);
 
-      dispatch({
-        type: GET_FOLLOWERS,
-        payload: followers
-      });
-    } catch (e) {
-      dispatch({
-        type: FOLLOWERS_ERROR
-      });
-    }
-  };
+    dispatch({
+      type: SET_FOLLOWERS,
+      payload: followers
+    });
+  } catch (e) {
+    dispatch({
+      type: FOLLOWERS_ERROR
+    });
+  }
 };
 
 export const getFollowing = userId => {
@@ -39,20 +38,13 @@ export const getFollowing = userId => {
 
       const { data: following } = await axios.get(`/api/users/${userId}/follows/following`);
 
-      dispatch({
-        type: GET_FOLLOWING,
-        payload: following
-      });
-    } catch (e) {
-      dispatch({
-        type: FOLLOWING_ERROR
-      });
-    }
-  };
-};
-
-export const resetFollows = (dispatch) => {
-  dispatch({
-    type: RESET_FOLLOWS
-  });
+    dispatch({
+      type: SET_FOLLOWING,
+      payload: following
+    });
+  } catch (e) {
+    dispatch({
+      type: FOLLOWING_ERROR
+    });
+  }
 };
