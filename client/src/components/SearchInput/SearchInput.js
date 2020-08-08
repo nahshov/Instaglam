@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUsers } from 'actions/users/userActions';
+import { searchUsers } from 'actions/search/searchActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -15,7 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { users, usersLoading, error } = useSelector((state) => { return state.users; });
+  const { users, usersLoading, error } = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -48,27 +48,25 @@ const SearchInput = () => {
           </PopoverListItem>
         ) : (
           <PopoverList>
-            {users.map((user) => {
-              return (
-                <PopoverListItem key={user.created}>
-                  <Link
-                    to={`/${user.username}`}
-                    onMouseDown={() => { return handleMouseDown(user); }}
-                    style={{ cursor: 'pointer', width: '100%' }}
-                  >
-                    {usersLoading ? (
-                      <LoadingSpinner className={styles.searchProfilePic} />
-                    ) : (
-                      <ProfilePic
-                        url={user.profilePic}
-                        className={styles.searchProfilePic}
-                      />
-                    )}
-                    <span>{user.username}</span>
-                  </Link>
-                </PopoverListItem>
-              );
-            })}
+            {users.map((user) => (
+              <PopoverListItem key={user.created}>
+                <Link
+                  to={`/${user.username}`}
+                  onMouseDown={() => handleMouseDown(user)}
+                  style={{ cursor: 'pointer', width: '100%' }}
+                >
+                  {usersLoading ? (
+                    <LoadingSpinner className={styles.searchProfilePic} />
+                  ) : (
+                    <ProfilePic
+                      url={user.profilePic}
+                      className={styles.searchProfilePic}
+                    />
+                  )}
+                  <span>{user.username}</span>
+                </Link>
+              </PopoverListItem>
+            ))}
           </PopoverList>
         )}
       </Popover>
@@ -77,10 +75,10 @@ const SearchInput = () => {
         className={`${styles.SearchInput}`}
         type="search"
         value={value}
-        onChange={(e) => { return handleChange(e.target.value); }}
+        onChange={(e) => handleChange(e.target.value)}
         required
-        onFocus={() => { return value && setIsPopoverOpen(true); }}
-        onBlur={() => { return setIsPopoverOpen(false); }}
+        onFocus={() => value && setIsPopoverOpen(true)}
+        onBlur={() => setIsPopoverOpen(false)}
       />
       <label htmlFor="searchInput" className={styles.searchLabel}>
         <div>

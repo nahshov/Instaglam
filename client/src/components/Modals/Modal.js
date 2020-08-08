@@ -34,7 +34,7 @@ const Modal = (
         handleUploadPostOnClose();
       }
     };
-  }, [modalRoot]);
+  }, []);
 
   return (
     isOpen && createPortal(

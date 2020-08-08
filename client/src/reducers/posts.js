@@ -8,7 +8,7 @@ import {
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
-  RESET_POSTS
+  RESET_POSTS, ADD_COMMENT_TO_POST
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -19,7 +19,6 @@ const initialState = {
   post: {},
   uploadPostLoadingProgress: '',
   postLikes: [],
-  postComments: [],
   error: ''
 };
 
@@ -65,7 +64,6 @@ export default function (state = initialState, action) {
     case TOGGLE_POST_LIKE:
       return {
         ...state,
-        loading: false,
         posts: state.posts
           .map(post => {
             return (
@@ -75,6 +73,19 @@ export default function (state = initialState, action) {
                   numOfLikes: post.numOfLikes + payload.numOfLikes }
                 : post);
           })
+      };
+    case ADD_COMMENT_TO_POST:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          return (
+            post._id === payload.postId ? {
+              ...post,
+              comments: [payload.comment, ...post.comments],
+              numOfComments: post.numOfComments + payload.numOfComments
+            } : post
+          );
+        })
       };
     case RESET_POSTS_OF_USER_LOADING:
       return {

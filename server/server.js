@@ -18,6 +18,7 @@ app.use(
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // error handling logic
+  console.log(err);
   res.status(400).send('Bad request');
 });
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ActivityItem = ({ profilePic, usernames, activityLength }) => (
   <div>
@@ -7,12 +8,16 @@ const ActivityItem = ({ profilePic, usernames, activityLength }) => (
       <span>{usernames}</span>
       <span>
         and
-        {activityLength}
+        {activityLength - 2}
         {' '}
         more
       </span>
     </div>
   </div>
 );
+
+// Activity.propTypes = {
+//   profilePic: PropTypes.
+// }
 
 export default ActivityItem;

@@ -8,7 +8,7 @@ const FollowModal = ({ title, setModalTitle, isModalOpen, setIsModalOpen, ...oth
     return () => {
       setModalTitle('');
     };
-  }, []);
+  }, [setModalTitle]);
 
   return (
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>

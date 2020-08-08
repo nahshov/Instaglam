@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
+  SET_FOLLOWERS,
+  SET_FOLLOWING,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
@@ -9,46 +9,42 @@ import {
   RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
-export const getFollowers = userId => {
-  return async dispatch => {
-    try {
-      dispatch({
-        type: RESET_FOLLOWERS_LOADING
-      });
+export const getFollowers = userId => async dispatch => {
+  try {
+    dispatch({
+      type: RESET_FOLLOWERS_LOADING
+    });
 
-      const { data: followers } = await axios.get(`/api/users/${userId}/follows/followers`);
+    const { data: followers } = await axios.get(`/api/users/${userId}/follows/followers`);
 
-      dispatch({
-        type: GET_FOLLOWERS,
-        payload: followers
-      });
-    } catch (e) {
-      dispatch({
-        type: FOLLOWERS_ERROR
-      });
-    }
-  };
+    dispatch({
+      type: SET_FOLLOWERS,
+      payload: followers
+    });
+  } catch (e) {
+    dispatch({
+      type: FOLLOWERS_ERROR
+    });
+  }
 };
 
-export const getFollowing = userId => {
-  return async dispatch => {
-    try {
-      dispatch({
-        type: RESET_FOLLOWING_LOADING
-      });
+export const getFollowing = userId => async dispatch => {
+  try {
+    dispatch({
+      type: RESET_FOLLOWING_LOADING
+    });
 
-      const { data: following } = await axios.get(`/api/users/${userId}/follows/following`);
+    const { data: following } = await axios.get(`/api/users/${userId}/follows/following`);
 
-      dispatch({
-        type: GET_FOLLOWING,
-        payload: following
-      });
-    } catch (e) {
-      dispatch({
-        type: FOLLOWING_ERROR
-      });
-    }
-  };
+    dispatch({
+      type: SET_FOLLOWING,
+      payload: following
+    });
+  } catch (e) {
+    dispatch({
+      type: FOLLOWING_ERROR
+    });
+  }
 };
 
 export const resetFollows = (dispatch) => {

@@ -17,7 +17,7 @@ const PostModal = ({ post, isOpen, setModalOpen, isGallery = false }) => {
       setModalOpen(!isOpen);
       changeUrl(`${username}`);
     };
-  }, []);
+  }, [setModalOpen, username, isOpen, post._id]);
 
   return (
     <Modal

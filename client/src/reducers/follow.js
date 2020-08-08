@@ -1,6 +1,6 @@
 import {
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
+  SET_FOLLOWERS,
+  SET_FOLLOWING,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR, FOLLOWING_ERROR,
@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_FOLLOWERS:
+    case SET_FOLLOWERS:
       return {
         ...state,
         followersLoading: false,
@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
         error: 'Error loading following',
         followers: []
       };
-    case GET_FOLLOWING:
+    case SET_FOLLOWING:
       return {
         ...state,
         followingLoading: false,
