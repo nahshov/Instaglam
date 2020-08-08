@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
+  SET_FOLLOWERS,
+  SET_FOLLOWING,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
@@ -17,7 +17,7 @@ export const getFollowers = userId => async dispatch => {
     const { data: followers } = await axios.get(`/api/users/${userId}/follows/followers`);
 
     dispatch({
-      type: GET_FOLLOWERS,
+      type: SET_FOLLOWERS,
       payload: followers
     });
   } catch (e) {
@@ -36,7 +36,7 @@ export const getFollowing = userId => async dispatch => {
     const { data: following } = await axios.get(`/api/users/${userId}/follows/following`);
 
     dispatch({
-      type: GET_FOLLOWING,
+      type: SET_FOLLOWING,
       payload: following
     });
   } catch (e) {

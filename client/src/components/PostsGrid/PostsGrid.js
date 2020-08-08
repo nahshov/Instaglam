@@ -6,12 +6,12 @@ import PostModal from '../Modals/PostModal/PostModal';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { postPropType } from '../../customPropTypes';
 
-const PostsGrid = ({ isLink = false, postsOfUserLoading = true, posts = [] }) => {
+const PostsGrid = ({ isLink = false, loading = true, posts = [] }) => {
   const [searchedPost, setSearchedPost] = useState(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   return (
-    postsOfUserLoading
+    loading
       ? (<LoadingSpinner style={{ display: 'block', width: '20%', margin: '20px auto' }} />)
       : !posts.length ? (
         <div className={styles.noPostsUploaded}>
@@ -45,13 +45,13 @@ const PostsGrid = ({ isLink = false, postsOfUserLoading = true, posts = [] }) =>
 PostsGrid.defaultProps = {
   isLink: false,
   posts: [],
-  postsOfUserLoading: true
+  loading: true
 };
 
 PostsGrid.propTypes = {
   isLink: PropTypes.bool,
   posts: PropTypes.arrayOf(PropTypes.shape(postPropType)),
-  postsOfUserLoading: PropTypes.bool
+  loading: PropTypes.bool
 };
 
 export default PostsGrid;

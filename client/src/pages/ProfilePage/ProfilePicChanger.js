@@ -7,7 +7,7 @@ import ModalList from 'components/Modals/ModalList/ModalList';
 import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import Button from 'components/Button/Button';
 import { removeProfilePic, uploadProfilePic } from 'actions/auth/authActions';
-import { searchedUserPropType } from 'customPropTypes';
+import { profilePropType } from 'customPropTypes';
 import styles from './ProfilePage.module.scss';
 
 const ProfilePicChanger = ({ isAuthenticatedUser, searchedUser }) => {
@@ -99,7 +99,7 @@ const ProfilePicChanger = ({ isAuthenticatedUser, searchedUser }) => {
 
 ProfilePicChanger.propTypes = {
   isAuthenticatedUser: PropTypes.bool.isRequired,
-  searchedUser: PropTypes.shape(searchedUserPropType).isRequired
+  searchedUser: PropTypes.shape(profilePropType).isRequired
 };
 
 export default ProfilePicChanger;

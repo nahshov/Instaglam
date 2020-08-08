@@ -1,74 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
-import { searchUser } from 'actions/users/userActions';
-import { loadPostsOfUser } from 'actions/posts/postActions';
 import PostsGrid from 'components/PostsGrid/PostsGrid';
-import {
-  postsOfUserLoadingSelector,
-  postsOfUserSelector
-} from 'actions/posts/postSelectors';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
-import { userLoadingSelector, userSelector } from 'actions/users/userSelectors';
+import { getProfile } from 'actions/profile/profileActions';
+import { profileSelector, profileLoadingSelector } from 'actions/profile/profileSelectors';
 import ProfileHeader from './ProfileHeader';
 
 const profilePageSelector = createStructuredSelector({
-  postsOfUser: postsOfUserSelector,
-  postsOfUserLoading: postsOfUserLoadingSelector,
   authenticatedUser: authenticatedUserSelector,
-  searchedUser: userSelector,
-  searchedUserLoading: userLoadingSelector
+  profile: profileSelector,
+  profileLoading: profileLoadingSelector
 });
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const {
-    postsOfUser,
-    postsOfUserLoading,
     authenticatedUser,
-    searchedUser,
-    searchedUserLoading
+    profile,
+    profileLoading
   } = useSelector(profilePageSelector);
 
-  const [searchedUserUsername, setSearchedUserUsername] = useState(pathname.replace('/', ''));
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    searchedUserUsername === authenticatedUser.username
-  );
+  const searchedUserUsername = pathname.replace('/', '');
+  const isAuthenticated = searchedUserUsername === authenticatedUser.username;
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      dispatch(searchUser(searchedUserUsername));
-    } else {
-      setIsAuthenticated(true);
-    }
-    dispatch(loadPostsOfUser(searchedUserUsername));
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    setSearchedUserUsername(pathname.replace('/', ''));
-    setIsAuthenticated(pathname.replace('/', '') === authenticatedUser.username);
+    dispatch(getProfile(searchedUserUsername));
   }, [pathname]);
-
-  console.log(`%cpathname: ${pathname}`, 'background: #fff; color: black');
-  console.log(`%cIs authenticated: ${searchedUserUsername === authenticatedUser.username}`, `background: #333; color: ${isAuthenticated ? 'green' : 'red'}`);
-  console.log(`%cSearched user loading: ${searchedUserLoading}`, `background: #333; color: ${searchedUserLoading ? 'orange' : 'yellow'}`);
 
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {!postsOfUserLoading && (isAuthenticated || !searchedUserLoading) && (
+        {!profileLoading && (
         <>
           <ProfileHeader
-            searchedUser={isAuthenticated ? authenticatedUser : searchedUser}
+            profile={profile}
             isAuthenticatedUser={isAuthenticated}
-            postsCount={postsOfUser.length}
+            postsCount={profile.posts.length}
           />
           <PostsGrid
-            posts={postsOfUser}
-            postsOfUserLoading={postsOfUserLoading}
+            posts={profile.posts}
+            loading={profileLoading}
           />
         </>
         )}
