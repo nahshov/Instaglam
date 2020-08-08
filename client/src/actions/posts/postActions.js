@@ -11,6 +11,7 @@ import {
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
+  ADD_COMMENT_TO_POST,
   RESET_POSTS
 } from './postTypes';
 
@@ -149,4 +150,23 @@ export const resetPosts = (dispatch) => {
   dispatch({
     type: RESET_POSTS
   });
+};
+
+export const addAComment = (postId, comment) => {
+  return async dispatch => {
+    try{
+      if(postId) {
+        if(comment){
+          const res = await axios.post('/api/posts/${postId}/comments');
+          console.log(res)
+          // dispatch({ 
+          //   type: ADD_COMMENT_TO_POST,
+          //   payload: { postId, numOfComments: 1}
+          // })
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  };
 };
