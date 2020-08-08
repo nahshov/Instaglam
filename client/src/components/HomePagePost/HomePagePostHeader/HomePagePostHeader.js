@@ -16,7 +16,7 @@ const HomePagePostHeader = ({ username, profilePic, postId }) => {
         <Button btnRole="astext">
           <FiMoreHorizontal
             className={styles.moreIcon}
-            onClick={() => setModalOpen(true)}
+            onClick={() => { return setModalOpen(true); }}
           />
         </Button>
         {isModalOpen && (

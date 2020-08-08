@@ -48,7 +48,6 @@ const getUser = async (req, res) => {
       }
     );
   } catch (e) {
-    console.log(e);
     return serverResponse(res, 500);
   }
 };

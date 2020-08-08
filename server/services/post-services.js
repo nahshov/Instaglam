@@ -2,7 +2,7 @@ const Post = require('../models/Post.js');
 const { deleteFile } = require('./cloud-services');
 const { getUser } = require('./user-services');
 
-function getAllPosts(limit = 10, skip = 0) {
+function getAllPosts(limit, skip) {
   return Post.find({})
     .limit(+limit)
     .skip(+skip)
@@ -17,9 +17,7 @@ async function getAllPostsOfUser(userInfo) {
 
 function getPost(postId) {
   return Post.findOne({ _id: postId });
-
 }
-
 
 function createPost(post) {
   post = new Post(post);

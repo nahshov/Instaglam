@@ -5,7 +5,8 @@ import {
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
-  FOLLOWING_ERROR
+  FOLLOWING_ERROR,
+  RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
 export const getFollowers = userId => async dispatch => {
@@ -44,4 +45,10 @@ export const getFollowing = userId => async dispatch => {
       type: FOLLOWING_ERROR
     });
   }
+};
+
+export const resetFollows = (dispatch) => {
+  dispatch({
+    type: RESET_FOLLOWS
+  });
 };

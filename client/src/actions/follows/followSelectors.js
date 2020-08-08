@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-const followSelector = state => state.follow;
+const followSelector = state => { return state.follow; };
 
 export const followingSelector = createSelector(
   [followSelector],
-  follow => follow.following
+  follow => { return follow.following; }
 );
 
 export const followersSelector = createSelector(
   [followSelector],
-  follow => follow.followers
+  follow => { return follow.followers; }
 );

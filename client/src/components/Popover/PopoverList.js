@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './PopoverList.module.scss';
 
-const PopoverList = ({ children }) => (
-  <ul className={styles.list}>{children}</ul>
-);
+const PopoverList = ({ children }) => {
+  return (
+    <ul className={styles.list}>{children}</ul>
+  );
+};
 
 PopoverList.propTypes = {
   children: PropTypes.oneOfType([

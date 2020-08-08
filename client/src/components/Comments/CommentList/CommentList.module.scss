@@ -2,6 +2,8 @@
 
 .commentListWrapper{
   display: flex;
-  justify-content: start;
-  color: $secondary-text-color
+  justify-content: flex-start;
+  button{
+    color: $secondary-text-color;
+  }
 }

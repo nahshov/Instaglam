@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList/ModalList';
 import ModalListItem from 'components/Modals/ModalList/ModalListItem';
@@ -17,17 +16,18 @@ const LikeModal = ({ isModalOpen, setModalOpen, postLikes, loading }) => {
           <h3>Likes</h3>
         </div>
         <div className={styles.listItemWrapper}>
-          {!loading && postLikes.map(like => (
-            <ModalListItem className={styles.LikeModalItem}>
-              
-              <UserIdentifier
-                key={like._id}
-                username={like.user.username}
-                profilePic={like.user.profilePic}
-              />
-              {isFollowed ? <Button btnRole="primary bold"> Unfollow </Button> : <Button btnRole="primary bold"> Follow</Button>}
-            </ModalListItem>
-          ))}
+          {!loading && postLikes.map(like => {
+            return (
+              <ModalListItem className={styles.LikeModalItem}>
+                <UserIdentifier
+                  key={like._id}
+                  username={like.user.username}
+                  profilePic={like.user.profilePic}
+                />
+                {isFollowed ? <Button btnRole="primary bold"> Unfollow </Button> : <Button btnRole="primary bold"> Follow</Button>}
+              </ModalListItem>
+            );
+          })}
         </div>
       </ModalList>
     </Modal>

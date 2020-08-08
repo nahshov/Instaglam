@@ -6,19 +6,21 @@ import Logo from 'components/Logo/Logo';
 import SearchInput from 'components/SearchInput/SearchInput';
 import NavLinks from 'components/Navbar/NavLinks/NavLinks';
 
-const Navbar = () => (
-  <nav className={styles.Navbar}>
-    <div className={styles.content}>
-      <div className={styles.cameraAndLogoDiv}>
-        <NavPostUpload />
-        <Link exact="true" to="/" className={styles.Link}>
-          <Logo />
-        </Link>
+const Navbar = () => {
+  return (
+    <nav className={styles.Navbar}>
+      <div className={styles.content}>
+        <div className={styles.cameraAndLogoDiv}>
+          <NavPostUpload />
+          <Link exact="true" to="/" className={styles.Link}>
+            <Logo />
+          </Link>
+        </div>
+        <SearchInput />
+        <NavLinks />
       </div>
-      <SearchInput />
-      <NavLinks />
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 export default Navbar;

@@ -7,7 +7,7 @@ import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login } from 'actions/auth/authActions';
+import { login, loadUser } from 'actions/auth/authActions';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {
@@ -20,15 +20,17 @@ const LogInForm = () => {
 
   const {
     isAuthenticated, loading
-  } = useSelector(state => state.auth);
+  } = useSelector(state => { return state.auth; });
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const checkDisabled = () => Object.values(logInForm).some(
-    value => !value || logInForm.password.length < 6
-  );
+  const checkDisabled = () => {
+    return Object.values(logInForm).some(
+      value => { return !value || logInForm.password.length < 6; }
+    );
+  };
 
   const handleChange = e => {
     setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
@@ -50,7 +52,7 @@ const LogInForm = () => {
     return <Redirect to="/" />;
   }
 
-  window.addEventListener('load', () => history.push('/accounts/welcomepage'));
+  window.addEventListener('load', () => { return history.push('/accounts/welcomepage'); });
 
   const inputType = showPass ? 'text' : 'password';
   const showPassBtn = showPass ? 'Hide' : 'Show';
@@ -105,7 +107,7 @@ const LogInForm = () => {
       <AuthSwitch
         hasAccountText={"Don't have an account?"}
         linkText="Sign up"
-        onClick={() => setLogInAlert('')}
+        onClick={() => { return setLogInAlert(''); }}
       />
     </div>
   );

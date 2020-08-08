@@ -56,7 +56,6 @@ const addLikeToAPost = async (req, res) => {
 
     return serverResponse(res, 200, like);
   } catch (error) {
-    console.log(error);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a like'
     });
@@ -80,7 +79,6 @@ const deleteLikeFromAPost = async (req, res) => {
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
-    console.log(error);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a like'
     });
