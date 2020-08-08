@@ -15,7 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { users, usersLoading, error } = useSelector((state) => state.users);
+  const { users, usersLoading, error } = useSelector((state) => { return state.users; });
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -48,25 +48,27 @@ const SearchInput = () => {
           </PopoverListItem>
         ) : (
           <PopoverList>
-            {users.map((user) => (
-              <PopoverListItem key={user.created}>
-                <Link
-                  to={`/${user.username}`}
-                  onMouseDown={() => handleMouseDown(user)}
-                  style={{ cursor: 'pointer', width: '100%' }}
-                >
-                  {usersLoading ? (
-                    <LoadingSpinner className={styles.searchProfilePic} />
-                  ) : (
-                    <ProfilePic
-                      url={user.profilePic}
-                      className={styles.searchProfilePic}
-                    />
-                  )}
-                  <span>{user.username}</span>
-                </Link>
-              </PopoverListItem>
-            ))}
+            {users.map((user) => {
+              return (
+                <PopoverListItem key={user.created}>
+                  <Link
+                    to={`/${user.username}`}
+                    onMouseDown={() => { return handleMouseDown(user); }}
+                    style={{ cursor: 'pointer', width: '100%' }}
+                  >
+                    {usersLoading ? (
+                      <LoadingSpinner className={styles.searchProfilePic} />
+                    ) : (
+                      <ProfilePic
+                        url={user.profilePic}
+                        className={styles.searchProfilePic}
+                      />
+                    )}
+                    <span>{user.username}</span>
+                  </Link>
+                </PopoverListItem>
+              );
+            })}
           </PopoverList>
         )}
       </Popover>
@@ -75,10 +77,10 @@ const SearchInput = () => {
         className={`${styles.SearchInput}`}
         type="search"
         value={value}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => { return handleChange(e.target.value); }}
         required
-        onFocus={() => value && setIsPopoverOpen(true)}
-        onBlur={() => setIsPopoverOpen(false)}
+        onFocus={() => { return value && setIsPopoverOpen(true); }}
+        onBlur={() => { return setIsPopoverOpen(false); }}
       />
       <label htmlFor="searchInput" className={styles.searchLabel}>
         <div>

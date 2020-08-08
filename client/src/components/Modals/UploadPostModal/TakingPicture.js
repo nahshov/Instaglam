@@ -48,7 +48,7 @@ const TakingPicture = ({ videoRef, setPostMedia, setIsTakingPicture }) => {
             btnRole="astext btnBlock"
             onClick={() => {
               setIsTakingPicture(false);
-              videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+              videoRef.current.srcObject.getTracks().forEach((track) => { return track.stop(); });
             }}
           >
             Done

@@ -19,19 +19,22 @@ const PostsGrid = ({ isLink = false, postsOfUserLoading = true, posts = [] }) =>
         </div>
       ) : (
         <div className={styles.gridContainer}>
-          {posts.map(post => (
-            <PostsGridItem
-              key={post._id}
-              post={post}
-              posts={posts}
-              setSearchedPost={setSearchedPost}
-              isPostModalOpen={isPostModalOpen}
-              setIsPostModalOpen={setIsPostModalOpen}
-              isLink={isLink}
-            />
-          ))}
+          {posts.map(post => {
+            return (
+              <PostsGridItem
+                key={post._id}
+                post={post}
+                posts={posts}
+                setSearchedPost={setSearchedPost}
+                isPostModalOpen={isPostModalOpen}
+                setIsPostModalOpen={setIsPostModalOpen}
+                isLink={isLink}
+              />
+            );
+          })}
           {isPostModalOpen && (
           <PostModal
+            isGallery
             post={searchedPost}
             isOpen={isPostModalOpen}
             setModalOpen={setIsPostModalOpen}

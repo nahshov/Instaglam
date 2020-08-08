@@ -3,7 +3,9 @@ import {
   SEARCH_USERS_FAIL,
   SEARCH_SINGLE_USER_SUCCESS,
   SEARCH_SINGLE_USER_FAIL,
-  RESET_LOADING
+  RESET_LOADING_USER_LOADING,
+  RESET_LOADING_USERS_LOADING, TOGGLE_FOLLOW,
+  RESET_USERS
 } from 'actions/users/userTypes';
 
 const initialState = {
@@ -46,11 +48,32 @@ export default function (state = initialState, action) {
         userLoading: false,
         error: payload
       };
-    case RESET_LOADING:
+    case TOGGLE_FOLLOW:
       return {
         ...state,
-        userLoading: true,
+        user: {
+          ...state.user,
+          numOfFollowers: state.user.numOfFollowers + payload.numOfFollowers,
+          isFollowed: payload.isFollowed
+        }
+      };
+    case RESET_LOADING_USER_LOADING:
+      return {
+        ...state,
+        userLoading: true
+      };
+    case RESET_LOADING_USERS_LOADING:
+      return {
+        ...state,
         usersLoading: true
+      };
+    case RESET_USERS:
+      return {
+        users: [],
+        usersLoading: true,
+        user: {},
+        userLoading: true,
+        error: ''
       };
     default:
       return state;

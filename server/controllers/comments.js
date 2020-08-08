@@ -76,7 +76,7 @@ const addCommentToPost = async (req, res) => {
       post: req.params.postId
     };
 
-    post.comments++;
+    post.numOfComments++;
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
@@ -118,7 +118,7 @@ const addReplyToComment = async (req, res) => {
       replyToComment: comment.replyToComment || req.params.commentId
     };
 
-    post.comments++;
+    post.numOfComments++;
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
 
@@ -162,8 +162,8 @@ const removeAComment = async (req, res) => {
     const removeLikesFromReplyPromises = replies.map(reply => removeLikesFromComment(reply));
 
     const post = await getPost(req.params.postId);
-    post.comments -= replies.length;
-    post.comments--;
+    post.numOfComments -= replies.length;
+    post.numOfComments--;
 
     const [comment] = await Promise.all([removeComment(req.params.commentId),
       removeLikesFromComment(req.params.commentId),

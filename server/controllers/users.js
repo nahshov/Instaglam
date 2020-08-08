@@ -14,6 +14,7 @@ const {
 } = require('../services/follow-services');
 const { removeAllUserActivitiesFeed, removeAllUserActivities } = require('../services/activity-services');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
+const { getUserFollowersCount, getUserFollowingCount, isFollowed } = require('../services/follow-services');
 const serverResponse = require('../utils/serverResponse');
 const formatImage = require('../utils/formatMedia.js');
 
@@ -23,6 +24,13 @@ const formatImage = require('../utils/formatMedia.js');
 const getUser = async (req, res) => {
   try {
     const user = await getUserService(req.params.userInfo);
+    const [following, followers, doesFollowExist] = await Promise.all(
+      [
+        getUserFollowingCount(user._id),
+        getUserFollowersCount(user._id),
+        isFollowed(req.user.sub, user._id)
+      ]
+    );
 
     if (!user) {
       return serverResponse(res, 404, {
@@ -30,9 +38,17 @@ const getUser = async (req, res) => {
       });
     }
 
-    return serverResponse(res, 200, user);
+    return serverResponse(
+      res,
+      200,
+      {
+        ...user.toJSON(),
+        numOfFollowing: following,
+        numOfFollowers: followers,
+        isFollowed: doesFollowExist
+      }
+    );
   } catch (e) {
-    console.log(e);
     return serverResponse(res, 500);
   }
 };
@@ -62,7 +78,15 @@ const getUsers = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const user = await getUserService(req.user.email);
-    return serverResponse(res, 200, user);
+    const [following, followers] = await Promise.all(
+      [getUserFollowingCount(user._id), getUserFollowersCount(user._id)]
+    );
+
+    return serverResponse(
+      res,
+      200,
+      { ...user.toJSON(), numOfFollowing: following, numOfFollowers: followers }
+    );
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to find user'

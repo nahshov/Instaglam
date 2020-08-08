@@ -8,7 +8,7 @@ import styles from './WelcomePage.module.scss';
 const WelcomePage = () => {
   const {
     auth: { isAuthenticated, loading }
-  } = useSelector(state => state);
+  } = useSelector(state => { return state; });
 
   if (isAuthenticated && !loading) {
     return <Redirect to="/" />;

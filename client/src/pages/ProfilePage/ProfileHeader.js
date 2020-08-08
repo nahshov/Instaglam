@@ -1,58 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
 import styles from 'pages/ProfilePage/ProfilePage.module.scss';
 import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
-import { userSelector, userLoadingSelector } from 'actions/users/userSelectors';
-import { authenticatedUserSelector } from 'actions/auth/authSelectors';
+import { searchedUserPropType } from 'customPropTypes';
+import { toggleFollow } from 'actions/users/userActions';
 import SocialStatusList from './SocialStatusList';
 
-const profileHeaderSelector = createStructuredSelector({
-  searchedUser: userSelector,
-  searchedUserLoading: userLoadingSelector,
-  authenticatedUser: authenticatedUserSelector
-});
-
-const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
+const ProfileHeader = ({ postsCount, searchedUser, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
-  const {
-    searchedUser,
-    searchedUserLoading,
-    authenticatedUser
-  } = useSelector(profileHeaderSelector);
+
+  const handleFollow = () => {
+    dispatch(toggleFollow(searchedUser._id, searchedUser.isFollowed));
+  };
 
   return (
     <header className={styles.profileHeader}>
       <ProfilePicChanger
         searchedUser={searchedUser}
-        searchedUserLoading={searchedUserLoading}
-        authenticatedUsername={authenticatedUser.username}
+        isAuthenticatedUser={isAuthenticatedUser}
       />
       <section className={styles.profileInfo}>
         <div className={styles.profileInfoHeader}>
           <h2 className={styles.username}>{searchedUser.username}</h2>
-          <Link className={styles.editLink} to="/accounts/edit">
-            <Button>Edit Profile</Button>
-          </Link>
-          <Button
-            className={styles.logoutBtn}
-            btnRole="danger"
-            onClick={() => dispatch(logout())}
-          >
-            Logout
-          </Button>
+          {isAuthenticatedUser
+            ? (
+              <>
+                <Link className={styles.editLink} to="/accounts/edit">
+                  <Button>Edit Profile</Button>
+                </Link>
+                <Button
+                  className={styles.logoutBtn}
+                  btnRole="danger"
+                  onClick={() => dispatch(logout())}
+                >
+                  Logout
+                </Button>
+              </>
+            )
+            : (
+              <>
+                <Button
+                  style={{ marginLeft: '30px', fontWeight: 'bold', background: `${searchedUser.isFollowed ? '#ccc' : ''}` }}
+                  btnRole="primary"
+                  onClick={handleFollow}
+                >
+                  {searchedUser.isFollowed ? 'Unfollow' : 'Follow'}
+                </Button>
+              </>
+            )}
         </div>
-        {!postsOfUserLoading && searchedUser._id && postsCount
-          && (
-          <SocialStatusList
-            userId={searchedUser._id}
-            postCount={postsCount}
-          />
-          )}
+        <SocialStatusList
+          userId={searchedUser._id}
+          postCount={postsCount}
+          followersCount={searchedUser.numOfFollowers}
+          followingCount={searchedUser.numOfFollowing}
+        />
         <div className={styles.bioContainer}>
           <h1 className={styles.fullName}>{searchedUser.fullName}</h1>
           <p className={styles.bio}>{searchedUser.bio}</p>
@@ -62,14 +68,10 @@ const ProfileHeader = ({ postsCount = '', postsOfUserLoading = true }) => {
   );
 };
 
-ProfileHeader.defaultProps = {
-  postsCount: '',
-  postsOfUserLoading: true
-};
-
 ProfileHeader.propTypes = {
-  postsCount: PropTypes.string,
-  postsOfUserLoading: PropTypes.bool
+  postsCount: PropTypes.number.isRequired,
+  isAuthenticatedUser: PropTypes.bool.isRequired,
+  searchedUser: PropTypes.shape(searchedUserPropType).isRequired
 };
 
 export default ProfileHeader;

@@ -13,7 +13,7 @@ import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './NavLinks.module.scss';
 
 const NavLinks = () => {
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => { return state.auth; });
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
   const [isActivityFeedOpen, setIsActivityFeedOpen] = useState(false);
 

@@ -1,6 +1,4 @@
-@import '../../styles/mixins.scss';
 @import '../../styles/color-palette.scss';
-@import '../../styles/typography.scss';
 
 .postContainer{
     width: 600px;
@@ -12,34 +10,6 @@
     margin-bottom: 40px;
     }
     
-    .commentContainer{
-        border-top: 2.4px solid #8e8e8e57;
-        height: 48px;
-        display: flex;
-        justify-content: space-between;
-        .commentInput{
-            width: 95%;
-            resize: none;
-            overflow: auto;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;        
-            outline: none;
-            border: none;
-            padding: 12px;
-            &::-webkit-input-placeholder{
-              margin-left: 5px;
-            }
-        }
-        .postButton{
-            margin: 0px 11px 3px 0px;
-            width: 5%;
-            z-index: 100;
-            &:hover{
-                cursor: pointer;
-            }
-        }
-    }
   
 
 

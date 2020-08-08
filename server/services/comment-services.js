@@ -4,8 +4,8 @@ function getComment(commentId) {
   return Comment.findOne({ _id: commentId });
 }
 
-function getCommentsOfPost(postId) {
-  return Comment.find({ post: postId });
+function getCommentsOfPost(postId, includeComments = undefined) {
+  return Comment.find({ post: postId }, null, { limit: includeComments }).populate('user', 'username');
 }
 
 function getRepliesOfComment(commentId) {

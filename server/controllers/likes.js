@@ -54,17 +54,7 @@ const addLikeToAPost = async (req, res) => {
       return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
-    await likesOnPostListener;
-
-    activityEmitter.emit('postLike', {
-      post: req.params.postId,
-      postBy: post.user,
-      liker: req.user.sub,
-      likeId: like._id,
-      created: new Date()
-    });
-
-    post.likes++;
+    post.numOfLikes++;
     await post.save();
 
     return serverResponse(res, 200, like);
@@ -87,7 +77,7 @@ const deleteLikeFromAPost = async (req, res) => {
 
     const post = await getPost(req.params.postId);
 
-    post.likes--;
+    post.numOfLikes--;
     await post.save();
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });

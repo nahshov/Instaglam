@@ -25,16 +25,16 @@ const App = () => {
           <Route path="/accounts/welcomepage" component={WelcomePage} />
           <Route path="/accounts/emailsignup" exact component={SignUpForm} />
           <Route path="/accounts/login" exact component={LogInForm} />
-          <ProtectedRoute path="/p/:postId" component={() => <h1>Post page...</h1>} />
+          <ProtectedRoute path="/p/:postId" component={() => { return <h1>Post page...</h1>; }} />
           <ProtectedRoute
             exact
             path="/explore"
-            component={() => <div>Explore!</div>}
+            component={() => { return <div>Explore!</div>; }}
           />
           <ProtectedRoute
             exact
             path="/direct/inbox"
-            component={() => <div>Chat!</div>}
+            component={() => { return <div>Chat!</div>; }}
           />
           <ProtectedRoute path="/:profile" component={ProfilePage} />
         </Switch>

@@ -20,12 +20,17 @@ async function getUserFollowers(userId) {
   }));
 }
 
-async function addFollowToUser(follow) {
-  const { user, following } = follow;
-  const doesFollowExist = await Follow.findOne({
+async function isFollowed(user, following) {
+  const follow = await Follow.findOne({
     user,
     following
   });
+  return !!follow;
+}
+
+async function addFollowToUser(follow) {
+  const { user, following } = follow;
+  const doesFollowExist = await isFollowed(user, following);
   if (doesFollowExist) {
     return;
   }
@@ -51,11 +56,22 @@ function removeAllUserFollowers(userId) {
   return Follow.deleteMany({ user: userId });
 }
 
+function getUserFollowersCount(userId) {
+  return Follow.countDocuments({ following: userId });
+}
+
+function getUserFollowingCount(userId) {
+  return Follow.countDocuments({ user: userId });
+}
+
 module.exports = {
   getUserFollowers,
   getUserFollowing,
   addFollowToUser,
   removeFollowFromUser,
   removeAllUserFollowings,
-  removeAllUserFollowers
+  removeAllUserFollowers,
+  getUserFollowersCount,
+  getUserFollowingCount,
+  isFollowed
 };

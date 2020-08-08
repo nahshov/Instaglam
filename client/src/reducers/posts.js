@@ -1,11 +1,14 @@
 import {
-  GET_POSTS,
+  SET_POSTS,
   GET_USER_POSTS,
   USER_POSTS_ERROR,
   GET_POST,
   POST_ERROR,
   TOGGLE_POST_LIKE,
-  RESET_POSTS_OF_USER_LOADING
+  RESET_POSTS_OF_USER_LOADING,
+  GET_ALL_LIKES_OF_A_POST,
+  GET_ALL_COMMENTS_OF_A_POST,
+  RESET_POSTS
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -15,6 +18,8 @@ const initialState = {
   postsOfUserLoading: true,
   post: {},
   uploadPostLoadingProgress: '',
+  postLikes: [],
+  postComments: [],
   error: ''
 };
 
@@ -22,10 +27,10 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_POSTS:
+    case SET_POSTS:
       return {
         ...state,
-        posts: payload,
+        posts: [...state.posts, ...payload],
         loading: false,
         error: ''
       };
@@ -62,15 +67,43 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         posts: state.posts
-          .map(post => (
-            post._id === payload.postId
-              ? { ...post, isUserLiked: payload.isLike, likes: post.likes + payload.likes }
-              : post))
+          .map(post => {
+            return (
+              post._id === payload.postId
+                ? { ...post,
+                  isUserLiked: payload.isLike,
+                  numOfLikes: post.numOfLikes + payload.numOfLikes }
+                : post);
+          })
       };
     case RESET_POSTS_OF_USER_LOADING:
       return {
         ...state,
         postsOfUserLoading: true
+      };
+    case GET_ALL_LIKES_OF_A_POST:
+      return {
+        ...state,
+        loading: false,
+        postLikes: payload
+      };
+    case GET_ALL_COMMENTS_OF_A_POST:
+      return {
+        ...state,
+        loading: false,
+        postComments: payload
+      };
+    case RESET_POSTS:
+      return {
+        loading: true,
+        posts: [],
+        postsOfUser: [],
+        postsOfUserLoading: true,
+        post: {},
+        uploadPostLoadingProgress: '',
+        postLikes: [],
+        postComments: [],
+        error: ''
       };
     default:
       return state;

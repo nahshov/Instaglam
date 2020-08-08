@@ -7,18 +7,17 @@ import ModalList from 'components/Modals/ModalList/ModalList';
 import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import Button from 'components/Button/Button';
 import { removeProfilePic, uploadProfilePic } from 'actions/auth/authActions';
-import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { searchedUserPropType } from 'customPropTypes';
 import styles from './ProfilePage.module.scss';
 
-const ProfilePicChanger = ({ authenticatedUsername, searchedUserLoading, searchedUser }) => {
+const ProfilePicChanger = ({ isAuthenticatedUser, searchedUser }) => {
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);
   const [profilePicAlert, setProfilePicAlert] = useState('');
 
   const dispatch = useDispatch();
 
   const toggleProfilePicModal = () => {
-    if (!searchedUserLoading && (searchedUser.username === authenticatedUsername)) {
+    if (isAuthenticatedUser) {
       setSettingsModalOpen(!isSettingsModalOpen);
     }
   };
@@ -48,16 +47,13 @@ const ProfilePicChanger = ({ authenticatedUsername, searchedUserLoading, searche
           className={styles.changeProfilePicButton}
           onClick={toggleProfilePicModal}
         >
-          {searchedUserLoading && !searchedUser.profilePic
-            ? <LoadingSpinner style={{ width: '150px', height: '150px' }} />
-            : (
-              <div className={styles.profilePic}>
-                <img
-                  alt="Change avatar"
-                  src={searchedUser.profilePic}
-                />
-              </div>
-            )}
+
+          <div className={styles.profilePic}>
+            <img
+              alt="Change avatar"
+              src={searchedUser.profilePic}
+            />
+          </div>
         </button>
         {profilePicAlert && <Alert style={{ fontSize: '10px' }}>{profilePicAlert}</Alert>}
       </div>
@@ -102,8 +98,7 @@ const ProfilePicChanger = ({ authenticatedUsername, searchedUserLoading, searche
 };
 
 ProfilePicChanger.propTypes = {
-  authenticatedUsername: PropTypes.string.isRequired,
-  searchedUserLoading: PropTypes.bool.isRequired,
+  isAuthenticatedUser: PropTypes.bool.isRequired,
   searchedUser: PropTypes.shape(searchedUserPropType).isRequired
 };
 

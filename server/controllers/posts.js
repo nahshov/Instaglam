@@ -8,7 +8,11 @@ const {
 } = require('../services/post-services.js');
 
 const {
-  removeLikesFromPost, removeLikesFromComment, getPostLikes, userHasLikes, whereUserLiked
+  removeLikesFromPost,
+  removeLikesFromComment,
+  // getPostLikes,
+  userHasLikes,
+  whereUserLiked
 } = require('../services/like-services');
 
 const {
@@ -50,17 +54,28 @@ const submitPost = async (req, res) => {
 // @access private
 const getPosts = async (req, res) => {
   try {
-    const { limit, skip } = req.query || {};
     const userId = req.user.sub;
-
+    const limit = 2;
+    const skip = limit * +req.query.page;
     const posts = await getAllPosts(limit, skip);
-    const postLikes = await whereUserLiked(userId, posts.map(p => p._id));
+    const postsIds = posts.map(p => p._id);
+    const [postLikes, postsComments] = await Promise.all([
+      whereUserLiked(userId, postsIds),
+      Promise.all(
+        postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
+      )
+    ]);
 
     if (posts.length === 0) {
       return serverResponse(res, 404, { message: 'No posts found' });
     }
 
-    return serverResponse(res, 200, posts.map(post => ({ ...post.toObject(), isUserLiked: !!postLikes[post._id] })));
+    return serverResponse(res, 200, posts.map((post, index) => (
+      {
+        ...post.toObject(),
+        isUserLiked: !!postLikes[post._id],
+        comments: postsComments[index]
+      })));
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to get posts'
@@ -87,7 +102,7 @@ const getPostsOfAUser = async (req, res) => {
 // @desc   Get one post, with post id
 // @access private
 const getOnePost = async (req, res) => {
-  const { postId } = req.params;
+  const { postId } = req.params.postId;
   const userId = req.user.sub;
   try {
     const [post, isUserLike] = await Promise.all([
@@ -131,7 +146,9 @@ const deletePost = async (req, res) => {
 
     const comments = await getCommentsOfPost(req.params.postId);
 
-    const removeLikesFromCommentPromises = comments.map(async comment => removeLikesFromComment(comment._id));
+    const removeLikesFromCommentPromises = comments.map(
+      async comment => removeLikesFromComment(comment._id)
+    );
 
     await Promise.all([removeLikesFromPost(req.params.postId),
       removeAllPostComments(req.params.postId),
