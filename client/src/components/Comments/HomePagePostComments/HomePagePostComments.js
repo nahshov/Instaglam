@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
+import PropTypes from 'prop-types';
 import styles from './HomePagePostComments.module.scss';
 
 const HomePagePostComments = ({ postComments }) => {
+  console.log(postComments);
+
   return (
     <div className={styles.homePagePostCommentUserIdentifier}>
       {postComments.map((comment) => {
-        return (
-          <div className={styles.eachComment}>
+        return comment && (
+          <div key={comment._id} className={styles.eachComment}>
             <div className={styles.nameAndContent}>
               <span className={styles.username}>
                 <Link to={`/${comment.user.username}`}>
@@ -28,6 +31,10 @@ const HomePagePostComments = ({ postComments }) => {
       })}
     </div>
   );
+};
+
+HomePagePostComments.propTypes = {
+  postComments: PropTypes.arrayOf({}).isRequired
 };
 
 export default HomePagePostComments;

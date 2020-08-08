@@ -58,6 +58,12 @@ export const searchPostById = (postId) => {
   };
 };
 
+export const resetPosts = () => (dispatch) => {
+  dispatch({
+    type: RESET_POSTS
+  });
+};
+
 // getAll posts
 export const getAllPosts = (page) => {
   return async dispatch => {
@@ -146,27 +152,28 @@ export const getAllCommentsOfAPost = (postId) => {
   };
 };
 
-export const resetPosts = (dispatch) => {
-  dispatch({
-    type: RESET_POSTS
-  });
-};
-
 export const addAComment = (postId, comment) => {
   return async dispatch => {
-    try{
-      if(postId) {
-        if(comment){
-          const res = await axios.post('/api/posts/${postId}/comments');
-          console.log(res)
-          // dispatch({ 
-          //   type: ADD_COMMENT_TO_POST,
-          //   payload: { postId, numOfComments: 1}
-          // })
+    try {
+      if (postId) {
+        if (comment) {
+          const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+
+          const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
+          console.log(res.data);
+
+          dispatch({
+            type: ADD_COMMENT_TO_POST,
+            payload: { postId, numOfComments: 1, comment: res.data }
+          });
         }
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 };

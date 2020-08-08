@@ -29,7 +29,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     dispatch(getProfile(searchedUserUsername));
-  }, [pathname]);
+  }, [pathname, dispatch, searchedUserUsername]);
 
   return (
     <main className={styles.main}>

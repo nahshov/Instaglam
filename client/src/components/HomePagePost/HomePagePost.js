@@ -46,7 +46,7 @@ const HomePagePost = ({
       <Link to={`/p/${postId}`}>
         <CreatedTime created={created} />
       </Link>
-      <CommentForm />
+      {postId && <CommentForm postId={postId} />}
     </article>
   );
 };
