@@ -1,5 +1,5 @@
 const { activityEmitter } = require('../../events/events');
-const { addActivity } = require('../../services/activity-services');
+const { addActivity, removeActivity } = require('../../services/activity-services');
 
 let commentLikes = {};
 let nextCommentLikesCheck = false;
@@ -40,6 +40,11 @@ const likesOnCommentListener = activityEmitter.on('commentLike', payload => {
   checkLikesOnComment();
 });
 
+const removeLikeOnCommentListener = activityEmitter.on('deleteCommentLike', async likeId => {
+  await removeActivity(likeId);
+});
+
 module.exports = {
-  likesOnCommentListener
+  likesOnCommentListener,
+  removeLikeOnCommentListener
 };

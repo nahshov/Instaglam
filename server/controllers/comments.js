@@ -11,7 +11,7 @@ const {
 const { removeLikesFromComment } = require('../services/like-services');
 
 const { getPost } = require('../services/post-services');
-const { commentListener } = require('../listeners/activityListeners/commentListener');
+const { commentListener, removeCommentListener } = require('../listeners/activityListeners/commentListeners');
 const { replyListener } = require('../listeners/activityListeners/replyListener');
 const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
@@ -171,6 +171,10 @@ const removeAComment = async (req, res) => {
       removeLikesFromComment(req.params.commentId),
       ...removeLikesFromReplyPromises,
       post.save()]);
+
+    await removeCommentListener;
+
+    activityEmitter.emit('deleteComment', getAComment._id);
 
     return serverResponse(res, 200, comment);
   } catch (error) {

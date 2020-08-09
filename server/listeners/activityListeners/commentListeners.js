@@ -1,5 +1,5 @@
 const { activityEmitter } = require('../../events/events');
-const { addActivity } = require('../../services/activity-services');
+const { addActivity, removeActivity } = require('../../services/activity-services');
 
 let comments = {};
 let nextCommentsCheck = false;
@@ -7,12 +7,12 @@ let nextCommentsCheck = false;
 function checkComments() {
   if (!nextCommentsCheck) {
     nextCommentsCheck = true;
-    setTimeout(() => {
-      const activities = Object.values(comments);
-      comments = {};
-      activities.map(addActivity);
-      nextCommentsCheck = false;
-    }, 30000);
+    // setTimeout(() => {
+    const activities = Object.values(comments);
+    comments = {};
+    activities.map(addActivity);
+    nextCommentsCheck = false;
+    // }, 30000);
   }
 }
 
@@ -40,6 +40,11 @@ const commentListener = activityEmitter.on('comment', payload => {
   checkComments();
 });
 
+const removeCommentListener = activityEmitter.on('deleteComment', async commentId => {
+  await removeActivity(commentId);
+});
+
 module.exports = {
-  commentListener
+  commentListener,
+  removeCommentListener
 };

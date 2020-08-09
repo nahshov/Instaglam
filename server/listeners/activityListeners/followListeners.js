@@ -1,5 +1,5 @@
 const { activityEmitter } = require('../../events/events');
-const { addActivity } = require('../../services/activity-services');
+const { addActivity, removeActivity } = require('../../services/activity-services');
 
 let follows = {};
 let nextFollowCheck = false;
@@ -40,6 +40,11 @@ const followListener = activityEmitter.on('follow', payload => {
   checkFollows();
 });
 
+const removeFollowListener = activityEmitter.on('removeFollow', async followId => {
+  await removeActivity(followId);
+});
+
 module.exports = {
-  followListener
+  followListener,
+  removeFollowListener
 };

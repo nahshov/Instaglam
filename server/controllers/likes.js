@@ -3,14 +3,15 @@ const {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLike
+  removeLikeFromAPost,
+  removeLikeFromAComment
 } = require('../services/like-services');
 
 const { getComment } = require('../services/comment-services');
 const serverResponse = require('../utils/serverResponse');
 const { getPost } = require('../services/post-services');
-const { likesOnPostListener } = require('../listeners/activityListeners/likesOnPostListener');
-const { likesOnCommentListener } = require('../listeners/activityListeners/likesOnCommentListener');
+const { likesOnPostListener, removeLikeOnPostListener } = require('../listeners/activityListeners/likesOnPostListeners');
+const { likesOnCommentListener, removeLikeOnCommentListener } = require('../listeners/activityListeners/likesOnCommentListeners');
 const { activityEmitter } = require('../events/events');
 
 // @route   GET '/api/posts/:postId/likes'
@@ -57,6 +58,16 @@ const addLikeToAPost = async (req, res) => {
     post.numOfLikes++;
     await post.save();
 
+    await likesOnPostListener;
+
+    activityEmitter.emit('postLike', {
+      post: req.params.postId,
+      postBy: post.user,
+      liker: req.user.sub,
+      likeId: like._id,
+      created: new Date()
+    });
+
     return serverResponse(res, 200, like);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -70,7 +81,8 @@ const addLikeToAPost = async (req, res) => {
 // @access  private
 const deleteLikeFromAPost = async (req, res) => {
   try {
-    const like = await removeLike(req.params.postId, req.user.sub);
+    const like = await removeLikeFromAPost(req.params.postId, req.user.sub);
+
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
     }
@@ -79,6 +91,10 @@ const deleteLikeFromAPost = async (req, res) => {
 
     post.numOfLikes--;
     await post.save();
+
+    await removeLikeOnPostListener;
+
+    activityEmitter.emit('deletePostLike', like._id);
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
@@ -155,7 +171,7 @@ const addLikeToAComment = async (req, res) => {
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
-    const like = await removeLike(req.params.likeId);
+    const like = await removeLikeFromAComment(req.params.commentId, req.user.sub);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
@@ -165,6 +181,10 @@ const deleteLikeFromAComment = async (req, res) => {
 
     comment.likes--;
     await comment.save();
+
+    await removeLikeOnCommentListener;
+
+    activityEmitter.emit('deleteCommentLike', like._id);
 
     return serverResponse(res, 200, like);
   } catch (error) {

@@ -1,5 +1,9 @@
 const Follow = require('../models/Follow.js');
 
+function getFollow(userId) {
+  return Follow.findOne({ user: userId });
+}
+
 async function getUserFollowing(userId) {
   const following = await Follow.find({ user: userId }).populate('following');
   return following.map(followee => ({
@@ -65,6 +69,7 @@ function getUserFollowingCount(userId) {
 }
 
 module.exports = {
+  getFollow,
   getUserFollowers,
   getUserFollowing,
   addFollowToUser,
