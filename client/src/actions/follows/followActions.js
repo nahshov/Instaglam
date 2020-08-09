@@ -5,8 +5,7 @@ import {
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
-  FOLLOWING_ERROR,
-  RESET_FOLLOWS
+  FOLLOWING_ERROR
 } from 'actions/follows/followTypes';
 
 export const getFollowers = userId => {
@@ -18,15 +17,16 @@ export const getFollowers = userId => {
 
       const { data: followers } = await axios.get(`/api/users/${userId}/follows/followers`);
 
-    dispatch({
-      type: SET_FOLLOWERS,
-      payload: followers
-    });
-  } catch (e) {
-    dispatch({
-      type: FOLLOWERS_ERROR
-    });
-  }
+      dispatch({
+        type: SET_FOLLOWERS,
+        payload: followers
+      });
+    } catch (e) {
+      dispatch({
+        type: FOLLOWERS_ERROR
+      });
+    }
+  };
 };
 
 export const getFollowing = userId => {
@@ -38,13 +38,14 @@ export const getFollowing = userId => {
 
       const { data: following } = await axios.get(`/api/users/${userId}/follows/following`);
 
-    dispatch({
-      type: SET_FOLLOWING,
-      payload: following
-    });
-  } catch (e) {
-    dispatch({
-      type: FOLLOWING_ERROR
-    });
-  }
+      dispatch({
+        type: SET_FOLLOWING,
+        payload: following
+      });
+    } catch (e) {
+      dispatch({
+        type: FOLLOWING_ERROR
+      });
+    }
+  };
 };
