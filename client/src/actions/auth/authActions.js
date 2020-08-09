@@ -16,9 +16,6 @@ import {
 import {
   RESET_FOLLOWS
 } from '../follows/followTypes';
-import {
-  RESET_USERS
-} from '../users/userTypes';
 
 export const register = ({ fullName, email, username, password }, setAlert) => {
   return async (
@@ -167,8 +164,5 @@ export const resetState = (dispatch) => {
   });
   dispatch({
     type: RESET_FOLLOWS
-  });
-  dispatch({
-    type: RESET_USERS
   });
 };

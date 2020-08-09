@@ -18,24 +18,35 @@ const CommentList = ({ post }) => {
     setIsPostModalOpen(true);
     commentHandler();
   };
+
+  const comments = post.comments.length < 2
+    ? post.comments
+    : [post.comments[0], post.comments[1]];
+
   return (
     <div>
-      {post.numOfComments > 2 ? (
-        <div className={styles.commentListWrapper}>
-          <Button btnRole="astext" onClick={handleClick}>
-            View all
-            {' '}
-            {post.numOfComments}
-            {' '}
-            comments
-          </Button>
-          {isPostModalOpen && (
-          <PostModal isOpen={isPostModalOpen} setModalOpen={setIsPostModalOpen} post={post} />
-          )}
-        </div>
-      ) : ''}
+      {
+        post.numOfComments > 2 ? (
+          <div className={styles.commentListWrapper}>
+            <Button btnRole="astext" onClick={handleClick}>
+              View all
+              {' '}
+              {post.numOfComments}
+              {' '}
+              comments
+            </Button>
+            {isPostModalOpen && (
+            <PostModal isOpen={isPostModalOpen} setModalOpen={setIsPostModalOpen} post={post} />
+            )}
+          </div>
+        ) : ''
+}
       <div>
-        <HomePagePostComments postComments={post.comments} />
+        <HomePagePostComments
+          postComments={
+            comments
+          }
+        />
       </div>
     </div>
   );

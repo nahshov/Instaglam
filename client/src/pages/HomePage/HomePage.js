@@ -7,14 +7,18 @@ import { getAllPosts, resetPosts } from 'actions/posts/postActions';
 let page = 0;
 
 const HomePage = () => {
-  const { posts: { posts, loading } } = useSelector(state => { return state; });
+  const { posts, loading } = useSelector(state => state.posts);
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(false);
+  let noMorePosts = false;
 
   function isScrolling() {
     if
     (window.innerHeight + document.documentElement.scrollTop
       !== document.documentElement.offsetHeight) {
+      if (!posts.length) {
+        noMorePosts = true;
+      }
       return;
     } setIsFetching(true);
   }
@@ -26,24 +30,26 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    dispatch(resetPosts);
     page = 0;
-    console.log('ty');
     dispatch(getAllPosts(page));
     window.addEventListener('scroll', isScrolling);
-    return () => window.removeEventListener('scroll', isScrolling);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', isScrolling);
+      dispatch(resetPosts());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (isFetching) {
-      getMorePosts();
-      console.log('hi');
+      if (!noMorePosts) {
+        getMorePosts();
+      }
     }
   }, [isFetching]);
 
   return (
     <div className={styles.container}>
-      {posts.length && !loading && posts.map(
+      {!!posts.length && !loading && posts.map(
         post => { return <HomePagePost key={post._id} post={post} />; }
       )}
     </div>

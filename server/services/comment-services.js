@@ -5,16 +5,16 @@ function getComment(commentId) {
 }
 
 function getCommentsOfPost(postId, includeComments = undefined) {
-  return Comment.find({ post: postId }, null, { limit: includeComments }).populate('user', 'username');
+  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments }).populate('user', 'username');
 }
 
 function getRepliesOfComment(commentId) {
   return Comment.find({ replyToComment: commentId });
 }
 
-function addComment(comment) {
+async function addComment(comment) {
   comment = new Comment(comment);
-  return comment.save();
+  return comment.save().then(c => c.populate('user -_id', 'username').execPopulate());
 }
 
 function removeComment(commentId) {

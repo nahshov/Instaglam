@@ -13,7 +13,7 @@ const structuredAuthSelector = createStructuredSelector({
 });
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useSelector(structuredAuthSelector);
+  const { isAuthenticated, loading } = useSelector(structuredAuthSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,23 +21,29 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   }, [dispatch]);
 
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!isAuthenticated) {
-          dispatch(logout());
-          return <Redirect to="/accounts/welcomepage" />;
-        }
-        if (Component) {
-          return (
-            <>
-              <Navbar {...props} />
-              <Component {...props} />
-            </>
-          );
-        }
-      }}
-    />
+    <>
+      {
+          !loading && (
+          <Route
+            {...rest}
+            render={(props) => {
+              if (!isAuthenticated) {
+                dispatch(logout());
+                return <Redirect to="/accounts/welcomepage" />;
+              }
+              if (Component) {
+                return (
+                  <>
+                    <Navbar {...props} />
+                    <Component {...props} />
+                  </>
+                );
+              }
+            }}
+          />
+          )
+      }
+    </>
   );
 };
 

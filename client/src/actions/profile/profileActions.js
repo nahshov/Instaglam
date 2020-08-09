@@ -12,8 +12,6 @@ export const getProfile = (userInfo) => async (dispatch) => {
         type: RESET_PROFILE_LOADING
       });
 
-      // const res = await axios.get(`/api/users/${userInfo}`);
-      // const res = await axios.get(`/api/posts/${userInfo}`);
       const [profile, posts] = await Promise.all([
         axios.get(`/api/users/${userInfo}`),
         axios.get(`/api/posts/${userInfo}`)

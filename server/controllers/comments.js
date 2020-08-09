@@ -77,7 +77,7 @@ const addCommentToPost = async (req, res) => {
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
-    return serverResponse(res, 200, response);
+    return serverResponse(res, 200, response.populate('user', 'username'));
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a comment'

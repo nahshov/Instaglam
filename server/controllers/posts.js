@@ -67,7 +67,7 @@ const getPosts = async (req, res) => {
     ]);
 
     if (posts.length === 0) {
-      return serverResponse(res, 404, { message: 'No posts found' });
+      return serverResponse(res, 200, []);
     }
 
     return serverResponse(res, 200, posts.map((post, index) => (
