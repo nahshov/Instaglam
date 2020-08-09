@@ -10,10 +10,18 @@ async function userHasLikes(userId, postId) {
   return !!like;
 }
 
-async function whereUserLiked(userId, postsIds) {
+async function isPostLiked(userId, postsIds) {
   const likes = await Like.find({ user: userId, post: { $in: postsIds } });
   return likes.reduce((result, like) => {
     result[like.post] = true;
+    return result;
+  }, {});
+}
+
+async function isCommentLiked(userId, commentsIds) {
+  const likes = await Like.find({ user: userId, comment: { $in: commentsIds } });
+  return likes.reduce((result, like) => {
+    result[like.comment] = true;
     return result;
   }, {});
 }
@@ -45,6 +53,9 @@ async function addLikeToComment(like) {
 function removeLike(postId, userId) {
   return Like.deleteOne({ post: postId, user: userId });
 }
+function removeLikeFromComment(commentId, userId) {
+  return Like.deleteOne({ comment: commentId, user: userId });
+}
 
 function removeLikesFromPost(postId) {
   return Like.deleteMany({ post: postId });
@@ -64,9 +75,11 @@ module.exports = {
   addLikeToPost,
   addLikeToComment,
   removeLike,
+  removeLikeFromComment,
   removeLikesFromPost,
   removeLikesFromComment,
   removeAllUserLikes,
   userHasLikes,
-  whereUserLiked
+  isPostLiked,
+  isCommentLiked
 };

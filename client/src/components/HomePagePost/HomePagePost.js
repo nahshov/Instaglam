@@ -24,15 +24,16 @@ const HomePagePost = ({
     media,
     created,
     _id: postId,
-    isUserLiked
+    isPostLiked
   } = post;
 
+  console.log(post)
   return (
     <article className={styles.postContainer}>
       <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} />
-      <HomePagePostMedia media={media} isLike={isUserLiked} postId={postId} />
+      <HomePagePostMedia media={media} isLike={isPostLiked} postId={postId} />
       <HomePagePostIconBar
-        isLike={isUserLiked}
+        isLike={isPostLiked}
         postId={postId}
       />
       <PostLikes

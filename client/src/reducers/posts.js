@@ -8,7 +8,9 @@ import {
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
-  RESET_POSTS, ADD_COMMENT_TO_POST
+  RESET_POSTS,
+  ADD_COMMENT_TO_POST,
+  TOGGLE_COMMENT_LIKE
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -69,11 +71,31 @@ export default function (state = initialState, action) {
             return (
               post._id === payload.postId
                 ? { ...post,
-                  isUserLiked: payload.isLike,
+                  isPostLiked: payload.isLike,
                   numOfLikes: post.numOfLikes + payload.numOfLikes }
                 : post);
           })
       };
+    case TOGGLE_COMMENT_LIKE:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === payload.postId) {
+            return {
+              ...post,
+              comments: post.comments.map(c => (
+                c._id === payload.commentId
+                  ? {
+                    ...c,
+                    isCommentLiked: payload.isCommentLiked,
+                    numOfLikes: c.numOfLikes + payload.numOfLikes 
+                  }
+                  : c))
+            };
+          }
+          return post;
+        }) };
+
     case ADD_COMMENT_TO_POST:
       return {
         ...state,

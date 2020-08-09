@@ -142,7 +142,7 @@ const addLikeToAComment = async (req, res) => {
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
-    const like = await removeLike(req.params.likeId);
+    const like = await removeLike(req.params.commentId, req.user.sub);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
@@ -153,7 +153,7 @@ const deleteLikeFromAComment = async (req, res) => {
     comment.likes--;
     await comment.save();
 
-    return serverResponse(res, 200, like);
+    return serverResponse(res, 200, { message: 'like successfully deleted' });
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a like'

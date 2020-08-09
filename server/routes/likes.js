@@ -19,7 +19,7 @@ module.exports = function (app) {
     .get('/api/comments/:commentId/likes', verifyUser, getLikesOfComment)
     .post('/api/comments/:commentId/likes', verifyUser, addLikeToAComment)
     .delete(
-      '/api/comments/:commentId/likes/:likeId',
+      '/api/comments/:commentId/likes',
       verifyUser,
       deleteLikeFromAComment
     );
