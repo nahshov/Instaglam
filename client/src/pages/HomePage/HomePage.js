@@ -31,11 +31,11 @@ const HomePage = () => {
 
   useEffect(() => {
     page = 0;
+    dispatch(resetPosts());
     dispatch(getAllPosts(page));
     window.addEventListener('scroll', isScrolling);
     return () => {
       window.removeEventListener('scroll', isScrolling);
-      dispatch(resetPosts());
     };
   }, [dispatch]);
 
