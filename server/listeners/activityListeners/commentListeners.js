@@ -7,12 +7,12 @@ let nextCommentsCheck = false;
 function checkComments() {
   if (!nextCommentsCheck) {
     nextCommentsCheck = true;
-    // setTimeout(() => {
-    const activities = Object.values(comments);
-    comments = {};
-    activities.map(addActivity);
-    nextCommentsCheck = false;
-    // }, 30000);
+    setTimeout(() => {
+      const activities = Object.values(comments);
+      comments = {};
+      activities.map(addActivity);
+      nextCommentsCheck = false;
+    }, 30000);
   }
 }
 
