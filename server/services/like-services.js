@@ -50,8 +50,12 @@ async function addLikeToComment(like) {
   return like.save();
 }
 
-function removeLike(postId, userId) {
-  return Like.deleteOne({ post: postId, user: userId });
+function removeLikeFromAPost(postId, userId) {
+  return Like.findOneAndDelete({ post: postId, user: userId });
+}
+
+function removeLikeFromAComment(commentId, userId) {
+  return Like.findOneAndDelete({ comment: commentId, user: userId });
 }
 function removeLikeFromComment(commentId, userId) {
   return Like.deleteOne({ comment: commentId, user: userId });
@@ -74,8 +78,8 @@ module.exports = {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLike,
-  removeLikeFromComment,
+  removeLikeFromAPost,
+  removeLikeFromAComment,
   removeLikesFromPost,
   removeLikesFromComment,
   removeAllUserLikes,
@@ -83,3 +87,4 @@ module.exports = {
   isPostLiked,
   isCommentLiked
 };
+git add
