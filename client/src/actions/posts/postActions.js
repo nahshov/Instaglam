@@ -8,6 +8,7 @@ import {
   SET_POSTS,
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
+  TOGGLE_COMMENT_LIKE,
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
@@ -95,7 +96,7 @@ export const submitAPost = (fd) => {
 };
 
 // toggle like of a post
-export const toggleLike = (postId, isLike) => {
+export const togglePostLike = (postId, isLike) => {
   return async dispatch => {
     try {
       if (postId) {
@@ -118,6 +119,37 @@ export const toggleLike = (postId, isLike) => {
     }
   };
 };
+
+// toggle like of a comment
+export const toggleCommentLike = (commentId, isLike, postId) => {
+  return async dispatch => {
+    try {
+      if (commentId) {
+        console.log(commentId);
+        if (isLike) {
+          console.log(isLike);
+
+          await axios.delete(`/api/comments/${commentId}/likes`);
+          dispatch({
+            type: TOGGLE_COMMENT_LIKE,
+            payload: { commentId, isCommentLiked: false, numOfLikes: -1, postId }
+          });
+          console.log('removed please')
+        } else {
+          await axios.post(`/api/comments/${commentId}/likes`);
+          dispatch({
+            type: TOGGLE_COMMENT_LIKE,
+            payload: { commentId, isCommentLiked: true, numOfLikes: 1, postId }
+          });
+          console.log('rotyyyyyy')
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 // get all likes of a post for like modal
 export const getAllLikesOfAPost = (postId) => {
   return async dispatch => {

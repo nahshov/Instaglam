@@ -12,7 +12,8 @@ const {
   removeLikesFromComment,
   // getPostLikes,
   userHasLikes,
-  whereUserLiked
+  isPostLiked,
+  isCommentLiked
 } = require('../services/like-services');
 
 const {
@@ -60,11 +61,14 @@ const getPosts = async (req, res) => {
     const posts = await getAllPosts(limit, skip);
     const postsIds = posts.map(p => p._id);
     const [postLikes, postsComments] = await Promise.all([
-      whereUserLiked(userId, postsIds),
+      isPostLiked(userId, postsIds),
       Promise.all(
         postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
       )
+
     ]);
+    const commentsIds = postsComments.flat().map(c => c._id);
+    const commentLiked = await isCommentLiked(userId, commentsIds);
 
     if (posts.length === 0) {
       return serverResponse(res, 200, []);
@@ -73,8 +77,10 @@ const getPosts = async (req, res) => {
     return serverResponse(res, 200, posts.map((post, index) => (
       {
         ...post.toObject(),
-        isUserLiked: !!postLikes[post._id],
-        comments: postsComments[index]
+        isPostLiked: !!postLikes[post._id],
+        comments: postsComments[index].map(
+          comment => ({ ...comment.toObject(), isCommentLiked: !!commentLiked[comment._id] })
+        )
       })));
   } catch (e) {
     return serverResponse(res, 500, {
@@ -116,7 +122,7 @@ const getOnePost = async (req, res) => {
       });
     }
 
-    return serverResponse(res, 200, { ...post.toObject(), isUserLiked: isUserLike });
+    return serverResponse(res, 200, { ...post.toObject(), isPostLiked: isUserLike });
   } catch (e) {
     res
       .status(500)

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from 'pages/HomePage/HomePage.module.scss';
 import HomePagePost from 'components/HomePagePost/HomePagePost';
+import NoPosts from 'components/NoPosts/NoPosts';
 import { getAllPosts, resetPosts } from 'actions/posts/postActions';
 
 let page = 0;
@@ -49,7 +50,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      {!!posts.length && !loading && posts.map(
+      {!posts.length && !loading ? <NoPosts /> : !!posts.length && !loading && posts.map(
         post => { return <HomePagePost key={post._id} post={post} />; }
       )}
     </div>

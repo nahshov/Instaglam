@@ -13,7 +13,7 @@ export const postPropType = {
   user: PropTypes.string,
   content: PropTypes.string,
   profilePic: PropTypes.string,
-  isUserliked: PropTypes.bool
+  isPostLiked: PropTypes.bool
 };
 
 export const likePropType = {
