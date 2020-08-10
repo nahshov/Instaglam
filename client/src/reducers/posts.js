@@ -88,7 +88,7 @@ export default function (state = initialState, action) {
                   ? {
                     ...c,
                     isCommentLiked: payload.isCommentLiked,
-                    numOfLikes: c.numOfLikes + payload.numOfLikes 
+                    numOfLikes: c.numOfLikes + payload.numOfLikes
                   }
                   : c))
             };

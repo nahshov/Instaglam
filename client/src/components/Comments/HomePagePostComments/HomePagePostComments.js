@@ -37,7 +37,10 @@ const HomePagePostComments = ({ postComments, postId }) => {
               <HeartIcon
                 isRed
                 isFilled={comment.isCommentLiked}
-                onClick={() => handleLike(comment)}
+                onClick={() => { 
+                  handleLike(comment)
+                  console.log(comment.isCommentLiked)
+                }}
               />
             </div>
           </div>
