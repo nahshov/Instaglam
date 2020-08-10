@@ -80,16 +80,17 @@ const addCommentToPost = async (req, res) => {
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
-    await commentListener;
+    if (post.user.toString() !== req.user.sub) {
+      await commentListener;
 
-    activityEmitter.emit('comment', {
-      post: req.params.postId,
-      postBy: post.user,
-      commenter: req.user.sub,
-      commentId: response._id,
-      created: new Date()
-    });
-
+      activityEmitter.emit('comment', {
+        post: req.params.postId,
+        postBy: post.user,
+        commenter: req.user.sub,
+        commentId: response._id,
+        created: new Date()
+      });
+    }
     return serverResponse(res, 200, response.populate('user', 'username'));
   } catch (error) {
     return serverResponse(res, 500, {
@@ -122,15 +123,17 @@ const addReplyToComment = async (req, res) => {
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
 
-    await replyListener;
+    if (comment.user.toString() !== req.user.sub) {
+      await replyListener;
 
-    activityEmitter.emit('reply', {
-      comment: req.params.commentId,
-      commentBy: comment.user,
-      replier: req.user.sub,
-      replyId: response._id,
-      created: new Date()
-    });
+      activityEmitter.emit('reply', {
+        comment: req.params.commentId,
+        commentBy: comment.user,
+        replier: req.user.sub,
+        replyId: response._id,
+        created: new Date()
+      });
+    }
 
     return serverResponse(res, 200, response);
   } catch (error) {

@@ -10,7 +10,6 @@ function getUserActivity(userId) {
 }
 
 function removeActivity(activityId) {
-  console.log(activityId);
   return Activity.updateOne({ 'activities.activityId': activityId }, { $pull: { activities: { activityId } } });
 }
 

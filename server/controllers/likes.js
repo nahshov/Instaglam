@@ -58,15 +58,17 @@ const addLikeToAPost = async (req, res) => {
     post.numOfLikes++;
     await post.save();
 
-    await likesOnPostListener;
+    if (post.user.toString() !== req.user.sub) {
+      await likesOnPostListener;
 
-    activityEmitter.emit('postLike', {
-      post: req.params.postId,
-      postBy: post.user,
-      liker: req.user.sub,
-      likeId: like._id,
-      created: new Date()
-    });
+      activityEmitter.emit('postLike', {
+        post: req.params.postId,
+        postBy: post.user,
+        liker: req.user.sub,
+        likeId: like._id,
+        created: new Date()
+      });
+    }
 
     return serverResponse(res, 200, like);
   } catch (error) {
@@ -145,16 +147,17 @@ const addLikeToAComment = async (req, res) => {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
 
-    await likesOnCommentListener;
+    if (comment.user.toString() !== req.user.sub) {
+      await likesOnCommentListener;
 
-    activityEmitter.emit('commentLike', {
-      comment: req.params.commentId,
-      commentBy: comment.user,
-      liker: req.user.sub,
-      likeId: like._id,
-      created: new Date()
-    });
-
+      activityEmitter.emit('commentLike', {
+        comment: req.params.commentId,
+        commentBy: comment.user,
+        liker: req.user.sub,
+        likeId: like._id,
+        created: new Date()
+      });
+    }
     comment.likes++;
     await comment.save();
 
