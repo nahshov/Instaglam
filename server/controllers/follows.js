@@ -8,6 +8,7 @@ const {
 const { followListener, removeFollowListener } = require('../listeners/activityListeners/followListeners');
 const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
+const { isFollowed } = require('../services/follow-services');
 
 // @route   GET '/api/users/:userId/follows/followers'
 // @desc    Get followers list of a user
@@ -15,7 +16,14 @@ const serverResponse = require('../utils/serverResponse');
 const getUserFollowersList = async (req, res) => {
   try {
     const follows = await getUserFollowers(req.params.userId);
-    return serverResponse(res, 200, follows);
+    const newFollowsPromisesArr = follows.map(async f => ({
+      ...f,
+      isFollowed: await isFollowed(req.user.sub, f._id)
+    }));
+
+    const newFollows = await Promise.all(newFollowsPromisesArr);
+
+    return serverResponse(res, 200, newFollows);
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to get followers list'

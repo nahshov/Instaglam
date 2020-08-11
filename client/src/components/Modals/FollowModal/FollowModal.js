@@ -9,6 +9,7 @@ import Modal from '../Modal';
 import ModalListItem from '../ModalList/ModalListItem';
 import ProfilePic from '../../ProfilePic/ProfilePic';
 import FollowButton from '../../FollowButton/FollowButton';
+import { toggleFollow } from '../../../actions/profile/profileActions';
 
 const FollowModal = ({
   title,
@@ -43,7 +44,10 @@ const FollowModal = ({
                 <ProfilePic size="medium" url={f.profilePic} style={{ marginRight: '10px' }} />
                 {f.username}
               </div>
-              <FollowButton />
+              <FollowButton
+                handleFollow={() => dispatch(toggleFollow(f._id, f.isFollowed))}
+                isFollowed={f.isFollowed}
+              />
             </ModalListItem>
           ))
         }
