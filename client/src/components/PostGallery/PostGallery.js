@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Post from 'components/Post/Post';
+import { changeUrl } from 'utils/changeUrl';
+import { postPropType } from 'customPropTypes';
 import styles from './PostGallery.module.scss';
-import { changeUrl } from '../../utils/changeUrl';
 
-const PostGallery = ({ post, isGallery }) => {
-  const { postsOfUser } = useSelector(state => { return state.posts; });
+const PostGallery = ({ post, posts, isGallery }) => {
   const [currentPost, setCurrentPost] = useState(post);
-  const currentPostIndex = postsOfUser.indexOf(currentPost);
+  const currentPostIndex = posts.indexOf(currentPost);
 
   const next = () => {
-    if (currentPostIndex > postsOfUser.length - 1) {
+    if (currentPostIndex > posts.length - 1) {
       return;
     }
 
-    changeUrl(`/p/${postsOfUser[currentPostIndex + 1]._id}`, 'post modal path');
-    setCurrentPost(postsOfUser[currentPostIndex + 1]);
+    changeUrl(`/p/${posts[currentPostIndex + 1]._id}`, 'post modal path');
+    setCurrentPost(posts[currentPostIndex + 1]);
   };
 
   const prev = () => {
@@ -25,8 +24,8 @@ const PostGallery = ({ post, isGallery }) => {
       return;
     }
 
-    changeUrl(`/p/${postsOfUser[currentPostIndex - 1]._id}`, 'post modal path');
-    setCurrentPost(postsOfUser[currentPostIndex - 1]);
+    changeUrl(`/p/${posts[currentPostIndex - 1]._id}`, 'post modal path');
+    setCurrentPost(posts[currentPostIndex - 1]);
   };
 
   return (
@@ -39,7 +38,7 @@ const PostGallery = ({ post, isGallery }) => {
           <FaChevronLeft />
         </button>
         )}
-        {currentPostIndex < postsOfUser.length - 1 && (
+        {currentPostIndex < posts.length - 1 && (
         <button className={styles.right} type="button" onClick={next}>
           <FaChevronRight />
         </button>
@@ -51,15 +50,9 @@ const PostGallery = ({ post, isGallery }) => {
 };
 
 PostGallery.propTypes = {
-  post: PropTypes.shape({
-    likes: PropTypes.number,
-    comments: PropTypes.number,
-    _id: PropTypes.string,
-    media: PropTypes.string,
-    user: PropTypes.string,
-    content: PropTypes.string
-  }).isRequired,
-  isGallery: PropTypes.bool.isRequired
+  post: PropTypes.shape(postPropType).isRequired,
+  isGallery: PropTypes.bool.isRequired,
+  posts: PropTypes.arrayOf(postPropType).isRequired
 };
 
 export default PostGallery;
