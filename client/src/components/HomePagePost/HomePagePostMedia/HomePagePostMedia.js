@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { postPropType, likePropType } from 'customPropTypes';
-import { toggleLike } from 'actions/posts/postActions';
+import { togglePostLike } from 'actions/posts/postActions';
 import styles from './HomePagePostMedia.module.scss';
 
 const HomePagePostMedia = ({ media, postId, isLike }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
-    dispatch(toggleLike(postId, isLike));
+    dispatch(togglePostLike(postId, isLike));
   };
 
   return (

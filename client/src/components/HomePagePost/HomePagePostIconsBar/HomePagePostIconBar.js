@@ -4,7 +4,7 @@ import { RiChat3Line } from 'react-icons/ri';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import BookMarkIcon from 'components/Icons/BookMarkIcon/BookMarkIcon';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
-import { toggleLike } from 'actions/posts/postActions';
+import { togglePostLike } from 'actions/posts/postActions';
 import { postPropType, likePropType } from 'customPropTypes';
 
 import styles from './HomePagePostIconBar.module.scss';
@@ -12,7 +12,7 @@ import styles from './HomePagePostIconBar.module.scss';
 const HomePagePostIconBar = ({ isLike, postId }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
-    dispatch(toggleLike(postId, isLike));
+    dispatch(togglePostLike(postId, isLike));
   };
 
   return (

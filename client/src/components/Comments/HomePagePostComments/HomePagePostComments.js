@@ -1,11 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import PropTypes from 'prop-types';
+import { toggleCommentLike } from 'actions/posts/postActions';
 import styles from './HomePagePostComments.module.scss';
 
-const HomePagePostComments = ({ postComments }) => {
+const HomePagePostComments = ({ postComments, postId }) => {
+  // const dispatch = useDispatch();
+  // const handleLike = () => {
+  //   dispatch(toggleCommentLike(commentId, isLike));
+  // };
   console.log(postComments);
+  const dispatch = useDispatch();
+  const handleLike = (comment) => {
+    dispatch(toggleCommentLike(comment._id, comment.isCommentLiked, postId));
+  };
 
   return (
     <div className={styles.homePagePostCommentUserIdentifier}>
@@ -24,7 +34,14 @@ const HomePagePostComments = ({ postComments }) => {
               </span>
             </div>
             <div>
-              <HeartIcon />
+              <HeartIcon
+                isRed
+                isFilled={comment.isCommentLiked}
+                onClick={() => { 
+                  handleLike(comment)
+                  console.log(comment.isCommentLiked)
+                }}
+              />
             </div>
           </div>
         );
@@ -34,7 +51,8 @@ const HomePagePostComments = ({ postComments }) => {
 };
 
 HomePagePostComments.propTypes = {
-  postComments: PropTypes.arrayOf({}).isRequired
+  postComments: PropTypes.arrayOf({}).isRequired,
+  postId: PropTypes.string.isRequired
 };
 
 export default HomePagePostComments;

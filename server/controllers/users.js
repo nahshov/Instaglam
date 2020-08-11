@@ -12,6 +12,7 @@ const {
   removeAllUserFollowings,
   removeAllUserFollowers
 } = require('../services/follow-services');
+const { removeAllUserActivitiesFeed, removeAllUserActivities } = require('../services/activity-services');
 const { deleteFile, uploadFile } = require('../services/cloud-services');
 const { getUserFollowersCount, getUserFollowingCount, isFollowed } = require('../services/follow-services');
 const serverResponse = require('../utils/serverResponse');
@@ -127,6 +128,8 @@ const deleteProfile = async (req, res) => {
         removeAllUserPosts(req.user.sub),
         removeAllUserFollowings(req.user.sub),
         removeAllUserFollowers(req.user.sub),
+        removeAllUserActivitiesFeed(req.user.sub),
+        removeAllUserActivities(req.user.sub),
         deleteUser(req.user.email)
       ]);
 
@@ -135,6 +138,7 @@ const deleteProfile = async (req, res) => {
 
     return serverResponse(res, 404, { message: 'User not found' });
   } catch (e) {
+    console.log(e);
     return serverResponse(res, 500, {
       message: 'Internal error while trying to delete user'
     });

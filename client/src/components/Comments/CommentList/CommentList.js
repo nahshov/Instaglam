@@ -43,9 +43,8 @@ const CommentList = ({ post }) => {
 }
       <div>
         <HomePagePostComments
-          postComments={
-            comments
-          }
+          postComments={comments}
+          postId={post._id}
         />
       </div>
     </div>

@@ -1,9 +1,12 @@
 const {
+  getFollow,
   getUserFollowers,
   getUserFollowing,
   addFollowToUser,
   removeFollowFromUser
 } = require('../services/follow-services');
+const { followListener, removeFollowListener } = require('../listeners/activityListeners/followListeners');
+const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 
 // @route   GET '/api/users/:userId/follows/followers'
@@ -43,6 +46,16 @@ const addFollowToAUser = async (req, res) => {
       user: req.user.sub,
       following: req.params.userId
     });
+
+    await followListener;
+
+    activityEmitter.emit('follow', {
+      following: req.params.userId,
+      follower: req.user.sub,
+      followId: follow._id,
+      created: new Date()
+    });
+
     return serverResponse(res, 200, follow);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -56,10 +69,21 @@ const addFollowToAUser = async (req, res) => {
 // @access  private
 const removeFollow = async (req, res) => {
   try {
+    const follow = await getFollow(req.user.sub);
+
+    if (!follow) {
+      return serverResponse(res, 404, { message: "Follow doesn't exist" });
+    }
+
     await removeFollowFromUser(
       req.params.userId,
       req.user.sub
     );
+
+    await removeFollowListener;
+
+    activityEmitter.emit('removeFollow', follow._id);
+
     return serverResponse(res, 200, { message: 'successfully removed follow' });
   } catch (error) {
     return serverResponse(res, 500, {

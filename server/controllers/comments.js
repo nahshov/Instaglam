@@ -11,6 +11,9 @@ const {
 const { removeLikesFromComment } = require('../services/like-services');
 
 const { getPost } = require('../services/post-services');
+const { commentListener, removeCommentListener } = require('../listeners/activityListeners/commentListeners');
+const { replyListener } = require('../listeners/activityListeners/replyListener');
+const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
 
@@ -77,6 +80,17 @@ const addCommentToPost = async (req, res) => {
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
+    if (post.user.toString() !== req.user.sub) {
+      await commentListener;
+
+      activityEmitter.emit('comment', {
+        post: req.params.postId,
+        postBy: post.user,
+        commenter: req.user.sub,
+        commentId: response._id,
+        created: new Date()
+      });
+    }
     return serverResponse(res, 200, response.populate('user', 'username'));
   } catch (error) {
     return serverResponse(res, 500, {
@@ -108,6 +122,18 @@ const addReplyToComment = async (req, res) => {
     post.numOfComments++;
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
+
+    if (comment.user.toString() !== req.user.sub) {
+      await replyListener;
+
+      activityEmitter.emit('reply', {
+        comment: req.params.commentId,
+        commentBy: comment.user,
+        replier: req.user.sub,
+        replyId: response._id,
+        created: new Date()
+      });
+    }
 
     return serverResponse(res, 200, response);
   } catch (error) {
@@ -148,6 +174,10 @@ const removeAComment = async (req, res) => {
       removeLikesFromComment(req.params.commentId),
       ...removeLikesFromReplyPromises,
       post.save()]);
+
+    await removeCommentListener;
+
+    activityEmitter.emit('deleteComment', getAComment._id);
 
     return serverResponse(res, 200, comment);
   } catch (error) {
