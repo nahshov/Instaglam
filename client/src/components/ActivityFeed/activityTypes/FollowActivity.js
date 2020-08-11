@@ -1,35 +1,22 @@
 import React from 'react';
 
-const Follow = ({ profilePic, usernames, activityLength }) => {
+const FollowActivity = ({ profilePic, usernames, activityLength }) => {
   let followActivityText;
+
   if (activityLength > 2) {
-    followActivityText = `and
-    ${activityLength - 2}
-    {' '}
-    more started following you;`;
-  } else if (activityLength = 2) {
-    
+    followActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
+    more started following you.`;
+  } else if (activityLength === 2) {
+    followActivityText = `${usernames[0]} and ${usernames[1]} started following you.`;
+  } else {
+    followActivityText = `${usernames} started following you.`;
   }
   return (
-    <div>
+    <>
       <img src={profilePic} alt="):" />
-      <span>{usernames}</span>
-      { activityLength > 2 ? (
-        <span>
-          and
-          {activityLength - 2}
-          {' '}
-          more started following you
-        </span>
-      ) : (
-        <span>
-          {usernames}
-          {' '}
-          started following you
-        </span>
-      )}
-    </div>
+      <span>{followActivityText}</span>
+    </>
   );
 };
 
-export default Follow;
+export default FollowActivity;

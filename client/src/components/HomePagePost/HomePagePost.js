@@ -27,7 +27,6 @@ const HomePagePost = ({
     isPostLiked
   } = post;
 
-  console.log(post)
   return (
     <article className={styles.postContainer}>
       <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} />

@@ -125,23 +125,18 @@ export const toggleCommentLike = (commentId, isLike, postId) => {
   return async dispatch => {
     try {
       if (commentId) {
-        console.log(commentId);
         if (isLike) {
-          console.log(isLike);
-
           await axios.delete(`/api/comments/${commentId}/likes`);
           dispatch({
             type: TOGGLE_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: false, numOfLikes: -1, postId }
           });
-          console.log('removed please')
         } else {
           await axios.post(`/api/comments/${commentId}/likes`);
           dispatch({
             type: TOGGLE_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: true, numOfLikes: 1, postId }
           });
-          console.log('rotyyyyyy')
         }
       }
     } catch (e) {
