@@ -26,7 +26,7 @@ const HomePagePost = ({
     _id: postId,
     isPostLiked
   } = post;
-
+  const loading = false;
   return (
     <article className={styles.postContainer}>
       <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} />

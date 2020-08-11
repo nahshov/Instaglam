@@ -72,7 +72,7 @@ export const getAllPosts = (page) => {
       const { data: posts } = await axios.get('/api/posts', { params: { includeComments: 2, page } });
       dispatch({
         type: SET_POSTS,
-        payload: posts
+        payload: { posts, noMorePosts: !posts.length }
       });
     } catch (e) {
       dispatch({
@@ -90,7 +90,7 @@ export const submitAPost = (fd) => {
       dispatch(loadUser());
       window.location.reload();
     } catch (e) {
-      const { message } = e.response.data;
+      console.log(e);
     }
   };
 };
@@ -171,7 +171,6 @@ export const getAllCommentsOfAPost = (postId) => {
           type: GET_ALL_COMMENTS_OF_A_POST,
           payload: commentsOfPost.data
         });
-        console.log(commentsOfPost.data);
       }
     } catch (e) {
       console.log(e);
@@ -191,7 +190,6 @@ export const addAComment = (postId, comment) => {
           };
 
           const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
-          console.log(res.data);
 
           dispatch({
             type: ADD_COMMENT_TO_POST,

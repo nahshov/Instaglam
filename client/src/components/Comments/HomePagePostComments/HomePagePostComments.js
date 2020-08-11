@@ -11,7 +11,6 @@ const HomePagePostComments = ({ postComments, postId }) => {
   // const handleLike = () => {
   //   dispatch(toggleCommentLike(commentId, isLike));
   // };
-  console.log(postComments);
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     dispatch(toggleCommentLike(comment._id, comment.isCommentLiked, postId));
@@ -37,9 +36,8 @@ const HomePagePostComments = ({ postComments, postId }) => {
               <HeartIcon
                 isRed
                 isFilled={comment.isCommentLiked}
-                onClick={() => { 
-                  handleLike(comment)
-                  console.log(comment.isCommentLiked)
+                onClick={() => {
+                  handleLike(comment);
                 }}
               />
             </div>

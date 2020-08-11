@@ -9,6 +9,7 @@ import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
 import { profilePropType } from 'customPropTypes';
 import { toggleFollow } from 'actions/profile/profileActions';
 import SocialStatusList from './SocialStatusList';
+import FollowButton from '../../components/FollowButton/FollowButton';
 
 const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
@@ -42,15 +43,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
               </>
             )
             : (
-              <>
-                <Button
-                  style={{ marginLeft: '30px', fontWeight: 'bold', background: `${profile.isFollowed ? '#ccc' : ''}` }}
-                  btnRole="primary"
-                  onClick={handleFollow}
-                >
-                  {profile.isFollowed ? 'Unfollow' : 'Follow'}
-                </Button>
-              </>
+              <FollowButton handleFollow={handleFollow} isFollowed={profile.isFollowed} />
             )}
         </div>
         <SocialStatusList

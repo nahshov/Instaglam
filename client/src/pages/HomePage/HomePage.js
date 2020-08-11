@@ -8,20 +8,17 @@ import { getAllPosts, resetPosts } from 'actions/posts/postActions';
 let page = 0;
 
 const HomePage = () => {
-  const { posts, loading } = useSelector(state => state.posts);
+  const { posts, loading, noMorePosts } = useSelector(state => state.posts);
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(false);
-  let noMorePosts = false;
 
   function isScrolling() {
     if
     (window.innerHeight + document.documentElement.scrollTop
       !== document.documentElement.offsetHeight) {
-      if (!posts.length) {
-        noMorePosts = true;
-      }
       return;
-    } setIsFetching(true);
+    }
+    setIsFetching(true);
   }
 
   function getMorePosts() {
@@ -32,19 +29,19 @@ const HomePage = () => {
 
   useEffect(() => {
     page = 0;
+    dispatch(resetPosts());
     dispatch(getAllPosts(page));
     window.addEventListener('scroll', isScrolling);
     return () => {
       window.removeEventListener('scroll', isScrolling);
-      dispatch(resetPosts());
     };
   }, [dispatch]);
 
   useEffect(() => {
-    if (isFetching) {
-      if (!noMorePosts) {
-        getMorePosts();
-      }
+    if (isFetching && !noMorePosts) {
+      getMorePosts();
+    } else {
+      return;
     }
   }, [isFetching]);
 
