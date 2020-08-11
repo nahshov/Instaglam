@@ -5,7 +5,7 @@ import styles from './ProfilePic.module.scss';
 const ProfilePic = ({ url = '', size = '', ...otherProps }) => {
   return (
     <div
-      className={`${styles.ProfilePic} ${styles[size]}`}
+      className={`${styles.ProfilePic} ${styles[size]} ${otherProps.className || ''}`}
       {...otherProps}
     >
       <img alt="user avatar" src={url} />
