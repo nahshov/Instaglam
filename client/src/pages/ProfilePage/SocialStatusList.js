@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import FollowModal from 'components/Modals/FollowModal/FollowModal';
-import { getFollowers, getFollowing } from 'actions/follows/followActions';
 import styles from './ProfilePage.module.scss';
 
 const SocialStatusList = ({ postCount, followingCount, followersCount, userId }) => {
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
+
+  console.log('i rendered');
 
   return (
     <ul className={styles.socialStatusList}>
@@ -26,7 +25,6 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
           onClick={() => {
             setModalTitle('Followers');
             setIsModalOpen(true);
-            dispatch(getFollowers(userId));
           }}
         >
           {`${followersCount || 0} `}
@@ -40,7 +38,6 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
           onClick={() => {
             setModalTitle('Following');
             setIsModalOpen(true);
-            dispatch(getFollowing(userId));
           }}
         >
           {`${followingCount || 0}`}
@@ -48,10 +45,10 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
           following
         </Button>
       </li>
-      {isModalOpen && modalTitle && (
+      {isModalOpen && modalTitle && userId && (
         <FollowModal
+          userId={userId}
           title={modalTitle}
-          setModalTitle={setModalTitle}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           isAnimated

@@ -1,14 +1,32 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getFollowers, getFollowing } from 'actions/follows/followActions';
+import { conditionalFollowSelector } from 'actions/follows/followSelectors';
 import ModalList from '../ModalList/ModalList';
 import Modal from '../Modal';
 
-const FollowModal = ({ title, setModalTitle, isModalOpen, setIsModalOpen, ...otherProps }) => {
+const FollowModal = ({
+  title,
+  isModalOpen,
+  setIsModalOpen,
+  userId,
+  ...otherProps }) => {
+  const follow = useSelector(state => conditionalFollowSelector(title)(state));
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    return () => {
-      setModalTitle('');
-    };
-  }, [setModalTitle]);
+    if (title === 'Followers') {
+      dispatch(getFollowers(userId));
+    } else {
+      dispatch(getFollowing(userId));
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(follow);
+  }, [follow]);
 
   return (
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>
@@ -22,9 +40,9 @@ const FollowModal = ({ title, setModalTitle, isModalOpen, setIsModalOpen, ...oth
 
 FollowModal.propTypes = {
   title: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
-  setIsModalOpen: PropTypes.func.isRequired,
-  setModalTitle: PropTypes.func.isRequired
+  setIsModalOpen: PropTypes.func.isRequired
 };
 
 export default FollowModal;
