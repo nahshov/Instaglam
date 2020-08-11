@@ -42,9 +42,10 @@ const HomePage = () => {
 
   useEffect(() => {
     if (isFetching) {
+      console.log(!noMorePosts);
       if (!noMorePosts) {
         getMorePosts();
-      }
+      } else return;
     }
   }, [isFetching]);
 

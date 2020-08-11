@@ -26,6 +26,7 @@ const HomePagePost = ({
     _id: postId,
     isPostLiked
   } = post;
+  const loading = false;
 
   console.log(post)
   return (
