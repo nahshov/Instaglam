@@ -8,8 +8,6 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
 
-  console.log('i rendered');
-
   return (
     <ul className={styles.socialStatusList}>
       <li>

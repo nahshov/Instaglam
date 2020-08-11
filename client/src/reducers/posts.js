@@ -19,6 +19,7 @@ const initialState = {
   postsOfUser: [],
   postsOfUserLoading: true,
   post: {},
+  noMorePosts: false,
   uploadPostLoadingProgress: '',
   postLikes: [],
   error: ''
@@ -31,7 +32,8 @@ export default function (state = initialState, action) {
     case SET_POSTS:
       return {
         ...state,
-        posts: [...state.posts, ...payload],
+        posts: [...state.posts, ...payload.posts],
+        noMorePosts: payload.noMorePosts,
         loading: false,
         error: ''
       };

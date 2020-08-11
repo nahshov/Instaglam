@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addAComment } from 'actions/posts/postActions';
 // import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './CommentForm.module.scss';
@@ -29,7 +29,7 @@ const CommentForm = ({ postId }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
-      <textarea onChange={handleChange} id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
+      <textarea value={inputValue} onChange={handleChange} id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
       <button type="submit" disabled={checkDisabled()} className={styles.postButton}>Post</button>
       {/* {loading ? <LoadingSpinner style={{ width: '24px' }} /> : setInputValue('') } */}
     </form>

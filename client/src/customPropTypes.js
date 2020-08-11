@@ -10,7 +10,15 @@ export const postPropType = {
   numOfComments: PropTypes.number,
   _id: PropTypes.string,
   media: PropTypes.string,
-  user: PropTypes.string,
+  user: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.shape(
+      {
+        _id: PropTypes.string,
+        username: PropTypes.string,
+        profilePic: PropTypes.string
+      }
+    )
+  ]),
   content: PropTypes.string,
   profilePic: PropTypes.string,
   isPostLiked: PropTypes.bool

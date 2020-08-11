@@ -25,7 +25,7 @@ const FollowModal = ({
   }, []);
 
   useEffect(() => {
-    console.log(follow);
+    // console.log(follow);
   }, [follow]);
 
   return (

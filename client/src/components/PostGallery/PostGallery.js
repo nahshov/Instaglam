@@ -8,25 +8,29 @@ import styles from './PostGallery.module.scss';
 
 const PostGallery = ({ post, posts, isGallery }) => {
   const [currentPost, setCurrentPost] = useState(post);
-  const currentPostIndex = posts.indexOf(currentPost);
+  const currentPostIndex = posts ? posts.indexOf(currentPost) : 0;
 
-  const next = () => {
-    if (currentPostIndex > posts.length - 1) {
-      return;
-    }
+  let next;
+  let prev;
+  if (posts) {
+    next = () => {
+      if (currentPostIndex > posts.length - 1) {
+        return;
+      }
 
-    changeUrl(`/p/${posts[currentPostIndex + 1]._id}`, 'post modal path');
-    setCurrentPost(posts[currentPostIndex + 1]);
-  };
+      changeUrl(`/p/${posts[currentPostIndex + 1]._id}`, 'post modal path');
+      setCurrentPost(posts[currentPostIndex + 1]);
+    };
 
-  const prev = () => {
-    if (currentPostIndex < 0) {
-      return;
-    }
+    prev = () => {
+      if (currentPostIndex < 0) {
+        return;
+      }
 
-    changeUrl(`/p/${posts[currentPostIndex - 1]._id}`, 'post modal path');
-    setCurrentPost(posts[currentPostIndex - 1]);
-  };
+      changeUrl(`/p/${posts[currentPostIndex - 1]._id}`, 'post modal path');
+      setCurrentPost(posts[currentPostIndex - 1]);
+    };
+  }
 
   return (
     <div className={styles.Gallery}>
@@ -52,7 +56,7 @@ const PostGallery = ({ post, posts, isGallery }) => {
 PostGallery.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
   isGallery: PropTypes.bool.isRequired,
-  posts: PropTypes.arrayOf(postPropType).isRequired
+  posts: PropTypes.arrayOf(PropTypes.shape(postPropType)).isRequired
 };
 
 export default PostGallery;
