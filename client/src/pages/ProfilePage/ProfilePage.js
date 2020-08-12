@@ -34,7 +34,7 @@ const ProfilePage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {!profileLoading && (
+        {!profileLoading && profile && profile.posts.length && (
         <>
           <ProfileHeader
             profile={profile}
