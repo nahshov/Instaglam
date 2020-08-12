@@ -58,20 +58,20 @@ export const resetFollows = (dispatch) => {
   });
 };
 
-export const toggleFollowing = (userId, isFollowing) => async dispatch => {
+export const toggleFollowing = (userId, isFollowing, setLocalLoading) => async dispatch => {
   try {
-    dispatch({
-      type: RESET_FOLLOWING_LOADING
-    });
+    setLocalLoading(true);
 
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);
+      setLocalLoading(false);
       dispatch({
         type: TOGGLE_FOLLOWING,
         payload: { isFollowed: true, userId }
       });
     } else {
       await axios.delete(`/api/users/${userId}/follows`);
+      setLocalLoading(false);
       dispatch({
         type: TOGGLE_FOLLOWING,
         payload: { isFollowed: false, userId }
@@ -82,19 +82,19 @@ export const toggleFollowing = (userId, isFollowing) => async dispatch => {
   }
 };
 
-export const toggleFollowers = (userId, isFollowing) => async dispatch => {
+export const toggleFollowers = (userId, isFollowing, setLocalLoading) => async dispatch => {
   try {
-    dispatch({
-      type: RESET_FOLLOWERS_LOADING
-    });
+    setLocalLoading(true);
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);
+      setLocalLoading(false);
       dispatch({
         type: TOGGLE_FOLLOWERS,
         payload: { isFollowed: true, userId }
       });
     } else {
       await axios.delete(`/api/users/${userId}/follows`);
+      setLocalLoading(false);
       dispatch({
         type: TOGGLE_FOLLOWERS,
         payload: { isFollowed: false, userId }

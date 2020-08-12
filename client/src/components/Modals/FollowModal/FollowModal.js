@@ -10,7 +10,6 @@ import { profileSelector } from 'actions/profile/profileSelectors';
 import { Link } from 'react-router-dom';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
-import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import ModalList from '../ModalList/ModalList';
 import styles from './FollowModal.module.scss';
 import Modal from '../Modal';
@@ -44,9 +43,9 @@ const FollowModal = ({
     }
   }, []);
 
-  const handleFollow = (f) => {
+  const handleFollow = (f, setLocalLoading) => {
     if (title === 'Followers') {
-      dispatch(toggleFollowers(f._id, f.isFollowed));
+      dispatch(toggleFollowers(f._id, f.isFollowed, setLocalLoading));
       if (profile.username === authenticatedUser.username) {
         if (f.isFollowed) {
           dispatch(setNumOfFollowing(-1));
@@ -55,7 +54,7 @@ const FollowModal = ({
         }
       }
     } else {
-      dispatch(toggleFollowing(f._id, f.isFollowed));
+      dispatch(toggleFollowing(f._id, f.isFollowed, setLocalLoading));
       if (profile.username === authenticatedUser.username) {
         if (f.isFollowed) {
           dispatch(setNumOfFollowing(-1));
@@ -70,10 +69,9 @@ const FollowModal = ({
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>
       <div className={styles.modalContainer}>
         <h1 className={styles.title}>{title}</h1>
-        {follows.loading ? <LoadingSpinner style={{ width: '30%', margin: '30px auto' }} /> : (
-          <ModalList className={styles.followList}>
-            {
-            !follows.follows.length
+        <ModalList className={styles.followList}>
+          {
+            !follows.follows.length && !follows.loading
               ? (
                 <ModalListItem>
                   {title === 'Followers' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
@@ -87,15 +85,14 @@ const FollowModal = ({
                   </div>
                   {f.username !== authenticatedUser.username && (
                   <FollowButton
-                    handleFollow={() => handleFollow(f)}
+                    handleFollow={(setLocalLoading) => handleFollow(f, setLocalLoading)}
                     isFollowed={f.isFollowed}
                   />
                   )}
                 </li>
               )))
           }
-          </ModalList>
-        )}
+        </ModalList>
       </div>
     </Modal>
   );
