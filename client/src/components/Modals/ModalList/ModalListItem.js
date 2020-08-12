@@ -9,7 +9,7 @@ const ModalListItem = ({ children, ...otherProps }) => {
   delete otherProps.className;
 
   return (
-    <li className={`${styles.listItem} ${classNames}`} {...otherProps}>
+    <li className={`${styles.listItem} ${classNames || ''}`} {...otherProps}>
       {children}
     </li>
   );

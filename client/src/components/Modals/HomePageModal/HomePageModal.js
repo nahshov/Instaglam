@@ -12,6 +12,7 @@ const HomePageModal = ({ postId = '', isModalOpen, setModalOpen }) => {
     <Modal
       isOpen={isModalOpen}
       setModalOpen={setModalOpen}
+      isAnimated
     >
       <ModalList>
         <ModalListItem>

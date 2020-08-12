@@ -6,7 +6,7 @@ const ModalList = ({ children, ...otherProps }) => {
   const classNames = otherProps.className;
 
   return (
-    <ul className={`${styles.list} ${classNames}`} {...otherProps}>
+    <ul className={`${styles.list} ${classNames || ''}`} {...otherProps}>
       {children}
     </ul>
   );
