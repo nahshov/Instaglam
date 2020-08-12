@@ -4,7 +4,7 @@ const followSelector = state => { return state.follow; };
 
 export const conditionalFollowSelector = (type) => createSelector(
   [followSelector],
-  follow => (type === 'Followers' ? follow.followers : follow.following)
+  follow => (type === 'Followers' ? { follows: follow.followers, loading: follow.followersLoading } : { follows: follow.following, loading: follow.followingLoading })
 );
 
 export const followingSelector = createSelector(

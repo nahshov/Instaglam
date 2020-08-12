@@ -9,11 +9,12 @@ import FollowButton from 'components/FollowButton/FollowButton';
 import { profileSelector } from 'actions/profile/profileSelectors';
 import { Link } from 'react-router-dom';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
+import { setNumOfFollowing } from 'actions/profile/profileActions';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import ModalList from '../ModalList/ModalList';
 import styles from './FollowModal.module.scss';
 import Modal from '../Modal';
 import ModalListItem from '../ModalList/ModalListItem';
-import { setNumOfFollowing } from '../../../actions/profile/profileActions';
 
 const FollowModalSelector = title => createStructuredSelector({
   follows: conditionalFollowSelector(title),
@@ -69,15 +70,16 @@ const FollowModal = ({
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>
       <div className={styles.modalContainer}>
         <h1 className={styles.title}>{title}</h1>
-        <ModalList className={styles.followList}>
-          {
-            !follows.length
+        {follows.loading ? <LoadingSpinner style={{ width: '30%', margin: '30px auto' }} /> : (
+          <ModalList className={styles.followList}>
+            {
+            !follows.follows.length
               ? (
                 <ModalListItem>
                   {title === 'Followers' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
                 </ModalListItem>
               )
-              : (follows.map(f => (
+              : (follows.follows.map(f => (
                 <li key={f.created} className={styles.followItem}>
                   <div className={styles.userInfo}>
                     <ProfilePic size="medium" url={f.profilePic} style={{ marginRight: '10px' }} />
@@ -92,7 +94,8 @@ const FollowModal = ({
                 </li>
               )))
           }
-        </ModalList>
+          </ModalList>
+        )}
       </div>
     </Modal>
   );
