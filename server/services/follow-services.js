@@ -6,7 +6,7 @@ function getFollow(userId) {
 
 async function getUserFollowing(userId) {
   const following = await Follow.find({ user: userId }).populate('following');
-  console.log(following);
+
   return following.map(followee => ({
     username: followee.following.username,
     fullName: followee.following.fullName,

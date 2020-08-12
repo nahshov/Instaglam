@@ -11,8 +11,6 @@ import {
   TOGGLE_FOLLOWING
 } from 'actions/follows/followTypes';
 
-import { getProfile } from '../profile/profileActions';
-
 export const getFollowers = userId => async dispatch => {
   try {
     dispatch({
