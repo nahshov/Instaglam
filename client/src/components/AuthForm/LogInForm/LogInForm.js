@@ -20,20 +20,18 @@ const LogInForm = () => {
 
   const {
     isAuthenticated, loading
-  } = useSelector(state => { return state.auth; });
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const checkDisabled = () => {
-    return Object.values(logInForm).some(
-      value => { return !value || logInForm.password.length < 6; }
-    );
-  };
+  const checkDisabled = () => Object.values(logInForm).some(
+    value => !value || logInForm.password.length < 6
+  );
 
   const handleChange = e => {
-    setLoginForm({ ...logInForm, [e.target.name]: e.target.value });
+    setLoginForm({ ...logInForm, [e.target.name]: e.target.name === 'email' ? e.target.value.toLowerCase() : e.target.value });
   };
 
   const handleSubmit = e => {
@@ -52,7 +50,7 @@ const LogInForm = () => {
     return <Redirect to="/" />;
   }
 
-  window.addEventListener('load', () => { return history.push('/accounts/welcomepage'); });
+  window.addEventListener('load', () => history.push('/accounts/welcomepage'));
 
   const inputType = showPass ? 'text' : 'password';
   const showPassBtn = showPass ? 'Hide' : 'Show';

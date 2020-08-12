@@ -19,7 +19,7 @@ const login = async (req, res) => {
     if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
     const { email, password } = req.body || {};
-    const user = await getUser(email);
+    const user = await getUser(email.toLowerCase());
 
     if (!user) {
       return serverResponse(res, 401, {
@@ -67,7 +67,8 @@ const register = async (req, res) => {
 
     if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
-    const exists = await getUser(req.body.email);
+    const exists = await getUser(req.body.email.toLowerCase());
+
     const userNameExists = await getUser(req.body.username);
 
     if (exists) {
@@ -82,7 +83,8 @@ const register = async (req, res) => {
       });
     }
 
-    const user = await createUser(req.body);
+    const userWithLowerCasedEmail = { ...req.body, email: req.body.email.toLowerCase() };
+    const user = await createUser(userWithLowerCasedEmail);
 
     const userAgent = req.headers['user-agent'];
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { activitiesPropTypes } from 'customPropTypes';
 
 const CommentActivity = ({ profilePic, usernames, activityLength }) => {
   let CommentActivityText;
@@ -17,6 +18,10 @@ const CommentActivity = ({ profilePic, usernames, activityLength }) => {
       <span>{CommentActivityText}</span>
     </>
   );
+};
+
+CommentActivity.propTypes = {
+  ...activitiesPropTypes
 };
 
 export default CommentActivity;

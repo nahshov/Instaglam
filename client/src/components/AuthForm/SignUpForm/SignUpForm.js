@@ -28,7 +28,7 @@ const SignUpForm = () => {
 
   const {
     isAuthenticated, loading
-  } = useSelector(state => { return state.auth; });
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -62,14 +62,12 @@ const SignUpForm = () => {
     }
   }, [signUpForm]);
 
-  const checkDisabled = () => {
-    return Object.values(signUpForm).some(
-      value => { return !value || signUpForm.password.length < 6; }
-    );
-  };
+  const checkDisabled = () => Object.values(signUpForm).some(
+    value => !value || signUpForm.password.length < 6
+  );
 
   const handleChange = e => {
-    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
+    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.name === 'email' ? e.target.value.toLowerCase() : e.target.value });
   };
 
   const handleSubmit = e => {
@@ -90,7 +88,7 @@ const SignUpForm = () => {
     return <Redirect to="/" />;
   }
 
-  window.addEventListener('load', () => { return history.push('/accounts/welcomepage'); });
+  window.addEventListener('load', () => history.push('/accounts/welcomepage'));
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
@@ -163,7 +161,7 @@ const SignUpForm = () => {
             type={inputType}
             name="password"
             onChange={handleChange}
-            onClick={() => { return setShowPass(!showPass); }}
+            onClick={() => setShowPass(!showPass)}
             btnText={buttonText}
             withButton
             inputFieldIcon={passwordCheckOrError === 'Check' && <CheckIcon />}
@@ -190,7 +188,7 @@ const SignUpForm = () => {
       <AuthSwitch
         hasAccountText="Have an account?"
         linkText="Log in"
-        onClick={() => { return setSignUpAlert(''); }}
+        onClick={() => setSignUpAlert('')}
       />
     </div>
   );

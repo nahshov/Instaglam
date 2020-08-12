@@ -27,9 +27,10 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     }
   }, [isActivityFeedOpen]);
 
-  userActivities.forEach(activity => {
-    console.log(activity.referredEntityType);
-  });
+  // userActivities.forEach(activity => {
+  //   console.log(activity.referredEntity, activity.referredEntityType);
+  //   // activity.referredEntityType === 'post' && console.log(activity.activities[0].post);
+  // });
 
   return (
     isActivityFeedOpen
@@ -43,7 +44,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     >
       <Popover
         isPopoverOpen
-        style={{ top: '60px', right: '173px', zIndex: '5', width: '80%' }}
+        style={{ top: '60px', right: '111px', width: '30%' }}
       >
         <PopoverList>
           {
@@ -66,6 +67,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                     activityLength={activity.activities.length}
                     activityType={activity.activityType}
                     referredEntityType={activity.referredEntityType}
+                    referredEntity={activity.referredEntity}
                   />
                 </PopoverListItem>
               ))

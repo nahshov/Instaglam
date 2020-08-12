@@ -6,7 +6,11 @@ function addActivity(activity) {
 }
 
 function getUserActivity(userId) {
-  return Activity.find({ referredUser: userId }).populate('activities.user', 'username profilePic');
+  return Activity.find({ referredUser: userId })
+    .populate('activities.user', 'username profilePic')
+    .populate('referredEntity', 'media post')
+    .populate('referredEntity.post', 'media')
+    .sort('-created');
 }
 
 function removeActivity(activityId) {

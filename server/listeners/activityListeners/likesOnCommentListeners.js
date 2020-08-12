@@ -26,7 +26,7 @@ const likesOnCommentListener = activityEmitter.on('commentLike', payload => {
       created,
       referredUser: commentBy,
       referredEntity: comment,
-      referredEntityType: 'comment',
+      referredEntityType: 'Comment',
       activityType: 'like',
       activities: []
     };

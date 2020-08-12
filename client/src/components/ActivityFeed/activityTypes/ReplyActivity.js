@@ -1,4 +1,5 @@
 import React from 'react';
+import { activitiesPropTypes } from 'customPropTypes';
 
 const ReplyActivity = ({ profilePic, usernames, activityLength }) => {
   let ReplyActivityText;
@@ -17,6 +18,10 @@ const ReplyActivity = ({ profilePic, usernames, activityLength }) => {
       <span>{ReplyActivityText}</span>
     </>
   );
+};
+
+ReplyActivity.propTypes = {
+  ...activitiesPropTypes
 };
 
 export default ReplyActivity;

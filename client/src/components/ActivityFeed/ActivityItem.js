@@ -3,44 +3,51 @@ import FollowActivity from 'components/ActivityFeed/activityTypes/FollowActivity
 import CommentActivity from 'components/ActivityFeed/activityTypes/CommentActivity';
 import LikeActivity from 'components/ActivityFeed/activityTypes/LikeActivity';
 import ReplyActivity from 'components/ActivityFeed/activityTypes/ReplyActivity';
-import PropTypes from 'prop-types';
+import { activitiesPropTypes } from 'customPropTypes';
 
-const ActivityItem = ({ profilePic, usernames, activityLength, activityType, referredEntityType }) => (
-  <>
-    {activityType === 'follow' && (
-    <FollowActivity
-      profilePic={profilePic}
-      usernames={usernames}
-      activityLength={activityLength}
-    />
-    )}
-    {activityType === 'comment' && (
+const ActivityItem = ({
+  profilePic,
+  usernames,
+  activityLength,
+  activityType,
+  referredEntityType,
+  referredEntity }) => (
+    <>
+      {activityType === 'follow' && (
+      <FollowActivity
+        profilePic={profilePic}
+        usernames={usernames}
+        activityLength={activityLength}
+      />
+      )}
+      {activityType === 'comment' && (
       <CommentActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
       />
-    )}
-    {activityType === 'like' && (
+      )}
+      {activityType === 'like' && (
       <LikeActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
         referredEntityType={referredEntityType}
+        referredEntity={referredEntity}
       />
-    )}
-    {activityType === 'reply' && (
+      )}
+      {activityType === 'reply' && (
       <ReplyActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
       />
-    )}
-  </>
+      )}
+    </>
 );
 
-// Activity.propTypes = {
-//   profilePic: PropTypes.
-// }
+ActivityItem.propTypes = {
+  ...activitiesPropTypes
+};
 
 export default ActivityItem;
