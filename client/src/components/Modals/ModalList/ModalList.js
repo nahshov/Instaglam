@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import styles from './ModalList.module.scss';
 
 const ModalList = ({ children, ...otherProps }) => {
+  const classNames = otherProps.className;
+
   return (
-    <ul className={styles.list} {...otherProps}>
+    <ul className={`${styles.list} ${classNames}`} {...otherProps}>
       {children}
     </ul>
   );

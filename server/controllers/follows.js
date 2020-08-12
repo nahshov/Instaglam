@@ -37,7 +37,12 @@ const getUserFollowersList = async (req, res) => {
 const getUserFollowingList = async (req, res) => {
   try {
     const follows = await getUserFollowing(req.params.userId);
-    return serverResponse(res, 200, follows);
+    const newFollowsPromisesArr = follows.map(async f => ({
+      ...f,
+      isFollowed: await isFollowed(req.user.sub, f._id)
+    }));
+    const newFollows = await Promise.all(newFollowsPromisesArr);
+    return serverResponse(res, 200, newFollows);
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to get following list'

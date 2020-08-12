@@ -6,8 +6,12 @@ import {
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
   FOLLOWING_ERROR,
-  RESET_FOLLOWS
+  RESET_FOLLOWS,
+  TOGGLE_FOLLOWERS,
+  TOGGLE_FOLLOWING
 } from 'actions/follows/followTypes';
+
+import { getProfile } from '../profile/profileActions';
 
 export const getFollowers = userId => async dispatch => {
   try {
@@ -41,6 +45,7 @@ export const getFollowing = userId => async dispatch => {
       payload: following
     });
   } catch (e) {
+    console.log(e);
     dispatch({
       type: FOLLOWING_ERROR
     });
@@ -51,4 +56,51 @@ export const resetFollows = (dispatch) => {
   dispatch({
     type: RESET_FOLLOWS
   });
+};
+
+export const toggleFollowing = (userId, isFollowing) => async dispatch => {
+  try {
+    dispatch({
+      type: RESET_FOLLOWING_LOADING
+    });
+
+    if (!isFollowing) {
+      await axios.post(`/api/users/${userId}/follows`);
+      dispatch({
+        type: TOGGLE_FOLLOWING,
+        payload: { isFollowed: true, userId }
+      });
+    } else {
+      await axios.delete(`/api/users/${userId}/follows`);
+      dispatch({
+        type: TOGGLE_FOLLOWING,
+        payload: { isFollowed: false, userId }
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const toggleFollowers = (userId, isFollowing) => async dispatch => {
+  try {
+    dispatch({
+      type: RESET_FOLLOWERS_LOADING
+    });
+    if (!isFollowing) {
+      await axios.post(`/api/users/${userId}/follows`);
+      dispatch({
+        type: TOGGLE_FOLLOWERS,
+        payload: { isFollowed: true, userId }
+      });
+    } else {
+      await axios.delete(`/api/users/${userId}/follows`);
+      dispatch({
+        type: TOGGLE_FOLLOWERS,
+        payload: { isFollowed: false, userId }
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };

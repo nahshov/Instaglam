@@ -4,9 +4,10 @@
 .list {
   background: $color-white;
   min-width: 400px;
-  min-height: auto;
+  height: 400px;
   text-align: center;
   font-size: 14px;
   @include flexColumn;
   justify-content: center;
+  overflow: auto;
 }

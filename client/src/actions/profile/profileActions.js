@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { SET_PROFILE,
+import {
+  SET_PROFILE,
   SET_EMPTY_PROFILE,
-  TOGGLE_FOLLOW,
-  RESET_PROFILE_LOADING
+  TOGGLE_PROFILE_FOLLOW,
+  RESET_PROFILE_LOADING, SET_PROFILE_FOLLOWERS_COUNT, SET_PROFILE_FOLLOWING_COUNT
 } from './profileTypes';
 
 export const getProfile = (userInfo) => async (dispatch) => {
@@ -36,17 +37,24 @@ export const toggleFollow = (userId, isFollowing) => async dispatch => {
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);
       dispatch({
-        type: TOGGLE_FOLLOW,
+        type: TOGGLE_PROFILE_FOLLOW,
         payload: { numOfFollowers: 1, isFollowed: true }
       });
     } else {
       await axios.delete(`/api/users/${userId}/follows`);
       dispatch({
-        type: TOGGLE_FOLLOW,
+        type: TOGGLE_PROFILE_FOLLOW,
         payload: { numOfFollowers: -1, isFollowed: false }
       });
     }
   } catch (e) {
     console.log(e);
   }
+};
+
+export const setNumOfFollowing = (numOfFollowing) => dispatch => {
+  dispatch({
+    type: SET_PROFILE_FOLLOWING_COUNT,
+    payload: { numOfFollowing }
+  });
 };
