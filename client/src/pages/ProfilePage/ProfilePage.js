@@ -25,7 +25,10 @@ const ProfilePage = () => {
   } = useSelector(profilePageSelector);
 
   const searchedUserUsername = pathname.replace('/', '');
-  const isAuthenticated = searchedUserUsername === authenticatedUser.username;
+  const isAuthenticated = (
+    searchedUserUsername === authenticatedUser.username
+      || pathname.replace('/', '') === authenticatedUser._id
+      || pathname.replace('/', '') === authenticatedUser.email);
 
   useEffect(() => {
     dispatch(getProfile(searchedUserUsername));
