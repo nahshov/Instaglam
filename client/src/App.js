@@ -26,6 +26,7 @@ const App = () => {
           <Route path="/accounts/emailsignup" exact component={SignUpForm} />
           <Route path="/accounts/login" exact component={LogInForm} />
           <ProtectedRoute path="/p/:postId" component={() => { return <h1>Post page...</h1>; }} />
+          <ProtectedRoute path="/accounts/edit" component={() => { return <h1>Edit Profile page...</h1>; }} />
           <ProtectedRoute
             exact
             path="/explore"

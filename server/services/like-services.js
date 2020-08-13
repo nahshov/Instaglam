@@ -1,4 +1,19 @@
 const Like = require('../models/Like.js');
+const { isFollowed } = require('./follow-services');
+
+async function getPostLikers(postId, userId) {
+  const likes = await Like.find({ post: postId }).populate('user', 'username profilePic');
+  return Promise.all(
+    likes
+      .filter(like => !like.comment)
+      .map(async like => (
+        {
+          ...like.user.toObject(),
+          isFollowed: await isFollowed(userId, like.user._id)
+        }
+      ))
+  );
+}
 
 async function getPostLikes(postId) {
   const likes = await Like.find({ post: postId }).populate('user', 'username profilePic');
@@ -85,5 +100,6 @@ module.exports = {
   removeAllUserLikes,
   userHasLikes,
   isPostLiked,
-  isCommentLiked
+  isCommentLiked,
+  getPostLikers
 };

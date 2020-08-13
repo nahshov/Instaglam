@@ -6,21 +6,25 @@ function getFollow(userId) {
 
 async function getUserFollowing(userId) {
   const following = await Follow.find({ user: userId }).populate('following');
+
   return following.map(followee => ({
     username: followee.following.username,
     fullName: followee.following.fullName,
     profilePic: followee.following.profilePic,
-    created: followee.created
+    created: followee.created,
+    _id: followee.following._id
   }));
 }
 
 async function getUserFollowers(userId) {
   const followers = await Follow.find({ following: userId }).populate('user');
+
   return followers.map(follower => ({
     username: follower.user.username,
     fullName: follower.user.fullName,
     profilePic: follower.user.profilePic,
-    created: follower.created
+    created: follower.created,
+    _id: follower.user._id
   }));
 }
 

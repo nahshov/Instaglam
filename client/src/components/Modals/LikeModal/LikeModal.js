@@ -7,7 +7,7 @@ import UserIdentifier from 'components/UserIdentifier/UserIdentifier';
 import { likePropType, modalPropType } from 'customPropTypes';
 import styles from './LikeModal.module.scss';
 
-const LikeModal = ({ isModalOpen, setModalOpen, postLikes, loading }) => {
+const LikeModal = ({ isModalOpen, setModalOpen, postLikers, postLikersLoading }) => {
   const isFollowed = false;
   return (
     <Modal className={styles.modalProperties} isOpen={isModalOpen} setModalOpen={setModalOpen}>
@@ -16,7 +16,7 @@ const LikeModal = ({ isModalOpen, setModalOpen, postLikes, loading }) => {
           <h3>Likes</h3>
         </div>
         <div className={styles.listItemWrapper}>
-          {!loading && postLikes.map(like => {
+          {!postLikersLoading && postLikers.map(like => {
             return (
               <ModalListItem className={styles.LikeModalItem}>
                 <UserIdentifier

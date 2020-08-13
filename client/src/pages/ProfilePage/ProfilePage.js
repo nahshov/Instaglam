@@ -25,7 +25,10 @@ const ProfilePage = () => {
   } = useSelector(profilePageSelector);
 
   const searchedUserUsername = pathname.replace('/', '');
-  const isAuthenticated = searchedUserUsername === authenticatedUser.username;
+  const isAuthenticated = (
+    searchedUserUsername === authenticatedUser.username
+      || pathname.replace('/', '') === authenticatedUser._id
+      || pathname.replace('/', '') === authenticatedUser.email);
 
   useEffect(() => {
     dispatch(getProfile(searchedUserUsername));
@@ -34,17 +37,19 @@ const ProfilePage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {!profileLoading && (
+        {!profileLoading && profile && (
         <>
           <ProfileHeader
             profile={profile}
             isAuthenticatedUser={isAuthenticated}
             postsCount={profile.posts.length}
           />
+          {profile.posts && !!profile.posts.length && (
           <PostsGrid
             posts={profile.posts}
             loading={profileLoading}
           />
+          )}
         </>
         )}
       </div>

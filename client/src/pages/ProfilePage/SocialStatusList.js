@@ -6,7 +6,7 @@ import styles from './ProfilePage.module.scss';
 
 const SocialStatusList = ({ postCount, followingCount, followersCount, userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalType, setModalType] = useState('');
 
   return (
     <ul className={styles.socialStatusList}>
@@ -21,7 +21,7 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
         <Button
           btnRole="astext"
           onClick={() => {
-            setModalTitle('Followers');
+            setModalType('Followers');
             setIsModalOpen(true);
           }}
         >
@@ -34,7 +34,7 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
         <Button
           btnRole="astext"
           onClick={() => {
-            setModalTitle('Following');
+            setModalType('Following');
             setIsModalOpen(true);
           }}
         >
@@ -43,10 +43,10 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
           following
         </Button>
       </li>
-      {isModalOpen && modalTitle && userId && (
+      {isModalOpen && modalType && userId && (
         <FollowModal
           userId={userId}
-          title={modalTitle}
+          type={modalType}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           isAnimated

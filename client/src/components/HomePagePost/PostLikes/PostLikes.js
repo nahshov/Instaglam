@@ -1,33 +1,26 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { postPropType } from 'customPropTypes';
-import LikeModal from 'components/Modals/LikeModal/LikeModal';
-import { getAllLikesOfAPost } from 'actions/posts/postActions';
 import styles from './PostLikes.module.scss';
+import FollowModal from '../../Modals/FollowModal/FollowModal';
 
 const PostLikes = ({ likesOfPost, postId }) => {
-  const { postLikes, loading } = useSelector(state => { return state.posts; });
   const [isModalOpen, setModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const fetchLikes = () => {
-    setModalOpen(true);
-    dispatch(getAllLikesOfAPost(postId));
-  };
   return (
     <div>
       <div
         className={styles.likesAmount}
-        onClick={fetchLikes}
+        onClick={() => setModalOpen(true)}
       >
         {likesOfPost}
         &nbsp; likes
       </div>
       {isModalOpen && (
-      <LikeModal
+      <FollowModal
         isModalOpen={isModalOpen}
-        setModalOpen={setModalOpen}
-        postLikes={postLikes}
-        loading={loading}
+        setIsModalOpen={setModalOpen}
+        postId={postId}
+        type="Likes"
+        isAnimated
       />
       )}
     </div>
