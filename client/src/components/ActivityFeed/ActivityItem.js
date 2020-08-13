@@ -42,6 +42,7 @@ const ActivityItem = ({
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
+        referredEntity={referredEntity}
       />
       )}
     </>

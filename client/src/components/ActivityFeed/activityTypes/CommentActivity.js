@@ -23,6 +23,7 @@ const CommentActivity = ({ profilePic, usernames, activityLength, referredEntity
         size="medium"
       />
       <span>{CommentActivityText}</span>
+      <img src={referredEntity.media} alt="postPicture" />
     </div>
   );
 };

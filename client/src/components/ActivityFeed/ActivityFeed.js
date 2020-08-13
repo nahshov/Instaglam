@@ -27,8 +27,6 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     }
   }, [isActivityFeedOpen]);
 
-  userActivities.map(activity => console.log(activity.referredEntity));
-
   return (
     isActivityFeedOpen
   && (
@@ -52,6 +50,8 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                 </PopoverListItem>
               )
               : userActivities.map(activity => (
+                !!activity.activities.length
+                && (
                 <PopoverListItem>
                   <ActivityItem
                     key={activity._id}
@@ -67,6 +67,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                     referredEntity={activity.referredEntity}
                   />
                 </PopoverListItem>
+                )
               ))
 }
         </PopoverList>
