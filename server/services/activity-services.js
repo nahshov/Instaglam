@@ -1,4 +1,5 @@
 const Activity = require('../models/Activity.js');
+const Post = require('../models/Post.js');
 
 function addActivity(activity) {
   activity = new Activity(activity);
@@ -8,8 +9,8 @@ function addActivity(activity) {
 function getUserActivity(userId) {
   return Activity.find({ referredUser: userId })
     .populate('activities.user', 'username profilePic')
-    .populate('referredEntity', 'media post')
-    .populate('referredEntity.post', 'media')
+    .populate('referredEntity', 'media')
+    .populate({ path: 'referredEntity', populate: { path: 'post', select: 'media' } })
     .sort('-created');
 }
 

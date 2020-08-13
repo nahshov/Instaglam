@@ -27,10 +27,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     }
   }, [isActivityFeedOpen]);
 
-  // userActivities.forEach(activity => {
-  //   console.log(activity.referredEntity, activity.referredEntityType);
-  //   // activity.referredEntityType === 'post' && console.log(activity.activities[0].post);
-  // });
+  userActivities.map(activity => console.log(activity.referredEntity));
 
   return (
     isActivityFeedOpen
