@@ -13,6 +13,8 @@
   }
 
   & button {
+    display: block;
+    width: 100%;
     font-family: inherit;
     background: transparent;
     border: 1px solid $primary-border-color;

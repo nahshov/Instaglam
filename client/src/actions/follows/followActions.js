@@ -2,13 +2,15 @@ import axios from 'axios';
 import {
   SET_FOLLOWERS,
   SET_FOLLOWING,
+  SET_LIKERS,
   RESET_FOLLOWERS_LOADING,
   RESET_FOLLOWING_LOADING,
   FOLLOWERS_ERROR,
   FOLLOWING_ERROR,
   RESET_FOLLOWS,
   TOGGLE_FOLLOWERS,
-  TOGGLE_FOLLOWING
+  TOGGLE_FOLLOWING,
+  TOGGLE_LIKERS_FOLLOW
 } from 'actions/follows/followTypes';
 
 export const getFollowers = userId => async dispatch => {
@@ -50,54 +52,98 @@ export const getFollowing = userId => async dispatch => {
   }
 };
 
+export const getLikers = postId => async dispatch => {
+  try {
+    dispatch({
+      type: RESET_FOLLOWING_LOADING
+    });
+
+    const { data: likers } = await axios.get(`/api/posts/${postId}/likes/users`);
+
+    dispatch({
+      type: SET_LIKERS,
+      payload: likers
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: FOLLOWING_ERROR
+    });
+  }
+};
+
 export const resetFollows = (dispatch) => {
   dispatch({
     type: RESET_FOLLOWS
   });
 };
 
-export const toggleFollowing = (userId, isFollowing, setLocalLoading) => async dispatch => {
+export const toggleFollowing = (userId, isFollowing) => async dispatch => {
   try {
-    setLocalLoading(true);
-
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);
-      setLocalLoading(false);
+
       dispatch({
         type: TOGGLE_FOLLOWING,
         payload: { isFollowed: true, userId }
       });
-    } else {
-      await axios.delete(`/api/users/${userId}/follows`);
-      setLocalLoading(false);
-      dispatch({
-        type: TOGGLE_FOLLOWING,
-        payload: { isFollowed: false, userId }
-      });
+      return Promise.resolve();
     }
+    await axios.delete(`/api/users/${userId}/follows`);
+
+    dispatch({
+      type: TOGGLE_FOLLOWING,
+      payload: { isFollowed: false, userId }
+    });
+    return Promise.resolve();
   } catch (e) {
     console.log(e);
   }
 };
 
-export const toggleFollowers = (userId, isFollowing, setLocalLoading) => async dispatch => {
+export const toggleFollowers = (userId, isFollowing) => async dispatch => {
   try {
-    setLocalLoading(true);
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);
-      setLocalLoading(false);
+
       dispatch({
         type: TOGGLE_FOLLOWERS,
         payload: { isFollowed: true, userId }
       });
-    } else {
-      await axios.delete(`/api/users/${userId}/follows`);
-      setLocalLoading(false);
-      dispatch({
-        type: TOGGLE_FOLLOWERS,
-        payload: { isFollowed: false, userId }
-      });
+
+      return Promise.resolve();
     }
+    await axios.delete(`/api/users/${userId}/follows`);
+
+    dispatch({
+      type: TOGGLE_FOLLOWERS,
+      payload: { isFollowed: false, userId }
+    });
+    return Promise.resolve();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const toggleLikersFollow = (userId, isFollowing) => async dispatch => {
+  try {
+    if (!isFollowing) {
+      await axios.post(`/api/users/${userId}/follows`);
+
+      dispatch({
+        type: TOGGLE_LIKERS_FOLLOW,
+        payload: { isFollowed: true, userId }
+      });
+
+      return Promise.resolve();
+    }
+    await axios.delete(`/api/users/${userId}/follows`);
+
+    dispatch({
+      type: TOGGLE_LIKERS_FOLLOW,
+      payload: { isFollowed: false, userId }
+    });
+    return Promise.resolve();
   } catch (e) {
     console.log(e);
   }

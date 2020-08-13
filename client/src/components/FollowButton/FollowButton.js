@@ -8,17 +8,23 @@ const FollowButton = ({ isFollowed, handleFollow }) => {
 
   return (
     <Button
-      style={{ fontWeight: 'bold' }}
+      style={{ fontWeight: 'bold', width: '80px' }}
       btnRole={`${isFollowed ? 'danger' : 'primary'}`}
-      onClick={() => handleFollow(setLocalLoading)}
+      onClick={async () => {
+        setLocalLoading(true);
+        await handleFollow();
+        setLocalLoading(false);
+      }}
     >
-      {localLoading ? <LoadingSpinner style={{ width: '30px' }} /> : (
-        <>
-          {isFollowed
-            ? 'Unfollow'
-            : 'Follow'}
-        </>
-      )}
+      <div style={{ width: '100%' }}>
+        {localLoading ? <LoadingSpinner style={{ width: '20px' }} /> : (
+          <>
+            {isFollowed
+              ? 'Unfollow'
+              : 'Follow'}
+          </>
+        )}
+      </div>
     </Button>
   );
 };

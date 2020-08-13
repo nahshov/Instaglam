@@ -161,6 +161,7 @@ export const getAllLikesOfAPost = (postId) => {
     }
   };
 };
+
 // get all comments of a post
 export const getAllCommentsOfAPost = (postId) => {
   return async dispatch => {

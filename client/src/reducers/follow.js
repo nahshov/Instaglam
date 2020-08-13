@@ -7,7 +7,9 @@ import {
   FOLLOWING_ERROR,
   RESET_FOLLOWS,
   TOGGLE_FOLLOWERS,
-  TOGGLE_FOLLOWING
+  TOGGLE_FOLLOWING,
+  SET_LIKERS,
+  TOGGLE_LIKERS_FOLLOW
 } from 'actions/follows/followTypes';
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   followers: [],
   followingLoading: true,
   following: [],
+  likers: [],
   error: ''
 };
 
@@ -27,6 +30,12 @@ export default function (state = initialState, action) {
         ...state,
         followersLoading: false,
         followers: payload
+      };
+    case SET_LIKERS:
+      return {
+        ...state,
+        followersLoading: false,
+        likers: payload
       };
     case SET_FOLLOWING:
       return {
@@ -54,6 +63,17 @@ export default function (state = initialState, action) {
             return { ...f, isFollowed: payload.isFollowed };
           }
           return f;
+        })
+      };
+    case TOGGLE_LIKERS_FOLLOW:
+      return {
+        ...state,
+        followingLoading: false,
+        likers: state.likers.map(l => {
+          if (payload.userId === l._id) {
+            return { ...l, isFollowed: payload.isFollowed };
+          }
+          return l;
         })
       };
     case RESET_FOLLOWERS_LOADING:

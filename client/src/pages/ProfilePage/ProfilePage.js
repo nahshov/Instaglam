@@ -37,17 +37,19 @@ const ProfilePage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        {!profileLoading && profile && profile.posts.length && (
+        {!profileLoading && profile && (
         <>
           <ProfileHeader
             profile={profile}
             isAuthenticatedUser={isAuthenticated}
             postsCount={profile.posts.length}
           />
+          {profile.posts && !!profile.posts.length && (
           <PostsGrid
             posts={profile.posts}
             loading={profileLoading}
           />
+          )}
         </>
         )}
       </div>
