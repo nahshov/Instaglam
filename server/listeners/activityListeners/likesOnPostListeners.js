@@ -26,7 +26,7 @@ const likesOnPostListener = activityEmitter.on('postLike', payload => {
       created,
       referredUser: postBy,
       referredEntity: post,
-      referredEntityType: 'post',
+      referredEntityType: 'Post',
       activityType: 'like',
       activities: []
     };

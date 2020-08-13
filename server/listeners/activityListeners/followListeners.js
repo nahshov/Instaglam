@@ -26,7 +26,7 @@ const followListener = activityEmitter.on('follow', payload => {
       created,
       referredUser: following,
       referredEntity: following,
-      referredEntityType: 'user',
+      referredEntityType: 'User',
       activityType: 'follow',
       activities: []
     };

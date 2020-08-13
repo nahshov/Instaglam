@@ -26,7 +26,7 @@ const replyListener = activityEmitter.on('reply', payload => {
       created,
       referredUser: commentBy,
       referredEntity: comment,
-      referredEntityType: 'comment',
+      referredEntityType: 'Comment',
       activityType: 'reply',
       activities: []
     };

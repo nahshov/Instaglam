@@ -27,6 +27,11 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     }
   }, [isActivityFeedOpen]);
 
+  // userActivities.forEach(activity => {
+  //   console.log(activity.referredEntity, activity.referredEntityType);
+  //   // activity.referredEntityType === 'post' && console.log(activity.activities[0].post);
+  // });
+
   return (
     isActivityFeedOpen
   && (
@@ -39,18 +44,35 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     >
       <Popover
         isPopoverOpen
-        style={{ top: '60px', right: '173px', zIndex: '5' }}
+        style={{ top: '60px', right: '111px', width: '30%' }}
       >
-        <PopoverListItem>
-          {!userActivities.length ? <span className={styles.notFound}>No activities found.</span>
-            : userActivities.map(activity => (
-              <ActivityItem
-                profilePic={activity.activities[activity.activities.length - 1].user.profilePic}
-                usernames={[activity.activities[0].user.username, activity.activities[1].user.username]}
-                activityLength={activity.activities.length}
-              />
-            ))}
-        </PopoverListItem>
+        <PopoverList>
+          {
+            !userActivities.length
+              ? (
+                <PopoverListItem>
+                  <span className={styles.notFound}>No activities found.</span>
+                </PopoverListItem>
+              )
+              : userActivities.map(activity => (
+                <PopoverListItem>
+                  <ActivityItem
+                    key={activity._id}
+                    profilePic={activity.activities[activity.activities.length - 1].user.profilePic}
+                    usernames={
+                  activity.activities.length >= 2
+                    ? [activity.activities[0].user.username, activity.activities[1].user.username]
+                    : [activity.activities[0].user.username]
+}
+                    activityLength={activity.activities.length}
+                    activityType={activity.activityType}
+                    referredEntityType={activity.referredEntityType}
+                    referredEntity={activity.referredEntity}
+                  />
+                </PopoverListItem>
+              ))
+}
+        </PopoverList>
       </Popover>
     </div>
   )
