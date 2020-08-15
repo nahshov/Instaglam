@@ -62,13 +62,13 @@ $breakpoint argument choices:
 
 @mixin respond($breakpoint) {
   @if $breakpoint == phone {
-    @media (max-width: 450px) {
+    @media (max-width: 500px) {
       @content;
     }
   }
 
   @if $breakpoint == phablet {
-    @media (max-width: 650px) {
+    @media (max-width: 700px) {
       @content;
     }
   }

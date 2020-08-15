@@ -59,6 +59,7 @@ const SearchInput = () => {
                     <LoadingSpinner className={styles.searchProfilePic} />
                   ) : (
                     <ProfilePic
+                      size="medium"
                       url={user.profilePic}
                       className={styles.searchProfilePic}
                     />

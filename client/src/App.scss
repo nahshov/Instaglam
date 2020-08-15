@@ -9,17 +9,17 @@
   color: $primary-text-color;
   overflow: auto;
 
-  @include respond(phone) {
-    height: 100vh;
-  }
-
-  @media (max-width: 375px) and (max-height: 667px) {
-    height: 125vh;
-  }
-
-  @media screen and (orientation: landscape) and (max-width: 850px) {
-    height: fit-content;
-  }
+  //@include respond(phone) {
+  //  height: 100vh;
+  //}
+  //
+  //@media (max-width: 375px) and (max-height: 667px) {
+  //  height: 125vh;
+  //}
+  //
+  //@media screen and (orientation: landscape) and (max-width: 850px) {
+  //  height: fit-content;
+  //}
 }
 
 a {
