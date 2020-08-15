@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import {
   getFollows,
-  toggleFollows
+  toggleFollows,
+  resetFollows
 } from 'actions/follows/followActions';
 import { followsSelector } from 'actions/follows/followSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
@@ -50,6 +51,10 @@ const FollowModal = ({
     } else {
       dispatch(getFollows(userId, type));
     }
+
+    return () => {
+      dispatch(resetFollows());
+    };
   }, []);
 
   const handleFollow = async (user) => {

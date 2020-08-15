@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   SET_FOLLOWS,
   SET_FOLLOWS_LOADING,
-  TOGGLE_FOLLOWS
+  TOGGLE_FOLLOWS,
+  RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
 export const getFollows = (id, type) => async dispatch => {
@@ -49,4 +50,10 @@ export const toggleFollows = (userId, isFollowing) => async dispatch => {
     payload: { isFollowed: false, userId }
   });
   return Promise.resolve();
+};
+
+export const resetFollows = () => dispatch => {
+  dispatch({
+    type: RESET_FOLLOWS
+  });
 };
