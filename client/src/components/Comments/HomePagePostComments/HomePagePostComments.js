@@ -7,10 +7,6 @@ import { toggleCommentLike } from 'actions/posts/postActions';
 import styles from './HomePagePostComments.module.scss';
 
 const HomePagePostComments = ({ postComments, postId }) => {
-  // const dispatch = useDispatch();
-  // const handleLike = () => {
-  //   dispatch(toggleCommentLike(commentId, isLike));
-  // };
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     dispatch(toggleCommentLike(comment._id, comment.isCommentLiked, postId));
@@ -49,7 +45,20 @@ const HomePagePostComments = ({ postComments, postId }) => {
 };
 
 HomePagePostComments.propTypes = {
-  postComments: PropTypes.arrayOf({}).isRequired,
+  postComments: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string,
+    created: PropTypes.string,
+    isCommentLiked: PropTypes.bool,
+    numOfLikes: PropTypes.number,
+    post: PropTypes.string,
+    replyToComment: PropTypes.string,
+    user: {
+      username: PropTypes.string,
+      _id: PropTypes.string
+    },
+    __v: PropTypes.number,
+    _id: PropTypes.string
+  })).isRequired,
   postId: PropTypes.string.isRequired
 };
 
