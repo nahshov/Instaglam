@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
-const followSelector = state => { return state.follow; };
+const followSelector = state => state.follow;
 
-export const conditionalFollowSelector = (type) => createSelector(
+export const followsSelector = createSelector(
   [followSelector],
-  follow => (type === 'Followers' ? { follows: follow.followers, loading: follow.followersLoading } : { follows: follow.following, loading: follow.followingLoading })
+  follow => follow.follows
 );
 
 export const followingSelector = createSelector(

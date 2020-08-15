@@ -29,11 +29,6 @@ const App = () => {
           <ProtectedRoute path="/accounts/edit" component={() => { return <h1>Edit Profile page...</h1>; }} />
           <ProtectedRoute
             exact
-            path="/explore"
-            component={() => { return <div>Explore!</div>; }}
-          />
-          <ProtectedRoute
-            exact
             path="/direct/inbox"
             component={() => { return <div>Chat!</div>; }}
           />

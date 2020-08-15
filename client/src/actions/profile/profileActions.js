@@ -3,7 +3,8 @@ import {
   SET_PROFILE,
   SET_EMPTY_PROFILE,
   TOGGLE_PROFILE_FOLLOW,
-  RESET_PROFILE_LOADING, SET_PROFILE_FOLLOWERS_COUNT, SET_PROFILE_FOLLOWING_COUNT
+  RESET_PROFILE_LOADING,
+  SET_PROFILE_FOLLOWING_COUNT
 } from './profileTypes';
 
 export const getProfile = (userInfo) => async (dispatch) => {
@@ -32,7 +33,7 @@ export const getProfile = (userInfo) => async (dispatch) => {
 };
 
 // Add a follow to a user
-export const toggleFollow = (userId, isFollowing) => async dispatch => {
+export const toggleProfileFollow = (userId, isFollowing) => async dispatch => {
   try {
     if (!isFollowing) {
       await axios.post(`/api/users/${userId}/follows`);

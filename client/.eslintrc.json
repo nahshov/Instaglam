@@ -27,6 +27,7 @@
   ],
   "parser": "babel-eslint",
   "rules": {
+    "no-param-reassign": "off",
     "no-shadow": "off",
     "func-names": "off",
     "no-nested-ternary": "off",

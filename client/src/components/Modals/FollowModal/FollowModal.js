@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFollowers, getFollowing, toggleFollowers, toggleFollowing } from 'actions/follows/followActions';
-import { conditionalFollowSelector } from 'actions/follows/followSelectors';
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
+import {
+  getFollows,
+  toggleFollows,
+  resetFollows
+} from 'actions/follows/followActions';
+import { followsSelector } from 'actions/follows/followSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import { profileSelector } from 'actions/profile/profileSelectors';
-import { Link } from 'react-router-dom';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import ModalList from '../ModalList/ModalList';
@@ -15,54 +19,58 @@ import styles from './FollowModal.module.scss';
 import Modal from '../Modal';
 import ModalListItem from '../ModalList/ModalListItem';
 
-const FollowModalSelector = title => createStructuredSelector({
-  follows: conditionalFollowSelector(title),
+const FollowModalSelector = createStructuredSelector({
+  follows: followsSelector,
   profile: profileSelector,
   authenticatedUser: authenticatedUserSelector
 });
 
 const FollowModal = ({
-  title,
+  //  All possible types: 'likes', 'followers', 'following'
+  type,
   isModalOpen,
   setIsModalOpen,
-  userId,
-  ...otherProps }) => {
+  userId = '',
+  postId = '',
+  ...otherProps
+}) => {
   const {
     follows,
     profile,
     authenticatedUser
-  } = useSelector(state => FollowModalSelector(title)(state));
+  } = useSelector(FollowModalSelector);
+
+  type = type.toLowerCase();
+  const title = type[0].toUpperCase() + type.substr(1);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (title === 'Followers') {
-      dispatch(getFollowers(userId));
+    if (type === 'likes') {
+      dispatch(getFollows(postId, type));
     } else {
-      dispatch(getFollowing(userId));
+      dispatch(getFollows(userId, type));
     }
+
+    return () => {
+      dispatch(resetFollows());
+    };
   }, []);
 
-  const handleFollow = (f, setLocalLoading) => {
-    if (title === 'Followers') {
-      dispatch(toggleFollowers(f._id, f.isFollowed, setLocalLoading));
-      if (profile.username === authenticatedUser.username) {
-        if (f.isFollowed) {
-          dispatch(setNumOfFollowing(-1));
-        } else {
-          dispatch(setNumOfFollowing(1));
-        }
-      }
-    } else {
-      dispatch(toggleFollowing(f._id, f.isFollowed, setLocalLoading));
-      if (profile.username === authenticatedUser.username) {
-        if (f.isFollowed) {
-          dispatch(setNumOfFollowing(-1));
-        } else {
-          dispatch(setNumOfFollowing(1));
-        }
+  const handleFollow = async (user) => {
+    await dispatch(toggleFollows(user._id, user.isFollowed));
+
+    // if type is not likes,
+    // then I am on profile page and need to increase or decrement num of following by 1
+    if (type !== 'likes' && profile.username === authenticatedUser.username) {
+      if (user.isFollowed) {
+        dispatch(setNumOfFollowing(-1));
+      } else {
+        dispatch(setNumOfFollowing(1));
       }
     }
+
+    return Promise.resolve();
   };
 
   return (
@@ -71,21 +79,21 @@ const FollowModal = ({
         <h1 className={styles.title}>{title}</h1>
         <ModalList className={styles.followList}>
           {
-            !follows.follows.length && !follows.loading
+            !follows.length && !follows.loading
               ? (
                 <ModalListItem>
-                  {title === 'Followers' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
+                  {type === 'followers' && type !== 'likes' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
                 </ModalListItem>
               )
-              : (follows.follows.map(f => (
-                <li key={f.created} className={styles.followItem}>
+              : (follows.map(f => (
+                <li key={f._id} className={styles.followItem}>
                   <div className={styles.userInfo}>
                     <ProfilePic size="medium" url={f.profilePic} style={{ marginRight: '10px' }} />
                     <Link className={styles.username} to={`/${f.username}`}>{f.username}</Link>
                   </div>
                   {f.username !== authenticatedUser.username && (
                   <FollowButton
-                    handleFollow={(setLocalLoading) => handleFollow(f, setLocalLoading)}
+                    handleFollow={() => handleFollow(f)}
                     isFollowed={f.isFollowed}
                   />
                   )}
@@ -98,9 +106,15 @@ const FollowModal = ({
   );
 };
 
+FollowModal.defaultProps = {
+  userId: '',
+  postId: ''
+};
+
 FollowModal.propTypes = {
-  title: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  userId: PropTypes.string,
+  postId: PropTypes.string,
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired
 };

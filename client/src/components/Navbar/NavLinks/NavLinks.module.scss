@@ -13,13 +13,13 @@
     width: 100%;
     background: $secondary-background;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     border-top: 1px solid $primary-border-color;
     padding: 10px;
   }
 }
 
-.NavLinks * {
+.NavLinks > *{
   margin: 0 10px 0 10px;
   cursor: pointer;
 
@@ -49,13 +49,13 @@
   border: 1px solid $color-black;
 }
 
-.chatLink {
-  @include respond(phone) {
-    position: fixed;
-    top: 13px;
-    right: 20px;
-  }
-}
+//.chatLink {
+//  @include respond(phone) {
+//    position: fixed;
+//    top: 13px;
+//    right: 20px;
+//  }
+//}
 
 .HeartIcon {
   font-size: $icon-medium-large;
