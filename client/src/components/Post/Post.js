@@ -32,7 +32,7 @@ const Post = ({ post }) => {
       />
       <div className={styles.postContentContainer}>
         <div className={styles.postContentHeader}>
-          <UserIdentifier />
+          <UserIdentifier className={styles.UserIdentifier} />
           <Button btnRole="astext">
             <FiMoreHorizontal
               className={styles.moreIcon}
@@ -41,8 +41,9 @@ const Post = ({ post }) => {
           </Button>
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
-
         </div>
+        comments
+        commentform
       </div>
     </div>
   );

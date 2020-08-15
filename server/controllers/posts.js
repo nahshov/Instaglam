@@ -108,7 +108,7 @@ const getPostsOfAUser = async (req, res) => {
 // @desc   Get one post, with post id
 // @access private
 const getOnePost = async (req, res) => {
-  const { postId } = req.params.postId;
+  const { postId } = req.params;
   const userId = req.user.sub;
   try {
     const [post, isUserLike] = await Promise.all([

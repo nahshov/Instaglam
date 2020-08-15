@@ -22,7 +22,6 @@ const CommentForm = ({ postId }) => {
     e.preventDefault();
     if (!inputValue) return;
     setCommentLoading(true);
-    // @ts-ignore
     await dispatch(addAComment(postId, inputValue));
     setInputValue('');
     setCommentLoading(false);
@@ -30,7 +29,7 @@ const CommentForm = ({ postId }) => {
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
       <textarea value={inputValue} onChange={handleChange} id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
-      <Button type="submit" disabled={checkDisabled()} isLoading={commentLoading} className={styles.postButton}>Post</Button>
+      <Button type="submit" btnRole="astext" disabled={checkDisabled()} isLoading={commentLoading} className={styles.postButton}>Post</Button>
     </form>
 
   );
