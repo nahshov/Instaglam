@@ -27,11 +27,6 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     }
   }, [isActivityFeedOpen]);
 
-  // userActivities.forEach(activity => {
-  //   console.log(activity.referredEntity, activity.referredEntityType);
-  //   // activity.referredEntityType === 'post' && console.log(activity.activities[0].post);
-  // });
-
   return (
     isActivityFeedOpen
   && (
@@ -55,6 +50,8 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                 </PopoverListItem>
               )
               : userActivities.map(activity => (
+                !!activity.activities.length
+                && (
                 <PopoverListItem>
                   <ActivityItem
                     key={activity._id}
@@ -70,6 +67,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                     referredEntity={activity.referredEntity}
                   />
                 </PopoverListItem>
+                )
               ))
 }
         </PopoverList>

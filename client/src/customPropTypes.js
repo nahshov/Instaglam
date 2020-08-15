@@ -79,8 +79,6 @@ export const activitiesPropTypes = {
   profilePic: PropTypes.string.isRequired,
   usernames: PropTypes.arrayOf(PropTypes.string).isRequired,
   activityLength: PropTypes.number.isRequired,
-  activityType: PropTypes.string.isRequired,
-  referredEntityType: PropTypes.string.isRequired,
   referredEntity: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     postId: PropTypes.string,
