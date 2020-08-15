@@ -16,6 +16,7 @@ import {
 import {
   RESET_FOLLOWS
 } from '../follows/followTypes';
+import { RESET_PROFILE } from '../profile/profileTypes';
 
 export const register = ({ fullName, email, username, password }, setAlert) => {
   return async (
@@ -91,15 +92,27 @@ export const login = ({ email, password }, setAlert) => {
   };
 };
 
+export const resetState = (dispatch) => {
+  dispatch({
+    type: RESET_AUTH
+  });
+  dispatch({
+    type: RESET_POSTS
+  });
+  dispatch({
+    type: RESET_FOLLOWS
+  });
+  dispatch({
+    type: RESET_PROFILE
+  });
+};
+
 export const logout = () => {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: RESET_AUTH_LOADING
-      });
-
       await axios.post('/api/logout');
       dispatch({ type: LOGOUT });
+      resetState(dispatch);
     } catch (error) {
       dispatch({
         type: AUTH_ERROR
@@ -153,16 +166,4 @@ export const removeProfilePic = () => {
       console.log(error.message);
     }
   };
-};
-
-export const resetState = (dispatch) => {
-  dispatch({
-    type: RESET_AUTH
-  });
-  dispatch({
-    type: RESET_POSTS
-  });
-  dispatch({
-    type: RESET_FOLLOWS
-  });
 };
