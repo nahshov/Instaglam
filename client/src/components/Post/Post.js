@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { postPropType } from 'customPropTypes';
+import UserIdentifier from 'components/UserIdentifier/UserIdentifier';
+import Button from 'components/Button/Button';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
 import styles from './Post.module.scss';
-// import PostConversation from './PostConversation/PostConversation';
 
 const Post = ({ post }) => {
+  const {
+    numOfLikes,
+    content,
+    user: {
+      username = '',
+      profilePic = ''
+    },
+    media,
+    created,
+    _id: postId,
+    isPostLiked
+  } = post;
+
+  const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className={styles.container}>
       <div
@@ -13,6 +30,20 @@ const Post = ({ post }) => {
           background: `url(${post.media}) no-repeat center center / cover`
         }}
       />
+      <div className={styles.postContentContainer}>
+        <div className={styles.postContentHeader}>
+          <UserIdentifier />
+          <Button btnRole="astext">
+            <FiMoreHorizontal
+              className={styles.moreIcon}
+              onClick={() => { return setModalOpen(true); }}
+            />
+          </Button>
+          {isModalOpen && (
+          <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
+
+        </div>
+      </div>
     </div>
   );
 };

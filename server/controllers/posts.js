@@ -121,6 +121,7 @@ const getOnePost = async (req, res) => {
         message: "Post doesn't exist"
       });
     }
+    console.log(post);
 
     return serverResponse(res, 200, { ...post.toObject(), isPostLiked: isUserLike });
   } catch (e) {

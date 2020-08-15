@@ -26,7 +26,6 @@ const PostModal = ({ post, isOpen, setModalOpen, isGallery = false, posts = [] }
       setModalOpen={setModalOpen}
     >
       <PostGallery post={post} posts={posts} isGallery={isGallery} />
-      <div />
     </Modal>
   );
 };

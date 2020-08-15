@@ -1,10 +1,22 @@
+@import '../../styles/mixins.scss';
+
 .container {
     width: 100%;
     display: flex;
 
     .media {
-        width: 70%;
+        width: 600px;
         height: 100%;
+    }
+    
+    .postContentContainer{
+      width: 290px;
+      @include flexColumn;
+      .postContentHeader{
+        height: 80px;
+        width: 100%;
+        @include flexSpaceBetween
+      }
     }
 }
 

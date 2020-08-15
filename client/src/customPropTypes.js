@@ -61,14 +61,18 @@ export const profilePropType = {
 };
 
 export const commentsPropType = {
-  likes: PropTypes.number,
-  replyToComment: PropTypes.string,
-  _id: PropTypes.string,
-  user: PropTypes.string,
-  post: PropTypes.string,
   content: PropTypes.string,
   created: PropTypes.string,
-  __v: PropTypes.number
+  isCommentLiked: PropTypes.bool,
+  numOfLikes: PropTypes.number,
+  post: PropTypes.string,
+  replyToComment: PropTypes.string,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    _id: PropTypes.string
+  }),
+  __v: PropTypes.number,
+  _id: PropTypes.string
 };
 
 export const activitiesPropTypes = {

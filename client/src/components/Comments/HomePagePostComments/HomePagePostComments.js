@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import PropTypes from 'prop-types';
 import { toggleCommentLike } from 'actions/posts/postActions';
+import { commentsPropType } from 'customPropTypes';
 import styles from './HomePagePostComments.module.scss';
-
 const HomePagePostComments = ({ postComments, postId }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
@@ -45,20 +45,7 @@ const HomePagePostComments = ({ postComments, postId }) => {
 };
 
 HomePagePostComments.propTypes = {
-  postComments: PropTypes.arrayOf(PropTypes.shape({
-    content: PropTypes.string,
-    created: PropTypes.string,
-    isCommentLiked: PropTypes.bool,
-    numOfLikes: PropTypes.number,
-    post: PropTypes.string,
-    replyToComment: PropTypes.string,
-    user: {
-      username: PropTypes.string,
-      _id: PropTypes.string
-    },
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  })).isRequired,
+  postComments: PropTypes.arrayOf(PropTypes.shape(commentsPropType)).isRequired,
   postId: PropTypes.string.isRequired
 };
 
