@@ -1,32 +1,31 @@
-import React, { useState } from 'react';
-import styles from 'components/Comments/ViewAllComments/ViewAllComments.module.scss';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
-import PostModal from 'components/PostModal/PostModal';
+import styles from './ViewAllComments.module.scss';
 
-const ViewAllComments = (numOfComments) => {
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
-  return (
-    <div>
-      {
+const ViewAllComments = ({ numOfComments, setIsPostModalOpen }) => (
+  <div>
+    {
         numOfComments > 2 ? (
-          <div className={styles.commentListWrapper}>
-            <Button btnRole="astext" onClick={() => setIsPostModalOpen(true)}>
+          <div>
+            <Button className={styles.viewAllBtn} btnRole="astext" onClick={() => setIsPostModalOpen(true)}>
               View all
               {' '}
               {numOfComments}
               {' '}
               comments
             </Button>
-            {isPostModalOpen && (
-            <PostModal isOpen={isPostModalOpen} setModalOpen={setIsPostModalOpen} post={post} />
-            )}
+
           </div>
         ) : ''
       }
 
-    </div>
-  )
-}
+  </div>
+);
 
-export default ViewAllComments
+ViewAllComments.propTypes = {
+  numOfComments: PropTypes.number.isRequired,
+  setIsPostModalOpen: PropTypes.func.isRequired
+};
+
+export default ViewAllComments;

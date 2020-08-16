@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
 import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
@@ -10,12 +10,15 @@ import CommentForm from 'components/Comments/CommentForm/CommentForm';
 import CommentList from 'components/Comments/CommentList/CommentList';
 import { postPropType } from 'customPropTypes';
 import styles from './HomePagePost.module.scss';
+import ViewAllComments from '../Comments/ViewAllComments/ViewAllComments';
+import PostModal from '../Modals/PostModal/PostModal';
 
 const HomePagePost = ({
   post
 }) => {
   const {
     numOfLikes,
+    numOfComments,
     content,
     user: {
       username = '',
@@ -24,11 +27,22 @@ const HomePagePost = ({
     media,
     created,
     _id: postId,
-    isPostLiked
+    isPostLiked,
+    comments
   } = post;
+
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  console.log(post);
+
   return (
     <article className={styles.postContainer}>
-      <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} className={styles.postHeader} />
+      <HomePagePostHeader
+        username={username}
+        profilePic={profilePic}
+        postId={postId}
+        className={styles.postHeader}
+      />
       <HomePagePostMedia media={media} isLike={isPostLiked} postId={postId} />
       <HomePagePostIconBar
         isLike={isPostLiked}
@@ -41,11 +55,19 @@ const HomePagePost = ({
         postId={postId}
       />
       <HomePagePostContent username={username} content={content} />
-      <CommentList post={post} />
+      <ViewAllComments numOfComments={numOfComments} setIsPostModalOpen={setIsPostModalOpen} />
+      <CommentList comments={post.comments} />
       <Link to={`/p/${postId}`}>
         <CreatedTime created={created} />
       </Link>
       {postId && <CommentForm postId={postId} />}
+      {isPostModalOpen && (
+        <PostModal
+          isOpen={isPostModalOpen}
+          setModalOpen={setIsPostModalOpen}
+          post={post}
+        />
+      )}
     </article>
   );
 };

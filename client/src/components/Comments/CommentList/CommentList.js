@@ -1,31 +1,29 @@
-import React, { useState } from 'react';
-import PostModal from 'components/Modals/PostModal/PostModal';
-import Button from 'components/Button/Button';
-import { postPropType } from 'customPropTypes';
-
+import React from 'react';
+import { commentsPropType } from 'customPropTypes';
 import styles from './CommentList.module.scss';
-import HomePagePostComments from '../HomePagePostComments/HomePagePostComments';
+import Comment from '../Comment/Comment';
 
-const CommentList = ({ post }) => {
+const CommentList = ({ comments, isHomePage = true }) => (
+  <div className={styles.commentListWrapper}>
+    {comments.map(comment => (
+      <Comment
+        key={comment._id}
+        comment={isHomePage
+          ? {
+            ...comment, user: { ...comment.user, profilePic: undefined }
+          }
+          : comment}
+      />
+    ))}
+  </div>
+);
 
-  const comments = post.comments.length < 2
-    ? post.comments
-    : [post.comments[0], post.comments[1]];
-
-  return (
-    <div>
-      <div>
-        <HomePagePostComments
-          postComments={comments}
-          postId={post._id}
-        />
-      </div>
-    </div>
-  );
+CommentList.defaultProps = {
+  isHomePage: true
 };
 
 CommentList.propTypes = {
-  ...postPropType
+  ...commentsPropType
 };
 
 export default CommentList;
