@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { getUserActivitiesFeedSelector } from 'actions/activities/activitiesFeedSelectors';
 import { getUserActivitiesFeed } from 'actions/activities/activitiesFeedActions';
+import { getFollowing } from 'actions/follows/followActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -24,6 +25,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
   useEffect(() => {
     if (isActivityFeedOpen) {
       dispatch(getUserActivitiesFeed(user._id));
+      dispatch(getFollowing(user._id));
     }
   }, [isActivityFeedOpen]);
 
@@ -33,7 +35,7 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
     <div
       className={styles.popoverWrapper}
       onClick={() => {
-        setIsActivityFeedOpen(false);
+        // setIsActivityFeedOpen(false);
         setHeartIconFilled(false);
       }}
     >
@@ -58,13 +60,16 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                     profilePic={activity.activities[activity.activities.length - 1].user.profilePic}
                     usernames={
                   activity.activities.length >= 2
-                    ? [activity.activities[0].user.username, activity.activities[1].user.username]
+                    ? [activity.activities[activity.activities.length - 1].user.username,
+                      activity.activities[activity.activities.length - 2].user.username]
                     : [activity.activities[0].user.username]
 }
                     activityLength={activity.activities.length}
                     activityType={activity.activityType}
                     referredEntityType={activity.referredEntityType}
                     referredEntity={activity.referredEntity}
+                    userOfActivity={activity.activities.map(user => user.user._id)}
+                    user={user}
                   />
                 </PopoverListItem>
                 )

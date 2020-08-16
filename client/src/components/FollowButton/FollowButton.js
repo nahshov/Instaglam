@@ -9,6 +9,7 @@ const FollowButton = ({ isFollowed, handleFollow }) => {
   return (
     <Button
       style={{ fontWeight: 'bold', width: '80px' }}
+      disabled={localLoading}
       btnRole={`${isFollowed ? 'danger' : 'primary'}`}
       onClick={async () => {
         setLocalLoading(true);

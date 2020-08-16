@@ -11,24 +11,29 @@ const ActivityItem = ({
   activityLength,
   activityType,
   referredEntityType,
-  referredEntity }) => (
-    <>
-      {activityType === 'follow' && (
+  referredEntity,
+  userOfActivity,
+  user
+}) => (
+  <>
+    {activityType === 'follow' && (
       <FollowActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
+        userOfActivity={userOfActivity}
+        user={user}
       />
-      )}
-      {activityType === 'comment' && (
+    )}
+    {activityType === 'comment' && (
       <CommentActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
         referredEntity={referredEntity}
       />
-      )}
-      {activityType === 'like' && (
+    )}
+    {activityType === 'like' && (
       <LikeActivity
         profilePic={profilePic}
         usernames={usernames}
@@ -36,16 +41,16 @@ const ActivityItem = ({
         referredEntityType={referredEntityType}
         referredEntity={referredEntity}
       />
-      )}
-      {activityType === 'reply' && (
+    )}
+    {activityType === 'reply' && (
       <ReplyActivity
         profilePic={profilePic}
         usernames={usernames}
         activityLength={activityLength}
         referredEntity={referredEntity}
       />
-      )}
-    </>
+    )}
+  </>
 );
 
 ActivityItem.propTypes = {
