@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PostGallery from 'components/PostGallery/PostGallery';
 import { changeUrl } from 'utils/changeUrl';
 import { postPropType } from 'customPropTypes';
+import { getPost } from 'actions/post/postActions';
 import Modal from 'components/Modals/Modal';
 import styles from './PostModal.module.scss';
 
 const PostModal = ({ post, isOpen, setModalOpen, isGallery = false, posts = [] }) => {
   const { pathname: username } = useLocation();
-
+  const dispatch = useDispatch();
+  dispatch(getPost(post._id));
   useEffect(() => {
     changeUrl(`/p/${post._id}`, 'post modal path');
-
     return () => {
       setModalOpen(!isOpen);
       changeUrl(`${username}`);

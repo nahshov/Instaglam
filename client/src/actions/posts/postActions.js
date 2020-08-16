@@ -168,7 +168,7 @@ export const getAllCommentsOfAPost = (postId) => {
   return async dispatch => {
     try {
       if (postId) {
-        const commentsOfPost = await axios.get(`/api/posts/${postId}/Comments`);
+        const commentsOfPost = await axios.get(`/api/posts/${postId}/comments`);
         dispatch({
           type: GET_ALL_COMMENTS_OF_A_POST,
           payload: commentsOfPost.data

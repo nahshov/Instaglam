@@ -16,7 +16,8 @@ async function getAllPostsOfUser(userInfo) {
 }
 
 function getPost(postId) {
-  return Post.findOne({ _id: postId });
+  return Post.findOne({ _id: postId })
+    .populate('user', 'profilePic username -_id');
 }
 
 function createPost(post) {
