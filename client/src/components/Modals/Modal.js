@@ -51,14 +51,15 @@ const Modal = (
 Modal.defaultProps = {
   isOpen: false,
   isUploadPost: false,
-  isAnimated: false
+  isAnimated: false,
+  children: undefined
 };
 
 Modal.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired,
+  ]),
   isOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   setModalOpen: PropTypes.func.isRequired,
   isAnimated: PropTypes.bool

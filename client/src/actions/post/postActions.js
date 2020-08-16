@@ -1,20 +1,24 @@
 import axios from 'axios';
 import {
-  SET_POST,
+  SET_POST
 } from './postTypes';
 
-export const getPost = postId => async dispatch => {
+export const getPost = post => async dispatch => {
+  dispatch({
+    type: SET_POST,
+    payload: post
+  });
+
   try {
-    if (postId) {
-      // const { data: post } = await axios.get(`/api/posts/singlePost/${postId}`);
-      // const { data: comments } = await axios.get(`/api/posts/${postId}/comments`);
-      const [post, comments] = await Promise.all([
-        axios.get(`/api/posts/singlePost/${postId}`),
-        axios.get(`/api/posts/${postId}/comments`)
-      ])
+    if (post._id) {
+      const [updatedPost, comments] = await Promise.all([
+        axios.get(`/api/posts/singlePost/${post._id}`),
+        axios.get(`/api/posts/${post._id}/comments`)
+      ]);
+      console.log('data is back');
       dispatch({
         type: SET_POST,
-        payload: { ...post.data, comments: comments.data }
+        payload: { ...updatedPost.data, comments: comments.data }
       });
     }
   } catch (e) {

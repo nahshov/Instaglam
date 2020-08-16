@@ -6,7 +6,7 @@ import { changeUrl } from 'utils/changeUrl';
 import { postPropType } from 'customPropTypes';
 import styles from './PostGallery.module.scss';
 
-const PostGallery = ({ post, posts, isGallery }) => {
+const PostGallery = ({ post = {}, posts, isGallery }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = posts ? posts.indexOf(currentPost) : 0;
 

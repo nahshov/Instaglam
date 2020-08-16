@@ -12,6 +12,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_POST:
+      console.log(payload);
       return {
         ...state,
         post: payload

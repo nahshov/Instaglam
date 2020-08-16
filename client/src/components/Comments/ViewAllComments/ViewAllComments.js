@@ -27,5 +27,4 @@ ViewAllComments.propTypes = {
   numOfComments: PropTypes.number.isRequired,
   setIsPostModalOpen: PropTypes.func.isRequired
 };
-
 export default ViewAllComments;

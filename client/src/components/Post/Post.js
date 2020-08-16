@@ -5,6 +5,7 @@ import UserIdentifier from 'components/UserIdentifier/UserIdentifier';
 import Button from 'components/Button/Button';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
+import CommentList from 'components/Comments/CommentList/CommentList';
 import styles from './Post.module.scss';
 
 const Post = ({ post }) => {
@@ -27,12 +28,12 @@ const Post = ({ post }) => {
       <div
         className={styles.media}
         style={{
-          background: `url(${post.media}) no-repeat center center / cover`
+          background: `url(${media}) no-repeat center center / cover`
         }}
       />
       <div className={styles.postContentContainer}>
         <div className={styles.postContentHeader}>
-          <UserIdentifier className={styles.UserIdentifier} />
+          <UserIdentifier className={styles.UserIdentifier} username={username} profilePic={profilePic} />
           <Button btnRole="astext">
             <FiMoreHorizontal
               className={styles.moreIcon}
@@ -42,6 +43,7 @@ const Post = ({ post }) => {
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
         </div>
+        <CommentList comments={post.comments} isHomePage={false} />
         comments
         commentform
       </div>

@@ -33,8 +33,6 @@ const HomePagePost = ({
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
-  console.log(post);
-
   return (
     <article className={styles.postContainer}>
       <HomePagePostHeader
@@ -65,7 +63,8 @@ const HomePagePost = ({
         <PostModal
           isOpen={isPostModalOpen}
           setModalOpen={setIsPostModalOpen}
-          post={post}
+          postId={postId}
+          postProp={post}
         />
       )}
     </article>
