@@ -14,7 +14,6 @@ const Button = ({
     .split(' ')
     .map((btnClass) => { return styles[btnClass]; })
     .join(' ');
-
   return (
     <div className={`${styles.btn} ${classes}`}>
       <button {...otherProps}>

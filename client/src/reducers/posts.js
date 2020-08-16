@@ -6,6 +6,7 @@ import {
   POST_ERROR,
   TOGGLE_POST_LIKE,
   RESET_POSTS_OF_USER_LOADING,
+  SET_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
   RESET_POSTS,
@@ -101,6 +102,7 @@ export default function (state = initialState, action) {
     case ADD_COMMENT_TO_POST:
       return {
         ...state,
+        loading: false,
         posts: state.posts.map(post => {
           return (
             post._id === payload.postId ? {
@@ -116,6 +118,11 @@ export default function (state = initialState, action) {
         ...state,
         postsOfUserLoading: true
       };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: payload
+      }
     case GET_ALL_LIKES_OF_A_POST:
       return {
         ...state,

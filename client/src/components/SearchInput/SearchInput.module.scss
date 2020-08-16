@@ -118,11 +118,12 @@
 
 .searchProfilePic {
   width: 40px;
-  overflow: hidden;
   display: flex;
+  margin-right: 20px;
+  z-index: 2;
 
   img {
-    width: 100%;
+    width: inherit;
     border-radius: 100%;
   }
 }

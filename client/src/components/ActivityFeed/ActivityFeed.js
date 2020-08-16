@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { getUserActivitiesFeedSelector } from 'actions/activities/activitiesFeedSelectors';
 import { getUserActivitiesFeed } from 'actions/activities/activitiesFeedActions';
-import { getFollowing } from 'actions/follows/followActions';
+import { getFollows } from 'actions/follows/followActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -17,34 +17,31 @@ const structuredActivitieFeedsSelector = createStructuredSelector({
   userActivities: getUserActivitiesFeedSelector
 });
 
-const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconFilled }) => {
+const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
   const { user, userActivities } = useSelector(structuredActivitieFeedsSelector);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isActivityFeedOpen) {
-      dispatch(getUserActivitiesFeed(user._id));
-      dispatch(getFollowing(user._id));
-    }
-  }, [isActivityFeedOpen]);
+    dispatch(getUserActivitiesFeed(user._id));
+    dispatch(getFollows(user._id, 'following'));
+  }, []);
 
   return (
-    isActivityFeedOpen
-  && (
-    <div
-      className={styles.popoverWrapper}
-      onClick={() => {
+    (
+      <div
+        className={styles.popoverWrapper}
+        onClick={() => {
         // setIsActivityFeedOpen(false);
-        setHeartIconFilled(false);
-      }}
-    >
-      <Popover
-        isPopoverOpen
-        style={{ top: '60px', right: '111px', width: '30%' }}
+          setHeartIconFilled(false);
+        }}
       >
-        <PopoverList>
-          {
+        <Popover
+          isPopoverOpen
+          style={{ top: '60px', right: '111px', width: '30%' }}
+        >
+          <PopoverList>
+            {
             !userActivities.length
               ? (
                 <PopoverListItem>
@@ -75,10 +72,10 @@ const ActivityFeed = ({ isActivityFeedOpen, setIsActivityFeedOpen, setHeartIconF
                 )
               ))
 }
-        </PopoverList>
-      </Popover>
-    </div>
-  )
+          </PopoverList>
+        </Popover>
+      </div>
+    )
   );
 };
 

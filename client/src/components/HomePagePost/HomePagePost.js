@@ -26,10 +26,9 @@ const HomePagePost = ({
     _id: postId,
     isPostLiked
   } = post;
-  const loading = false;
   return (
     <article className={styles.postContainer}>
-      <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} />
+      <HomePagePostHeader username={username} profilePic={profilePic} postId={postId} className={styles.postHeader} />
       <HomePagePostMedia media={media} isLike={isPostLiked} postId={postId} />
       <HomePagePostIconBar
         isLike={isPostLiked}

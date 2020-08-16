@@ -6,6 +6,7 @@ import {
   GET_POST,
   POST_ERROR,
   SET_POSTS,
+  SET_LOADING,
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
   TOGGLE_COMMENT_LIKE,
@@ -180,6 +181,7 @@ export const getAllCommentsOfAPost = (postId) => {
 };
 
 export const addAComment = (postId, comment) => {
+
   return async dispatch => {
     try {
       if (postId) {
@@ -189,7 +191,6 @@ export const addAComment = (postId, comment) => {
               'Content-Type': 'application/json'
             }
           };
-
           const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
 
           dispatch({
@@ -198,8 +199,10 @@ export const addAComment = (postId, comment) => {
           });
         }
       }
+      return Promise.resolve();
     } catch (e) {
-      console.log(e);
+      return Promise.reject();
+      // console.log(e);
     }
   };
 };

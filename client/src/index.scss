@@ -1,5 +1,6 @@
 @import './styles/typography.scss';
 @import './styles/color-palette.scss';
+@import './styles/mixins.scss';
 
 *,
 *:before,
@@ -12,6 +13,7 @@
 html {
   margin: 0;
   padding: 0;
+  
 }
 
 body {

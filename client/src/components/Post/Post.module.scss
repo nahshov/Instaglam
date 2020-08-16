@@ -1,10 +1,25 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/color-palette';
+
 .container {
     width: 100%;
     display: flex;
 
     .media {
-        width: 70%;
+        width: 600px;
         height: 100%;
+    }
+    
+    .postContentContainer{
+      width: 378px;
+      @include flexColumn;
+      .postContentHeader{
+        height: 80px;
+        width: 100%;
+        @include flexSpaceBetween;
+        padding: 5px 9px 15px 9px;
+        border-bottom: 1px solid $third-border-color;
+      }
     }
 }
 

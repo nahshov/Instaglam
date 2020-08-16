@@ -26,9 +26,6 @@ const NavLinks = () => {
       <CustomNavLink to="/direct/inbox" className={styles.chatLink}>
         <ChatIcon className={styles.ChatIcon} />
       </CustomNavLink>
-      <CustomNavLink to="/explore">
-        <ExploreIcon />
-      </CustomNavLink>
       <HeartIcon
         className={styles.HeartIcon}
         isFilled={isHeartIconFilled}

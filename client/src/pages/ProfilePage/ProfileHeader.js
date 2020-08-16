@@ -7,7 +7,7 @@ import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
 import { profilePropType } from 'customPropTypes';
-import { toggleFollow } from 'actions/profile/profileActions';
+import { toggleProfileFollow } from 'actions/profile/profileActions';
 import SocialStatusList from './SocialStatusList';
 import FollowButton from '../../components/FollowButton/FollowButton';
 
@@ -15,7 +15,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
 
   const handleFollow = () => {
-    dispatch(toggleFollow(profile._id, profile.isFollowed));
+    dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
   };
 
   return (
