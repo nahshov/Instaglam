@@ -18,12 +18,12 @@ function removeActivity(activityId) {
   return Activity.updateOne({ 'activities.activityId': activityId }, { $pull: { activities: { activityId } } });
 }
 
-function removeAllUserActivitiesFeed(userId) {
-  return Activity.deleteMany({ referredUser: userId });
-}
-
 function removeAllUserActivities(userId) {
   return Activity.updateMany({ 'activities.user': userId }, { $pull: { activities: { user: userId } } });
+}
+
+function removeAllUserActivitiesFeed(userId) {
+  return Activity.deleteMany({ referredUser: userId });
 }
 
 module.exports = {
