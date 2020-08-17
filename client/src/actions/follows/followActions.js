@@ -43,6 +43,7 @@ export const toggleFollows = (userId, isFollowing) => async dispatch => {
 
     return Promise.resolve();
   }
+
   await axios.delete(`/api/users/${userId}/follows`);
 
   dispatch({

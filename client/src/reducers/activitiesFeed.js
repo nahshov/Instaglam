@@ -1,4 +1,4 @@
-import { GET_ACTIVITIES_FEED } from 'actions/activities/activitiesFeedTypes';
+import { SET_ACTIVITIES_FEED } from 'actions/activities/activitiesFeedTypes';
 
 const initialState = {
   userActivitiesFeed: [],
@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_ACTIVITIES_FEED:
+    case SET_ACTIVITIES_FEED:
       return {
         ...state,
         userActivitiesFeed: payload,

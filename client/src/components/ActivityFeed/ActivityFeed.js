@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
-import { getUserActivitiesFeedSelector } from 'actions/activities/activitiesFeedSelectors';
+import { userActivitiesFeedSelector } from 'actions/activities/activitiesFeedSelectors';
 import { getUserActivitiesFeed } from 'actions/activities/activitiesFeedActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
@@ -13,7 +13,7 @@ import styles from './ActivityFeed.module.scss';
 
 const structuredActivitieFeedSelector = createStructuredSelector({
   user: authenticatedUserSelector,
-  userActivities: getUserActivitiesFeedSelector
+  userActivities: userActivitiesFeedSelector
 });
 
 const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {

@@ -3,36 +3,36 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { followsSelector } from 'actions/follows/followSelectors';
-import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
-
 import { setNumOfFollowing } from 'actions/profile/profileActions';
+import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import PropTypes from 'prop-types';
+import follow from 'reducers/follow';
 
 const structuredFollowingSelector = createStructuredSelector({
-  follows: followsSelector
+  follows: followsSelector,
+  authenticatedUser: authenticatedUserSelector
 });
 
 const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => {
-  const { follows } = useSelector(structuredFollowingSelector);
-  const userId = activity.activities[0].user._id;
-  const isUserFollowed = follows.find(follow => follow._id === userId);
-  console.log(isUserFollowed);
+  const { follows, authenticatedUser } = useSelector(structuredFollowingSelector);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getFollows(activity.referredEntity._id, 'following'));
-  }, []);
-
   const history = useHistory();
 
-  const handleFollow = async (user, isUserFollowed) => {
-    console.log(user, usernames[0]);
-    await dispatch(toggleFollows(user, isUserFollowed));
-    console.log('hi');
+  useEffect(() => {
+    dispatch(getFollows(authenticatedUser._id, 'following'));
+  }, []);
+
+  // const activityUserId = activity.activities[0].user._id;
+  // const isUserFollowed = follows.find(follow => follow._id === activityUserId);
+
+  const handleFollow = (user) => {
+    console.log(user);
+    dispatch(toggleFollows(user._id, user.isFollowed));
     if (user.isFollowed) {
       dispatch(setNumOfFollowing(-1));
     } else {
@@ -50,6 +50,7 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
   } else {
     followActivityText = `${usernames} started following you.`;
   }
+
   return (
     <div>
       <div onClick={() => history.push(`/${usernames[0]}`)}>
@@ -61,12 +62,12 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
       </div>
 
       {activityLength < 2
-        && (
-        <FollowButton
-          handleFollow={() => handleFollow(userId, isUserFollowed)}
-          isFollowed={isUserFollowed && isUserFollowed.isFollowed}
-        />
-        )}
+          && follows.map(follow => (
+            <FollowButton
+              handleFollow={() => handleFollow(follow)}
+              isFollowed={follow.isFollowed}
+            />
+          ))}
     </div>
   );
 };
@@ -74,7 +75,14 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
 FollowActivity.propTypes = {
   usernames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   profilePic: PropTypes.string.isRequired,
-  activityLength: PropTypes.number.isRequired
+  activityLength: PropTypes.number.isRequired,
+  activity: PropTypes.shape({
+    activities: PropTypes.arrayOf(PropTypes.shape({
+      user: PropTypes.shape({
+        _id: PropTypes.string.isRequired
+      }).isRequired
+    })).isRequired
+  }).isRequired
 };
 
 export default FollowActivity;

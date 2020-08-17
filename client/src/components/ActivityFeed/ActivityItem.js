@@ -1,6 +1,6 @@
 import React from 'react';
 import { activityTypesObject } from 'utils/activityTypesObject';
-import { activitiesPropTypes } from 'customPropTypes';
+// import { activitiesPropTypes } from 'customPropTypes';
 import PropTypes from 'prop-types';
 
 const getActivitiesUsers = (activities = []) => {
