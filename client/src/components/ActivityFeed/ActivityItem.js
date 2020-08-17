@@ -1,60 +1,40 @@
 import React from 'react';
-import FollowActivity from 'components/ActivityFeed/activityTypes/FollowActivity';
-import CommentActivity from 'components/ActivityFeed/activityTypes/CommentActivity';
-import LikeActivity from 'components/ActivityFeed/activityTypes/LikeActivity';
-import ReplyActivity from 'components/ActivityFeed/activityTypes/ReplyActivity';
+import { activityTypesObject } from 'utils/activityTypesObject';
 import { activitiesPropTypes } from 'customPropTypes';
+import PropTypes from 'prop-types';
+
+const getActivitiesUsers = (activities = []) => {
+  return activities.length >= 2
+    ? [activities[activities.length - 1].user.username,
+      activities[activities.length - 2].user.username]
+    : [activities[0].user.username];
+};
 
 const ActivityItem = ({
-  profilePic,
-  usernames,
-  activityLength,
-  activityType,
-  referredEntityType,
-  referredEntity,
-  userOfActivity,
-  user
-}) => (
-  <>
-    {activityType === 'follow' && (
-      <FollowActivity
-        profilePic={profilePic}
+  activity
+}) => {
+  const { profilePic } = activity.activities[activity.activities.length - 1].user;
+  const usernames = getActivitiesUsers(activity.activities);
+  const ActivityComponent = activityTypesObject[activity.activityType];
+  const activityLength = activity.activities.length;
+
+  return (
+    <>
+      <ActivityComponent
+        activity={activity}
         usernames={usernames}
-        activityLength={activityLength}
-        userOfActivity={userOfActivity}
-        user={user}
-      />
-    )}
-    {activityType === 'comment' && (
-      <CommentActivity
         profilePic={profilePic}
-        usernames={usernames}
         activityLength={activityLength}
-        referredEntity={referredEntity}
       />
-    )}
-    {activityType === 'like' && (
-      <LikeActivity
-        profilePic={profilePic}
-        usernames={usernames}
-        activityLength={activityLength}
-        referredEntityType={referredEntityType}
-        referredEntity={referredEntity}
-      />
-    )}
-    {activityType === 'reply' && (
-      <ReplyActivity
-        profilePic={profilePic}
-        usernames={usernames}
-        activityLength={activityLength}
-        referredEntity={referredEntity}
-      />
-    )}
-  </>
-);
+    </>
+  );
+};
 
 ActivityItem.propTypes = {
-  ...activitiesPropTypes
+  activity: PropTypes.shape({
+    activities: PropTypes.array.isRequired,
+    activityType: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default ActivityItem;

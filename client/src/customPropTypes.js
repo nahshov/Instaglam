@@ -81,7 +81,7 @@ export const activitiesPropTypes = {
   activityLength: PropTypes.number.isRequired,
   referredEntity: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    postId: PropTypes.string,
-    media: PropTypes.string
+    postId: PropTypes.string.isRequired,
+    media: PropTypes.string.isRequired
   }).isRequired
 };

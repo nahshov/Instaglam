@@ -1,12 +1,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
+import PropTypes from 'prop-types';
 import { activitiesPropTypes } from 'customPropTypes';
 
-const ReplyActivity = ({ profilePic, usernames, activityLength, referredEntity }) => {
-  let ReplyActivityText;
+const ReplyActivity = ({ activity, profilePic, usernames, activityLength }) => {
+  const { referredEntity } = activity;
 
   const history = useHistory();
+
+  let ReplyActivityText;
 
   if (activityLength > 2) {
     ReplyActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
@@ -29,7 +32,17 @@ const ReplyActivity = ({ profilePic, usernames, activityLength, referredEntity }
 };
 
 ReplyActivity.propTypes = {
-  ...activitiesPropTypes
+  usernames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  profilePic: PropTypes.string.isRequired,
+  activityLength: PropTypes.number.isRequired,
+  activity: PropTypes.shape({
+    referredEntity: PropTypes.shape({
+      post: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        media: PropTypes.string.isRequired
+      }).isRequired
+    }).isRequired
+  }).isRequired
 };
 
 export default ReplyActivity;

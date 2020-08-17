@@ -5,16 +5,18 @@ import PropTypes from 'prop-types';
 import { activitiesPropTypes } from 'customPropTypes';
 
 const LikeActivity = ({
-  profilePic,
+  activity,
   usernames,
-  activityLength,
-  referredEntityType,
-  referredEntity }) => {
+  profilePic,
+  activityLength }) => {
+  const { referredEntity } = activity;
+  const { referredEntityType } = activity;
+
+  const history = useHistory();
+
   let LikeActivityText;
   let postRef;
   let postMedia;
-
-  const history = useHistory();
 
   if (referredEntityType === 'Post') {
     postRef = referredEntity._id;
@@ -52,9 +54,28 @@ const LikeActivity = ({
   );
 };
 
+LikeActivity.defaultProps = {
+  activity: PropTypes.shape({
+    referredEntity: PropTypes.shape({
+      post: ''
+    })
+  })
+};
+
 LikeActivity.propTypes = {
-  ...activitiesPropTypes,
-  referredEntityType: PropTypes.string.isRequired
+  usernames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  profilePic: PropTypes.string.isRequired,
+  activityLength: PropTypes.number.isRequired,
+  activity: PropTypes.shape({
+    referredEntityType: PropTypes.string.isRequired,
+    referredEntity: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      media: PropTypes.string.isRequired,
+      post: PropTypes.shape({
+        media: PropTypes.string.isRequired
+      })
+    })
+  })
 };
 
 export default LikeActivity;
