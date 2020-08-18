@@ -1,5 +1,6 @@
 import {
-  SET_POST
+  SET_POST,
+  RESET_POST
 
 } from 'actions/post/postTypes';
 
@@ -17,6 +18,10 @@ export default function (state = initialState, action) {
         ...state,
         post: payload
       };
+    case RESET_POST:
+      return{
+        post: {}
+      }
     default:
       return state;
   }

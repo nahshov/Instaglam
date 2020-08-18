@@ -1,14 +1,9 @@
 import axios from 'axios';
 import {
-  SET_POST
+  SET_POST,
 } from './postTypes';
 
 export const getPost = post => async dispatch => {
-  dispatch({
-    type: SET_POST,
-    payload: post
-  });
-
   try {
     if (post._id) {
       const [updatedPost, comments] = await Promise.all([
@@ -25,3 +20,4 @@ export const getPost = post => async dispatch => {
     console.log(e);
   }
 };
+

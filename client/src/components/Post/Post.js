@@ -21,7 +21,6 @@ const Post = ({ post }) => {
     _id: postId,
     isPostLiked
   } = post;
-
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className={styles.container}>
@@ -37,7 +36,9 @@ const Post = ({ post }) => {
           <Button btnRole="astext">
             <FiMoreHorizontal
               className={styles.moreIcon}
-              onClick={() => { return setModalOpen(true); }}
+              onClick={() => {
+                setModalOpen(true)
+                }}
             />
           </Button>
           {isModalOpen && (
