@@ -3,36 +3,37 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { followsSelector } from 'actions/follows/followSelectors';
+import { activitiesFeedFollowsSelector } from 'actions/activities/activitiesFeedSelectors';
+import { toggleActivitiesFeedFollows } from 'actions/activities/activitiesFeedActions';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import PropTypes from 'prop-types';
-import follow from 'reducers/follow';
 
-const structuredFollowingSelector = createStructuredSelector({
-  follows: followsSelector,
+const structuredActivitesFeedFollowingSelector = createStructuredSelector({
+  activitiesFeedFollows: activitiesFeedFollowsSelector,
   authenticatedUser: authenticatedUserSelector
 });
 
 const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => {
-  const { follows, authenticatedUser } = useSelector(structuredFollowingSelector);
+  const { activitiesFeedFollows, authenticatedUser } = useSelector(structuredActivitesFeedFollowingSelector);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getFollows(authenticatedUser._id, 'following'));
-  }, []);
+    console.log(activitiesFeedFollows);
+  }, [activitiesFeedFollows]);
 
-  // const activityUserId = activity.activities[0].user._id;
+  console.log(activitiesFeedFollows);
+  const userOfActivity = activity.activities[0].user;
   // const isUserFollowed = follows.find(follow => follow._id === activityUserId);
 
   const handleFollow = (user) => {
-    console.log(user);
-    dispatch(toggleFollows(user._id, user.isFollowed));
+    dispatch(toggleActivitiesFeedFollows(user._id, user.isFollowed));
     if (user.isFollowed) {
       dispatch(setNumOfFollowing(-1));
     } else {
@@ -62,12 +63,12 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
       </div>
 
       {activityLength < 2
-          && follows.map(follow => (
+            && (
             <FollowButton
-              handleFollow={() => handleFollow(follow)}
-              isFollowed={follow.isFollowed}
+              handleFollow={() => handleFollow(userOfActivity)}
+              isFollowed={userOfActivity.isFollowed}
             />
-          ))}
+            )}
     </div>
   );
 };
