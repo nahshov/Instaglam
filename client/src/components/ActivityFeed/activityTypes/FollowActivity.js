@@ -46,36 +46,45 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength, creat
 
   if (activityLength > 2) {
     followActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
-    more started following you.`;
+    more`;
   } else if (activityLength === 2) {
-    followActivityText = `${usernames[0]} and ${usernames[1]} started following you.`;
+    followActivityText = `${usernames[0]} and ${usernames[1]}.`;
   } else {
-    followActivityText = `${usernames} started following you.`;
+    followActivityText = `${usernames}`;
   }
 
   return (
-    <>
-      <div onClick={() => history.push(`/${usernames[0]}`)}>
+    <div className={styles.activityWrapper}>
+      <div onClick={() => history.push(`/${usernames[0]}`)} className={styles.activityContentWrapper}>
         <div className={styles.activityProfilePicDiv}>
           <ProfilePic
             url={profilePic}
             size="medium"
-            className={styles.activityProfilePic}
+            className={styles.activityProfilePicDiv}
           />
         </div>
-        <span>{followActivityText}</span>
-        <div className={styles.activityCreatedDiv}>
-          {created}
+        <div className={styles.activityContent}>
+          <div className={styles.activityText}>
+            <div className={styles.activityUsername}>
+              <span>{followActivityText}</span>
+            </div>
+            <span> &nbsp;started following you.</span>
+          </div>
+          <div className={styles.activityCreatedDiv}>
+            {created}
+          </div>
         </div>
       </div>
-      {activityLength < 2
+      <div className={styles.activityMedia}>
+        {activityLength < 2
             && (
             <FollowButton
               handleFollow={() => handleFollow(userOfActivity)}
               isFollowed={userOfActivity.isFollowed}
             />
             )}
-    </>
+      </div>
+    </div>
   );
 };
 

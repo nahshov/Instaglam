@@ -51,6 +51,7 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
                 && (
                 <PopoverListItem
                   key={activity._id}
+                  style={{ textOverflow: 'initial' }}
                 >
                   <ActivityItem
                     activity={activity}

@@ -1,7 +1,16 @@
-.activityDiv {
+.activityWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.activityProfilePic {
+.activityContentWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.activityProfilePicDiv {
   width: 45px;
   display: flex;
   margin-right: 20px;
@@ -12,20 +21,29 @@
   }
 }
 
+.activityText {
+  display: flex;
+
+  span {
+    text-overflow: initial;
+  }
+}
+
 .activityCreatedDiv {
-  width: 220px;
+  width: 150pxx;
 
   div {
     margin-bottom: 0px;
+    width: 100%;
   }
 }
 
 .activityMedia {
-  width: 45px;
+  width: 80px;
   display: flex;
-  margin-right: 20px;
+  justify-content: flex-end;
 
   img {
-    width: inherit;
+    width: 45px;
   }
 }

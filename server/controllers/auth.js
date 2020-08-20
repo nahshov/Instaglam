@@ -69,7 +69,7 @@ const register = async (req, res) => {
 
     const exists = await getUser(req.body.email.toLowerCase());
 
-    const userNameExists = await getUser(req.body.username);
+    const usernameExists = await getUser(req.body.username);
 
     if (exists) {
       return serverResponse(res, 400, {
@@ -77,9 +77,15 @@ const register = async (req, res) => {
       });
     }
 
-    if (userNameExists) {
+    if (usernameExists) {
       return serverResponse(res, 400, {
         errors: "This username isn't available. Please try another."
+      });
+    }
+
+    if (req.body.username.length > 20) {
+      return serverResponse(res, 400, {
+        errors: 'Username should be shorter than 20 characters.'
       });
     }
 

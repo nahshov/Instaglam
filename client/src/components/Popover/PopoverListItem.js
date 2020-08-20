@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './PopoverListItem.module.scss';
 
-const PopoverListItem = ({ children, style = {} }) => {
+const PopoverListItem = ({ children, ...otherProps }) => {
   return (
-    <li style={style} className={styles.listItem}>
+    <li className={styles.listItem} {...otherProps}>
       {children}
     </li>
   );

@@ -46,17 +46,21 @@ const LikeActivity = ({
   }
 
   return (
-    <div onClick={() => history.push(`/p/${postId}`)}>
-      <div className={styles.activityProfilePicDiv}>
-        <ProfilePic
-          url={profilePic}
-          size="medium"
-          className={styles.activityProfilePic}
-        />
-      </div>
-      <span>{LikeActivityText}</span>
-      <div className={styles.activityCreatedDiv}>
-        {created}
+    <div onClick={() => history.push(`/p/${postId}`)} className={styles.activityWrapper}>
+      <div className={styles.activityContentWrapper}>
+        <div className={styles.activityProfilePicDiv}>
+          <ProfilePic
+            url={profilePic}
+            size="medium"
+            className={styles.activityProfilePicDiv}
+          />
+        </div>
+        <div className={styles.activityText}>
+          <span>{LikeActivityText}</span>
+        </div>
+        <div className={styles.activityCreatedDiv}>
+          {created}
+        </div>
       </div>
       <div className={styles.activityMedia}>
         <img src={postMedia} alt="postPic" />
