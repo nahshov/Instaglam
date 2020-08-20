@@ -1,0 +1,31 @@
+.activityDiv {
+}
+
+.activityProfilePic {
+  width: 45px;
+  display: flex;
+  margin-right: 20px;
+
+  img {
+    width: inherit;
+    border-radius: 100%;
+  }
+}
+
+.activityCreatedDiv {
+  width: 220px;
+
+  div {
+    margin-bottom: 0px;
+  }
+}
+
+.activityMedia {
+  width: 45px;
+  display: flex;
+  margin-right: 20px;
+
+  img {
+    width: inherit;
+  }
+}

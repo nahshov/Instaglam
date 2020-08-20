@@ -11,13 +11,14 @@ import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import PropTypes from 'prop-types';
+import styles from '../ActivityItem.module.scss';
 
 const structuredActivitesFeedFollowingSelector = createStructuredSelector({
   activitiesFeedFollows: activitiesFeedFollowsSelector,
   authenticatedUser: authenticatedUserSelector
 });
 
-const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => {
+const FollowActivity = ({ activity, usernames, profilePic, activityLength, created }) => {
   const { activitiesFeedFollows, authenticatedUser } = useSelector(structuredActivitesFeedFollowingSelector);
 
   const dispatch = useDispatch();
@@ -53,15 +54,20 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
   }
 
   return (
-    <div>
+    <>
       <div onClick={() => history.push(`/${usernames[0]}`)}>
-        <ProfilePic
-          url={profilePic}
-          size="medium"
-        />
+        <div className={styles.activityProfilePicDiv}>
+          <ProfilePic
+            url={profilePic}
+            size="medium"
+            className={styles.activityProfilePic}
+          />
+        </div>
         <span>{followActivityText}</span>
+        <div className={styles.activityCreatedDiv}>
+          {created}
+        </div>
       </div>
-
       {activityLength < 2
             && (
             <FollowButton
@@ -69,7 +75,7 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength }) => 
               isFollowed={userOfActivity.isFollowed}
             />
             )}
-    </div>
+    </>
   );
 };
 

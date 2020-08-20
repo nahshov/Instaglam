@@ -36,7 +36,7 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
       >
         <Popover
           isPopoverOpen
-          style={{ top: '60px', right: '111px', width: '30%' }}
+          style={{ top: '60px', right: '111px', width: '100%', maxWidth: '600px' }}
         >
           <PopoverList>
             {

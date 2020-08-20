@@ -1,5 +1,6 @@
 import React from 'react';
 import { activityTypesObject } from 'utils/activityTypesObject';
+import CreatedTime from 'components/CreatedTime/CreatedTime';
 // import { activitiesPropTypes } from 'customPropTypes';
 import PropTypes from 'prop-types';
 
@@ -13,10 +14,11 @@ const getActivitiesUsers = (activities = []) => {
 const ActivityItem = ({
   activity
 }) => {
+  const ActivityComponent = activityTypesObject[activity.activityType];
   const { profilePic } = activity.activities[activity.activities.length - 1].user;
   const usernames = getActivitiesUsers(activity.activities);
-  const ActivityComponent = activityTypesObject[activity.activityType];
   const activityLength = activity.activities.length;
+  const { created } = activity;
 
   return (
     <>
@@ -25,6 +27,7 @@ const ActivityItem = ({
         usernames={usernames}
         profilePic={profilePic}
         activityLength={activityLength}
+        created={<CreatedTime created={created} />}
       />
     </>
   );

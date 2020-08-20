@@ -3,23 +3,26 @@ import { useHistory } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import PropTypes from 'prop-types';
 import { activitiesPropTypes } from 'customPropTypes';
+import styles from '../ActivityItem.module.scss';
 
 const LikeActivity = ({
   activity,
   usernames,
   profilePic,
-  activityLength }) => {
+  activityLength,
+  created
+}) => {
   const { referredEntity } = activity;
   const { referredEntityType } = activity;
 
   const history = useHistory();
 
   let LikeActivityText;
-  let postRef;
+  let postId;
   let postMedia;
 
   if (referredEntityType === 'Post') {
-    postRef = referredEntity._id;
+    postId = referredEntity._id;
     postMedia = referredEntity.media;
     if (activityLength > 2) {
       LikeActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
@@ -30,7 +33,7 @@ const LikeActivity = ({
       LikeActivityText = `${usernames} liked your post.`;
     }
   } else {
-    postRef = referredEntity.post;
+    postId = referredEntity.post;
     postMedia = referredEntity.post.media;
     if (activityLength > 2) {
       LikeActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
@@ -43,13 +46,21 @@ const LikeActivity = ({
   }
 
   return (
-    <div onClick={() => history.push(`/p/${postRef}`)}>
-      <ProfilePic
-        url={profilePic}
-        size="medium"
-      />
+    <div onClick={() => history.push(`/p/${postId}`)}>
+      <div className={styles.activityProfilePicDiv}>
+        <ProfilePic
+          url={profilePic}
+          size="medium"
+          className={styles.activityProfilePic}
+        />
+      </div>
       <span>{LikeActivityText}</span>
-      <img src={postMedia} alt="postPic" />
+      <div className={styles.activityCreatedDiv}>
+        {created}
+      </div>
+      <div className={styles.activityMedia}>
+        <img src={postMedia} alt="postPic" />
+      </div>
     </div>
   );
 };
