@@ -1,5 +1,4 @@
 const Activity = require('../models/Activity.js');
-const Post = require('../models/Post.js');
 
 function addActivity(activity) {
   activity = new Activity(activity);
