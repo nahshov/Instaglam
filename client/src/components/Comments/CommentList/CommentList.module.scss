@@ -2,6 +2,7 @@
 
 .commentListWrapper{
   display: flex;
+  width: 100%;
   flex-direction: column;
   button{
     color: $secondary-text-color;

@@ -9,6 +9,7 @@ const CommentList = ({ comments, isHomePage = true }) => {
       {comments.map(comment => (
         <Comment
           key={comment._id}
+          className={styles.comment}
           comment={isHomePage
             ? {
               ...comment, user: { ...comment.user, profilePic: undefined }

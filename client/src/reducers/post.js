@@ -1,7 +1,7 @@
 import {
   SET_POST,
-  RESET_POST
-
+  RESET_POST,
+  TOGGLE_POST_OWNER_FOLLOW
 } from 'actions/post/postTypes';
 
 const initialState = {
@@ -13,15 +13,20 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_POST:
-      console.log(payload);
       return {
         ...state,
         post: payload
       };
+    case TOGGLE_POST_OWNER_FOLLOW:
+      console.log(payload)
+      return {
+        ...state,
+        post: { ...state.post, user: { ...state.post.user, isFollowed: payload } }
+      };
     case RESET_POST:
-      return{
+      return {
         post: {}
-      }
+      };
     default:
       return state;
   }

@@ -59,6 +59,7 @@ const addFollowToAUser = async (req, res) => {
       user: req.user.sub,
       following: req.params.userId
     });
+    console.log(follow)
 
     await followListener;
 
@@ -71,6 +72,7 @@ const addFollowToAUser = async (req, res) => {
 
     return serverResponse(res, 200, follow);
   } catch (error) {
+    console.log(error)
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a follow'
     });

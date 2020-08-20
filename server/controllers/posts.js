@@ -25,6 +25,7 @@ const serverResponse = require('../utils/serverResponse');
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 const formatImage = require('../utils/formatMedia.js');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
+const { isFollowed } = require('../services/follow-services.js');
 
 // @route  POST '/api/posts'
 // @desc   Submit a posts
@@ -121,9 +122,11 @@ const getOnePost = async (req, res) => {
         message: "Post doesn't exist"
       });
     }
-    console.log(post);
-
-    return serverResponse(res, 200, { ...post.toObject(), isPostLiked: isUserLike });
+    return serverResponse(res, 200, {
+      ...post.toObject(),
+      isPostLiked: isUserLike,
+      user: { ...post.user.toObject(), isFollowed: await isFollowed(req.user.sub, post.user._id) }
+    });
   } catch (e) {
     res
       .status(500)

@@ -11,14 +11,17 @@
     }
     
     .postContentContainer{
-      width: 378px;
       @include flexColumn;
+      flex: 1;
       .postContentHeader{
         height: 80px;
         width: 100%;
         @include flexSpaceBetween;
         padding: 5px 9px 15px 9px;
         border-bottom: 1px solid $third-border-color;
+        .postContentHeaderIdentifier{
+          display: flex;
+        }
       }
     }
 }

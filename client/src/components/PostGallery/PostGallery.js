@@ -6,7 +6,7 @@ import { changeUrl } from 'utils/changeUrl';
 import { postPropType } from 'customPropTypes';
 import styles from './PostGallery.module.scss';
 
-const PostGallery = ({ post = {}, posts, isGallery }) => {
+const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = posts ? posts.indexOf(currentPost) : 0;
 
@@ -34,7 +34,7 @@ const PostGallery = ({ post = {}, posts, isGallery }) => {
 
   return (
     <div className={styles.Gallery}>
-      <Post post={currentPost} />
+      <Post post={currentPost} authenticatedUserId={authenticatedUserId} />
       {isGallery && (
       <div className={styles.arrows}>
         {!!currentPostIndex && (
@@ -56,7 +56,8 @@ const PostGallery = ({ post = {}, posts, isGallery }) => {
 PostGallery.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
   isGallery: PropTypes.bool.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.shape(postPropType)).isRequired
+  posts: PropTypes.arrayOf(PropTypes.shape(postPropType)).isRequired,
+  authenticatedUserId: PropTypes.string.isRequired
 };
 
 export default PostGallery;
