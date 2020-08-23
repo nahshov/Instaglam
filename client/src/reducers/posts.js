@@ -98,7 +98,7 @@ export default function (state = initialState, action) {
           }
           return post;
         }) };
-
+    // belongs to homepage state module
     case ADD_COMMENT_TO_POST:
       return {
         ...state,
@@ -107,7 +107,7 @@ export default function (state = initialState, action) {
           return (
             post._id === payload.postId ? {
               ...post,
-              comments: [payload.comment, ...post.comments],
+              comments: [payload.comment, post.comments[0]],
               numOfComments: post.numOfComments + payload.numOfComments
             } : post
           );
@@ -122,7 +122,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: payload
-      }
+      };
     case GET_ALL_LIKES_OF_A_POST:
       return {
         ...state,

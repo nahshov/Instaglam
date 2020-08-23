@@ -1,0 +1,8 @@
+@import '../../../styles/mixins.scss';
+
+.comment {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: 5px 9px;
+}

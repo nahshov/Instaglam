@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import Button from '../Button/Button';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
-const FollowButton = ({ isFollowed, handleFollow }) => {
+const FollowButton = ({ isFollowed, handleFollow, ...otherProps }) => {
   const [localLoading, setLocalLoading] = useState(false);
-
   return (
     <Button
       style={{ fontWeight: 'bold', width: '80px' }}
-      disabled={localLoading}
-      btnRole={`${isFollowed ? 'danger' : 'primary'}`}
+      btnRole={`${isFollowed && !otherProps.astext ? 'danger' : 'primary'} ${otherProps.astext}`}
       onClick={async () => {
         setLocalLoading(true);
         await handleFollow();

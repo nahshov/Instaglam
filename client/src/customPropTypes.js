@@ -5,25 +5,6 @@ export const userPropType = {
   profilePic: PropTypes.string
 };
 
-export const postPropType = {
-  numOfLikes: PropTypes.number,
-  numOfComments: PropTypes.number,
-  _id: PropTypes.string,
-  media: PropTypes.string,
-  user: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.shape(
-      {
-        _id: PropTypes.string,
-        username: PropTypes.string,
-        profilePic: PropTypes.string
-      }
-    )
-  ]),
-  content: PropTypes.string,
-  profilePic: PropTypes.string,
-  isPostLiked: PropTypes.bool
-};
-
 export const likePropType = {
   likes: PropTypes.string,
   postLikes: PropTypes.arrayOf(
@@ -84,4 +65,26 @@ export const activitiesPropTypes = {
     postId: PropTypes.string.isRequired,
     media: PropTypes.string.isRequired
   }).isRequired
+};
+
+export const postPropType = {
+  numOfLikes: PropTypes.number,
+  numOfComments: PropTypes.number,
+  _id: PropTypes.string,
+  media: PropTypes.string,
+  user: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.shape(
+      {
+        _id: PropTypes.string,
+        username: PropTypes.string,
+        profilePic: PropTypes.string
+      }
+    )
+  ]),
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    ...commentsPropType
+  })),
+  content: PropTypes.string,
+  profilePic: PropTypes.string,
+  isPostLiked: PropTypes.bool
 };

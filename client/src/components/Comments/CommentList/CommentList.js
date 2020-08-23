@@ -1,56 +1,32 @@
-import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-import PostModal from 'components/Modals/PostModal/PostModal';
-import Button from 'components/Button/Button';
-import { postPropType } from 'customPropTypes';
-// import { getAllCommentsOfAPost } from 'actions/posts/postActions';
-
+import React from 'react';
+import { commentsPropType } from 'customPropTypes';
 import styles from './CommentList.module.scss';
-import HomePagePostComments from '../HomePagePostComments/HomePagePostComments';
+import Comment from '../Comment/Comment';
 
-const CommentList = ({ post }) => {
-  // const dispatch = useDispatch();
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
-  // const handleClick = () => {
-  //   ;
-  //   dispatch(getAllCommentsOfAPost(post._id));
-  // };
-
-  const comments = post.comments.length < 2
-    ? post.comments
-    : [post.comments[0], post.comments[1]];
-
+const CommentList = ({ comments, isHomePage = true }) => {
   return (
-    <div>
-      {
-        post.numOfComments > 2 ? (
-          <div className={styles.commentListWrapper}>
-            <Button btnRole="astext" onClick={() => setIsPostModalOpen(true)}>
-              View all
-              {' '}
-              {post.numOfComments}
-              {' '}
-              comments
-            </Button>
-            {isPostModalOpen && (
-            <PostModal isOpen={isPostModalOpen} setModalOpen={setIsPostModalOpen} post={post} />
-            )}
-          </div>
-        ) : ''
-}
-      <div>
-        <HomePagePostComments
-          postComments={comments}
-          postId={post._id}
+    <div className={styles.commentListWrapper}>
+      {comments.map(comment => (
+        <Comment
+          key={comment._id}
+          className={styles.comment}
+          comment={isHomePage
+            ? {
+              ...comment, user: { ...comment.user, profilePic: undefined }
+            }
+            : comment}
         />
-      </div>
+      ))}
     </div>
   );
 };
 
+CommentList.defaultProps = {
+  isHomePage: true
+};
+
 CommentList.propTypes = {
-  ...postPropType
+  ...commentsPropType
 };
 
 export default CommentList;
