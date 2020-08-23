@@ -2,27 +2,31 @@
 @import '../../styles/color-palette';
 
 .container {
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
 
-    .media {
-        width: 600px;
-        height: 100%;
-    }
-    
-    .postContentContainer{
-      @include flexColumn;
-      flex: 1;
-      .postContentHeader{
-        height: 80px;
-        width: 100%;
-        @include flexSpaceBetween;
-        padding: 5px 9px 15px 9px;
-        border-bottom: 1px solid $third-border-color;
-        .postContentHeaderIdentifier{
-          display: flex;
-        }
+  .media {
+      width: 600px;
+      height: 100%;
+  }
+  
+  .postContentContainer{
+    @include flexColumn;
+    flex: 1;
+    .postContentHeader{
+      height: 80px;
+      width: 100%;
+      @include flexSpaceBetween;
+      padding: 10px 9px 15px 9px;
+      border-bottom: 1px solid $third-border-color;
+      .postContentHeaderIdentifier{
+        display: flex;
+        font-weight: bold;
       }
     }
+    .postComments{
+      padding-left: 10px;
+    }
+  }
 }
 

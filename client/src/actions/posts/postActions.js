@@ -9,7 +9,7 @@ import {
   SET_LOADING,
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
-  TOGGLE_COMMENT_LIKE,
+  TOGGLE_HOME_COMMENT_LIKE,
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
@@ -129,13 +129,13 @@ export const toggleCommentLike = (commentId, isLike, postId) => {
         if (isLike) {
           await axios.delete(`/api/comments/${commentId}/likes`);
           dispatch({
-            type: TOGGLE_COMMENT_LIKE,
+            type: TOGGLE_HOME_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: false, numOfLikes: -1, postId }
           });
         } else {
           await axios.post(`/api/comments/${commentId}/likes`);
           dispatch({
-            type: TOGGLE_COMMENT_LIKE,
+            type: TOGGLE_HOME_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: true, numOfLikes: 1, postId }
           });
         }

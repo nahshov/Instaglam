@@ -3,18 +3,14 @@ import { commentsPropType } from 'customPropTypes';
 import styles from './CommentList.module.scss';
 import Comment from '../Comment/Comment';
 
-const CommentList = ({ comments, isHomePage = true }) => {
+const CommentList = ({ comments, isPostPage = false }) => {
   return (
     <div className={styles.commentListWrapper}>
       {comments.map(comment => (
         <Comment
           key={comment._id}
-          className={styles.comment}
-          comment={isHomePage
-            ? {
-              ...comment, user: { ...comment.user, profilePic: undefined }
-            }
-            : comment}
+          comment={comment}
+          isPostPage={isPostPage}
         />
       ))}
     </div>
@@ -22,7 +18,7 @@ const CommentList = ({ comments, isHomePage = true }) => {
 };
 
 CommentList.defaultProps = {
-  isHomePage: true
+  isPostPage: false
 };
 
 CommentList.propTypes = {

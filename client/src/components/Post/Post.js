@@ -6,8 +6,10 @@ import UserIdentifier from 'components/UserIdentifier/UserIdentifier';
 import Button from 'components/Button/Button';
 import FollowButton from 'components/FollowButton/FollowButton';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import HomePagePostIconBar from 'components/HomePagePost/HomePagePostIconsBar/HomePagePostIconBar';
 import HomePageModal from 'components/Modals/HomePageModal/HomePageModal';
 import CommentList from 'components/Comments/CommentList/CommentList';
+import CommentForm from 'components/Comments/CommentForm/CommentForm';
 import { togglePostOwnerFollow } from 'actions/post/postActions';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import styles from './Post.module.scss';
@@ -27,6 +29,7 @@ const Post = ({ post, authenticatedUserId }) => {
   };
 
   const {
+    comments,
     numOfLikes,
     content,
     user: {
@@ -38,6 +41,7 @@ const Post = ({ post, authenticatedUserId }) => {
     _id: postId,
     isPostLiked
   } = post;
+  console.log(comments)
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className={styles.container}>
@@ -51,7 +55,6 @@ const Post = ({ post, authenticatedUserId }) => {
         <div className={styles.postContentHeader}>
           <div className={styles.postContentHeaderIdentifier}>
             <UserIdentifier
-              className={styles.UserIdentifier}
               username={username}
               profilePic={profilePic}
             />
@@ -80,9 +83,14 @@ const Post = ({ post, authenticatedUserId }) => {
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
         </div>
-        <CommentList comments={post.comments} isHomePage={false} />
-        comments
-        commentform
+        <CommentList comments={comments} isPostPage className={styles.postComments} />
+        <HomePagePostIconBar
+          isLike={isPostLiked}
+          postId={postId}
+          className={styles.icons}
+        />
+        {postId && <CommentForm postId={postId} />}
+
       </div>
     </div>
   );

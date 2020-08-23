@@ -27,8 +27,7 @@ const HomePagePost = ({
     media,
     created,
     _id: postId,
-    isPostLiked,
-    comments
+    isPostLiked
   } = post;
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -54,7 +53,11 @@ const HomePagePost = ({
       />
       <HomePagePostContent username={username} content={content} />
       <ViewAllComments numOfComments={numOfComments} setIsPostModalOpen={setIsPostModalOpen} />
-      <CommentList comments={post.comments} />
+      <CommentList
+        comments={post.comments}
+        isPostPage={false}
+        className={styles.homePagePostCommentList}
+      />
       <Link to={`/p/${postId}`}>
         <CreatedTime created={created} />
       </Link>

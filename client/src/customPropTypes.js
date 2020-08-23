@@ -53,7 +53,9 @@ export const commentsPropType = {
     _id: PropTypes.string
   }),
   __v: PropTypes.number,
-  _id: PropTypes.string
+  _id: PropTypes.string,
+  isPostPage: PropTypes.bool
+
 };
 
 export const activitiesPropTypes = {

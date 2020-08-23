@@ -5,7 +5,8 @@ function getComment(commentId) {
 }
 
 function getCommentsOfPost(postId, includeComments = undefined) {
-  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments }).populate('user', 'username profilePic');
+  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments })
+    .populate('user', 'username profilePic');
 }
 
 function getRepliesOfComment(commentId) {
