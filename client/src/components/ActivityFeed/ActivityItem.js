@@ -11,6 +11,16 @@ const getActivitiesUsers = (activities = []) => {
     : [activities[0].user.username];
 };
 
+const getActivityUsernamesText = (lengthOfActivity, usernamesArr) => {
+  if (lengthOfActivity > 2) {
+    return `${usernamesArr[0]}, ${usernamesArr[1]} and ${lengthOfActivity - 2}
+    more`;
+  } if (lengthOfActivity === 2) {
+    return `${usernamesArr[0]} and ${usernamesArr[1]}`;
+  }
+  return `${usernamesArr}`;
+};
+
 const ActivityItem = ({
   activity
 }) => {
@@ -19,6 +29,7 @@ const ActivityItem = ({
   const usernames = getActivitiesUsers(activity.activities);
   const activityLength = activity.activities.length;
   const { created } = activity;
+  const activityUsernamesText = getActivityUsernamesText(activityLength, usernames);
 
   return (
     <>
@@ -28,6 +39,7 @@ const ActivityItem = ({
         profilePic={profilePic}
         activityLength={activityLength}
         created={<CreatedTime created={created} />}
+        activityUsernamesText={activityUsernamesText}
       />
     </>
   );
@@ -36,7 +48,8 @@ const ActivityItem = ({
 ActivityItem.propTypes = {
   activity: PropTypes.shape({
     activities: PropTypes.array.isRequired,
-    activityType: PropTypes.string.isRequired
+    activityType: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired
   }).isRequired
 };
 

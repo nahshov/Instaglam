@@ -18,7 +18,13 @@ const structuredActivitesFeedFollowingSelector = createStructuredSelector({
   authenticatedUser: authenticatedUserSelector
 });
 
-const FollowActivity = ({ activity, usernames, profilePic, activityLength, created }) => {
+const FollowActivity = ({
+  activity,
+  usernames,
+  profilePic,
+  activityLength,
+  created,
+  activityUsernamesText }) => {
   const { activitiesFeedFollows, authenticatedUser } = useSelector(structuredActivitesFeedFollowingSelector);
 
   const dispatch = useDispatch();
@@ -42,17 +48,6 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength, creat
     }
   };
 
-  let followActivityText;
-
-  if (activityLength > 2) {
-    followActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
-    more`;
-  } else if (activityLength === 2) {
-    followActivityText = `${usernames[0]} and ${usernames[1]}.`;
-  } else {
-    followActivityText = `${usernames}`;
-  }
-
   return (
     <div className={styles.activityWrapper}>
       <div onClick={() => history.push(`/${usernames[0]}`)} className={styles.activityContentWrapper}>
@@ -64,13 +59,11 @@ const FollowActivity = ({ activity, usernames, profilePic, activityLength, creat
           />
         </div>
         <div className={styles.activityContent}>
-          <div className={styles.activityText}>
-            <div className={styles.activityUsername}>
-              <span>{followActivityText}</span>
-            </div>
-            <span> &nbsp;started following you.</span>
+          <div className={styles.activityUsernamesText}>
+            <span>{activityUsernamesText}</span>
           </div>
           <div className={styles.activityCreatedDiv}>
+            <span>started following you.</span>
             {created}
           </div>
         </div>

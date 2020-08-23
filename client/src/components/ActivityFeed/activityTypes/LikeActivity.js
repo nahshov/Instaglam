@@ -7,42 +7,27 @@ import styles from '../ActivityItem.module.scss';
 
 const LikeActivity = ({
   activity,
-  usernames,
   profilePic,
-  activityLength,
-  created
+  created,
+  activityUsernamesText
 }) => {
   const { referredEntity } = activity;
   const { referredEntityType } = activity;
 
   const history = useHistory();
 
-  let LikeActivityText;
+  let likeActivityText;
   let postId;
   let postMedia;
 
   if (referredEntityType === 'Post') {
     postId = referredEntity._id;
     postMedia = referredEntity.media;
-    if (activityLength > 2) {
-      LikeActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
-      more liked your post.`;
-    } else if (activityLength === 2) {
-      LikeActivityText = `${usernames[0]} and ${usernames[1]} liked your post.`;
-    } else {
-      LikeActivityText = `${usernames} liked your post.`;
-    }
+    likeActivityText = 'liked your post.';
   } else {
     postId = referredEntity.post;
     postMedia = referredEntity.post.media;
-    if (activityLength > 2) {
-      LikeActivityText = `${usernames[0]}, ${usernames[1]} and ${activityLength - 2}
-      more liked your comment.`;
-    } else if (activityLength === 2) {
-      LikeActivityText = `${usernames[0]} and ${usernames[1]} liked your comment.`;
-    } else {
-      LikeActivityText = `${usernames} liked your comment.`;
-    }
+    likeActivityText = 'liked your comment.';
   }
 
   return (
@@ -55,11 +40,16 @@ const LikeActivity = ({
             className={styles.activityProfilePicDiv}
           />
         </div>
-        <div className={styles.activityText}>
-          <span>{LikeActivityText}</span>
-        </div>
-        <div className={styles.activityCreatedDiv}>
-          {created}
+        <div className={styles.activityContent}>
+          <div className={styles.activityUsernamesText}>
+            <span>{activityUsernamesText}</span>
+          </div>
+          <div className={styles.activityCreatedDiv}>
+            <span>
+              {likeActivityText}
+            </span>
+            {created}
+          </div>
         </div>
       </div>
       <div className={styles.activityMedia}>
@@ -78,9 +68,7 @@ LikeActivity.defaultProps = {
 };
 
 LikeActivity.propTypes = {
-  usernames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   profilePic: PropTypes.string.isRequired,
-  activityLength: PropTypes.number.isRequired,
   activity: PropTypes.shape({
     referredEntityType: PropTypes.string.isRequired,
     referredEntity: PropTypes.shape({

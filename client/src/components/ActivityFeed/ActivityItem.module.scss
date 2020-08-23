@@ -2,12 +2,27 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  span {
+    white-space: normal;
+    text-overflow: initial;
+  }
 }
 
 .activityContentWrapper {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.activityContent {
+  display: flex;
+  flex-direction: column;
+
+  div {
+    margin: 0px;
+    width: 100%;
+  }
 }
 
 .activityProfilePicDiv {
@@ -21,27 +36,23 @@
   }
 }
 
-.activityText {
+.activityUsernamesText {
   display: flex;
-
-  span {
-    text-overflow: initial;
-  }
+  flex-direction: column;
+  width: 100%;
 }
 
 .activityCreatedDiv {
-  width: 150pxx;
+  display: flex;
 
-  div {
-    margin-bottom: 0px;
-    width: 100%;
+  span {
+    overflow: hidden;
+    width: 280px;
   }
 }
 
 .activityMedia {
-  width: 80px;
   display: flex;
-  justify-content: flex-end;
 
   img {
     width: 45px;
