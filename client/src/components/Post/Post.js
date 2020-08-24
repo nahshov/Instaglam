@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { postPropType } from 'customPropTypes';
@@ -13,6 +13,9 @@ import { setNumOfFollowing } from 'actions/profile/profileActions';
 import styles from './Post.module.scss';
 
 const Post = ({ post, authenticatedUserId }) => {
+  useEffect(() => {
+
+  }, [post]);
   const dispatch = useDispatch();
   const handleFollow = async (userId, isFollowed) => {
     await dispatch(togglePostOwnerFollow(userId, isFollowed));

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const { refreshTokenSecret } = require('../config');
+const { refreshTokenSecret } = require('../config/index');
 const {
   verifyPassword,
   getUser,

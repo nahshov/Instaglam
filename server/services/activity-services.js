@@ -1,16 +1,24 @@
 const Activity = require('../models/Activity.js');
+const { isFollowed } = require('./follow-services');
 
 function addActivity(activity) {
   activity = new Activity(activity);
   return activity.save();
 }
 
-function getUserActivity(userId) {
-  return Activity.find({ referredUser: userId })
+async function getUserActivity(userId) {
+  const users = await Activity.find({ referredUser: userId })
     .populate('activities.user', 'username profilePic')
     .populate('referredEntity', 'media')
     .populate({ path: 'referredEntity', populate: { path: 'post', select: 'media' } })
     .sort('-created');
+
+  return Promise.all(users.map(user => async like => (
+    {
+      ...like.user.toObject(),
+      isFollowed: await isFollowed(userId, like.user._id)
+    }
+  )));
 }
 
 function removeActivity(activityId) {

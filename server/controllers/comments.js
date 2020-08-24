@@ -177,7 +177,7 @@ const removeAComment = async (req, res) => {
 
     await removeCommentListener;
 
-    activityEmitter.emit('deleteComment', getAComment._id);
+    activityEmitter.emit('deleteComment', { commentId: getAComment._id, postId: post._id });
 
     return serverResponse(res, 200, comment);
   } catch (error) {

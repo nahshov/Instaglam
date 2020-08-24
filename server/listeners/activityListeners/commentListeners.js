@@ -40,7 +40,9 @@ const commentListener = activityEmitter.on('comment', payload => {
   checkComments();
 });
 
-const removeCommentListener = activityEmitter.on('deleteComment', async commentId => {
+const removeCommentListener = activityEmitter.on('deleteComment', async ({ commentId, postId }) => {
+  comments[postId].activities = comments[postId].activities
+    .filter(activity => commentId.toString() !== activity.activityId.toString());
   await removeActivity(commentId);
 });
 

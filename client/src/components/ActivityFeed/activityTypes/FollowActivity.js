@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { followsSelector } from 'actions/follows/followSelectors';
 import { activitiesFeedFollowsSelector } from 'actions/activities/activitiesFeedSelectors';
-import { toggleActivitiesFeedFollows } from 'actions/activities/activitiesFeedActions';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
@@ -40,7 +38,6 @@ const FollowActivity = ({
   // const isUserFollowed = follows.find(follow => follow._id === activityUserId);
 
   const handleFollow = (user) => {
-    dispatch(toggleActivitiesFeedFollows(user._id, user.isFollowed));
     if (user.isFollowed) {
       dispatch(setNumOfFollowing(-1));
     } else {
