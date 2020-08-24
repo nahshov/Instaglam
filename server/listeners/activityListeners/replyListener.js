@@ -1,8 +1,12 @@
 const { activityEmitter } = require('../../events/events');
-const { addActivity } = require('../../services/activity-services');
+const { addActivity, removeActivity } = require('../../services/activity-services');
+const { activityInterval } = require('../../config/index');
 
 let replies = {};
 let nextRepliesCheck = false;
+
+const revertReplyActivity = (replyId, commentId) => replies[commentId].activities
+  .filter(activity => replyId.toString() !== activity.activityId.toString());
 
 function checkReplies() {
   if (!nextRepliesCheck) {
@@ -12,7 +16,7 @@ function checkReplies() {
       replies = {};
       activities.map(addActivity);
       nextRepliesCheck = false;
-    }, 30000);
+    }, activityInterval);
   }
 }
 
@@ -40,6 +44,20 @@ const replyListener = activityEmitter.on('reply', payload => {
   checkReplies();
 });
 
+const removeReplyListener = activityEmitter.on('deleteReply', async ({ replyId, commentId }) => {
+  try {
+    await removeActivity(replyId);
+    if (!replies[commentId]) return;
+    replies[commentId].activities = revertReplyActivity(replyId, commentId);
+    if (replies[commentId].activities.length === 0) {
+      delete replies[commentId];
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = {
-  replyListener
+  replyListener,
+  removeReplyListener
 };

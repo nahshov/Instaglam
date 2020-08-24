@@ -5,7 +5,7 @@ const { activityInterval } = require('../../config/index');
 let follows = {};
 let nextFollowCheck = false;
 
-const revertFollowActivities = (followId, following) => follows[following].activities
+const revertFollowActivity = (followId, following) => follows[following].activities
   .filter(activity => followId.toString() !== activity.activityId.toString());
 
 function checkFollows() {
@@ -45,11 +45,15 @@ const followListener = activityEmitter.on('follow', payload => {
 });
 
 const removeFollowListener = activityEmitter.on('removeFollow', async ({ followId, following }) => {
-  await removeActivity(followId);
-  if (!follows[following]) return;
-  follows[following].activities = revertFollowActivities(followId, following);
-  if (follows[following].activities.length === 0) {
-    delete follows[following];
+  try {
+    await removeActivity(followId);
+    if (!follows[following]) return;
+    follows[following].activities = revertFollowActivity(followId, following);
+    if (follows[following].activities.length === 0) {
+      delete follows[following];
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 

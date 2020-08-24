@@ -9,14 +9,13 @@ function addActivity(activity) {
 async function getUserActivity(userId) {
   const users = await Activity.find({ referredUser: userId })
     .populate('activities.user', 'username profilePic')
-    .populate('referredEntity', 'media')
-    .populate({ path: 'referredEntity', populate: { path: 'post', select: 'media' } })
+    .populate({ path: 'referredEntity', select: 'media', populate: { path: 'post', select: 'media' } })
     .sort('-created');
 
-  return Promise.all(users.map(user => async like => (
+  return Promise.all(users.map(async activity => (
     {
-      ...like.user.toObject(),
-      isFollowed: await isFollowed(userId, like.user._id)
+      ...activity.toObject(),
+      isFollowed: await isFollowed(userId, activity.activities[0].user._id)
     }
   )));
 }

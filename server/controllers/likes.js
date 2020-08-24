@@ -118,7 +118,7 @@ const deleteLikeFromAPost = async (req, res) => {
 
     await removeLikeOnPostListener;
 
-    activityEmitter.emit('deletePostLike', like._id);
+    activityEmitter.emit('deletePostLike', { likeId: like._id, postId: req.params.postId });
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
@@ -209,7 +209,7 @@ const deleteLikeFromAComment = async (req, res) => {
 
     await removeLikeOnCommentListener;
 
-    activityEmitter.emit('deleteCommentLike', like._id);
+    activityEmitter.emit('deleteCommentLike', { likeId: like._id, commentId: req.params.commentId });
 
     return serverResponse(res, 200, like);
   } catch (error) {
