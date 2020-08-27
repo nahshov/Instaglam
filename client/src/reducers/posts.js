@@ -11,7 +11,7 @@ import {
   GET_ALL_COMMENTS_OF_A_POST,
   RESET_POSTS,
   ADD_COMMENT_TO_POST,
-  TOGGLE_COMMENT_LIKE
+  TOGGLE_HOME_COMMENT_LIKE
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -79,7 +79,7 @@ export default function (state = initialState, action) {
                 : post);
           })
       };
-    case TOGGLE_COMMENT_LIKE:
+    case TOGGLE_HOME_COMMENT_LIKE:
       return {
         ...state,
         posts: state.posts.map(post => {
