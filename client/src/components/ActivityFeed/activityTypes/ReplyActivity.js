@@ -25,7 +25,7 @@ const ReplyActivity = ({
           />
         </div>
         <div className={styles.activityContent}>
-          <span>{activityUsernamesText}</span>
+          <span className={styles.activityUsernamesText}>{activityUsernamesText}</span>
             &nbsp;
           <span>
             replied to your comment.

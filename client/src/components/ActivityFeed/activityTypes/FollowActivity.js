@@ -1,12 +1,18 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { useHistory } from 'react-router-dom';
-import { toggleFollows } from 'actions/follows/followActions';
+import { toggleFollows, getFollows } from 'actions/follows/followActions';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
+import { followsSelector } from 'actions/follows/followSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import PropTypes from 'prop-types';
 import styles from '../ActivityItem.module.scss';
+
+const structuredFollowsSelector = createStructuredSelector({
+  follows: followsSelector
+});
 
 const FollowActivity = ({
   activity,
@@ -15,14 +21,22 @@ const FollowActivity = ({
   activityLength,
   created,
   activityUsernamesText }) => {
+  const [bla, setBla] = useState(false);
+  const { follows } = useSelector(structuredFollowsSelector);
   const userOfActivityId = activity.activities[0].user._id;
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
+  const isFollowed = follows.find(follow => follow._id === userOfActivityId);
+
+  useEffect(() => {
+    dispatch(getFollows(activity.referredEntity._id, 'following'));
+  }, []);
+
   const handleFollow = async () => {
-    await dispatch(toggleFollows(userOfActivityId, activity.isFollowed));
+    await dispatch(toggleFollows(userOfActivityId, isFollowed));
     // if (activity.isFollowed) {
     //   dispatch(setNumOfFollowing(-1));
     // } else {
@@ -41,7 +55,7 @@ const FollowActivity = ({
           />
         </div>
         <div className={styles.activityContent}>
-          <span>{activityUsernamesText}</span>
+          <span className={styles.activityUsernamesText}>{activityUsernamesText}</span>
             &nbsp;
           <span>
             started following you.
@@ -55,7 +69,7 @@ const FollowActivity = ({
             && (
             <FollowButton
               handleFollow={handleFollow}
-              isFollowed={activity.isFollowed}
+              isFollowed={isFollowed}
             />
             )}
       </div>

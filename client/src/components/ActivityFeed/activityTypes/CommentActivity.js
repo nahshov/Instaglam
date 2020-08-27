@@ -25,7 +25,7 @@ const CommentActivity = ({
           />
         </div>
         <div className={styles.activityContent}>
-          <span>{activityUsernamesText}</span>
+          <span className={styles.activityUsernamesText}>{activityUsernamesText}</span>
             &nbsp;
           <span>
             commented on your post.

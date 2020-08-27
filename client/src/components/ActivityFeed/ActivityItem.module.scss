@@ -18,6 +18,7 @@
 .activityContent {
   display: flex;
   flex-wrap: wrap;
+  width: 85%;
 
   div {
     margin: 0px;
@@ -37,9 +38,7 @@
 }
 
 .activityUsernamesText {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  font-weight: 600;
 }
 
 .activityMedia {

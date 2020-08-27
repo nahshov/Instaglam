@@ -28,13 +28,7 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
 
   useEffect(() => {
     dispatch(getUserActivitiesFeed(user._id));
-  }, [follows]);
-
-  useEffect(() => {
-    dispatch(getFollows(user._id, 'following'));
   }, []);
-
-  console.log(follows);
 
   return (
     (
