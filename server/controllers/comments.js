@@ -80,7 +80,7 @@ const addCommentToPost = async (req, res) => {
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
-    if (post.user.toString() !== req.user.sub) {
+    if (post.user._id.toString() !== req.user.sub) {
       await commentListener;
 
       activityEmitter.emit('comment', {
@@ -123,7 +123,7 @@ const addReplyToComment = async (req, res) => {
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
 
-    if (comment.user.toString() !== req.user.sub) {
+    if (comment.user._id.toString() !== req.user.sub) {
       await replyListener;
 
       activityEmitter.emit('reply', {

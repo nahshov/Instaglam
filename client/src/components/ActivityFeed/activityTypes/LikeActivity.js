@@ -41,15 +41,13 @@ const LikeActivity = ({
           />
         </div>
         <div className={styles.activityContent}>
-          <div className={styles.activityUsernamesText}>
-            <span>{activityUsernamesText}</span>
-          </div>
-          <div className={styles.activityCreatedDiv}>
-            <span>
-              {likeActivityText}
-            </span>
-            {created}
-          </div>
+          <span>{activityUsernamesText}</span>
+            &nbsp;
+          <span>
+            {likeActivityText}
+          </span>
+            &nbsp;
+          {created}
         </div>
       </div>
       <div className={styles.activityMedia}>

@@ -16,18 +16,21 @@ const ReplyActivity = ({
 
   return (
     <div onClick={() => history.push(`/p/${referredEntity.post._id}`)} className={styles.activityWrapper}>
-      <div className={styles.activityProfilePicDiv}>
-        <ProfilePic
-          url={profilePic}
-          size="medium"
-        />
-      </div>
       <div className={styles.activityContentWrapper}>
-        <div className={styles.activityUsernamesText}>
-          <span>{activityUsernamesText}</span>
+        <div className={styles.activityProfilePicDiv}>
+          <ProfilePic
+            url={profilePic}
+            size="medium"
+            className={styles.activityProfilePicDiv}
+          />
         </div>
-        <div className={styles.activityCreatedDiv}>
-          <span> &nbsp;replied to your comment.</span>
+        <div className={styles.activityContent}>
+          <span>{activityUsernamesText}</span>
+            &nbsp;
+          <span>
+            replied to your comment.
+          </span>
+            &nbsp;
           {created}
         </div>
       </div>

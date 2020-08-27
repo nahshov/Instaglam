@@ -80,7 +80,7 @@ const addLikeToAPost = async (req, res) => {
     post.numOfLikes++;
     await post.save();
 
-    if (post.user.toString() !== req.user.sub) {
+    if (post.user._id.toString() !== req.user.sub) {
       await likesOnPostListener;
 
       activityEmitter.emit('postLike', {
@@ -169,7 +169,7 @@ const addLikeToAComment = async (req, res) => {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
 
-    if (comment.user.toString() !== req.user.sub) {
+    if (comment.user._id.toString() !== req.user.sub) {
       await likesOnCommentListener;
 
       activityEmitter.emit('commentLike', {

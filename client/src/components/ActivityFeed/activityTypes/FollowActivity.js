@@ -1,20 +1,12 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { activitiesFeedFollowsSelector } from 'actions/activities/activitiesFeedSelectors';
-import { toggleFollows, getFollows } from 'actions/follows/followActions';
+import { toggleFollows } from 'actions/follows/followActions';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
-import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
 import PropTypes from 'prop-types';
 import styles from '../ActivityItem.module.scss';
-
-const structuredActivitesFeedFollowingSelector = createStructuredSelector({
-  activitiesFeedFollows: activitiesFeedFollowsSelector,
-  authenticatedUser: authenticatedUserSelector
-});
 
 const FollowActivity = ({
   activity,
@@ -23,26 +15,19 @@ const FollowActivity = ({
   activityLength,
   created,
   activityUsernamesText }) => {
-  const { activitiesFeedFollows, authenticatedUser } = useSelector(structuredActivitesFeedFollowingSelector);
+  const userOfActivityId = activity.activities[0].user._id;
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  useEffect(() => {
-    console.log(activitiesFeedFollows);
-  }, [activitiesFeedFollows]);
-
-  console.log(activitiesFeedFollows);
-  const userOfActivity = activity.activities[0].user;
-  // const isUserFollowed = follows.find(follow => follow._id === activityUserId);
-
-  const handleFollow = (user) => {
-    if (user.isFollowed) {
-      dispatch(setNumOfFollowing(-1));
-    } else {
-      dispatch(setNumOfFollowing(1));
-    }
+  const handleFollow = async () => {
+    await dispatch(toggleFollows(userOfActivityId, activity.isFollowed));
+    // if (activity.isFollowed) {
+    //   dispatch(setNumOfFollowing(-1));
+    // } else {
+    //   dispatch(setNumOfFollowing(1));
+    // }
   };
 
   return (
@@ -56,21 +41,21 @@ const FollowActivity = ({
           />
         </div>
         <div className={styles.activityContent}>
-          <div className={styles.activityUsernamesText}>
-            <span>{activityUsernamesText}</span>
-          </div>
-          <div className={styles.activityCreatedDiv}>
-            <span>started following you.</span>
-            {created}
-          </div>
+          <span>{activityUsernamesText}</span>
+            &nbsp;
+          <span>
+            started following you.
+          </span>
+            &nbsp;
+          {created}
         </div>
       </div>
       <div className={styles.activityMedia}>
         {activityLength < 2
             && (
             <FollowButton
-              handleFollow={() => handleFollow(userOfActivity)}
-              isFollowed={userOfActivity.isFollowed}
+              handleFollow={handleFollow}
+              isFollowed={activity.isFollowed}
             />
             )}
       </div>
@@ -83,12 +68,14 @@ FollowActivity.propTypes = {
   profilePic: PropTypes.string.isRequired,
   activityLength: PropTypes.number.isRequired,
   activity: PropTypes.shape({
+    isFollowed: PropTypes.bool.isRequired,
     activities: PropTypes.arrayOf(PropTypes.shape({
       user: PropTypes.shape({
         _id: PropTypes.string.isRequired
       }).isRequired
     })).isRequired
-  }).isRequired
+  }).isRequired,
+  activityUsernamesText: PropTypes.string.isRequired
 };
 
 export default FollowActivity;

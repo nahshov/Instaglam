@@ -7,17 +7,18 @@ function addActivity(activity) {
 }
 
 async function getUserActivity(userId) {
-  const users = await Activity.find({ referredUser: userId })
+  const activities = await Activity.find({ referredUser: userId })
     .populate('activities.user', 'username profilePic')
     .populate({ path: 'referredEntity', select: 'media', populate: { path: 'post', select: 'media' } })
+    .populate('activities.activityId', 'content')
     .sort('-created');
 
-  return Promise.all(users.map(async activity => (
-    {
-      ...activity.toObject(),
-      isFollowed: await isFollowed(userId, activity.activities[0].user._id)
-    }
-  )));
+  const noEmptyActivitiesArr = activities.filter(activity => activity.activities.length !== 0);
+
+  return Promise.all(noEmptyActivitiesArr.map(async activity => ({
+    ...activity.toObject(),
+    isFollowed: await isFollowed(userId, activity.activities[0].user._id)
+  })));
 }
 
 function removeActivity(activityId) {
@@ -31,6 +32,17 @@ function removeAllUserActivities(userId) {
 function removeAllUserActivitiesFeed(userId) {
   return Activity.deleteMany({ referredUser: userId });
 }
+
+// async function clearActivities() {
+//   const activitiesArr = await Activity.find({});
+//   activitiesArr.forEach(doc => {
+//     if (doc.activities.length === 0) {
+//     }
+//   });
+//   return activitiesArr;
+// }
+
+// clearActivities();
 
 module.exports = {
   addActivity,

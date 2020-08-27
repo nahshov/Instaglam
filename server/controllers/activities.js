@@ -13,6 +13,7 @@ const getActivityOfUser = async (req, res) => {
 
     return serverResponse(res, 200, userActivity);
   } catch (error) {
+    console.log(error);
     return serverResponse(res, 500,
       { message: "Internal error while to get user's activity" });
   }

@@ -17,6 +17,6 @@ module.exports = {
     },
     bucketName: process.env.GOOGLE_STORAGE_BUCKET_NAME
   },
-  activityInterval: 5000,
+  activityInterval: 10000,
   isProduction: false
 };

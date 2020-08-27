@@ -14,8 +14,8 @@ import FollowButton from '../../components/FollowButton/FollowButton';
 const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
 
-  const handleFollow = () => {
-    dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
+  const handleFollow = async () => {
+    await dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
   };
 
   return (

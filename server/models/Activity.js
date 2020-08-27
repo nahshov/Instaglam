@@ -34,6 +34,7 @@ const ActivitySchema = new mongoose.Schema({
       },
       activityId: {
         type: mongoose.Types.ObjectId,
+        ref: 'Comment',
         required: true
       }
     }

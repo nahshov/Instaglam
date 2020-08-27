@@ -33,6 +33,7 @@ async function isFollowed(user, following) {
     user,
     following
   });
+
   return !!follow;
 }
 
