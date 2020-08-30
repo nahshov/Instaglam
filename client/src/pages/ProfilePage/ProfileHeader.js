@@ -18,8 +18,6 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
     await dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
   };
 
-  console.log('profile page');
-
   return (
     <header className={styles.profileHeader}>
       <ProfilePicChanger

@@ -60,6 +60,7 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
               >
                 <ActivityItem
                   activity={activity}
+                  authenticatedUserId={user._id}
                 />
               </PopoverListItem>
             ))

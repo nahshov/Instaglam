@@ -22,7 +22,8 @@ const getActivityUsernamesText = (lengthOfActivity, usernamesArr) => {
 };
 
 const ActivityItem = ({
-  activity
+  activity,
+  authenticatedUserId
 }) => {
   const ActivityComponent = activityTypesObject[activity.activityType];
   const { profilePic } = activity.activities[activity.activities.length - 1].user;
@@ -35,6 +36,7 @@ const ActivityItem = ({
     <>
       <ActivityComponent
         activity={activity}
+        authenticatedUserId={authenticatedUserId}
         usernames={usernames}
         profilePic={profilePic}
         activityLength={activityLength}
@@ -50,7 +52,8 @@ ActivityItem.propTypes = {
     activities: PropTypes.array.isRequired,
     activityType: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  authenticatedUserId: PropTypes.string.isRequired
 };
 
 export default ActivityItem;
