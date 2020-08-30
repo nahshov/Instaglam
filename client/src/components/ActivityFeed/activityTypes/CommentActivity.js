@@ -16,16 +16,21 @@ const CommentActivity = ({
 
   return (
     <div onClick={() => history.push(`/p/${referredEntity._id}`)} className={styles.activityWrapper}>
-      <div className={styles.activityProfilePicDiv}>
-        <ProfilePic
-          url={profilePic}
-          size="medium"
-        />
-      </div>
       <div className={styles.activityContentWrapper}>
-        <span>{activityUsernamesText}</span>
-        <div className={styles.activityCreatedDiv}>
-          <span> &nbsp;commented on your post.</span>
+        <div className={styles.activityProfilePicDiv}>
+          <ProfilePic
+            url={profilePic}
+            size="medium"
+            className={styles.activityProfilePicDiv}
+          />
+        </div>
+        <div className={styles.activityContent}>
+          <span className={styles.activityUsernamesText}>{activityUsernamesText}</span>
+            &nbsp;
+          <span>
+            commented on your post.
+          </span>
+            &nbsp;
           {created}
         </div>
       </div>

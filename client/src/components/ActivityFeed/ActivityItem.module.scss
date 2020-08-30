@@ -17,11 +17,12 @@
 
 .activityContent {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  width: 85%;
 
   div {
     margin: 0px;
-    width: 100%;
+    width: auto;
   }
 }
 
@@ -37,18 +38,7 @@
 }
 
 .activityUsernamesText {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.activityCreatedDiv {
-  display: flex;
-
-  span {
-    overflow: hidden;
-    width: 280px;
-  }
+  font-weight: 600;
 }
 
 .activityMedia {

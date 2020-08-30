@@ -1,16 +1,24 @@
 const Activity = require('../models/Activity.js');
+const { isFollowed } = require('./follow-services');
 
 function addActivity(activity) {
   activity = new Activity(activity);
   return activity.save();
 }
 
-function getUserActivity(userId) {
-  return Activity.find({ referredUser: userId })
+async function getUserActivity(userId) {
+  const activities = await Activity.find({ referredUser: userId })
     .populate('activities.user', 'username profilePic')
-    .populate('referredEntity', 'media')
-    .populate({ path: 'referredEntity', populate: { path: 'post', select: 'media' } })
+    .populate({ path: 'referredEntity', select: 'media', populate: { path: 'post', select: 'media' } })
+    .populate('activities.activityId', 'content')
     .sort('-created');
+
+  const noEmptyActivitiesArr = activities.filter(activity => activity.activities.length !== 0);
+
+  return Promise.all(noEmptyActivitiesArr.map(async activity => ({
+    ...activity.toObject(),
+    isFollowed: await isFollowed(userId, activity.activities[0].user._id)
+  })));
 }
 
 function removeActivity(activityId) {
@@ -24,6 +32,17 @@ function removeAllUserActivities(userId) {
 function removeAllUserActivitiesFeed(userId) {
   return Activity.deleteMany({ referredUser: userId });
 }
+
+// async function clearActivities() {
+//   const activitiesArr = await Activity.find({});
+//   activitiesArr.forEach(doc => {
+//     if (doc.activities.length === 0) {
+//     }
+//   });
+//   return activitiesArr;
+// }
+
+// clearActivities();
 
 module.exports = {
   addActivity,

@@ -1,8 +1,12 @@
 const { activityEmitter } = require('../../events/events');
 const { addActivity, removeActivity } = require('../../services/activity-services');
+const { activityInterval } = require('../../config/index');
 
 let postLikes = {};
 let nextPostLikesCheck = false;
+
+const revertLikeOnPostActivity = (likeId, postId) => postLikes[postId].activities
+  .filter(activity => likeId.toString() !== activity.activityId.toString());
 
 function checkLikesOnPost() {
   if (!nextPostLikesCheck) {
@@ -12,7 +16,7 @@ function checkLikesOnPost() {
       postLikes = {};
       activities.map(addActivity);
       nextPostLikesCheck = false;
-    }, 30000);
+    }, activityInterval);
   }
 }
 
@@ -40,8 +44,17 @@ const likesOnPostListener = activityEmitter.on('postLike', payload => {
   checkLikesOnPost();
 });
 
-const removeLikeOnPostListener = activityEmitter.on('deletePostLike', async likeId => {
-  await removeActivity(likeId);
+const removeLikeOnPostListener = activityEmitter.on('deletePostLike', async ({ likeId, postId }) => {
+  try {
+    await removeActivity(likeId);
+    if (!postLikes[postId]) return;
+    postLikes[postId].activities = revertLikeOnPostActivity(likeId, postId);
+    if (postLikes[postId].activities.length === 0) {
+      delete postLikes[postId];
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = {

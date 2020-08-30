@@ -80,7 +80,7 @@ const addLikeToAPost = async (req, res) => {
     post.numOfLikes++;
     await post.save();
 
-    if (post.user.toString() !== req.user.sub) {
+    if (post.user._id.toString() !== req.user.sub) {
       await likesOnPostListener;
 
       activityEmitter.emit('postLike', {
@@ -118,7 +118,7 @@ const deleteLikeFromAPost = async (req, res) => {
 
     await removeLikeOnPostListener;
 
-    activityEmitter.emit('deletePostLike', like._id);
+    activityEmitter.emit('deletePostLike', { likeId: like._id, postId: req.params.postId });
 
     return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
@@ -169,7 +169,7 @@ const addLikeToAComment = async (req, res) => {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
 
-    if (comment.user.toString() !== req.user.sub) {
+    if (comment.user._id.toString() !== req.user.sub) {
       await likesOnCommentListener;
 
       activityEmitter.emit('commentLike', {
@@ -210,7 +210,7 @@ const deleteLikeFromAComment = async (req, res) => {
 
     await removeLikeOnCommentListener;
 
-    activityEmitter.emit('deleteCommentLike', like._id);
+    activityEmitter.emit('deleteCommentLike', { likeId: like._id, commentId: req.params.commentId });
 
     return serverResponse(res, 200, like);
   } catch (error) {

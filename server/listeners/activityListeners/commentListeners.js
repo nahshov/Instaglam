@@ -1,8 +1,12 @@
 const { activityEmitter } = require('../../events/events');
 const { addActivity, removeActivity } = require('../../services/activity-services');
+const { activityInterval } = require('../../config/index');
 
 let comments = {};
 let nextCommentsCheck = false;
+
+const revertCommentActivity = (commentId, postId) => comments[postId].activities
+  .filter(activity => commentId.toString() !== activity.activityId.toString());
 
 function checkComments() {
   if (!nextCommentsCheck) {
@@ -12,7 +16,7 @@ function checkComments() {
       comments = {};
       activities.map(addActivity);
       nextCommentsCheck = false;
-    }, 30000);
+    }, activityInterval);
   }
 }
 
@@ -40,8 +44,17 @@ const commentListener = activityEmitter.on('comment', payload => {
   checkComments();
 });
 
-const removeCommentListener = activityEmitter.on('deleteComment', async commentId => {
-  await removeActivity(commentId);
+const removeCommentListener = activityEmitter.on('deleteComment', async ({ commentId, postId }) => {
+  try {
+    await removeActivity(commentId);
+    if (!comments[postId]) return;
+    comments[postId].activities = revertCommentActivity(commentId, postId);
+    if (comments[postId].activities.length === 0) {
+      delete comments[postId];
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = {

@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { port } = require('./config');
+const { port, isProduction } = require('./config/index');
 const connect = require('./db');
 
 const app = express();
@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 
 require('./routes/index.js')(app);
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {

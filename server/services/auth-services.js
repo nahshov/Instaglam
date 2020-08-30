@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { tokenSecret, refreshTokenSecret, cookieSecret } = require('../config');
+const { tokenSecret, refreshTokenSecret, cookieSecret } = require('../config/index');
 const { setUserToken } = require('./user-services');
 
 async function setAuthCookie(user) {
