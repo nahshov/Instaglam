@@ -12,7 +12,6 @@ const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
   useEffect(() => {
     setCurrentPost(post);
   }, [post]);
-  console.log('post gallery');
   let next;
   let prev;
   if (posts) {

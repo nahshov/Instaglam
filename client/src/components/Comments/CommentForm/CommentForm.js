@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addAComment } from 'actions/posts/postActions';
+import { HomePageAddAComment } from 'actions/posts/postActions';
+import { postAddAComment } from 'actions/post/postActions';
 import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
-const CommentForm = ({ postId }) => {
+const CommentForm = ({ postId, isPostPage = false }) => {
   const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
@@ -19,11 +20,19 @@ const CommentForm = ({ postId }) => {
   };
 
   const handleSubmit = async e => {
+    // if (isReply){
+    //   console.log('hi')
+    // }
     e.preventDefault();
     if (!inputValue) return;
     setCommentLoading(true);
-    await dispatch(addAComment(postId, inputValue));
-    setInputValue('');
+    if (isPostPage) {
+      await dispatch(postAddAComment(postId, inputValue));
+      setInputValue('');
+    } else {
+      await dispatch(HomePageAddAComment(postId, inputValue));
+      setInputValue('');
+    }
     setCommentLoading(false);
   };
   return (

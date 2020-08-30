@@ -3,16 +3,19 @@ import { commentsPropType } from 'customPropTypes';
 import styles from './CommentList.module.scss';
 import Comment from '../Comment/Comment';
 
-const CommentList = ({ comments, isPostPage = false }) => {
+const CommentList = ({ comments, isPostPage = false, postId }) => {
   return (
-    <div className={styles.commentListWrapper}>
-      {comments.map(comment => (
-        <Comment
-          key={comment._id}
-          comment={comment}
-          isPostPage={isPostPage}
-        />
-      ))}
+    <div className={styles.commentContainer}>
+      <div className={styles.commentListWrapper}>
+        {comments.map(comment => (
+          <Comment
+            postId={postId}
+            key={comment._id}
+            comment={comment}
+            isPostPage={isPostPage}
+          />
+        ))}
+      </div>
     </div>
   );
 };

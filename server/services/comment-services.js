@@ -15,7 +15,7 @@ function getRepliesOfComment(commentId) {
 
 async function addComment(comment) {
   comment = new Comment(comment);
-  return comment.save().then(c => c.populate('user -_id', 'username').execPopulate());
+  return comment.save().then(c => c.populate('user -_id', 'username profilePic').execPopulate());
 }
 
 function removeComment(commentId) {

@@ -10,7 +10,7 @@ import {
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
   RESET_POSTS,
-  ADD_COMMENT_TO_POST,
+  ADD_COMMENT_TO_HOME_PAGE_POST,
   TOGGLE_HOME_COMMENT_LIKE
 } from 'actions/posts/postTypes';
 
@@ -99,7 +99,7 @@ export default function (state = initialState, action) {
           return post;
         }) };
     // belongs to homepage state module
-    case ADD_COMMENT_TO_POST:
+    case ADD_COMMENT_TO_HOME_PAGE_POST:
       return {
         ...state,
         loading: false,

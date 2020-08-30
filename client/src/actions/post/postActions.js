@@ -3,7 +3,9 @@ import {
   SET_POST,
   RESET_POST,
   TOGGLE_POST_OWNER_FOLLOW,
-  TOGGLE_POST_COMMENT_LIKE
+  TOGGLE_POST_COMMENT_LIKE,
+  TOGGLE_POST_LIKE,
+  ADD_COMMENT_TO_POST
 } from './postTypes';
 
 export const getPost = post => async dispatch => {
@@ -44,6 +46,32 @@ export const togglePostOwnerFollow = (userId, isFollowed) => async dispatch => {
   }
 };
 
+// toggle like of a post
+export const togglePostLike = (postId, isLike) => {
+  return async dispatch => {
+    try {
+      if (postId) {
+        if (isLike) {
+          await axios.delete(`/api/posts/${postId}/likes`);
+          dispatch({
+            type: TOGGLE_POST_LIKE,
+            payload: { postId, isLike: false, numOfLikes: -1 }
+          });
+        } else {
+          await axios.post(`/api/posts/${postId}/likes`);
+          dispatch({
+            type: TOGGLE_POST_LIKE,
+            payload: { postId, isLike: true, numOfLikes: 1 }
+          });
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+
 export const togglePostCommentLike = (commentId, isLike) => {
   return async dispatch => {
     try {
@@ -67,6 +95,32 @@ export const togglePostCommentLike = (commentId, isLike) => {
     }
   };
 };
+
+export const postAddAComment = (postId, comment) => {
+  return async dispatch => {
+    try {
+      if (postId) {
+        if (comment) {
+          const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
+
+          dispatch({
+            type: ADD_COMMENT_TO_POST,
+            payload: { postId, numOfComments: 1, comment: res.data }
+          });
+        }
+      }
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject();
+      // console.log(e);
+    }
+  };
+}
 
 export const resetPost = () => dispatch => {
   dispatch({

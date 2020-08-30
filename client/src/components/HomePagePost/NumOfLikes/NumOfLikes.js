@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { postPropType } from 'customPropTypes';
-import styles from './PostLikes.module.scss';
+import styles from './NumOfLikes.module.scss';
 import FollowModal from '../../Modals/FollowModal/FollowModal';
 
-const PostLikes = ({ likesOfPost, postId }) => {
+const NumOfLikes = ({ likes, postId, isPost = false }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
       <div
-        className={styles.likesAmount}
+        className={isPost ? styles.singlePostLikes : styles.likesAmount}
         onClick={() => setModalOpen(true)}
       >
-        {likesOfPost}
-        &nbsp; likes
+        {likes}
+        {' '}
+        likes
       </div>
       {isModalOpen && (
       <FollowModal
@@ -27,8 +28,8 @@ const PostLikes = ({ likesOfPost, postId }) => {
   );
 };
 
-PostLikes.propTypes = {
+NumOfLikes.propTypes = {
   ...postPropType
 };
 
-export default PostLikes;
+export default NumOfLikes;

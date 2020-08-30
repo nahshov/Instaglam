@@ -85,13 +85,14 @@ const Post = ({ post, authenticatedUserId }) => {
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
         </div>
-        <CommentList comments={comments} isPostPage className={styles.postComments} />
+        <CommentList comments={comments} isPostPage className={styles.postComments} postId={postId} />
         <HomePagePostIconBar
+          isPostPage
           isLike={isPostLiked}
           postId={postId}
           className={styles.icons}
         />
-        {postId && <CommentForm postId={postId} />}
+        {postId && <CommentForm postId={postId} isPostPage />}
 
       </div>
     </div>
