@@ -22,11 +22,11 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
   const dispatch = useDispatch();
   const { pathname: username } = useLocation();
   useEffect(() => {
-    dispatch(getPost(postProp));
+    dispatch(getPost(postProp)); // postprop is a post from homepage that helping us get the post without struggling with async problems
     return () => {
       dispatch(resetPost());
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     changeUrl(`/p/${postProp._id}`, 'post modal path');
@@ -35,6 +35,7 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
       changeUrl(`${username}`);
     };
   }, [setModalOpen, username, isOpen]);
+  console.log(post);
   return (
     <Modal
       className={styles.PostModal}

@@ -2,7 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import { commentsPropType } from 'customPropTypes';
-import { toggleCommentLike } from 'actions/posts/postActions';
+import { togglePostCommentLike } from 'actions/post/postActions';
+import { toggleHomeCommentLike } from 'actions/posts/postActions';
 import { Link } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import styles from './Comment.module.scss';
@@ -10,7 +11,11 @@ import styles from './Comment.module.scss';
 const Comment = ({ comment, isPostPage = false }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
-    dispatch(toggleCommentLike(comment._id, comment.isCommentLiked, comment.post));
+    if (isPostPage) {
+      dispatch(togglePostCommentLike(comment._id, comment.isCommentLiked));
+    } else {
+      dispatch(toggleHomeCommentLike(comment._id, comment.isCommentLiked, comment.post));
+    }
   };
   return (
     <div className={styles.comment}>

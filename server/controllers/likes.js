@@ -180,7 +180,7 @@ const addLikeToAComment = async (req, res) => {
         created: new Date()
       });
     }
-    comment.likes++;
+    comment.numOfLikes++;
     await comment.save();
 
     return serverResponse(res, 200, like);
@@ -204,8 +204,9 @@ const deleteLikeFromAComment = async (req, res) => {
 
     const comment = await getComment(req.params.commentId);
 
-    comment.likes--;
+    comment.numOfLikes--;
     await comment.save();
+
 
     await removeLikeOnCommentListener;
 

@@ -41,7 +41,6 @@ const Post = ({ post, authenticatedUserId }) => {
     _id: postId,
     isPostLiked
   } = post;
-  console.log(comments)
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className={styles.container}>

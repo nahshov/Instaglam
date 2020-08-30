@@ -122,7 +122,7 @@ export const togglePostLike = (postId, isLike) => {
 };
 
 // toggle like of a comment
-export const toggleCommentLike = (commentId, isLike, postId) => {
+export const toggleHomeCommentLike = (commentId, isLike, postId) => {
   return async dispatch => {
     try {
       if (commentId) {
@@ -181,7 +181,6 @@ export const getAllCommentsOfAPost = (postId) => {
 };
 
 export const addAComment = (postId, comment) => {
-
   return async dispatch => {
     try {
       if (postId) {

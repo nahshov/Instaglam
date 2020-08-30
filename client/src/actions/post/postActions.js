@@ -44,24 +44,22 @@ export const togglePostOwnerFollow = (userId, isFollowed) => async dispatch => {
   }
 };
 
-export const toggleCommentLike = (commentId, isLike, postId) => {
+export const togglePostCommentLike = (commentId, isLike) => {
   return async dispatch => {
     try {
       if (commentId) {
         if (isLike) {
-          const res = await axios.delete(`/api/comments/${commentId}/likes`);
+          await axios.delete(`/api/comments/${commentId}/likes`);
           dispatch({
             type: TOGGLE_POST_COMMENT_LIKE,
-            payload: { commentId, isCommentLiked: false, numOfLikes: -1, postId }
+            payload: { commentId, isCommentLiked: false, numOfLikes: -1 }
           });
-          console.log(res)
         } else {
-          const res = await axios.post(`/api/comments/${commentId}/likes`);
+          await axios.post(`/api/comments/${commentId}/likes`);
           dispatch({
             type: TOGGLE_POST_COMMENT_LIKE,
-            payload: { commentId, isCommentLiked: true, numOfLikes: 1, postId }
+            payload: { commentId, isCommentLiked: true, numOfLikes: 1 }
           });
-          console.log(res)
         }
       }
     } catch (e) {

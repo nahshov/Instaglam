@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Post from 'components/Post/Post';
@@ -9,7 +9,10 @@ import styles from './PostGallery.module.scss';
 const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
   const [currentPost, setCurrentPost] = useState(post);
   const currentPostIndex = posts ? posts.indexOf(currentPost) : 0;
-
+  useEffect(() => {
+    setCurrentPost(post);
+  }, [post]);
+  console.log('post gallery');
   let next;
   let prev;
   if (posts) {

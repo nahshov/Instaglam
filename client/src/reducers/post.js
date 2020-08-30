@@ -24,10 +24,25 @@ export default function (state = initialState, action) {
         post: { ...state.post, user: { ...state.post.user, isFollowed: payload } }
       };
     case TOGGLE_POST_COMMENT_LIKE:
+      const stateParsing = JSON.parse(JSON.stringify(state))
+      const postParsing = JSON.parse(JSON.stringify(stateParsing.post))
       return {
-        ...state,
-        
-      }
+
+        ...stateParsing,
+        post: {
+          ...postParsing,
+          comments: state.post.comments.map(c => {
+            const commentParsing = JSON.parse(JSON.stringify(c));
+            return c._id === payload.commentId
+              ? {
+                ...commentParsing,
+                isCommentLiked: payload.isCommentLiked,
+                numOfLikes: c.numOfLikes + payload.numOfLikes
+              }
+              : c;
+          })
+        }
+      };
     case RESET_POST:
       return {
         post: {}
