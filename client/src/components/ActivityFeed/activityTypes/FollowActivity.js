@@ -16,27 +16,38 @@ const structuredFollowsSelector = createStructuredSelector({
 
 const FollowActivity = ({
   activity,
+  authenticatedUserId,
   usernames,
   profilePic,
   activityLength,
   created,
   activityUsernamesText }) => {
-  const [bla, setBla] = useState(false);
   const { follows } = useSelector(structuredFollowsSelector);
   const userOfActivityId = activity.activities[0].user._id;
+  const [isFollowed, setIsFollowed] = useState(follows.some(follow => follow._id === userOfActivityId));
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const isFollowed = follows.find(follow => follow._id === userOfActivityId);
+  useEffect(() => {
+    dispatch(getFollows(authenticatedUserId, 'following'))
+      .then(() => setIsFollowed(follows.some(follow => {
+        return follow._id === userOfActivityId;
+      })));
+  }, []);
 
   useEffect(() => {
-    dispatch(getFollows(activity.referredEntity._id, 'following'));
-  }, []);
+    dispatch(getFollows(authenticatedUserId, 'following'))
+      .then(() => { console.log('hi'); });
+  }, [isFollowed]);
+
+  // console.log(isFollowed, 'isFollowed');
+  // console.log(follows.some(follow => follow._id === userOfActivityId));
 
   const handleFollow = async () => {
     await dispatch(toggleFollows(userOfActivityId, isFollowed));
+    setIsFollowed(!isFollowed);
     // if (activity.isFollowed) {
     //   dispatch(setNumOfFollowing(-1));
     // } else {
@@ -89,7 +100,8 @@ FollowActivity.propTypes = {
       }).isRequired
     })).isRequired
   }).isRequired,
-  activityUsernamesText: PropTypes.string.isRequired
+  activityUsernamesText: PropTypes.string.isRequired,
+  authenticatedUserId: PropTypes.string.isRequired
 };
 
 export default FollowActivity;
