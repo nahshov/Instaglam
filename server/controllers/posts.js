@@ -77,9 +77,9 @@ const getPosts = async (req, res) => {
     return serverResponse(res, 200, posts.map((post, index) => (
       {
         ...post.toObject(),
-        isPostLiked: !!postLikes[post._id],
+        isPostLiked: postLikes[post._id],
         comments: postsComments[index].map(
-          comment => ({ ...comment.toObject(), isCommentLiked: !!commentLiked[comment._id] })
+          comment => ({ ...comment.toObject(), isCommentLiked: commentLiked[comment._id] })
         )
       })));
   } catch (e) {
