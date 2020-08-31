@@ -31,19 +31,8 @@ const FollowActivity = ({
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getFollows(authenticatedUserId, 'following'))
-      .then(() => setIsFollowed(follows.some(follow => {
-        return follow._id === userOfActivityId;
-      })));
-  }, []);
-
-  useEffect(() => {
-    dispatch(getFollows(authenticatedUserId, 'following'))
-      .then(() => { console.log('hi'); });
+    dispatch(getFollows(authenticatedUserId, 'following'));
   }, [isFollowed]);
-
-  // console.log(isFollowed, 'isFollowed');
-  // console.log(follows.some(follow => follow._id === userOfActivityId));
 
   const handleFollow = async () => {
     await dispatch(toggleFollows(userOfActivityId, isFollowed));

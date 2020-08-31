@@ -27,7 +27,9 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserActivitiesFeed(user._id));
+    setLocalLoading(true);
+    dispatch(getUserActivitiesFeed(user._id))
+      .then(() => setLocalLoading(false));
   }, []);
 
   return (
@@ -56,7 +58,6 @@ const ActivityFeed = ({ setIsActivityFeedOpen, setHeartIconFilled }) => {
             : userActivities.map(activity => (
               <PopoverListItem
                 key={activity._id}
-                style={{ textOverflow: 'initial' }}
               >
                 <ActivityItem
                   activity={activity}
