@@ -40,17 +40,15 @@ export const toggleFollows = (userId, isFollowing) => async dispatch => {
       type: TOGGLE_FOLLOWS,
       payload: { isFollowed: true, userId }
     });
+  } else {
+    await axios.delete(`/api/users/${userId}/follows`);
 
-    return Promise.resolve();
+    dispatch({
+      type: TOGGLE_FOLLOWS,
+      payload: { isFollowed: false, userId }
+    });
   }
-
-  await axios.delete(`/api/users/${userId}/follows`);
-
-  dispatch({
-    type: TOGGLE_FOLLOWS,
-    payload: { isFollowed: false, userId }
-  });
-  return Promise.resolve();
+  console.log('happens');
 };
 
 export const resetFollows = () => dispatch => {

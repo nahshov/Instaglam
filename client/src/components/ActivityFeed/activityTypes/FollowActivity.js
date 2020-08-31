@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
-import { setNumOfFollowing } from 'actions/profile/profileActions';
+import { toggleProfileFollow, setNumOfFollowing } from 'actions/profile/profileActions';
 import { followsSelector } from 'actions/follows/followSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
@@ -24,24 +24,26 @@ const FollowActivity = ({
   activityUsernamesText }) => {
   const { follows } = useSelector(structuredFollowsSelector);
   const userOfActivityId = activity.activities[0].user._id;
-  const [isFollowed, setIsFollowed] = useState(follows.some(follow => follow._id === userOfActivityId));
+  const [isFollowed, setIsFollowed] = useState(false);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    dispatch(getFollows(authenticatedUserId, 'following'));
-  }, [isFollowed]);
+    setIsFollowed(follows.some(follow => (follow._id === userOfActivityId)));
+  }, [follows]);
 
   const handleFollow = async () => {
-    await dispatch(toggleFollows(userOfActivityId, isFollowed));
-    setIsFollowed(!isFollowed);
-    // if (activity.isFollowed) {
-    //   dispatch(setNumOfFollowing(-1));
-    // } else {
-    //   dispatch(setNumOfFollowing(1));
-    // }
+    const isProfilePage = usernames[0] === pathname.replace('/', '');
+    if (isProfilePage) {
+      await dispatch(toggleProfileFollow(userOfActivityId, isFollowed));
+    } else {
+      await dispatch(toggleFollows(userOfActivityId, isFollowed));
+    }
+    await dispatch(getFollows(authenticatedUserId, 'following'));
   };
 
   return (
@@ -82,7 +84,6 @@ FollowActivity.propTypes = {
   profilePic: PropTypes.string.isRequired,
   activityLength: PropTypes.number.isRequired,
   activity: PropTypes.shape({
-    isFollowed: PropTypes.bool.isRequired,
     activities: PropTypes.arrayOf(PropTypes.shape({
       user: PropTypes.shape({
         _id: PropTypes.string.isRequired

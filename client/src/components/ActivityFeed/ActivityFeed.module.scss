@@ -1,6 +1,22 @@
 @import "../../styles/color-palette.scss";
+@import '../../styles/typography.scss';
+
+.heartIcon {
+    font-size: $icon-medium-large;
+}
 
 .notFound {
   color: $secondary-text-color;
   padding: 5px;
+}
+
+.loadingSpinnerDiv {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  cursor: default;
+
+  img {
+    width: 50px
+  }
 }
