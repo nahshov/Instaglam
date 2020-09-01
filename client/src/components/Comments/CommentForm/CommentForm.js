@@ -20,9 +20,6 @@ const CommentForm = ({ postId, isPostPage = false }) => {
   };
 
   const handleSubmit = async e => {
-    // if (isReply){
-    //   console.log('hi')
-    // }
     e.preventDefault();
     if (!inputValue) return;
     setCommentLoading(true);
@@ -37,7 +34,12 @@ const CommentForm = ({ postId, isPostPage = false }) => {
   };
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
-      <textarea value={inputValue} onChange={handleChange} id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
+      <textarea 
+      value={inputValue} 
+      onChange={handleChange} 
+      id="commentTextArea" 
+      placeholder="Add a comment" 
+      className={styles.commentInput} />
       <Button type="submit" btnRole="astext" disabled={checkDisabled()} isLoading={commentLoading} className={styles.postButton}>Post</Button>
     </form>
 

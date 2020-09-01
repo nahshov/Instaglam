@@ -191,17 +191,14 @@ export const HomePageAddAComment = (postId, comment) => {
             }
           };
           const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
-
           dispatch({
             type: ADD_COMMENT_TO_HOME_PAGE_POST,
             payload: { postId, numOfComments: 1, comment: res.data }
           });
         }
       }
-      return Promise.resolve();
     } catch (e) {
-      return Promise.reject();
-      // console.log(e);
+      console.log(e);
     }
   };
 };

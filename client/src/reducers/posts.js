@@ -107,7 +107,7 @@ export default function (state = initialState, action) {
           return (
             post._id === payload.postId ? {
               ...post,
-              comments: [payload.comment, post.comments[0]],
+              comments: !post.comments.length ? [payload.comment] : [payload.comment, post.comments[0]],
               numOfComments: post.numOfComments + payload.numOfComments
             } : post
           );

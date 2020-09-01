@@ -85,7 +85,18 @@ const Post = ({ post, authenticatedUserId }) => {
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
         </div>
-        <CommentList comments={comments} isPostPage className={styles.postComments} postId={postId} />
+        {
+          comments
+          &&
+            (
+              <CommentList
+                comments={comments}
+                isPostPage
+                className={styles.postComments}
+                postId={postId}
+              />
+            )
+        }
         <HomePagePostIconBar
           isPostPage
           isLike={isPostLiked}

@@ -11,8 +11,7 @@ import CreatedTime from 'components/CreatedTime/CreatedTime';
 import Button from 'components/Button/Button';
 import styles from './Comment.module.scss';
 
-const Comment = ({ comment, isPostPage = false, postId }) => {
-  console.log(comment)
+const Comment = ({ comment, isPostPage = false, postId, onlyReplies }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     if (isPostPage) {
