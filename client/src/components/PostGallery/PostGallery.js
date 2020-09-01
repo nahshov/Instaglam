@@ -36,7 +36,7 @@ const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
 
   return (
     <div className={styles.Gallery}>
-      <Post post={currentPost} authenticatedUserId={authenticatedUserId} />
+      <Post post={currentPost} postId={post._id} authenticatedUserId={authenticatedUserId} />
       {isGallery && (
       <div className={styles.arrows}>
         {!!currentPostIndex && (

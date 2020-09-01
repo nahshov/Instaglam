@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
-import { commentsPropType } from 'customPropTypes';
+import { Link } from 'react-router-dom';
 import { togglePostCommentLike } from 'actions/post/postActions';
 import { toggleHomeCommentLike } from 'actions/posts/postActions';
-import { Link } from 'react-router-dom';
-import ProfilePic from 'components/ProfilePic/ProfilePic';
-import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
-import CreatedTime from 'components/CreatedTime/CreatedTime';
 import Button from 'components/Button/Button';
+import CreatedTime from 'components/CreatedTime/CreatedTime';
+import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
+import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
+import ProfilePic from 'components/ProfilePic/ProfilePic';
+import Reply from 'components/Comments/Reply/Reply';
+import { commentsPropType } from 'customPropTypes';
 import styles from './Comment.module.scss';
 
-const Comment = ({ comment, isPostPage = false, postId, onlyReplies }) => {
+const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = false }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     if (isPostPage) {
@@ -21,10 +22,12 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies }) => {
     }
   };
   useEffect(() => {}, [comment.user.profilePic]);
+  const [shownReplies, setShownReplies] = useState(false);
+  const filteredReply = onlyReplies.filter(reply => reply.replyToComment === comment._id);
   return (
     <div className={styles.comment}>
       <div className={styles.commentHeader}>
-        <div style={{ height: `${isPostPage ? '30px' : ''}` }} className={styles.commentData}>
+        <div style={{ height: `${isPostPage ? 'auto' : ''}` }} className={styles.commentData}>
           {isPostPage && comment.user.profilePic && <ProfilePic url={comment.user.profilePic} size="medium" />}
           <span>
             <Link to={`/${comment.user.username}`} className={isPostPage ? styles.postPageUsername : styles.homePageUsername}>
@@ -52,12 +55,28 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies }) => {
           <Link to={`/p/${postId}`}>
             <CreatedTime created={comment.created} isPost />
           </Link>
-          <NumOfLikes postId={postId} likes={comment.numOfLikes} isPost />
+          <NumOfLikes postId={postId} likes={comment.numOfLikes} isSinglePost />
           <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
             Reply
           </Button>
         </div>
       )}
+      {filteredReply && isPostPage
+      && (
+        <button
+          type="button"
+          className={styles.replyBar}
+          onClick={() => setShownReplies(!shownReplies)}
+        >
+          <div className={styles.grayLine} />
+          <span>
+            View Replies(
+            {filteredReply.length}
+            )
+          </span>
+        </button>
+      )}
+      {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
     </div>
   );
 };

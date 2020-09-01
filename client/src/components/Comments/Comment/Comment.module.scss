@@ -25,4 +25,16 @@
     display: flex;
     align-items: center;  
   }
+
+  .replyBar{
+    @include flexStart
+    cursor: pointer;
+    .grayLine{
+      width: 24px;
+      height: 1px;
+      background-color: #8e8e8e;
+      margin-right: 20px;
+      margin-left: 50px;
+    }
+  }
 }

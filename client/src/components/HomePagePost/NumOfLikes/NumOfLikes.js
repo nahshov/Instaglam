@@ -3,12 +3,12 @@ import { postPropType } from 'customPropTypes';
 import styles from './NumOfLikes.module.scss';
 import FollowModal from '../../Modals/FollowModal/FollowModal';
 
-const NumOfLikes = ({ likes, postId, isPost = false }) => {
+const NumOfLikes = ({ likes, postId, isSinglePost = false }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
       <div
-        className={isPost ? styles.singlePostLikes : styles.likesAmount}
+        className={isSinglePost ? styles.singlePostLikes : styles.likesAmount}
         onClick={() => setModalOpen(true)}
       >
         {likes}

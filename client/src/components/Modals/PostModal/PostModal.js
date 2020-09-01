@@ -17,7 +17,7 @@ const postModalStructuredSelector = createStructuredSelector({
   authenticatedUser: authenticatedUserSelector
 });
 
-const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = [] }) => {
+const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, postId, posts = [] }) => {
   const { post, authenticatedUser } = useSelector(postModalStructuredSelector);
   const dispatch = useDispatch();
   const { pathname: username } = useLocation();
@@ -35,7 +35,6 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
       changeUrl(`${username}`);
     };
   }, [setModalOpen, username, isOpen]);
-  console.log(post);
   return (
     <Modal
       className={styles.PostModal}

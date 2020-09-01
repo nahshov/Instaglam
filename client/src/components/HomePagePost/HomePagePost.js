@@ -30,7 +30,7 @@ const HomePagePost = ({
     isPostLiked,
     comments
   } = post;
-  console.log(post)
+
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   return (
