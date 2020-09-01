@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { userActivitiesFeedSelector } from 'actions/activities/activitiesFeedSelectors';
-import { followsSelector } from 'actions/follows/followSelectors';
 import { getUserActivitiesFeed } from 'actions/activities/activitiesFeedActions';
 import { getFollows } from 'actions/follows/followActions';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
@@ -16,15 +15,14 @@ import styles from './ActivityFeed.module.scss';
 
 const structuredActivitieFeedSelector = createStructuredSelector({
   user: authenticatedUserSelector,
-  userActivities: userActivitiesFeedSelector,
-  follows: followsSelector
+  userActivities: userActivitiesFeedSelector
 });
 
 const ActivityFeed = () => {
   const [localLoading, setLocalLoading] = useState(true);
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
   const [isActivityFeedOpen, setIsActivityFeedOpen] = useState(false);
-  const { user, userActivities, follows } = useSelector(structuredActivitieFeedSelector);
+  const { user, userActivities } = useSelector(structuredActivitieFeedSelector);
 
   const dispatch = useDispatch();
 
@@ -38,7 +36,7 @@ const ActivityFeed = () => {
 
   return (
     (
-      <div>
+      <div className={styles.activityFeedWrapper}>
         <HeartIcon
           className={styles.heartIcon}
           isFilled={isHeartIconFilled}
@@ -48,26 +46,28 @@ const ActivityFeed = () => {
           }}
         />
         {isActivityFeedOpen && (
-        <div
-          className={styles.popoverWrapper}
-          onClick={() => {
-            // setIsActivityFeedOpen(false);
-            setHeartIconFilled(false);
-          }}
-        >
-          <Popover
-            isPopoverOpen
-            style={{ top: '60px', right: '111px', width: '100%', maxWidth: '600px' }}
-          >
-            {localLoading
-              ? (
-                <div className={styles.loadingSpinnerDiv}>
-                  <LoadingSpinner />
-                </div>
-              )
-              : (
-                <PopoverList>
-                  {
+          <>
+            <div
+              className={styles.popoverWrapper}
+              onClick={() => {
+                setIsActivityFeedOpen(false);
+                setHeartIconFilled(false);
+              }}
+            />
+            <Popover
+              isPopoverOpen
+              style={{ top: '60px', right: '111px', width: '100%', maxWidth: '600px', zIndex: '5' }}
+              isActivityFeed
+            >
+              {localLoading
+                ? (
+                  <div className={styles.loadingSpinnerDiv}>
+                    <LoadingSpinner />
+                  </div>
+                )
+                : (
+                  <PopoverList>
+                    {
           !userActivities.length
             ? (
               <PopoverListItem>
@@ -77,19 +77,25 @@ const ActivityFeed = () => {
             : userActivities.map(activity => (
               <PopoverListItem
                 key={activity._id}
+                onClick={() => {
+                  setIsActivityFeedOpen(false);
+                  setHeartIconFilled(false);
+                }}
               >
                 <ActivityItem
                   activity={activity}
                   authenticatedUserId={user._id}
+                  setIsActivityFeedOpen={setIsActivityFeedOpen}
+                  setHeartIconFilled={setHeartIconFilled}
                 />
               </PopoverListItem>
             ))
 }
-                </PopoverList>
-              )}
+                  </PopoverList>
+                )}
 
-          </Popover>
-        </div>
+            </Popover>
+          </>
         )}
       </div>
     )
