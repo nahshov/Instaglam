@@ -1,10 +1,14 @@
 @import '../../../styles/color-palette.scss';
 
-.commentListWrapper{
-  display: flex;
+.commentContainer{
   width: 100%;
-  flex-direction: column;
-  button{
-    color: $secondary-text-color;
+  height: 100%;
+  overflow: auto;
+  .commentListWrapper{
+    width: 100%;
+    button{
+      color: $secondary-text-color;
+    }
   }
+
 }

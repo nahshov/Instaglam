@@ -44,7 +44,6 @@ const Post = ({ post, authenticatedUserId }) => {
     _id: postId,
     isPostLiked
   } = post;
-  console.log(comments)
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className={styles.container}>
@@ -86,13 +85,25 @@ const Post = ({ post, authenticatedUserId }) => {
           {isModalOpen && (
           <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
         </div>
-        <CommentList comments={comments} isPostPage className={styles.postComments} />
+        {
+          comments
+          &&
+            (
+              <CommentList
+                comments={comments}
+                isPostPage
+                className={styles.postComments}
+                postId={postId}
+              />
+            )
+        }
         <HomePagePostIconBar
+          isPostPage
           isLike={isPostLiked}
           postId={postId}
           className={styles.icons}
         />
-        {postId && <CommentForm postId={postId} />}
+        {postId && <CommentForm postId={postId} isPostPage />}
 
       </div>
     </div>

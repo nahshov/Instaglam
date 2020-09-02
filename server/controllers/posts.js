@@ -127,18 +127,6 @@ const getOnePost = async (req, res) => {
         message: "Post doesn't exist"
       });
     }
-    console.log({
-      ...post.toObject(),
-      isPostLiked: isUserLike,
-      user: {
-        ...post.user.toObject(),
-        isFollowed: await isFollowed(req.user.sub, post.user._id)
-      },
-      comments: postComments.map(
-        comment => ({ ...comment.toObject(), isCommentLiked: !!commentLiked[comment._id] })
-      )
-
-    })
 
     return serverResponse(res, 200, {
       ...post.toObject(),

@@ -91,7 +91,7 @@ const addCommentToPost = async (req, res) => {
         created: new Date()
       });
     }
-    return serverResponse(res, 200, response.populate('user', 'username'));
+    return serverResponse(res, 200, response);
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to add a comment'

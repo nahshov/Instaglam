@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
 import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
 import HomePagePostIconBar from 'components/HomePagePost/HomePagePostIconsBar/HomePagePostIconBar';
-import PostLikes from 'components/HomePagePost/PostLikes/PostLikes';
+import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
 import HomePagePostContent from 'components/HomePagePost/HomePagePostContent/HomePagePostContent';
 import CreatedTime from 'components/CreatedTime/CreatedTime';
 import CommentForm from 'components/Comments/CommentForm/CommentForm';
@@ -27,7 +27,8 @@ const HomePagePost = ({
     media,
     created,
     _id: postId,
-    isPostLiked
+    isPostLiked,
+    comments
   } = post;
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -45,8 +46,8 @@ const HomePagePost = ({
         isLike={isPostLiked}
         postId={postId}
       />
-      <PostLikes
-        likesOfPost={numOfLikes}
+      <NumOfLikes
+        likes={numOfLikes}
         username={username}
         profilePic={profilePic}
         postId={postId}
@@ -54,7 +55,7 @@ const HomePagePost = ({
       <HomePagePostContent username={username} content={content} />
       <ViewAllComments numOfComments={numOfComments} setIsPostModalOpen={setIsPostModalOpen} />
       <CommentList
-        comments={post.comments}
+        comments={comments}
         isPostPage={false}
         className={styles.homePagePostCommentList}
       />

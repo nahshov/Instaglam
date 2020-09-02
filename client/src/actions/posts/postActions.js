@@ -13,7 +13,7 @@ import {
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
-  ADD_COMMENT_TO_POST,
+  ADD_COMMENT_TO_HOME_PAGE_POST,
   RESET_POSTS
 } from './postTypes';
 
@@ -97,7 +97,7 @@ export const submitAPost = (fd) => {
 };
 
 // toggle like of a post
-export const togglePostLike = (postId, isLike) => {
+export const toggleHomePagePostLike = (postId, isLike) => {
   return async dispatch => {
     try {
       if (postId) {
@@ -122,7 +122,7 @@ export const togglePostLike = (postId, isLike) => {
 };
 
 // toggle like of a comment
-export const toggleCommentLike = (commentId, isLike, postId) => {
+export const toggleHomeCommentLike = (commentId, isLike, postId) => {
   return async dispatch => {
     try {
       if (commentId) {
@@ -180,8 +180,7 @@ export const getAllCommentsOfAPost = (postId) => {
   };
 };
 
-export const addAComment = (postId, comment) => {
-
+export const HomePageAddAComment = (postId, comment) => {
   return async dispatch => {
     try {
       if (postId) {
@@ -192,17 +191,14 @@ export const addAComment = (postId, comment) => {
             }
           };
           const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
-
           dispatch({
-            type: ADD_COMMENT_TO_POST,
+            type: ADD_COMMENT_TO_HOME_PAGE_POST,
             payload: { postId, numOfComments: 1, comment: res.data }
           });
         }
       }
-      return Promise.resolve();
     } catch (e) {
-      return Promise.reject();
-      // console.log(e);
+      console.log(e);
     }
   };
 };

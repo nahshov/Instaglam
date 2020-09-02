@@ -1,40 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
-import { commentsPropType } from 'customPropTypes';
-import { toggleCommentLike } from 'actions/posts/postActions';
 import { Link } from 'react-router-dom';
+import { togglePostCommentLike } from 'actions/post/postActions';
+import { toggleHomeCommentLike } from 'actions/posts/postActions';
+import Button from 'components/Button/Button';
+import CreatedTime from 'components/CreatedTime/CreatedTime';
+import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
+import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
+import Reply from 'components/Comments/Reply/Reply';
+import { commentsPropType } from 'customPropTypes';
 import styles from './Comment.module.scss';
 
-const Comment = ({ comment, isPostPage = false }) => {
+const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = false }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
-    dispatch(toggleCommentLike(comment._id, comment.isCommentLiked, comment.post));
+    if (isPostPage) {
+      dispatch(togglePostCommentLike(comment._id, comment.isCommentLiked));
+    } else {
+      dispatch(toggleHomeCommentLike(comment._id, comment.isCommentLiked, comment.post));
+    }
   };
+  useEffect(() => {}, [comment.user.profilePic]);
+  const [shownReplies, setShownReplies] = useState(false);
+  const filteredReply = onlyReplies.filter(reply => reply.replyToComment === comment._id);
   return (
     <div className={styles.comment}>
-      <div style={{ height: `${isPostPage ? '65px' : ''}` }} className={styles.commentData}>
-        {isPostPage && <ProfilePic url={comment.user.profilePic} size="medium" />}
-        <span>
-          <Link to={`/${comment.user.username}`} className={isPostPage ? styles.postPageUsername : styles.homePageUsername}>
-            {comment.user.username}
+      <div className={styles.commentHeader}>
+        <div style={{ height: `${isPostPage ? 'auto' : ''}` }} className={styles.commentData}>
+          {isPostPage && comment.user.profilePic && <ProfilePic url={comment.user.profilePic} size="medium" />}
+          <span>
+            <Link to={`/${comment.user.username}`} className={isPostPage ? styles.postPageUsername : styles.homePageUsername}>
+              {comment.user.username}
+            </Link>
+              &nbsp;
+          </span>
+          <span>
+            {comment.content}
+          </span>
+        </div>
+        <div className={styles.commentHeartIcon}>
+          <HeartIcon
+            isRed
+            isFilled={comment.isCommentLiked}
+            onClick={() => {
+              handleLike(comment);
+            }}
+          />
+        </div>
+      </div>
+      {isPostPage
+      && (
+        <div className={styles.commentActions}>
+          <Link to={`/p/${postId}`}>
+            <CreatedTime created={comment.created} isPost />
           </Link>
-            &nbsp;
-        </span>
-        <span>
-          {comment.content}
-        </span>
-      </div>
-      <div className={styles.commentHeartIcon}>
-        <HeartIcon
-          isRed
-          isFilled={comment.isCommentLiked}
-          onClick={() => {
-            handleLike(comment);
-          }}
-        />
-      </div>
+          <NumOfLikes postId={postId} likes={comment.numOfLikes} isSinglePost />
+          <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
+            Reply
+          </Button>
+        </div>
+      )}
+      {filteredReply && isPostPage
+      && (
+        <button
+          type="button"
+          className={styles.replyBar}
+          onClick={() => setShownReplies(!shownReplies)}
+        >
+          <div className={styles.grayLine} />
+          <span>
+            View Replies(
+            {filteredReply.length}
+            )
+          </span>
+        </button>
+      )}
+      {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
     </div>
   );
 };

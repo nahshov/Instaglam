@@ -2,17 +2,39 @@
 
 .comment {
   display: flex;
-  flex: 1;
-  justify-content: space-between;
-  padding: 5px 9px;
-  .commentData {
+  flex-direction: column;
+  .commentHeader{
     display: flex;
-     .postPageUsername {
-      padding-left: 10px;
-      font-weight: bold;
-     }
-     .homePageUsername{
-       font-weight: bold;
-     }
+    flex: 1;
+    justify-content: space-between;
+    padding: 5px 9px;  
+    .commentData {
+      display: flex;
+       .postPageUsername {
+        padding-left: 10px;
+        font-weight: bold;
+       }
+       .homePageUsername{
+         font-weight: bold;
+       }
+    }
+  
+  }
+  .commentActions{
+    width: 100%;
+    display: flex;
+    align-items: center;  
+  }
+
+  .replyBar{
+    @include flexStart
+    cursor: pointer;
+    .grayLine{
+      width: 24px;
+      height: 1px;
+      background-color: #8e8e8e;
+      margin-right: 20px;
+      margin-left: 50px;
+    }
   }
 }
