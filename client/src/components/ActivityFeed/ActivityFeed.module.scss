@@ -1,8 +1,8 @@
 @import "../../styles/color-palette.scss";
-@import '../../styles/typography.scss';
+@import "../../styles/typography.scss";
 
 .heartIcon {
-    font-size: $icon-medium-large;
+  font-size: $icon-medium-large;
 }
 
 .notFound {
@@ -17,12 +17,13 @@
   cursor: default;
 
   img {
-    width: 50px
+    width: 50px;
   }
 }
 
 .activityFeedWrapper {
   display: flex;
+  justify-content: flex-end;
 }
 
 .popoverWrapper {
@@ -33,4 +34,5 @@
   top: 0;
   z-index: 2;
   cursor: default;
+  overflow: hidden;
 }

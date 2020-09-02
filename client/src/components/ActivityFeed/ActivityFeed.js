@@ -17,7 +17,6 @@ const structuredActivitieFeedSelector = createStructuredSelector({
   user: authenticatedUserSelector,
   userActivities: userActivitiesFeedSelector
 });
-
 const ActivityFeed = () => {
   const [localLoading, setLocalLoading] = useState(true);
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
@@ -56,7 +55,7 @@ const ActivityFeed = () => {
             />
             <Popover
               isPopoverOpen
-              style={{ top: '60px', right: '111px', width: '100%', maxWidth: '600px', zIndex: '5' }}
+              style={{ top: '60px', width: '100%', maxWidth: '600px', zIndex: '5' }}
               isActivityFeed
             >
               {localLoading
@@ -84,16 +83,12 @@ const ActivityFeed = () => {
               >
                 <ActivityItem
                   activity={activity}
-                  authenticatedUserId={user._id}
-                  setIsActivityFeedOpen={setIsActivityFeedOpen}
-                  setHeartIconFilled={setHeartIconFilled}
                 />
               </PopoverListItem>
             ))
 }
                   </PopoverList>
                 )}
-
             </Popover>
           </>
         )}

@@ -48,7 +48,6 @@ export const toggleFollows = (userId, isFollowing) => async dispatch => {
       payload: { isFollowed: false, userId }
     });
   }
-  console.log('happens');
 };
 
 export const resetFollows = () => dispatch => {

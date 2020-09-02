@@ -1,8 +1,7 @@
 import React from 'react';
 import { activityTypesObject } from 'utils/activityTypesObject';
 import CreatedTime from 'components/CreatedTime/CreatedTime';
-// import { activitiesPropTypes } from 'customPropTypes';
-import PropTypes from 'prop-types';
+import { activityPropTypes } from 'customPropTypes';
 
 const getActivitiesUsers = (activities = []) => {
   return activities.length >= 2
@@ -22,8 +21,7 @@ const getActivityUsernamesText = (lengthOfActivity, usernamesArr) => {
 };
 
 const ActivityItem = ({
-  activity,
-  authenticatedUserId
+  activity
 }) => {
   const ActivityComponent = activityTypesObject[activity.activityType];
   const { profilePic } = activity.activities[activity.activities.length - 1].user;
@@ -36,24 +34,18 @@ const ActivityItem = ({
     <>
       <ActivityComponent
         activity={activity}
-        authenticatedUserId={authenticatedUserId}
         usernames={usernames}
         profilePic={profilePic}
         activityLength={activityLength}
-        created={<CreatedTime created={created} />}
         activityUsernamesText={activityUsernamesText}
+        created={<CreatedTime created={created} />}
       />
     </>
   );
 };
 
 ActivityItem.propTypes = {
-  activity: PropTypes.shape({
-    activities: PropTypes.array.isRequired,
-    activityType: PropTypes.string.isRequired,
-    created: PropTypes.string.isRequired
-  }).isRequired,
-  authenticatedUserId: PropTypes.string.isRequired
+  ...activityPropTypes
 };
 
 export default ActivityItem;

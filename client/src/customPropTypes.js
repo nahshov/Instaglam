@@ -58,15 +58,34 @@ export const commentsPropType = {
 
 };
 
-export const activitiesPropTypes = {
-  profilePic: PropTypes.string.isRequired,
-  usernames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activityLength: PropTypes.number.isRequired,
-  referredEntity: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    postId: PropTypes.string.isRequired,
-    media: PropTypes.string.isRequired
-  }).isRequired
+export const activityPropTypes = {
+  activity: PropTypes.shape({
+    _id: PropTypes.string,
+    referredUser: PropTypes.string,
+    referredEntity: PropTypes.shape({
+      _id: PropTypes.string,
+      media: PropTypes.string
+    }),
+    activities: PropTypes.arrayOf(PropTypes.shape({
+      activityId: PropTypes.shape({
+        _id: PropTypes.string,
+        content: PropTypes.string
+      }),
+      user: PropTypes.shape({
+        _id: PropTypes.string
+      })
+    }))
+  })
+};
+
+export const activityItemsPropTypes = {
+  profilePic: PropTypes.string,
+  usernames: PropTypes.arrayOf(PropTypes.string),
+  activityLength: PropTypes.number,
+  activityType: PropTypes.string,
+  activityUsernamesText: PropTypes.string,
+  created: PropTypes.element.isRequired,
+  ...activityPropTypes
 };
 
 export const postPropType = {
