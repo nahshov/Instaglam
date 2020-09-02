@@ -18,9 +18,6 @@ const PostsGridItem = (
     <div
       key={post._id}
       className={styles.profilePost}
-      style={{
-        background: `url(${post.media}) no-repeat center center / cover`
-      }}
       onClick={() => {
         if (!isLink) {
           // Setting the searched post in the parent grid component,
@@ -31,6 +28,7 @@ const PostsGridItem = (
         }
       }}
     >
+      <img alt={post.content} src={post.media} style={{ width: '100%' }} />
       {isLink ? (
         <Link to={`/p/${post._id}`} className={styles.profilePostOverlay}>
           <PostsGridItemContent likes={post.numOfLikes} comments={post.numOfComments} />

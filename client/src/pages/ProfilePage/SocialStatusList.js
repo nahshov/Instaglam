@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import FollowModal from 'components/Modals/FollowModal/FollowModal';
-import styles from './ProfilePage.module.scss';
+import styles from './SocialStatusList.module.scss';
 
 const SocialStatusList = ({ postCount, followingCount, followersCount, userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +11,7 @@ const SocialStatusList = ({ postCount, followingCount, followersCount, userId })
   return (
     <ul className={styles.socialStatusList}>
       <li>
-        <div>
+        <div className={styles.postCount}>
           {postCount}
           {' '}
           posts

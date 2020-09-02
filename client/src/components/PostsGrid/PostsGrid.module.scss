@@ -4,14 +4,13 @@
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(3, minmax(1px, 100%));
-  grid-auto-rows: 300px;
   column-gap: 20px;
   row-gap: 28px;
   margin: 50px 0;
 
 
   @include respond(phablet) {
-    margin: 20px 0;
+    margin: 10px 0;
     grid-gap: 5px;
   }
 
