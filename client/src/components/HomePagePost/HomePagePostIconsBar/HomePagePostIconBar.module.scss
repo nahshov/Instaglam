@@ -5,8 +5,7 @@
 .iconsWrapper{
   width: 100%;
   @include flexSpaceBetween;
-  font-size: $icon-medium-small;
-  background-color: $secondary-background;
+  font-size: $icon-medium-large;
   padding: 0px 10px;
 
   .leftIconsWrapper{
@@ -14,13 +13,13 @@
       height: 40px;
       @include flexSpaceBetween;
       .chatIcon{
-          font-size: $icon-small
+          font-size: $icon-medium-large
       }
       .likeHeart{
         color: red;
       }   
       .ShareModalIcon{
-        font-size: $icon-small
+        font-size: $icon-medium-large
       }
   }
 }

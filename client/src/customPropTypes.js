@@ -57,6 +57,22 @@ export const commentsPropType = {
   isPostPage: PropTypes.bool
 
 };
+export const replyPropType = {
+  content: PropTypes.string,
+  created: PropTypes.string,
+  isCommentLiked: PropTypes.bool,
+  numOfLikes: PropTypes.number,
+  post: PropTypes.string,
+  replyToComment: PropTypes.string,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    _id: PropTypes.string
+  }),
+  __v: PropTypes.number,
+  _id: PropTypes.string,
+  isPostPage: PropTypes.bool
+
+};
 
 export const activitiesPropTypes = {
   profilePic: PropTypes.string.isRequired,
