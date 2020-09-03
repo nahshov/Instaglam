@@ -14,8 +14,6 @@ const PostsGridItem = (
     setSearchedPost
   }
 ) => {
-  console.log(post);
-
   return (
     <div
       key={post._id}
