@@ -18,16 +18,12 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
     await dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
   };
 
-  console.log('profile page');
-
   return (
     <header className={styles.profileHeader}>
       <ProfilePicChanger
         searchedUser={profile}
         isAuthenticatedUser={isAuthenticatedUser}
       />
-      {/* <section className={styles.profileInfo}> */}
-      {/* <div className={styles.profileInfoHeader}> */}
       <h2 className={styles.username}>{profile.username}</h2>
       {isAuthenticatedUser
         ? (
@@ -51,7 +47,6 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
             isFollowed={profile.isFollowed}
           />
         )}
-      {/* </div> */}
       <SocialStatusList
         userId={profile._id}
         postCount={postsCount}
@@ -63,7 +58,6 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
         <h1 className={styles.fullName}>{profile.fullName}</h1>
         <p className={styles.bio}>{profile.bio}</p>
       </div>
-      {/* </section> */}
     </header>
   );
 };
