@@ -6,11 +6,12 @@ import {
   POST_ERROR,
   TOGGLE_POST_LIKE,
   RESET_POSTS_OF_USER_LOADING,
+  SET_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
   RESET_POSTS,
-  ADD_COMMENT_TO_POST,
-  TOGGLE_COMMENT_LIKE
+  ADD_COMMENT_TO_HOME_PAGE_POST,
+  TOGGLE_HOME_COMMENT_LIKE
 } from 'actions/posts/postTypes';
 
 const initialState = {
@@ -78,7 +79,7 @@ export default function (state = initialState, action) {
                 : post);
           })
       };
-    case TOGGLE_COMMENT_LIKE:
+    case TOGGLE_HOME_COMMENT_LIKE:
       return {
         ...state,
         posts: state.posts.map(post => {
@@ -97,15 +98,16 @@ export default function (state = initialState, action) {
           }
           return post;
         }) };
-
-    case ADD_COMMENT_TO_POST:
+    // belongs to homepage state module
+    case ADD_COMMENT_TO_HOME_PAGE_POST:
       return {
         ...state,
+        loading: false,
         posts: state.posts.map(post => {
           return (
             post._id === payload.postId ? {
               ...post,
-              comments: [payload.comment, ...post.comments],
+              comments: !post.comments.length ? [payload.comment] : [payload.comment, post.comments[0]],
               numOfComments: post.numOfComments + payload.numOfComments
             } : post
           );
@@ -115,6 +117,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         postsOfUserLoading: true
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: payload
       };
     case GET_ALL_LIKES_OF_A_POST:
       return {

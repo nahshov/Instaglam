@@ -1,14 +1,17 @@
 @import '../../styles/color-palette.scss';
 
 .postContainer{
-    width: 600px;
-    border: 2px solid $primary-border-color;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    background: $color-white;
-    margin-bottom: 40px;
-    }
+  width: 500px;
+  border: 2px solid $primary-border-color;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  background: $color-white;
+  margin-bottom: 40px;
+  .postHeader{
+    padding: 3px 10px;
+  }
+}
     
   
 

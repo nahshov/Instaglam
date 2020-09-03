@@ -1,8 +1,12 @@
 const { activityEmitter } = require('../../events/events');
 const { addActivity, removeActivity } = require('../../services/activity-services');
+const { activityInterval } = require('../../config/index');
 
 let commentLikes = {};
 let nextCommentLikesCheck = false;
+
+const revertLikeOnCommentActivity = (likeId, commentId) => commentLikes[commentId].activities
+  .filter(activity => likeId.toString() !== activity.activityId.toString());
 
 function checkLikesOnComment() {
   if (!nextCommentLikesCheck) {
@@ -12,7 +16,7 @@ function checkLikesOnComment() {
       commentLikes = {};
       activities.map(addActivity);
       nextCommentLikesCheck = false;
-    }, 30000);
+    }, activityInterval);
   }
 }
 
@@ -26,7 +30,7 @@ const likesOnCommentListener = activityEmitter.on('commentLike', payload => {
       created,
       referredUser: commentBy,
       referredEntity: comment,
-      referredEntityType: 'comment',
+      referredEntityType: 'Comment',
       activityType: 'like',
       activities: []
     };
@@ -40,8 +44,17 @@ const likesOnCommentListener = activityEmitter.on('commentLike', payload => {
   checkLikesOnComment();
 });
 
-const removeLikeOnCommentListener = activityEmitter.on('deleteCommentLike', async likeId => {
-  await removeActivity(likeId);
+const removeLikeOnCommentListener = activityEmitter.on('deleteCommentLike', async ({ likeId, commentId }) => {
+  try {
+    await removeActivity(likeId);
+    if (!commentLikes[commentId]) return;
+    commentLikes[commentId].activities = revertLikeOnCommentActivity(likeId, commentId);
+    if (commentLikes[commentId].activities.length === 0) {
+      delete commentLikes[commentId];
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = {

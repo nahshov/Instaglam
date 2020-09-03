@@ -7,10 +7,10 @@ import styles from './CreatedTime.module.scss';
 
 dayjs.extend(relativeTime);
 
-const CreatedTime = ({ created }) => {
+const CreatedTime = ({ created, isPost = false }) => {
   const date = dayjs(created).from(dayjs());
   return (
-    <div className={styles.age}>
+    <div className={isPost ? styles.postAge : styles.age}>
       {date}
     </div>
   );

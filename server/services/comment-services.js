@@ -5,7 +5,8 @@ function getComment(commentId) {
 }
 
 function getCommentsOfPost(postId, includeComments = undefined) {
-  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments }).populate('user', 'username');
+  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments })
+    .populate('user', 'username profilePic');
 }
 
 function getRepliesOfComment(commentId) {
@@ -14,7 +15,7 @@ function getRepliesOfComment(commentId) {
 
 async function addComment(comment) {
   comment = new Comment(comment);
-  return comment.save().then(c => c.populate('user -_id', 'username').execPopulate());
+  return comment.save().then(c => c.populate('user -_id', 'username profilePic').execPopulate());
 }
 
 function removeComment(commentId) {

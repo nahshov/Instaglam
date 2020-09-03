@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addAComment } from 'actions/posts/postActions';
-// import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import { HomePageAddAComment } from 'actions/posts/postActions';
+import { postAddAComment } from 'actions/post/postActions';
+import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
-const CommentForm = ({ postId }) => {
-  // const { loading } = useSelector(state => { return state.posts; });
-
+const CommentForm = ({ postId, isPostPage = false }) => {
+  const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
-
   const dispatch = useDispatch();
 
   const handleChange = ((e) => {
@@ -20,18 +19,28 @@ const CommentForm = ({ postId }) => {
     return !inputValue.trim();
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!inputValue) return;
-    dispatch(addAComment(postId, inputValue));
-    setInputValue('');
+    setCommentLoading(true);
+    if (isPostPage) {
+      await dispatch(postAddAComment(postId, inputValue));
+      setInputValue('');
+    } else {
+      await dispatch(HomePageAddAComment(postId, inputValue));
+      setInputValue('');
+    }
+    setCommentLoading(false);
   };
-
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
-      <textarea value={inputValue} onChange={handleChange} id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
-      <button type="submit" disabled={checkDisabled()} className={styles.postButton}>Post</button>
-      {/* {loading ? <LoadingSpinner style={{ width: '24px' }} /> : setInputValue('') } */}
+      <textarea 
+      value={inputValue} 
+      onChange={handleChange} 
+      id="commentTextArea" 
+      placeholder="Add a comment" 
+      className={styles.commentInput} />
+      <Button type="submit" btnRole="astext" disabled={checkDisabled()} isLoading={commentLoading} className={styles.postButton}>Post</Button>
     </form>
 
   );

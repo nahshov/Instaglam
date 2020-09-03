@@ -70,7 +70,6 @@ export const login = ({ email, password }, setAlert) => {
           'Content-Type': 'application/json'
         }
       };
-
       const body = { email, password };
       const res = await axios.post('/api/login', body, config);
 

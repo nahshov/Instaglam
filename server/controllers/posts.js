@@ -11,9 +11,9 @@ const {
   removeLikesFromPost,
   removeLikesFromComment,
   // getPostLikes,
-  userHasLikes,
+  arePostsLiked,
   isPostLiked,
-  isCommentLiked
+  areCommentsLiked
 } = require('../services/like-services');
 
 const {
@@ -25,6 +25,7 @@ const serverResponse = require('../utils/serverResponse');
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 const formatImage = require('../utils/formatMedia.js');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
+const { isFollowed } = require('../services/follow-services.js');
 
 // @route  POST '/api/posts'
 // @desc   Submit a posts
@@ -61,14 +62,14 @@ const getPosts = async (req, res) => {
     const posts = await getAllPosts(limit, skip);
     const postsIds = posts.map(p => p._id);
     const [postLikes, postsComments] = await Promise.all([
-      isPostLiked(userId, postsIds),
+      arePostsLiked(userId, postsIds),
       Promise.all(
         postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
       )
 
     ]);
     const commentsIds = postsComments.flat().map(c => c._id);
-    const commentLiked = await isCommentLiked(userId, commentsIds);
+    const commentLiked = await areCommentsLiked(userId, commentsIds);
 
     if (posts.length === 0) {
       return serverResponse(res, 200, []);
@@ -108,13 +109,18 @@ const getPostsOfAUser = async (req, res) => {
 // @desc   Get one post, with post id
 // @access private
 const getOnePost = async (req, res) => {
-  const { postId } = req.params.postId;
+  const { postId } = req.params;
   const userId = req.user.sub;
+  // const limit = 5;
+  // const skip = limit * +req.query.page;
   try {
-    const [post, isUserLike] = await Promise.all([
+    const [post, isUserLike, postComments] = await Promise.all([
       getPost(postId),
-      userHasLikes(userId, postId)
+      isPostLiked(userId, postId),
+      getCommentsOfPost(postId)
     ]);
+    const commentsIds = postComments.flat().map(c => c._id);
+    const commentLiked = await areCommentsLiked(userId, commentsIds);
 
     if (!post) {
       return serverResponse(res, 404, {
@@ -122,7 +128,18 @@ const getOnePost = async (req, res) => {
       });
     }
 
-    return serverResponse(res, 200, { ...post.toObject(), isPostLiked: isUserLike });
+    return serverResponse(res, 200, {
+      ...post.toObject(),
+      isPostLiked: isUserLike,
+      user: {
+        ...post.user.toObject(),
+        isFollowed: await isFollowed(req.user.sub, post.user._id)
+      },
+      comments: postComments.map(
+        comment => ({ ...comment.toObject(), isCommentLiked: !!commentLiked[comment._id] })
+      )
+
+    });
   } catch (e) {
     res
       .status(500)

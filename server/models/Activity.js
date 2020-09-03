@@ -12,11 +12,12 @@ const ActivitySchema = new mongoose.Schema({
   },
   referredEntity: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
+    refPath: 'referredEntityType'
   },
   referredEntityType: {
     type: String,
-    enum: ['user', 'post', 'comment'],
+    enum: ['User', 'Post', 'Comment'],
     required: true
   },
   activityType: {
@@ -33,11 +34,8 @@ const ActivitySchema = new mongoose.Schema({
       },
       activityId: {
         type: mongoose.Types.ObjectId,
+        ref: 'Comment',
         required: true
-      },
-      created: {
-        type: Date,
-        default: Date.now
       }
     }
   ]

@@ -1,14 +1,17 @@
 @import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette';
 @import '../../../styles/typography.scss';
 
 .iconsWrapper{
-  width: 96%;
+  width: 100%;
   @include flexSpaceBetween;
-  margin: 0 auto;
   font-size: $icon-medium-small;
+  background-color: $secondary-background;
+  padding: 0px 10px;
 
   .leftIconsWrapper{
       width: 14%;
+      height: 40px;
       @include flexSpaceBetween;
       .chatIcon{
           font-size: $icon-small

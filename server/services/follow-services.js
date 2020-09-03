@@ -33,10 +33,11 @@ async function isFollowed(user, following) {
     user,
     following
   });
+
   return !!follow;
 }
 
-async function addFollowToUser(follow) {
+async function addFollowToUser(follow = {}) {
   const { user, following } = follow;
   const doesFollowExist = await isFollowed(user, following);
   if (doesFollowExist) {

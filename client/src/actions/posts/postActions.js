@@ -6,13 +6,14 @@ import {
   GET_POST,
   POST_ERROR,
   SET_POSTS,
+  SET_LOADING,
   POSTS_ERROR,
   TOGGLE_POST_LIKE,
-  TOGGLE_COMMENT_LIKE,
+  TOGGLE_HOME_COMMENT_LIKE,
   RESET_POSTS_OF_USER_LOADING,
   GET_ALL_LIKES_OF_A_POST,
   GET_ALL_COMMENTS_OF_A_POST,
-  ADD_COMMENT_TO_POST,
+  ADD_COMMENT_TO_HOME_PAGE_POST,
   RESET_POSTS
 } from './postTypes';
 
@@ -96,7 +97,7 @@ export const submitAPost = (fd) => {
 };
 
 // toggle like of a post
-export const togglePostLike = (postId, isLike) => {
+export const toggleHomePagePostLike = (postId, isLike) => {
   return async dispatch => {
     try {
       if (postId) {
@@ -121,20 +122,20 @@ export const togglePostLike = (postId, isLike) => {
 };
 
 // toggle like of a comment
-export const toggleCommentLike = (commentId, isLike, postId) => {
+export const toggleHomeCommentLike = (commentId, isLike, postId) => {
   return async dispatch => {
     try {
       if (commentId) {
         if (isLike) {
           await axios.delete(`/api/comments/${commentId}/likes`);
           dispatch({
-            type: TOGGLE_COMMENT_LIKE,
+            type: TOGGLE_HOME_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: false, numOfLikes: -1, postId }
           });
         } else {
           await axios.post(`/api/comments/${commentId}/likes`);
           dispatch({
-            type: TOGGLE_COMMENT_LIKE,
+            type: TOGGLE_HOME_COMMENT_LIKE,
             payload: { commentId, isCommentLiked: true, numOfLikes: 1, postId }
           });
         }
@@ -167,7 +168,7 @@ export const getAllCommentsOfAPost = (postId) => {
   return async dispatch => {
     try {
       if (postId) {
-        const commentsOfPost = await axios.get(`/api/posts/${postId}/Comments`);
+        const commentsOfPost = await axios.get(`/api/posts/${postId}/comments`);
         dispatch({
           type: GET_ALL_COMMENTS_OF_A_POST,
           payload: commentsOfPost.data
@@ -179,7 +180,7 @@ export const getAllCommentsOfAPost = (postId) => {
   };
 };
 
-export const addAComment = (postId, comment) => {
+export const HomePageAddAComment = (postId, comment) => {
   return async dispatch => {
     try {
       if (postId) {
@@ -189,11 +190,9 @@ export const addAComment = (postId, comment) => {
               'Content-Type': 'application/json'
             }
           };
-
           const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
-
           dispatch({
-            type: ADD_COMMENT_TO_POST,
+            type: ADD_COMMENT_TO_HOME_PAGE_POST,
             payload: { postId, numOfComments: 1, comment: res.data }
           });
         }

@@ -95,7 +95,7 @@ const removeFollow = async (req, res) => {
 
     await removeFollowListener;
 
-    activityEmitter.emit('removeFollow', follow._id);
+    activityEmitter.emit('removeFollow', { followId: follow._id, following: req.params.userId });
 
     return serverResponse(res, 200, { message: 'successfully removed follow' });
   } catch (error) {
