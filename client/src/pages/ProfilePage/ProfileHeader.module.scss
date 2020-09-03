@@ -1,0 +1,115 @@
+@import '../../styles/typography.scss';
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.profileHeader {
+  display: grid;
+  grid-template-areas:      "profilePic profileName profileButtons"
+                            "profilePic socialStatusList socialStatusList"
+                            "profilePic bio bio";
+  grid-template-columns: 290px 1fr 2fr;
+  grid-template-rows: 50px 50px 1fr;
+  border-bottom: 1px solid $primary-border-color;
+  padding-bottom: 20px;
+
+
+  @include respond(phablet) {
+    margin-top: 20px;
+    grid-template-areas:      "profilePic profileName profileName"
+                              "profilePic profileButtons profileButtons"
+                              "bio bio bio"
+                              "socialStatusList socialStatusList socialStatusList";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 50px 50px 1fr;
+
+  }
+  @include respond(phone) {
+    grid-template-areas:      "profilePic  profileName profileName"
+                              "profilePic profileButtons profileButtons"
+                              "bio bio bio"
+                              "socialStatusList socialStatusList socialStatusList";
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 70px 70px 1fr;
+  }
+
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+
+    .profileInfoHeader {
+      display: flex;
+      align-items: center;
+      font-size: $button-text;
+      margin-bottom: 10px;
+
+      .editLink {
+        width: 90px;
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+      }
+
+      .logoutBtn {
+        padding: 3px 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.username{
+  grid-area: profileName;
+  font-size: $secondary-heading;
+  font-weight: 400;
+
+  @include respond(phablet) {
+    padding: 0 0 20px 100px;
+  }
+
+  @include respond(phone) {
+    padding: 0;
+  }
+
+}
+
+.bioContainer {
+  grid-area: bio;
+  .fullName {
+    margin-bottom: 10px;
+  }
+
+  @include respond(phablet) {
+    padding: 0 0 20px 100px;
+  }
+
+
+  @include respond(phone) {
+    padding: 10px;
+  }
+
+}
+
+.profileButtons {
+  grid-area: profileButtons;
+  align-self: center;
+  display: flex;
+  padding: 10px;
+
+  @include respond(phablet) {
+    place-self: end;
+  }
+  @include respond(phone) {
+    width: 100px;
+    padding: 0;
+
+    button {
+      font-size: 14px;
+      padding: 10px;
+
+      margin: 5px;
+    }
+  }
+}

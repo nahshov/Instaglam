@@ -8,7 +8,7 @@ import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import Button from 'components/Button/Button';
 import { removeProfilePic, uploadProfilePic } from 'actions/auth/authActions';
 import { profilePropType } from 'customPropTypes';
-import styles from './ProfilePage.module.scss';
+import styles from './ProfilePicChanger.module.scss';
 
 const ProfilePicChanger = ({ isAuthenticatedUser, searchedUser }) => {
   const [isSettingsModalOpen, setSettingsModalOpen] = useState(false);

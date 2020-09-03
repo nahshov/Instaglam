@@ -1,0 +1,25 @@
+@import '../../styles/mixins.scss';
+
+.socialStatusList {
+  display: flex;
+  min-width: 300px;
+  margin-bottom: 20px;
+  grid-area: socialStatusList;
+
+  @include respond(phablet) {
+    justify-content: space-around;
+    margin-bottom: -15px;
+  }
+
+
+  li > *{
+    display: flex;
+  }
+
+  .postCount {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    padding: 5px 9px;
+  }
+}

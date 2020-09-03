@@ -17,12 +17,14 @@ const postModalStructuredSelector = createStructuredSelector({
   authenticatedUser: authenticatedUserSelector
 });
 
-const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, postId, posts = [] }) => {
+const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = [] }) => {
   const { post, authenticatedUser } = useSelector(postModalStructuredSelector);
   const dispatch = useDispatch();
   const { pathname: username } = useLocation();
   useEffect(() => {
-    dispatch(getPost(postProp)); // postprop is a post from homepage that helping us get the post without struggling with async problems
+    // postprop is a post from homepage
+    // that helping us get the post without struggling with async problems
+    dispatch(getPost(postProp));
     return () => {
       dispatch(resetPost());
     };

@@ -68,13 +68,13 @@ $breakpoint argument choices:
   }
 
   @if $breakpoint == phablet {
-    @media (max-width: 700px) {
+    @media (min-width: 500px) and (max-width: 700px) {
       @content;
     }
   }
 
   @if $breakpoint == tab-port {
-    @media (max-width: 1000px) {
+    @media (min-width: 700px) and (max-width: 1000px) {
       @content;
     }
   }
