@@ -30,7 +30,16 @@ const App = () => {
           <ProtectedRoute
             exact
             path="/direct/inbox"
-            component={() => { return <div>Chat!</div>; }}
+            component={() => (
+              <div>
+                Chat! (soon to come
+                <span role="img" aria-label="chat">
+                  {' '}
+                  💬
+                </span>
+                )
+              </div>
+            )}
           />
           <ProtectedRoute path="/:profile" component={ProfilePage} />
         </Switch>
