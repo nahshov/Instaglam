@@ -45,12 +45,13 @@ const Reply = ({ reply }) => {
         <Link to={`/p/${reply.post}`}>
           <CreatedTime created={reply.created} isPost />
         </Link>
-        <NumOfLikes postId={reply.post} likes={reply.numOfLikes} isSinglePost />
+        <NumOfLikes id={reply.post} likes={reply.numOfLikes} isSinglePost />
         <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
           Reply
         </Button>
       </div>
     </div>
-  )};
+  );
+};
 
 export default Reply;

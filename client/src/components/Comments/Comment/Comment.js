@@ -55,7 +55,7 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
           <Link to={`/p/${postId}`}>
             <CreatedTime created={comment.created} isPost />
           </Link>
-          <NumOfLikes postId={postId} likes={comment.numOfLikes} isSinglePost />
+          <NumOfLikes id={comment._id} likes={comment.numOfLikes} isSinglePost isComment />
           <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
             Reply
           </Button>

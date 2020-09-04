@@ -50,7 +50,7 @@ const HomePagePost = ({
         likes={numOfLikes}
         username={username}
         profilePic={profilePic}
-        postId={postId}
+        id={postId}
       />
       <HomePagePostContent username={username} content={content} />
       <ViewAllComments numOfComments={numOfComments} setIsPostModalOpen={setIsPostModalOpen} />

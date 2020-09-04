@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { postPropType } from 'customPropTypes';
 import styles from './NumOfLikes.module.scss';
 import FollowModal from '../../Modals/FollowModal/FollowModal';
 
-const NumOfLikes = ({ likes, postId, isSinglePost = false }) => {
+const NumOfLikes = ({ likes, id, isSinglePost = false, isComment = false }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
@@ -15,12 +16,13 @@ const NumOfLikes = ({ likes, postId, isSinglePost = false }) => {
         {' '}
         likes
       </div>
-      {isModalOpen && (
+      {isModalOpen && !!likes && (
       <FollowModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setModalOpen}
-        postId={postId}
-        type="Likes"
+        id={id}
+        isComment={isComment}
+        type="likes"
         isAnimated
       />
       )}
@@ -28,8 +30,13 @@ const NumOfLikes = ({ likes, postId, isSinglePost = false }) => {
   );
 };
 
+NumOfLikes.defaultProps = {
+  isComment: false
+};
+
 NumOfLikes.propTypes = {
-  ...postPropType
+  ...postPropType,
+  isComment: PropTypes.bool
 };
 
 export default NumOfLikes;
