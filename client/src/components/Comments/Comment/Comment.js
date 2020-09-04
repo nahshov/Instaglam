@@ -59,7 +59,7 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
           <Button
             style={{ margin: '0px 0px 0px 10px', padding: '0' }}
             btnRole="astext primary"
-            onClick={() => setReplyClicked(true)}
+            // onClick={() => setReplyClicked(true)}
           >
             Reply
           </Button>
