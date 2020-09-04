@@ -1,0 +1,30 @@
+.postContent{
+    margin: 5px 0px 3px 11px;
+    max-width: 340px;
+    .postContentContainer{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+  
+      .contentWrapper{
+        padding: 0px 10px;
+        overflow-block: auto;
+        span{
+            overflow-wrap: anywhere;
+        }
+      }
+  
+    a{
+      max-height: 24px;
+    }
+    .username{
+      font-size: 18px;
+      font-weight: 600;
+      padding-left: 10px;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+  
+}

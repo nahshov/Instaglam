@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import PropTypes from 'prop-types';
-import { activitiesPropTypes } from 'customPropTypes';
 import styles from '../ActivityItem.module.scss';
 
 const LikeActivity = ({

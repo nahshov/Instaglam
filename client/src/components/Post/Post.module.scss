@@ -9,24 +9,39 @@
       width: 600px;
       height: 100%;
   }
-  
-  .postContentContainer{
+  .cssHelper{
     @include flexColumn;
-    flex: 1;
-    .postContentHeader{
-      height: 80px;
+    width: 100%;
+    height: 100%;
+    .postContentContainer{
       width: 100%;
-      @include flexSpaceBetween;
-      padding: 10px 9px 15px 9px;
-      border-bottom: 1px solid $third-border-color;
-      .postContentHeaderIdentifier{
+      height: 100%;
+      overflow: auto;
+      @include flexColumn;
+  
+      .postContentHeader{
+        height: 80px;
+        width: 100%;
+        @include flexSpaceBetween;
+        padding: 10px 9px 15px 9px;
+        border-bottom: 1px solid $third-border-color;
+        .postContentHeaderIdentifier{
+          display: flex;
+          font-weight: bold;
+        }
+      }
+      .contentWrap{
         display: flex;
-        font-weight: bold;
+        flex-direction: column;
+        width: 100%;      
+      }
+      .postComments{
+        padding-left: 10px;
       }
     }
-    .postComments{
-      padding-left: 10px;
-    }
+    .iconsAndFormWrapper{
+      width: 100%;
+    } 
   }
 }
 

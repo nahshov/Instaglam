@@ -7,15 +7,14 @@ import CreatedTime from 'components/CreatedTime/CreatedTime';
 import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
+import { replyPropType } from 'customPropTypes';
 import styles from './Reply.module.scss';
 
-const Reply = ({ reply }) => {
+const Reply = ({ reply, replyClicked, setReplyClicked}) => {
   const dispatch = useDispatch();
   const handleLike = (reply => {
     dispatch(togglePostCommentLike(reply._id, reply.isCommentLiked));
   });
-
-  console.log(reply);
   return (
     <div className={styles.reply}>
       <div className={styles.replyHeader}>
@@ -46,12 +45,20 @@ const Reply = ({ reply }) => {
           <CreatedTime created={reply.created} isPost />
         </Link>
         <NumOfLikes id={reply.post} likes={reply.numOfLikes} isSinglePost />
-        <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
+        <Button
+          style={{ margin: '0px 0px 0px 10px', padding: '0' }}
+          btnRole="astext primary"
+          onClick={() => setReplyClicked(true)}
+        >
           Reply
         </Button>
       </div>
     </div>
   );
+};
+
+Reply.propTypes = {
+  ...replyPropType
 };
 
 export default Reply;

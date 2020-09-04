@@ -1,8 +1,10 @@
 @import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette.scss';
 
 .comment {
   display: flex;
   flex-direction: column;
+  margin: 5px 0px;
   .commentHeader{
     display: flex;
     flex: 1;
@@ -27,7 +29,7 @@
   }
 
   .replyBar{
-    @include flexStart
+    @include flexStart;
     cursor: pointer;
     .grayLine{
       width: 24px;
