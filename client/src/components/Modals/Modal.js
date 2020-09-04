@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.scss';
 
@@ -16,20 +15,24 @@ const Modal = (
     ...otherProps }
 ) => {
   const node = useRef();
+
+  window.node = node;
+
   const handleClose = (e) => {
+    e.stopPropagation();
+
     if (node.current && node.current.contains(e.target)) {
       return;
     }
+
     setModalOpen(!isOpen);
   };
 
   useEffect(() => {
     document.body.style = 'overflow: hidden';
-    modalRoot.addEventListener('mousedown', handleClose);
 
     return () => {
       document.body.removeAttribute('style');
-      modalRoot.removeEventListener('mousedown', handleClose);
       if (isUploadPost) {
         handleUploadPostOnClose();
       }
@@ -38,7 +41,7 @@ const Modal = (
 
   return (
     isOpen && createPortal(
-      <div className={styles.modalShadow}>
+      <div className={styles.modalShadow} onMouseDown={handleClose}>
         <div className={`${isAnimated ? styles.showModal : ''}`} {...otherProps} ref={node}>
           {children}
         </div>
