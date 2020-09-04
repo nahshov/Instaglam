@@ -18,8 +18,7 @@ import { togglePostOwnerFollow, togglePostLike } from 'actions/post/postActions'
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import styles from './Post.module.scss';
 
-const Post = ({ post, authenticatedUserId }) => {
-  
+const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(togglePostLike(post._id, post.isPostLiked));
@@ -49,8 +48,6 @@ const Post = ({ post, authenticatedUserId }) => {
     isPostLiked
   } = post;
 
-
-
   const [isModalOpen, setModalOpen] = useState(false);
   const [replyClicked, setReplyClicked] = useState(false);
   return (
@@ -67,7 +64,7 @@ const Post = ({ post, authenticatedUserId }) => {
                 profilePic={profilePic}
               />
               {
-                  post.user._id !== authenticatedUserId
+                !isAuthenticatedUser
                   && (
                   <FollowButton
                     isFollowed={post.user.isFollowed}
@@ -89,7 +86,12 @@ const Post = ({ post, authenticatedUserId }) => {
               />
             </Button>
             {isModalOpen && (
-            <HomePageModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} postId={postId} />)}
+            <HomePageModal
+              isModalOpen={isModalOpen}
+              setModalOpen={setModalOpen}
+              postId={postId}
+            />
+            )}
           </div>
           <div className={styles.contentWrap}>
             <PostContent username={username} profilePic={profilePic} content={content} />
@@ -123,7 +125,14 @@ const Post = ({ post, authenticatedUserId }) => {
           <Link to={`/p/${postId}`}>
             <CreatedTime created={created} isPost />
           </Link>
-          {postId && <CommentForm replyClicked={replyClicked} setReplyClicked={setReplyClicked} postId={postId} isPostPage />}
+          {postId && (
+          <CommentForm
+            replyClicked={replyClicked}
+            setReplyClicked={setReplyClicked}
+            postId={postId}
+            isPostPage
+          />
+          )}
         </div>
       </div>
 

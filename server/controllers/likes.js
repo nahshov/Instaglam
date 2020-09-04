@@ -5,7 +5,8 @@ const {
   addLikeToComment,
   removeLikeFromAPost,
   removeLikeFromAComment,
-  getPostLikers
+  getPostLikers,
+  getCommentLikers
 } = require('../services/like-services');
 
 const { getComment } = require('../services/comment-services');
@@ -48,6 +49,27 @@ const getLikersOfPost = async (req, res) => {
     }
 
     const likers = await getPostLikers(req.params.postId, req.user.sub);
+
+    return serverResponse(res, 200, likers);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get likes'
+    });
+  }
+};
+
+// @route   GET '/api/comments/:commentId/likes/users'
+// @desc    Get all users who liked a specific post
+// @access  private
+const getLikersOfComment = async (req, res) => {
+  try {
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
+    const likers = await getCommentLikers(req.params.commentId, req.user.sub);
 
     return serverResponse(res, 200, likers);
   } catch (error) {
@@ -207,7 +229,6 @@ const deleteLikeFromAComment = async (req, res) => {
     comment.numOfLikes--;
     await comment.save();
 
-
     await removeLikeOnCommentListener;
 
     activityEmitter.emit('deleteCommentLike', { likeId: like._id, commentId: req.params.commentId });
@@ -223,6 +244,7 @@ const deleteLikeFromAComment = async (req, res) => {
 module.exports = {
   getLikesOfPost,
   getLikersOfPost,
+  getLikersOfComment,
   addLikeToAPost,
   deleteLikeFromAPost,
   getLikesOfComment,

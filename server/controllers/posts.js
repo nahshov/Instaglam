@@ -96,8 +96,35 @@ const getPosts = async (req, res) => {
 const getPostsOfAUser = async (req, res) => {
   try {
     const posts = await getAllPostsOfUser(req.params.userInfo);
+    if (posts.length === 0) {
+      return serverResponse(res, 200, []);
+    }
 
-    return serverResponse(res, 200, posts);
+    const postsIds = posts.map(p => p._id);
+    const [postLikes, postsComments] = await Promise.all([
+      arePostsLiked(req.user.sub, postsIds),
+      Promise.all(
+        postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
+      )
+
+    ]);
+    const commentsIds = postsComments.flat().map(c => c._id);
+    const commentLiked = await areCommentsLiked(req.user.sub, commentsIds);
+
+    const postsOfUser = await Promise.all(posts.map(async (post, index) => (
+      {
+        ...post.toObject(),
+        isPostLiked: postLikes[post._id],
+        comments: postsComments[index].map(
+          comment => ({ ...comment.toObject(), isCommentLiked: commentLiked[comment._id] })
+        ),
+        user: {
+          ...post.user.toObject(),
+          isFollowed: await isFollowed(req.user.sub, post.user._id)
+        }
+      })));
+
+    return serverResponse(res, 200, postsOfUser);
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to get posts'

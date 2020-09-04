@@ -50,7 +50,6 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
           post={post}
           posts={posts}
           isGallery={isGallery}
-          currentPostIndex={posts.indexOf(post)}
         />
       )}
     </Modal>
