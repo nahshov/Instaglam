@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
-import { toggleProfileFollow, setNumOfFollowing } from 'actions/profile/profileActions';
+import { setNumOfFollowing, setNumOfFollowers } from 'actions/profile/profileActions';
 import { followsSelector } from 'actions/follows/followSelectors';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
@@ -40,11 +40,20 @@ const FollowActivity = ({
 
   const handleFollow = async () => {
     const isProfilePage = usernames[0] === pathname.replace('/', '');
+
     const isAuthenticatedUserProfile = authenticatedUser.username === pathname.replace('/', '');
+
     if (isProfilePage) {
-      await dispatch(toggleProfileFollow(userOfActivityId, isFollowed));
+      await dispatch(toggleFollows(userOfActivityId, isFollowed));
+
+      if (isFollowed) {
+        dispatch(setNumOfFollowers(-1));
+      } else {
+        dispatch(setNumOfFollowers(+1));
+      }
     } else if (isAuthenticatedUserProfile) {
       await dispatch(toggleFollows(userOfActivityId, isFollowed));
+
       if (isFollowed) {
         dispatch(setNumOfFollowing(-1));
       } else {
@@ -53,6 +62,7 @@ const FollowActivity = ({
     } else {
       await dispatch(toggleFollows(userOfActivityId, isFollowed));
     }
+
     await dispatch(getFollows(authenticatedUser._id, 'following'));
   };
 

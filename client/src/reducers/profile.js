@@ -1,7 +1,7 @@
 import {
   SET_PROFILE,
   SET_EMPTY_PROFILE,
-  TOGGLE_PROFILE_FOLLOW,
+  TOGGLE_PROFILE_FOLLOWERS_COUNT,
   RESET_PROFILE_LOADING,
   RESET_PROFILE,
   SET_PROFILE_FOLLOWING_COUNT
@@ -31,13 +31,12 @@ export default function (state = initialState, action) {
         profileLoading: false,
         error: payload
       };
-    case TOGGLE_PROFILE_FOLLOW:
+    case TOGGLE_PROFILE_FOLLOWERS_COUNT:
       return {
         ...state,
         profile: {
           ...state.profile,
-          numOfFollowers: state.profile.numOfFollowers + payload.numOfFollowers,
-          isFollowed: payload.isFollowed
+          numOfFollowers: state.profile.numOfFollowers + payload.numOfFollowers
         }
       };
     case SET_PROFILE_FOLLOWING_COUNT:
