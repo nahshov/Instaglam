@@ -55,7 +55,6 @@ const ActivityFeed = () => {
             />
             <Popover
               isPopoverOpen
-              style={{ top: '60px', width: '100%', maxWidth: '600px', zIndex: '5' }}
               isActivityFeed
             >
               {localLoading
