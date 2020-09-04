@@ -35,7 +35,7 @@ const PostsGrid = ({ isLink = false, loading = true, posts = [] }) => {
           {isPostModalOpen && (
           <PostModal
             isGallery
-            post={searchedPost._id}
+            postProp={searchedPost}
             posts={posts}
             isOpen={isPostModalOpen}
             setModalOpen={setIsPostModalOpen}
