@@ -49,7 +49,7 @@ const FollowActivity = ({
       if (isFollowed) {
         dispatch(setNumOfFollowers(-1));
       } else {
-        dispatch(setNumOfFollowers(+1));
+        dispatch(setNumOfFollowers(1));
       }
     } else if (isAuthenticatedUserProfile) {
       await dispatch(toggleFollows(userOfActivityId, isFollowed));
@@ -57,7 +57,7 @@ const FollowActivity = ({
       if (isFollowed) {
         dispatch(setNumOfFollowing(-1));
       } else {
-        dispatch(setNumOfFollowing(+1));
+        dispatch(setNumOfFollowing(1));
       }
     } else {
       await dispatch(toggleFollows(userOfActivityId, isFollowed));

@@ -35,7 +35,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
     if (isFollowed) {
       dispatch(setNumOfFollowers(-1));
     } else {
-      dispatch(setNumOfFollowers(+1));
+      dispatch(setNumOfFollowers(1));
     }
   };
 
