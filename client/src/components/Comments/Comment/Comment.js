@@ -12,7 +12,7 @@ import Reply from 'components/Comments/Reply/Reply';
 import { commentsPropType } from 'customPropTypes';
 import styles from './Comment.module.scss';
 
-const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = false }) => {
+const Comment = ({ comment, isPostPage = false, postId, onlyReplies, replyClicked, setReplyClicked }) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     if (isPostPage) {
@@ -56,12 +56,16 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
             <CreatedTime created={comment.created} isPost />
           </Link>
           <NumOfLikes postId={postId} likes={comment.numOfLikes} isSinglePost />
-          <Button style={{ margin: '0px 0px 0px 10px', padding: '0' }} btnRole="astext primary">
+          <Button
+            style={{ margin: '0px 0px 0px 10px', padding: '0' }}
+            btnRole="astext primary"
+            onClick={() => setReplyClicked(true)}
+          >
             Reply
           </Button>
         </div>
       )}
-      {filteredReply && isPostPage
+      {filteredReply.length > 0 && isPostPage
       && (
         <button
           type="button"
@@ -76,7 +80,7 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
           </span>
         </button>
       )}
-      {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
+      {shownReplies && filteredReply.map(reply => <Reply reply={reply} replyClicked={replyClicked} setReplyClicked={setReplyClicked} key={reply._id} />)}
     </div>
   );
 };

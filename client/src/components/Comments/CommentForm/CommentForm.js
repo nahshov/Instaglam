@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { HomePageAddAComment } from 'actions/posts/postActions';
@@ -6,11 +6,15 @@ import { postAddAComment } from 'actions/post/postActions';
 import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
-const CommentForm = ({ postId, isPostPage = false }) => {
+const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked }) => {
+  console.log(replyClicked)
   const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
-
+  const textArea = useRef();
+  if (replyClicked) {
+    textArea.current.focus();
+  }
   const handleChange = ((e) => {
     setInputValue(e.target.value);
   });
@@ -34,20 +38,36 @@ const CommentForm = ({ postId, isPostPage = false }) => {
   };
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
-      <textarea 
-      value={inputValue} 
-      onChange={handleChange} 
-      id="commentTextArea" 
-      placeholder="Add a comment" 
-      className={styles.commentInput} />
-      <Button type="submit" btnRole="astext" disabled={checkDisabled()} isLoading={commentLoading} className={styles.postButton}>Post</Button>
+      <textarea
+        onBlur={() => setReplyClicked(false)}
+        ref={textArea}
+        value={inputValue}
+        onChange={handleChange}
+        id="commentTextArea"
+        placeholder="Add a comment"
+        className={styles.commentInput}
+      />
+      <Button
+        type="submit"
+        btnRole="astext"
+        disabled={checkDisabled()}
+        isLoading={commentLoading}
+        className={styles.postButton}
+      >
+        Post
+      </Button>
     </form>
 
   );
 };
 
+CommentForm.defaultProps = {
+  isPostPage: false
+};
+
 CommentForm.propTypes = {
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
+  isPostPage: PropTypes.bool
 };
 
 export default CommentForm;
