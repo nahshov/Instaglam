@@ -7,7 +7,6 @@ import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
 const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked }) => {
-  console.log(replyClicked)
   const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();

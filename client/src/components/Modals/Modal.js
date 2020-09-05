@@ -17,6 +17,7 @@ const Modal = (
 ) => {
   const node = useRef();
   const handleClose = (e) => {
+    console.log(node.current && node.current.contains(e.target))
     if (node.current && node.current.contains(e.target)) {
       return;
     }
