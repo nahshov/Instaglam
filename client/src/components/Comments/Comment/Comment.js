@@ -69,9 +69,7 @@ const Comment = (
              >
                <div className={styles.grayLine} />
                <span>
-                 {!shownReplies ? `View Replies(
-                ${filteredReply.length}
-                    )` : 'Collapse Replies' }
+                 {!shownReplies ? `View Replies(${filteredReply.length})` : 'Hide Replies' }
                </span>
              </button>
                {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
@@ -79,13 +77,13 @@ const Comment = (
          )}
       {isPostPage
       && (
-        <div className={styles.commentActions}>
+        <div className={styles.commentActions} style={!filteredReply.length ? { marginTop: '-5px' } : {}}>
           <Link to={`/p/${postId}`}>
             <CreatedTime created={comment.created} isPost />
           </Link>
           <NumOfLikes id={comment._id} likes={comment.numOfLikes} isSinglePost isComment />
           <Button
-            style={{ margin: '0px 0px 0px 10px', padding: '0' }}
+            style={{ margin: '0px 0px 0px 10px', padding: '0', fontSize: '13px', height: 'auto' }}
             btnRole="astext primary"
             onClick={() => setReplyClicked({ wasClicked: true, parentCommentId: comment._id })}
           >
