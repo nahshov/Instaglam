@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { toggleFollows, getFollows } from 'actions/follows/followActions';
-import { setNumOfFollowing } from 'actions/profile/profileActions';
+import { setNumOfFollowing, setNumOfFollowers } from 'actions/profile/profileActions';
 import { followsSelector } from 'actions/follows/followSelectors';
+import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
-import PropTypes from 'prop-types';
+import { activityItemsPropTypes } from 'customPropTypes';
 import styles from '../ActivityItem.module.scss';
 
-const structuredFollowsSelector = createStructuredSelector({
-  follows: followsSelector
+const structuredFollowActivitySelector = createStructuredSelector({
+  follows: followsSelector,
+  authenticatedUser: authenticatedUserSelector
 });
 
 const FollowActivity = ({
@@ -20,28 +22,48 @@ const FollowActivity = ({
   profilePic,
   activityLength,
   created,
-  activityUsernamesText }) => {
-  const [bla, setBla] = useState(false);
-  const { follows } = useSelector(structuredFollowsSelector);
+  activityUsernamesText
+}) => {
+  const { follows, authenticatedUser } = useSelector(structuredFollowActivitySelector);
   const userOfActivityId = activity.activities[0].user._id;
+  const [isFollowed, setIsFollowed] = useState(false);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const isFollowed = follows.find(follow => follow._id === userOfActivityId);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    dispatch(getFollows(activity.referredEntity._id, 'following'));
-  }, []);
+    setIsFollowed(follows.some(follow => (follow._id === userOfActivityId)));
+  }, [follows]);
 
   const handleFollow = async () => {
-    await dispatch(toggleFollows(userOfActivityId, isFollowed));
-    // if (activity.isFollowed) {
-    //   dispatch(setNumOfFollowing(-1));
-    // } else {
-    //   dispatch(setNumOfFollowing(1));
-    // }
+    const isProfilePage = usernames[0] === pathname.replace('/', '');
+
+    const isAuthenticatedUserProfile = authenticatedUser.username === pathname.replace('/', '');
+
+    if (isProfilePage) {
+      await dispatch(toggleFollows(userOfActivityId, isFollowed));
+
+      if (isFollowed) {
+        dispatch(setNumOfFollowers(-1));
+      } else {
+        dispatch(setNumOfFollowers(1));
+      }
+    } else if (isAuthenticatedUserProfile) {
+      await dispatch(toggleFollows(userOfActivityId, isFollowed));
+
+      if (isFollowed) {
+        dispatch(setNumOfFollowing(-1));
+      } else {
+        dispatch(setNumOfFollowing(1));
+      }
+    } else {
+      await dispatch(toggleFollows(userOfActivityId, isFollowed));
+    }
+
+    await dispatch(getFollows(authenticatedUser._id, 'following'));
   };
 
   return (
@@ -78,18 +100,7 @@ const FollowActivity = ({
 };
 
 FollowActivity.propTypes = {
-  usernames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  profilePic: PropTypes.string.isRequired,
-  activityLength: PropTypes.number.isRequired,
-  activity: PropTypes.shape({
-    isFollowed: PropTypes.bool.isRequired,
-    activities: PropTypes.arrayOf(PropTypes.shape({
-      user: PropTypes.shape({
-        _id: PropTypes.string.isRequired
-      }).isRequired
-    })).isRequired
-  }).isRequired,
-  activityUsernamesText: PropTypes.string.isRequired
+  ...activityItemsPropTypes
 };
 
 export default FollowActivity;

@@ -8,10 +8,33 @@ import styles from './PostGallery.module.scss';
 
 const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
   const [currentPost, setCurrentPost] = useState(post);
-  const currentPostIndex = posts ? posts.indexOf(currentPost) : 0;
+  const [currentPostIndex, setCurrentPostIndex] = useState(-1);
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(
+    currentPost.user._id === authenticatedUserId
+  );
+
   useEffect(() => {
     setCurrentPost(post);
+
+    if (isGallery) {
+      posts.find((p, i) => {
+        if (p._id === currentPost._id) {
+          setCurrentPostIndex(i);
+          return true;
+        }
+        return false;
+      });
+    }
   }, [post]);
+
+  useEffect(() => {
+    if (currentPostIndex > -1) {
+      changeUrl(`/p/${posts[currentPostIndex]._id}`, 'post modal path');
+      setCurrentPost(posts[currentPostIndex]);
+      setIsAuthenticatedUser(currentPost.user._id === authenticatedUserId);
+    }
+  }, [currentPostIndex]);
+
   let next;
   let prev;
   if (posts) {
@@ -19,9 +42,9 @@ const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
       if (currentPostIndex > posts.length - 1) {
         return;
       }
-
-      changeUrl(`/p/${posts[currentPostIndex + 1]._id}`, 'post modal path');
-      setCurrentPost(posts[currentPostIndex + 1]);
+      setCurrentPostIndex(currentPostIndex + 1);
+      // changeUrl(`/p/${posts[currentPostIndex + 1]._id}`, 'post modal path');
+      // setCurrentPost(posts[currentPostIndex + 1]);
     };
 
     prev = () => {
@@ -29,14 +52,24 @@ const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
         return;
       }
 
-      changeUrl(`/p/${posts[currentPostIndex - 1]._id}`, 'post modal path');
-      setCurrentPost(posts[currentPostIndex - 1]);
+      setCurrentPostIndex(currentPostIndex - 1);
+      // changeUrl(`/p/${posts[currentPostIndex - 1]._id}`, 'post modal path');
+      // setCurrentPost(posts[currentPostIndex - 1]);
     };
   }
 
+  window.posts = posts;
+  window.post = post;
+  window.isAuthenticatedUser = isAuthenticatedUser;
+
   return (
     <div className={styles.Gallery}>
-      <Post post={currentPost} postId={post._id} authenticatedUserId={authenticatedUserId} />
+      <Post
+        post={currentPost}
+        postId={post._id}
+        isAuthenticatedUser={isAuthenticatedUser}
+        authenticatedUserId={authenticatedUserId}
+      />
       {isGallery && (
       <div className={styles.arrows}>
         {!!currentPostIndex && (

@@ -13,11 +13,7 @@ const PostsGrid = ({ isLink = false, loading = true, posts = [] }) => {
   return (
     loading
       ? (<LoadingSpinner style={{ display: 'block', width: '20%', margin: '20px auto' }} />)
-      : !posts.length ? (
-        <div className={styles.noPostsUploaded}>
-          <h2>No posts uploaded yet...</h2>
-        </div>
-      ) : (
+      : (
         <div className={styles.gridContainer}>
           {posts.map(post => {
             return (

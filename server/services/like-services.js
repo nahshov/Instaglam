@@ -15,6 +15,20 @@ async function getPostLikers(postId, userId) {
   );
 }
 
+async function getCommentLikers(commentId, userId) {
+  const likes = await Like.find({ comment: commentId }).populate('user', 'username profilePic');
+  return Promise.all(
+    likes
+      .filter(like => !like.post)
+      .map(async like => (
+        {
+          ...like.user.toObject(),
+          isFollowed: await isFollowed(userId, like.user._id)
+        }
+      ))
+  );
+}
+
 async function getPostLikes(postId) {
   const likes = await Like.find({ post: postId }).populate('user', 'username profilePic');
   return likes.filter(like => !like.comment);
@@ -101,5 +115,6 @@ module.exports = {
   arePostsLiked,
   isPostLiked,
   areCommentsLiked,
-  getPostLikers
+  getPostLikers,
+  getCommentLikers
 };

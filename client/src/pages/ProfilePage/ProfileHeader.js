@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button/Button';
 import { logout } from 'actions/auth/authActions';
 import ProfilePicChanger from 'pages/ProfilePage/ProfilePicChanger';
 import { profilePropType } from 'customPropTypes';
-import { toggleProfileFollow } from 'actions/profile/profileActions';
+import { toggleFollows, getFollows } from 'actions/follows/followActions';
+import { setNumOfFollowers } from 'actions/profile/profileActions';
+import { followsSelector } from 'actions/follows/followSelectors';
+import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import SocialStatusList from './SocialStatusList';
 import FollowButton from '../../components/FollowButton/FollowButton';
 import styles from './ProfileHeader.module.scss';
 
+const structuredFollowSelector = createStructuredSelector({
+  follows: followsSelector,
+  authenticatedUser: authenticatedUserSelector
+});
+
 const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
+  const [isFollowed, setIsFollowed] = useState(false);
+  const { follows, authenticatedUser } = useSelector(structuredFollowSelector);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setIsFollowed(follows.some(follow => (follow._id === profile._id)));
+  }, [follows]);
+
   const handleFollow = async () => {
-    await dispatch(toggleProfileFollow(profile._id, profile.isFollowed));
+    await dispatch(toggleFollows(profile._id, isFollowed));
+    await dispatch(getFollows(authenticatedUser._id, 'following'));
+    if (isFollowed) {
+      dispatch(setNumOfFollowers(-1));
+    } else {
+      dispatch(setNumOfFollowers(1));
+    }
   };
 
   return (
@@ -44,7 +65,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
           <FollowButton
             className={styles.profileButtons}
             handleFollow={handleFollow}
-            isFollowed={profile.isFollowed}
+            isFollowed={isFollowed}
           />
         )}
       <SocialStatusList

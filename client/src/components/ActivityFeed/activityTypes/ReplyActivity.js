@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import PropTypes from 'prop-types';
-import { activitiesPropTypes } from 'customPropTypes';
+import { activityItemsPropTypes } from 'customPropTypes';
 import styles from '../ActivityItem.module.scss';
 
 const ReplyActivity = ({
@@ -42,15 +41,7 @@ const ReplyActivity = ({
 };
 
 ReplyActivity.propTypes = {
-  profilePic: PropTypes.string.isRequired,
-  activity: PropTypes.shape({
-    referredEntity: PropTypes.shape({
-      post: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        media: PropTypes.string.isRequired
-      }).isRequired
-    }).isRequired
-  }).isRequired
+  ...activityItemsPropTypes
 };
 
 export default ReplyActivity;

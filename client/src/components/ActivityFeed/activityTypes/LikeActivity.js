@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
-import PropTypes from 'prop-types';
+import { activityItemsPropTypes } from 'customPropTypes';
 import styles from '../ActivityItem.module.scss';
 
 const LikeActivity = ({
@@ -10,8 +10,7 @@ const LikeActivity = ({
   created,
   activityUsernamesText
 }) => {
-  const { referredEntity } = activity;
-  const { referredEntityType } = activity;
+  const { referredEntity, referredEntityType } = activity;
 
   const history = useHistory();
 
@@ -56,26 +55,8 @@ const LikeActivity = ({
   );
 };
 
-LikeActivity.defaultProps = {
-  activity: PropTypes.shape({
-    referredEntity: PropTypes.shape({
-      post: ''
-    })
-  })
-};
-
 LikeActivity.propTypes = {
-  profilePic: PropTypes.string.isRequired,
-  activity: PropTypes.shape({
-    referredEntityType: PropTypes.string.isRequired,
-    referredEntity: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      media: PropTypes.string.isRequired,
-      post: PropTypes.shape({
-        media: PropTypes.string.isRequired
-      })
-    })
-  })
+  ...activityItemsPropTypes
 };
 
 export default LikeActivity;

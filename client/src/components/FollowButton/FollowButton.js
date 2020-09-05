@@ -11,7 +11,8 @@ const FollowButton = ({ isFollowed, handleFollow, ...otherProps }) => {
     <Button
       style={{ fontWeight: 'bold', width: '80px' }}
       btnRole={`${isFollowed && !otherProps.astext ? 'danger' : 'primary'} ${otherProps.astext}`}
-      onClick={async () => {
+      onClick={async (e) => {
+        e.stopPropagation();
         setLocalLoading(true);
         setDisabled(true);
         await handleFollow();

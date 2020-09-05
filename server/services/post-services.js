@@ -12,7 +12,7 @@ function getAllPosts(limit, skip) {
 
 async function getAllPostsOfUser(userInfo) {
   const user = await getUser(userInfo);
-  return Post.find({ user: user._id }).sort('-created');
+  return Post.find({ user: user._id }).sort('-created').populate('user', 'profilePic username');
 }
 
 function getPost(postId) {

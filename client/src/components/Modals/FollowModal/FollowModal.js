@@ -31,7 +31,8 @@ const FollowModal = ({
   isModalOpen,
   setIsModalOpen,
   userId = '',
-  postId = '',
+  id = '', // commentId or postId
+  isComment = false,
   ...otherProps
 }) => {
   const {
@@ -47,7 +48,7 @@ const FollowModal = ({
 
   useEffect(() => {
     if (type === 'likes') {
-      dispatch(getFollows(postId, type));
+      dispatch(getFollows(id, type, isComment));
     } else {
       dispatch(getFollows(userId, type));
     }
@@ -108,13 +109,15 @@ const FollowModal = ({
 
 FollowModal.defaultProps = {
   userId: '',
-  postId: ''
+  id: '',
+  isComment: false
 };
 
 FollowModal.propTypes = {
+  isComment: PropTypes.bool,
   type: PropTypes.string.isRequired,
   userId: PropTypes.string,
-  postId: PropTypes.string,
+  id: PropTypes.string,
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired
 };

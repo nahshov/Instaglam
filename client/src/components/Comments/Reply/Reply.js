@@ -15,7 +15,6 @@ const Reply = ({ reply, replyClicked, setReplyClicked}) => {
   const handleLike = (reply => {
     dispatch(togglePostCommentLike(reply._id, reply.isCommentLiked));
   });
-
   return (
     <div className={styles.reply}>
       <div className={styles.replyHeader}>
@@ -45,7 +44,7 @@ const Reply = ({ reply, replyClicked, setReplyClicked}) => {
         <Link to={`/p/${reply.post}`}>
           <CreatedTime created={reply.created} isPost />
         </Link>
-        <NumOfLikes postId={reply.post} likes={reply.numOfLikes} isSinglePost />
+        <NumOfLikes id={reply.post} likes={reply.numOfLikes} isSinglePost />
         <Button
           style={{ margin: '0px 0px 0px 10px', padding: '0' }}
           btnRole="astext primary"
