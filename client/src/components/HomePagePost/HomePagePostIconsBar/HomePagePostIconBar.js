@@ -10,7 +10,7 @@ import { postPropType, likePropType } from 'customPropTypes';
 
 import styles from './HomePagePostIconBar.module.scss';
 
-const HomePagePostIconBar = ({ isLike, postId, isPostPage = false}) => {
+const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
     if (isPostPage) {
