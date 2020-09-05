@@ -6,6 +6,7 @@ import Comment from '../Comment/Comment';
 const CommentList = ({ comments, isPostPage = false, postId, replyClicked, setReplyClicked }) => {
   const onlyComments = comments.filter(comment => !comment.replyToComment);
   const onlyReplies = comments.filter(comment => comment.replyToComment);
+
   return (
     <div className={styles.commentContainer}>
       <div className={styles.commentListWrapper}>

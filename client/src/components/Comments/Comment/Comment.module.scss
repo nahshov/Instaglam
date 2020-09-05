@@ -4,7 +4,7 @@
 .comment {
   display: flex;
   flex-direction: column;
-  margin: 5px 0px;
+  margin: 15px 0px;
   .commentHeader{
     display: flex;
     flex: 1;
@@ -25,7 +25,10 @@
   .commentActions{
     width: 100%;
     display: flex;
-    align-items: center;  
+    align-items: center;
+    font-size: 14px;
+    margin-left: 40px;
+    margin-top: 10px;
   }
 
   .replyBar{

@@ -49,7 +49,13 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
   } = post;
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [replyClicked, setReplyClicked] = useState(false);
+  const [replyClicked, setReplyClicked] = useState(
+    {
+      wasClicked: false,
+      parentCommentId: ''
+    }
+  );
+  console.log(replyClicked);
   return (
     <div className={styles.container}>
       <div className={styles.media}>
@@ -125,7 +131,7 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
           <Link to={`/p/${postId}`}>
             <CreatedTime created={created} isPost />
           </Link>
-          {postId && (
+          {postId && !!replyClicked && (
           <CommentForm
             replyClicked={replyClicked}
             setReplyClicked={setReplyClicked}

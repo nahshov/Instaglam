@@ -11,7 +11,7 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
   const textArea = useRef();
-  if (replyClicked) {
+  if (replyClicked && replyClicked.wasClicked) {
     textArea.current.focus();
   }
   const handleChange = ((e) => {
@@ -27,7 +27,11 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
     if (!inputValue) return;
     setCommentLoading(true);
     if (isPostPage) {
-      await dispatch(postAddAComment(postId, inputValue));
+      if (replyClicked && replyClicked.parentCommentId) {
+        await dispatch(postAddAComment(postId, inputValue, replyClicked.parentCommentId));
+      } else {
+        await dispatch(postAddAComment(postId, inputValue));
+      }
       setInputValue('');
     } else {
       await dispatch(HomePageAddAComment(postId, inputValue));
@@ -38,7 +42,14 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
       <textarea
-        onBlur={() => setReplyClicked(false)}
+        onBlur={() => {
+          if (replyClicked && replyClicked.wasClicked) {
+            setReplyClicked({
+              ...replyClicked,
+              wasClicked: false
+            });
+          }
+        }}
         ref={textArea}
         value={inputValue}
         onChange={handleChange}
