@@ -48,7 +48,7 @@ export const togglePostOwnerFollow = (userId, isFollowed) => async dispatch => {
 
 // toggle like of a post
 export const togglePostLike = (postId, isLike) => {
-  console.log(postId, isLike)
+  console.log(postId, isLike);
   return async dispatch => {
     try {
       if (postId) {
@@ -71,7 +71,6 @@ export const togglePostLike = (postId, isLike) => {
     }
   };
 };
-
 
 export const togglePostCommentLike = (commentId, isLike) => {
   return async dispatch => {
@@ -97,17 +96,23 @@ export const togglePostCommentLike = (commentId, isLike) => {
   };
 };
 
-export const postAddAComment = (postId, comment) => {
+export const postAddAComment = (postId, commentContent, parentCommentId) => {
   return async dispatch => {
     try {
       if (postId) {
-        if (comment) {
+        if (commentContent) {
           const config = {
             headers: {
               'Content-Type': 'application/json'
             }
           };
-          const res = await axios.post(`/api/posts/${postId}/comments`, { content: comment }, config);
+          let res;
+
+          if (parentCommentId) {
+            res = await axios.post(`/api/posts/${postId}/comments/${parentCommentId}/replies`, { content: commentContent }, config);
+          } else {
+            res = await axios.post(`/api/posts/${postId}/comments`, { content: commentContent }, config);
+          }
 
           dispatch({
             type: ADD_COMMENT_TO_POST,
@@ -117,11 +122,11 @@ export const postAddAComment = (postId, comment) => {
       }
       return Promise.resolve();
     } catch (e) {
+      console.log(e);
       return Promise.reject();
-      // console.log(e);
     }
   };
-}
+};
 
 export const resetPost = () => dispatch => {
   dispatch({

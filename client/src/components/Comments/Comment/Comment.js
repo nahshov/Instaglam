@@ -12,7 +12,16 @@ import Reply from 'components/Comments/Reply/Reply';
 import { commentsPropType } from 'customPropTypes';
 import styles from './Comment.module.scss';
 
-const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = false }) => {
+const Comment = (
+  {
+    comment,
+    isPostPage = false,
+    postId,
+    onlyReplies,
+    isReply = false,
+    setReplyClicked
+  }
+) => {
   const dispatch = useDispatch();
   const handleLike = (comment) => {
     if (isPostPage) {
@@ -24,6 +33,7 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
   useEffect(() => {}, [comment.user.profilePic]);
   const [shownReplies, setShownReplies] = useState(false);
   const filteredReply = onlyReplies.filter(reply => reply.replyToComment === comment._id);
+
   return (
     <div className={styles.comment}>
       <div className={styles.commentHeader}>
@@ -49,6 +59,24 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
           />
         </div>
       </div>
+      {filteredReply && !!filteredReply.length && isPostPage
+         && (
+           <>
+             <button
+               type="button"
+               className={styles.replyBar}
+               onClick={() => setShownReplies(!shownReplies)}
+             >
+               <div className={styles.grayLine} />
+               <span>
+                 {!shownReplies ? `View Replies(
+                ${filteredReply.length}
+                    )` : 'Collapse Replies' }
+               </span>
+             </button>
+               {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
+           </>
+         )}
       {isPostPage
       && (
         <div className={styles.commentActions}>
@@ -59,28 +87,12 @@ const Comment = ({ comment, isPostPage = false, postId, onlyReplies, isReply = f
           <Button
             style={{ margin: '0px 0px 0px 10px', padding: '0' }}
             btnRole="astext primary"
-            // onClick={() => setReplyClicked(true)}
+            onClick={() => setReplyClicked({ wasClicked: true, parentCommentId: comment._id })}
           >
             Reply
           </Button>
         </div>
       )}
-      {filteredReply && isPostPage
-      && (
-        <button
-          type="button"
-          className={styles.replyBar}
-          onClick={() => setShownReplies(!shownReplies)}
-        >
-          <div className={styles.grayLine} />
-          <span>
-            View Replies(
-            {filteredReply.length}
-            )
-          </span>
-        </button>
-      )}
-      {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
     </div>
   );
 };
