@@ -30,8 +30,8 @@ const HomePagePost = ({
     isPostLiked,
     comments
   } = post;
-
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isCommentBubbleClicked, setCommentBubbleClicked] = useState(false);
 
   return (
     <article className={styles.postContainer}>
@@ -43,6 +43,8 @@ const HomePagePost = ({
       />
       <HomePagePostMedia media={media} isLike={isPostLiked} postId={postId} />
       <HomePagePostIconBar
+        isCommentBubbleClicked={isCommentBubbleClicked}
+        setCommentBubbleClicked={setCommentBubbleClicked}
         isLike={isPostLiked}
         postId={postId}
       />
@@ -62,7 +64,13 @@ const HomePagePost = ({
       <Link to={`/p/${postId}`}>
         <CreatedTime created={created} />
       </Link>
-      {postId && <CommentForm postId={postId} />}
+      {postId && (
+        <CommentForm
+          postId={postId}
+          isCommentBubbleClicked={isCommentBubbleClicked}
+          setCommentBubbleClicked={setCommentBubbleClicked}
+        />
+      )}
       {isPostModalOpen && (
         <PostModal
           isOpen={isPostModalOpen}

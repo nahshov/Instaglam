@@ -8,10 +8,25 @@ import {
   ADD_COMMENT_TO_POST
 } from './postTypes';
 
-export const getPost = post => async dispatch => {
+export const getPost = (postId, isPostPage = false) => async dispatch => {
   try {
-    if (post._id) {
-      const updatedPost = await axios.get(`/api/posts/singlePost/${post._id}`);
+    dispatch({
+      type: SET_POST,
+      payload: {}
+    })
+    if (postId) {
+      if (isPostPage) {
+        const singlePost = (await axios.get(`/api/posts/singlePost/${postId}`)).data;
+        const postsOfUser = (await axios.get(`/api/posts/${singlePost.user}`)).data;
+        dispatch({
+          type: SET_POST,
+          payload: { postsOfUser, singlePost }
+        });
+        return;
+      }
+
+      const updatedPost = await axios.get(`/api/posts/singlePost/${postId}`);
+
       dispatch({
         type: SET_POST,
         payload: updatedPost.data

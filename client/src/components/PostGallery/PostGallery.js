@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useCheckAuthenticatedUser } from 'hooks/useCheckAuthenticatedUser'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Post from 'components/Post/Post';
 import { changeUrl } from 'utils/changeUrl';

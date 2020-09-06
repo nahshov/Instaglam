@@ -8,6 +8,7 @@ import {
 } from 'actions/post/postTypes';
 
 const initialState = {
+  postsOfUser: [],
   post: {}
 };
 
@@ -16,6 +17,13 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_POST:
+      if (payload.postsOfUser) {
+        return {
+          ...state,
+          postsOfUser: payload.postsOfUser,
+          post: payload.singlePost
+        };
+      }
       return {
         ...state,
         post: payload
@@ -56,7 +64,6 @@ export default function (state = initialState, action) {
         }
       };
     case ADD_COMMENT_TO_POST:
-      console.log(payload.comment)
       return {
         ...state,
         post:
