@@ -11,10 +11,9 @@ const Popover = ({ isPopoverOpen,
   className={styles.Popover}
   style={isActivityFeed ? {
     top: '47px',
-    width: '300px',
-    'max-width': '600px',
-    'z-index': 5,
-    right: '-4px'
+    width: '600px',
+    zIndex: '5',
+    right: '-22px'
   } : {}}
   {...otherProps}
 >
