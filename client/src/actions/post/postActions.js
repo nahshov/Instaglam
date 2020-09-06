@@ -10,14 +10,10 @@ import {
 
 export const getPost = (postId, isPostPage = false) => async dispatch => {
   try {
-    dispatch({
-      type: SET_POST,
-      payload: {}
-    })
     if (postId) {
       if (isPostPage) {
         const singlePost = (await axios.get(`/api/posts/singlePost/${postId}`)).data;
-        const postsOfUser = (await axios.get(`/api/posts/${singlePost.user}`)).data;
+        const postsOfUser = (await axios.get(`/api/posts/${singlePost.user._id}`, { params: { limit: 7 } })).data;
         dispatch({
           type: SET_POST,
           payload: { postsOfUser, singlePost }

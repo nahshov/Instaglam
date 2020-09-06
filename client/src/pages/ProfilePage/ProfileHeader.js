@@ -50,7 +50,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
         ? (
           <div className={styles.profileButtons}>
             <Link className={styles.editLink} to="/accounts/edit">
-              <Button style={{ 'margin-right': '10px' }}>Edit</Button>
+              <Button style={{ marginRight: '10px' }}>Edit</Button>
             </Link>
             <Button
               className={styles.logoutBtn}

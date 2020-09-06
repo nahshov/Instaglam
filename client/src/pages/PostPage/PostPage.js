@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -6,25 +6,36 @@ import Post from 'components/Post/Post';
 import PostsGrid from 'components/PostsGrid/PostsGrid';
 import { getPost } from 'actions/post/postActions';
 import { postSelector, postsOfUserSelector } from 'actions/post/postSelectors';
+import { authenticatedUserSelector } from 'actions/auth/authSelectors';
+import styles from './PostPage.module.scss';
 
 const postPageStructuredSelector = createStructuredSelector({
   post: postSelector,
-  postsOfUser: postsOfUserSelector
+  postsOfUser: postsOfUserSelector,
+  authenticatedUser: authenticatedUserSelector
 });
 
 const PostPage = () => {
-  const { post, postsOfUser } = useSelector(postPageStructuredSelector);
+  const { post, postsOfUser, authenticatedUser } = useSelector(postPageStructuredSelector);
   const { pathname } = useLocation();
   const searchedPostId = pathname.replace('/p/', '');
+
   const dispatch = useDispatch();
-  console.log(post);
   useEffect(() => {
     dispatch(getPost(searchedPostId, true));
   }, []);
+
   return (
     <>
-      {/* <Post post={post} />
-      <PostsGrid posts={postsOfUser} /> */}
+      <div className={styles.container}>
+        {
+        post
+        && post.user && (
+        <Post post={post} isAuthenticatedUser={post.user._id === authenticatedUser._id} />
+        )
+      }
+        <PostsGrid posts={postsOfUser.filter(p => p._id !== post._id)} isLink loading={false} />
+      </div>
     </>
   );
 };
