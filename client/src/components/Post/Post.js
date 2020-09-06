@@ -61,7 +61,12 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
   } = post;
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [replyClicked, setReplyClicked] = useState(false);
+  const [replyClicked, setReplyClicked] = useState(
+    {
+      wasClicked: false,
+      parentCommentId: ''
+    }
+  );
   return (
     <div className={styles.container}>
       <div className={styles.media}>
@@ -134,7 +139,7 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
           <Link to={`/p/${postId}`}>
             <CreatedTime created={created} isPost />
           </Link>
-          {postId && (
+          {postId && !!replyClicked && (
           <CommentForm
             replyClicked={replyClicked}
             setReplyClicked={setReplyClicked}
@@ -151,7 +156,11 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
 
 Post.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
+<<<<<<< HEAD
   isAuthenticatedUser: PropTypes.bool.isRequired,
   authenticatedUserId: PropTypes.string.isRequired
+=======
+  isAuthenticatedUser: PropTypes.bool.isRequired
+>>>>>>> feature/home-page
 };
 export default Post;
