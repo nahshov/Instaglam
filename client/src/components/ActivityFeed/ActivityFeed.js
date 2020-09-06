@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
@@ -25,23 +25,18 @@ const ActivityFeed = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUserActivitiesFeed(user._id));
-    dispatch(getFollows(user._id, 'following'))
-      .then(() => {
-        setLocalLoading(false);
-      });
-  }, []);
-
   return (
     (
       <div className={styles.activityFeedWrapper}>
         <HeartIcon
           className={styles.heartIcon}
           isFilled={isHeartIconFilled}
-          onClick={() => {
+          onClick={async () => {
             setHeartIconFilled(!isHeartIconFilled);
             setIsActivityFeedOpen(!isActivityFeedOpen);
+            await dispatch(getUserActivitiesFeed(user._id));
+            await dispatch(getFollows(user._id, 'following'));
+            setLocalLoading(false);
           }}
         />
         {isActivityFeedOpen && (
