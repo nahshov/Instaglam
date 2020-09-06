@@ -10,7 +10,7 @@ import ProfilePic from 'components/ProfilePic/ProfilePic';
 import { replyPropType } from 'customPropTypes';
 import styles from './Reply.module.scss';
 
-const Reply = ({ reply, replyClicked, setReplyClicked }) => {
+const Reply = ({ reply, setReplyClicked }) => {
   const dispatch = useDispatch();
   const handleLike = (reply => {
     dispatch(togglePostCommentLike(reply._id, reply.isCommentLiked));

@@ -18,7 +18,6 @@ const Comment = (
     isPostPage = false,
     postId,
     onlyReplies,
-    isReply = false,
     setReplyClicked
   }
 ) => {

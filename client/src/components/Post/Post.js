@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -18,7 +18,7 @@ import { togglePostOwnerFollow, togglePostLike } from 'actions/post/postActions'
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import styles from './Post.module.scss';
 
-const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
+const Post = ({ post, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(togglePostLike(post._id, post.isPostLiked));
@@ -55,7 +55,6 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
       parentCommentId: ''
     }
   );
-  console.log(replyClicked);
   return (
     <div className={styles.container}>
       <div className={styles.media}>
@@ -148,6 +147,6 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
 
 Post.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
-  authenticatedUserId: PropTypes.string.isRequired
+  isAuthenticatedUser: PropTypes.bool.isRequired
 };
 export default Post;
