@@ -6,12 +6,12 @@ import { postAddAComment } from 'actions/post/postActions';
 import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
-const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked }) => {
+const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked, isCommentBubbleClicked, setCommentBubbleClicked }) => {
   const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
   const textArea = useRef();
-  if (replyClicked) {
+  if ((replyClicked && replyClicked.wasClicked) || isCommentBubbleClicked) {
     textArea.current.focus();
   }
   const handleChange = ((e) => {
@@ -22,12 +22,16 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
     return !inputValue.trim();
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async e => { 
     e.preventDefault();
     if (!inputValue) return;
     setCommentLoading(true);
     if (isPostPage) {
-      await dispatch(postAddAComment(postId, inputValue));
+      if (replyClicked && replyClicked.parentCommentId) {
+        await dispatch(postAddAComment(postId, inputValue, replyClicked.parentCommentId));
+      } else {
+        await dispatch(postAddAComment(postId, inputValue));
+      }
       setInputValue('');
     } else {
       await dispatch(HomePageAddAComment(postId, inputValue));
@@ -38,7 +42,16 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
   return (
     <form onSubmit={handleSubmit} className={styles.commentContainer}>
       <textarea
-        onBlur={() => setReplyClicked(false)}
+        onBlur={() => {
+          if (replyClicked && replyClicked.wasClicked) {
+            setReplyClicked({
+              ...replyClicked,
+              wasClicked: false
+            });
+          } else if (isCommentBubbleClicked) {
+            setCommentBubbleClicked(false);
+          }
+        }}
         ref={textArea}
         value={inputValue}
         onChange={handleChange}

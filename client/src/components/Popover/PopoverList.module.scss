@@ -1,6 +1,14 @@
+@import '../../styles/mixins.scss';
+
 .list {
   display: flex;
   flex-direction: column;
   overflow: auto;
   flex: 1;
+}
+
+@include respond(phone) {
+  .list::-webkit-scrollbar {
+    display: none;
+  }
 }

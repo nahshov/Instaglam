@@ -24,7 +24,7 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
   useEffect(() => {
     // postprop is a post from homepage
     // that helping us get the post without struggling with async problems
-    dispatch(getPost(postProp));
+    dispatch(getPost(postProp._id));
     return () => {
       dispatch(resetPost());
     };

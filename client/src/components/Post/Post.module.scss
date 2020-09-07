@@ -4,19 +4,31 @@
 .container {
   width: 100%;
   display: flex;
-
+    @include respond(tab-land){
+      height: inherit;
+    }
   .media {
+    img{
+      width: 100%;
+    }  
       width: 600px;
       height: 100%;
+      
+      @include respond(tab-land){
+        img{
+          width: 100%;
+        }  
+      }
+
   }
   .cssHelper{
     @include flexColumn;
-    width: 100%;
+    flex: 1;
     height: 100%;
     .postContentContainer{
       width: 100%;
       height: 100%;
-      overflow: auto;
+      overflow-x: hidden;
       @include flexColumn;
   
       .postContentHeader{

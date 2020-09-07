@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RiChat3Line } from 'react-icons/ri';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
@@ -10,14 +10,29 @@ import { postPropType, likePropType } from 'customPropTypes';
 
 import styles from './HomePagePostIconBar.module.scss';
 
-const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
+const HomePagePostIconBar = ({
+  isLike,
+  postId,
+  isPostPage = false,
+  setCommentBubbleClicked
+}) => {
+  const [heartClickLoading, setHeartClickLoading] = useState(false);
   const dispatch = useDispatch();
-  const handleLike = () => {
+
+  const handleLike = async () => {
+    setHeartClickLoading(true);
+
     if (isPostPage) {
-      dispatch(togglePostLike(postId, isLike));
+      await dispatch(togglePostLike(postId, isLike));
+      setHeartClickLoading(false);
     } else {
-      dispatch(toggleHomePagePostLike(postId, isLike));
+      await dispatch(toggleHomePagePostLike(postId, isLike));
+      setHeartClickLoading(false);
     }
+  };
+
+  const bubbleHandler = () => {
+    setCommentBubbleClicked(true);
   };
 
   return (
@@ -27,18 +42,14 @@ const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
           isFilled={isLike}
           isRed
           onClick={handleLike}
+          heartClickLoading={heartClickLoading}
         />
-        <RiChat3Line className={styles.chatIcon} />
+        <RiChat3Line className={styles.chatIcon} onClick={bubbleHandler} />
         <ShareModalIcon className={styles.ShareModalIcon} />
       </div>
       <BookMarkIcon />
     </div>
   );
-};
-
-HomePagePostIconBar.propTypes = {
-  ...postPropType,
-  ...likePropType
 };
 
 export default HomePagePostIconBar;

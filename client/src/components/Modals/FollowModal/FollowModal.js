@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -11,6 +11,7 @@ import {
 import { followsSelector } from 'actions/follows/followSelectors';
 import ProfilePic from 'components/ProfilePic/ProfilePic';
 import FollowButton from 'components/FollowButton/FollowButton';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import { profileSelector } from 'actions/profile/profileSelectors';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
 import { setNumOfFollowing } from 'actions/profile/profileActions';
@@ -35,6 +36,7 @@ const FollowModal = ({
   isComment = false,
   ...otherProps
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     follows,
     profile,
@@ -48,9 +50,11 @@ const FollowModal = ({
 
   useEffect(() => {
     if (type === 'likes') {
-      dispatch(getFollows(id, type, isComment));
+      dispatch(getFollows(id, type, isComment))
+        .then(() => setIsLoading(false));
     } else {
-      dispatch(getFollows(userId, type));
+      dispatch(getFollows(userId, type))
+        .then(() => setIsLoading(false));
     }
 
     return () => {
@@ -78,30 +82,39 @@ const FollowModal = ({
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>
       <div className={styles.modalContainer}>
         <h1 className={styles.title}>{title}</h1>
-        <ModalList className={styles.followList}>
-          {
-            !follows.length && !follows.loading
-              ? (
-                <ModalListItem>
-                  {type === 'followers' && type !== 'likes' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
-                </ModalListItem>
-              )
-              : (follows.map(f => (
-                <li key={f._id} className={styles.followItem}>
-                  <div className={styles.userInfo}>
-                    <ProfilePic size="medium" url={f.profilePic} style={{ marginRight: '10px' }} />
-                    <Link className={styles.username} to={`/${f.username}`}>{f.username}</Link>
-                  </div>
-                  {f.username !== authenticatedUser.username && (
-                  <FollowButton
-                    handleFollow={() => handleFollow(f)}
-                    isFollowed={f.isFollowed}
-                  />
-                  )}
-                </li>
-              )))
-          }
-        </ModalList>
+        {isLoading
+          ? (
+            <div className={styles.loadingSpinnerDiv}>
+              <LoadingSpinner />
+            </div>
+          )
+          : (
+            <ModalList className={styles.followList}>
+              {
+          !follows.length && !follows.loading
+            ? (
+              <ModalListItem>
+                {type === 'followers' && type !== 'likes' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
+              </ModalListItem>
+            )
+            : (follows.map(f => (
+              <li key={f._id} className={styles.followItem}>
+                <div className={styles.userInfo}>
+                  <ProfilePic size="medium" url={f.profilePic} style={{ marginRight: '10px' }} />
+                  <Link className={styles.username} to={`/${f.username}`}>{f.username}</Link>
+                </div>
+                {f.username !== authenticatedUser.username && (
+                <FollowButton
+                  handleFollow={() => handleFollow(f)}
+                  isFollowed={f.isFollowed}
+                />
+                )}
+              </li>
+            )))
+        }
+            </ModalList>
+          )}
+
       </div>
     </Modal>
   );

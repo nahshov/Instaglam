@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .activityWrapper {
   display: flex;
   align-items: center;
@@ -34,6 +36,10 @@
   img {
     width: inherit;
     border-radius: 100%;
+  }
+
+  @include respond(phone) {
+    margin-right: 16px;
   }
 }
 

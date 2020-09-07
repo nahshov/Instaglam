@@ -6,3 +6,7 @@ export const postSelector = createSelector(
   [postModuleSelector],
   post => post.post
 )
+export const postsOfUserSelector = createSelector(
+  [postModuleSelector],
+  post => post.postsOfUser
+)
