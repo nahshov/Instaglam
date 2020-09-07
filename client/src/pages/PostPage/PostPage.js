@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -23,7 +23,7 @@ const PostPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPost(searchedPostId, true));
-  }, []);
+  }, [searchedPostId, dispatch]);
 
   return (
     <>

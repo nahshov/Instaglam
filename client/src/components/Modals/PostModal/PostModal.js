@@ -28,7 +28,7 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
     return () => {
       dispatch(resetPost());
     };
-  }, [dispatch]);
+  }, [dispatch, postProp._id]);
 
   useEffect(() => {
     changeUrl(`/p/${postProp._id}`, 'post modal path');
@@ -36,7 +36,7 @@ const PostModal = ({ postProp, isOpen, setModalOpen, isGallery = false, posts = 
       setModalOpen(!isOpen);
       changeUrl(`${username}`);
     };
-  }, [setModalOpen, username, isOpen]);
+  }, [setModalOpen, username, isOpen, postProp._id]);
   return (
     <Modal
       className={styles.PostModal}

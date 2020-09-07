@@ -4,9 +4,12 @@
 .container {
   width: 100%;
   display: flex;
-    @include respond(tab-land){
-      height: inherit;
+    @include respond(tab-port){
+      overflow: auto;
+      @include flexColumn;
+      height: 100%;
     }
+    
   .media {
     img{
       width: 100%;
@@ -15,9 +18,15 @@
       height: 100%;
       
       @include respond(tab-land){
+        width: 100%;
+
+      }
+      @include respond(tab-port){
+        width: contain;
+        
         img{
-          width: 100%;
-        }  
+          overflow-x: hidden;
+        }
       }
 
   }
@@ -30,7 +39,6 @@
       height: 100%;
       overflow-x: hidden;
       @include flexColumn;
-  
       .postContentHeader{
         height: 80px;
         width: 100%;
