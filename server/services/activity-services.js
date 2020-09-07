@@ -1,5 +1,4 @@
 const Activity = require('../models/Activity.js');
-const { isFollowed } = require('./follow-services');
 
 function addActivity(activity) {
   activity = new Activity(activity);
@@ -27,17 +26,6 @@ function removeAllUserActivities(userId) {
 function removeAllUserActivitiesFeed(userId) {
   return Activity.deleteMany({ referredUser: userId });
 }
-
-// async function clearActivities() {
-//   const activitiesArr = await Activity.find({});
-//   activitiesArr.forEach(doc => {
-//     if (doc.activities.length === 0) {
-//     }
-//   });
-//   return activitiesArr;
-// }
-
-// clearActivities();
 
 module.exports = {
   addActivity,
