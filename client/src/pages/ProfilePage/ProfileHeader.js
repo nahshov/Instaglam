@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
@@ -11,6 +10,7 @@ import { toggleFollows, getFollows } from 'actions/follows/followActions';
 import { setNumOfFollowers } from 'actions/profile/profileActions';
 import { followsSelector } from 'actions/follows/followSelectors';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
+import PropTypes from 'prop-types';
 import SocialStatusList from './SocialStatusList';
 import FollowButton from '../../components/FollowButton/FollowButton';
 import styles from './ProfileHeader.module.scss';
@@ -50,7 +50,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
         ? (
           <div className={styles.profileButtons}>
             <Link className={styles.editLink} to="/accounts/edit">
-              <Button style={{ 'margin-right': '10px' }}>Edit</Button>
+              <Button style={{ marginRight: '10px' }}>Edit</Button>
             </Link>
             <Button
               className={styles.logoutBtn}

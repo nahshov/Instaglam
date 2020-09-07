@@ -95,7 +95,8 @@ const getPosts = async (req, res) => {
 // @access private
 const getPostsOfAUser = async (req, res) => {
   try {
-    const posts = await getAllPostsOfUser(req.params.userInfo);
+    const posts = await getAllPostsOfUser(req.params.userInfo, +req.query.limit);
+
     if (posts.length === 0) {
       return serverResponse(res, 200, []);
     }

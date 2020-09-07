@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { postPropType } from 'customPropTypes';
@@ -14,25 +15,36 @@ import CommentForm from 'components/Comments/CommentForm/CommentForm';
 import PostContent from 'components/Post/PostContent/PostContent';
 import CreatedTime from 'components/CreatedTime/CreatedTime';
 import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
-import { togglePostOwnerFollow, togglePostLike } from 'actions/post/postActions';
-import { setNumOfFollowing } from 'actions/profile/profileActions';
+import { followsSelector } from 'actions/follows/followSelectors';
+import { togglePostLike } from 'actions/post/postActions';
+import { setNumOfFollowers } from 'actions/profile/profileActions';
+import { toggleFollows, getFollows } from 'actions/follows/followActions';
 import styles from './Post.module.scss';
 
-const Post = ({ post, isAuthenticatedUser, isModal = false }) => {
+const structuredFollowSelector = createStructuredSelector({
+  follows: followsSelector
+});
+
+const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
+  const [isFollowed, setIsFollowed] = useState(false);
+  const { follows } = useSelector(structuredFollowSelector);
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(togglePostLike(post._id, post.isPostLiked));
   };
-  const handleFollow = async (userId, isFollowed) => {
-    await dispatch(togglePostOwnerFollow(userId, isFollowed));
 
-    if (post.user.isFollowed) {
-      dispatch(setNumOfFollowing(-1));
+  useEffect(() => {
+    setIsFollowed(follows.some(follow => (follow._id === post.user._id)));
+  }, [follows]);
+
+  const handleFollow = async () => {
+    await dispatch(toggleFollows(post.user._id, isFollowed));
+    await dispatch(getFollows(authenticatedUserId, 'following'));
+    if (isFollowed) {
+      dispatch(setNumOfFollowers(-1));
     } else {
-      dispatch(setNumOfFollowing(1));
+      dispatch(setNumOfFollowers(1));
     }
-
-    return Promise.resolve();
   };
 
   const {
@@ -73,11 +85,8 @@ const Post = ({ post, isAuthenticatedUser, isModal = false }) => {
                 !isAuthenticatedUser
                   && (
                   <FollowButton
-                    isFollowed={post.user.isFollowed}
-                    handleFollow={() => {
-                      handleFollow(post.user._id, post.user.isFollowed);
-                      return Promise.resolve();
-                    }}
+                    handleFollow={handleFollow}
+                    isFollowed={isFollowed}
                     astext="astext"
                   />
                   )
@@ -136,7 +145,7 @@ const Post = ({ post, isAuthenticatedUser, isModal = false }) => {
           {postId && !!replyClicked && (
           <CommentForm
             isCommentBubbleClicked={isCommentBubbleClicked}
-            setCommentBubbleClicked={setCommentBubbleClicked}  
+            setCommentBubbleClicked={setCommentBubbleClicked}
             replyClicked={replyClicked}
             setReplyClicked={setReplyClicked}
             postId={postId}
@@ -152,6 +161,7 @@ const Post = ({ post, isAuthenticatedUser, isModal = false }) => {
 
 Post.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
+  authenticatedUserId: PropTypes.string.isRequired,
   isAuthenticatedUser: PropTypes.bool.isRequired
 };
 export default Post;

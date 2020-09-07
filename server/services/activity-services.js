@@ -13,12 +13,7 @@ async function getUserActivity(userId) {
     .populate('activities.activityId', 'content')
     .sort('-created');
 
-  const noEmptyActivitiesArr = activities.filter(activity => activity.activities.length !== 0);
-
-  return Promise.all(noEmptyActivitiesArr.map(async activity => ({
-    ...activity.toObject(),
-    isFollowed: await isFollowed(userId, activity.activities[0].user._id)
-  })));
+  return activities.filter(activity => activity.activities.length !== 0);
 }
 
 function removeActivity(activityId) {
