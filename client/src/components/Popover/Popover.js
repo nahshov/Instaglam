@@ -8,13 +8,7 @@ const Popover = ({ isPopoverOpen,
   ...otherProps
 }) => isPopoverOpen && (
 <div
-  className={styles.Popover}
-  style={isActivityFeed ? {
-    top: '47px',
-    width: '600px',
-    zIndex: '5',
-    right: '-22px'
-  } : {}}
+  className={isActivityFeed ? styles.activityFeed : styles.Popover}
   {...otherProps}
 >
   <div className={styles.triangle} style={isActivityFeed ? { left: '94%' } : {}} />

@@ -2,7 +2,7 @@
 @import '../../styles/shadows.scss';
 @import '../../styles/mixins.scss';
 
-.Popover {
+%basicPopover {
   position: absolute;
   width: 240px;
   height: auto;
@@ -14,6 +14,36 @@
   border-radius: 2px;
 }
 
+.Popover {
+  @extend %basicPopover;
+}
+
+.activityFeed {
+  @extend %basicPopover;
+  top: 47px;
+  width: 600px;
+  z-index: 5;
+  right: -22px;
+
+  @include respond(phablet) {
+    width: 100%;
+    position: fixed;
+    top: 53px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  @include respond(phone) {
+    width: 100%;
+    position: fixed;
+    top: 43px;
+    right: 0;
+    left: 0;
+    bottom: 48px;
+  }
+}
+
 .triangle {
   @include absCenter;
   top: -7px;
@@ -23,6 +53,10 @@
   border-right: 7.5px solid transparent;
   border-bottom: 15px solid $color-white;
   filter: drop-shadow($primary-box-shadow);
+
+  @include respond(phone) {
+    display: none;
+  }
 }
 
 .content {

@@ -21,17 +21,26 @@ const Comment = (
     setReplyClicked
   }
 ) => {
+  const [shownReplies, setShownReplies] = useState(false);
+  const [heartClickLoading, setHeartClickLoading] = useState(false);
+
+  useEffect(() => {}, [comment.user.profilePic]);
+
   const dispatch = useDispatch();
-  const handleLike = (comment) => {
+
+  const filteredReply = onlyReplies.filter(reply => reply.replyToComment === comment._id);
+
+  const handleLike = async (comment) => {
+    setHeartClickLoading(true);
+
     if (isPostPage) {
-      dispatch(togglePostCommentLike(comment._id, comment.isCommentLiked));
+      await dispatch(togglePostCommentLike(comment._id, comment.isCommentLiked));
+      setHeartClickLoading(false);
     } else {
-      dispatch(toggleHomeCommentLike(comment._id, comment.isCommentLiked, comment.post));
+      await dispatch(toggleHomeCommentLike(comment._id, comment.isCommentLiked, comment.post));
+      setHeartClickLoading(false);
     }
   };
-  useEffect(() => {}, [comment.user.profilePic]);
-  const [shownReplies, setShownReplies] = useState(false);
-  const filteredReply = onlyReplies.filter(reply => reply.replyToComment === comment._id);
 
   return (
     <div className={styles.comment}>
@@ -55,6 +64,7 @@ const Comment = (
             onClick={() => {
               handleLike(comment);
             }}
+            heartClickLoading={heartClickLoading}
           />
         </div>
       </div>

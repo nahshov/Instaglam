@@ -156,11 +156,7 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
 
 Post.propTypes = {
   post: PropTypes.shape(postPropType).isRequired,
-<<<<<<< HEAD
   isAuthenticatedUser: PropTypes.bool.isRequired,
   authenticatedUserId: PropTypes.string.isRequired
-=======
-  isAuthenticatedUser: PropTypes.bool.isRequired
->>>>>>> feature/home-page
 };
 export default Post;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { togglePostCommentLike } from 'actions/post/postActions';
@@ -11,9 +11,16 @@ import { replyPropType } from 'customPropTypes';
 import styles from './Reply.module.scss';
 
 const Reply = ({ reply, setReplyClicked }) => {
+  const [heartClickLoading, setHeartClickLoading] = useState(false);
+
   const dispatch = useDispatch();
-  const handleLike = (reply => {
-    dispatch(togglePostCommentLike(reply._id, reply.isCommentLiked));
+
+  const handleLike = (async reply => {
+    setHeartClickLoading(true);
+
+    await dispatch(togglePostCommentLike(reply._id, reply.isCommentLiked));
+
+    setHeartClickLoading(false);
   });
   return (
     <div className={styles.reply}>
@@ -59,6 +66,7 @@ const Reply = ({ reply, setReplyClicked }) => {
               onClick={() => {
                 handleLike(reply);
               }}
+              heartClickLoading={heartClickLoading}
             />
           </div>
         </div>

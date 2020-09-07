@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RiChat3Line } from 'react-icons/ri';
 import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
@@ -11,12 +11,19 @@ import { postPropType, likePropType } from 'customPropTypes';
 import styles from './HomePagePostIconBar.module.scss';
 
 const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
+  const [heartClickLoading, setHeartClickLoading] = useState(false);
+
   const dispatch = useDispatch();
-  const handleLike = () => {
+
+  const handleLike = async () => {
+    setHeartClickLoading(true);
+
     if (isPostPage) {
-      dispatch(togglePostLike(postId, isLike));
+      await dispatch(togglePostLike(postId, isLike));
+      setHeartClickLoading(false);
     } else {
-      dispatch(toggleHomePagePostLike(postId, isLike));
+      await dispatch(toggleHomePagePostLike(postId, isLike));
+      setHeartClickLoading(false);
     }
   };
 
@@ -27,6 +34,7 @@ const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
           isFilled={isLike}
           isRed
           onClick={handleLike}
+          heartClickLoading={heartClickLoading}
         />
         <RiChat3Line className={styles.chatIcon} />
         <ShareModalIcon className={styles.ShareModalIcon} />
