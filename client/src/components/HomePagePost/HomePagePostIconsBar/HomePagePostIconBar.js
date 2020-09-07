@@ -10,9 +10,13 @@ import { postPropType, likePropType } from 'customPropTypes';
 
 import styles from './HomePagePostIconBar.module.scss';
 
-const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
+const HomePagePostIconBar = ({
+  isLike,
+  postId,
+  isPostPage = false,
+  setCommentBubbleClicked
+}) => {
   const [heartClickLoading, setHeartClickLoading] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleLike = async () => {
@@ -27,6 +31,10 @@ const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
     }
   };
 
+  const bubbleHandler = () => {
+    setCommentBubbleClicked(true);
+  };
+
   return (
     <div className={styles.iconsWrapper}>
       <div className={styles.leftIconsWrapper}>
@@ -36,17 +44,12 @@ const HomePagePostIconBar = ({ isLike, postId, isPostPage = false }) => {
           onClick={handleLike}
           heartClickLoading={heartClickLoading}
         />
-        <RiChat3Line className={styles.chatIcon} />
+        <RiChat3Line className={styles.chatIcon} onClick={bubbleHandler} />
         <ShareModalIcon className={styles.ShareModalIcon} />
       </div>
       <BookMarkIcon />
     </div>
   );
-};
-
-HomePagePostIconBar.propTypes = {
-  ...postPropType,
-  ...likePropType
 };
 
 export default HomePagePostIconBar;

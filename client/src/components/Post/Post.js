@@ -61,6 +61,7 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
   } = post;
 
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isCommentBubbleClicked, setCommentBubbleClicked] = useState(false);
   const [replyClicked, setReplyClicked] = useState(
     {
       wasClicked: false,
@@ -130,6 +131,8 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
 
         <div className={styles.iconsAndFormWrapper}>
           <HomePagePostIconBar
+            isCommentBubbleClicked={isCommentBubbleClicked}
+            setCommentBubbleClicked={setCommentBubbleClicked}
             isPostPage
             isLike={isPostLiked}
             postId={postId}
@@ -141,6 +144,8 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
           </Link>
           {postId && !!replyClicked && (
           <CommentForm
+            isCommentBubbleClicked={isCommentBubbleClicked}
+            setCommentBubbleClicked={setCommentBubbleClicked}
             replyClicked={replyClicked}
             setReplyClicked={setReplyClicked}
             postId={postId}
