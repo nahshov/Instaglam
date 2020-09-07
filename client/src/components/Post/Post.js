@@ -18,7 +18,7 @@ import { togglePostOwnerFollow, togglePostLike } from 'actions/post/postActions'
 import { setNumOfFollowing } from 'actions/profile/profileActions';
 import styles from './Post.module.scss';
 
-const Post = ({ post, isAuthenticatedUser }) => {
+const Post = ({ post, isAuthenticatedUser, isModal = false }) => {
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(togglePostLike(post._id, post.isPostLiked));

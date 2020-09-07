@@ -66,6 +66,7 @@ const PostGallery = ({ post = {}, posts, isGallery, authenticatedUserId }) => {
   return (
     <div className={styles.Gallery}>
       <Post
+        isModal
         post={currentPost}
         postId={post._id}
         isAuthenticatedUser={isAuthenticatedUser}
