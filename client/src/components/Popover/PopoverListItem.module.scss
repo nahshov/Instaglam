@@ -17,6 +17,7 @@
 
   @include respond(phone) {
     padding: 8px 9px;
+    height: auto;
   }
 }
 
