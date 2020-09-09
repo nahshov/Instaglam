@@ -80,6 +80,7 @@ const SearchInput = () => {
         required
         onFocus={() => value && setIsPopoverOpen(true)}
         onBlur={() => setIsPopoverOpen(false)}
+        autoComplete="off"
       />
       <label htmlFor="searchInput" className={styles.searchLabel}>
         <div>
