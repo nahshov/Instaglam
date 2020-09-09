@@ -8,6 +8,7 @@
 
   @include respond(postModal){
       overflow: auto;
+      overflow-x: hidden;
       @include flexColumn;
       height: 100%;
     }

@@ -10,4 +10,7 @@
   @include flexColumn;
   justify-content: center;
 
+  @include respond(phone) {
+    min-width: 320px;
+  }
 }
