@@ -43,12 +43,11 @@ const Modal = (
     isOpen && createPortal(
       <div
         className={styles.modalShadow}
-        style={isUploadPost ? { zIndex: '101' } : {}}
         onMouseDown={handleClose}
       >
         <div
           className={`${isAnimated ? styles.showModal : ''}`}
-          style={isUploadPost ? { maxWidth: '70%', maxHeight: '700px' } : {}}
+          style={isUploadPost ? { maxHeight: '700px' } : {}}
           {...otherProps}
           ref={node}
         >
