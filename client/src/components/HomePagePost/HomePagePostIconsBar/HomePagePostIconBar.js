@@ -6,7 +6,7 @@ import BookMarkIcon from 'components/Icons/BookMarkIcon/BookMarkIcon';
 import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
 import { toggleHomePagePostLike } from 'actions/posts/postActions';
 import { togglePostLike } from 'actions/post/postActions';
-import { postPropType, likePropType } from 'customPropTypes';
+import { postPropType } from 'customPropTypes';
 
 import styles from './HomePagePostIconBar.module.scss';
 
@@ -50,6 +50,10 @@ const HomePagePostIconBar = ({
       <BookMarkIcon />
     </div>
   );
+};
+
+HomePagePostIconBar.propTypes = {
+  ...postPropType
 };
 
 export default HomePagePostIconBar;

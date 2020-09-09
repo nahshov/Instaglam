@@ -81,7 +81,7 @@ const Comment = (
                  {!shownReplies ? `View Replies(${filteredReply.length})` : 'Hide Replies' }
                </span>
              </button>
-               {shownReplies && filteredReply.map(reply => <Reply reply={reply} />)}
+               {shownReplies && filteredReply.map(reply => <Reply reply={reply} key={reply._id} />)}
            </>
          )}
       {isPostPage

@@ -6,7 +6,14 @@ import { postAddAComment } from 'actions/post/postActions';
 import Button from 'components/Button/Button';
 import styles from './CommentForm.module.scss';
 
-const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked, isCommentBubbleClicked, setCommentBubbleClicked }) => {
+const CommentForm = ({
+  postId,
+  isPostPage = false,
+  replyClicked,
+  setReplyClicked,
+  isCommentBubbleClicked,
+  setCommentBubbleClicked
+}) => {
   const [commentLoading, setCommentLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
@@ -22,7 +29,7 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
     return !inputValue.trim();
   };
 
-  const handleSubmit = async e => { 
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!inputValue) return;
     setCommentLoading(true);
@@ -55,7 +62,7 @@ const CommentForm = ({ postId, isPostPage = false, replyClicked, setReplyClicked
         ref={textArea}
         value={inputValue}
         onChange={handleChange}
-        id="commentTextArea"
+        id={postId}
         placeholder="Add a comment"
         className={styles.commentInput}
       />
@@ -79,7 +86,14 @@ CommentForm.defaultProps = {
 
 CommentForm.propTypes = {
   postId: PropTypes.string.isRequired,
-  isPostPage: PropTypes.bool
+  isPostPage: PropTypes.bool,
+  replyClicked: PropTypes.shape({
+    wasClicked: PropTypes.bool,
+    parentCommentId: PropTypes.string
+  }).isRequired,
+  setReplyClicked: PropTypes.func,
+  isCommentBubbleClicked: PropTypes.bool,
+  setCommentBubbleClicked: PropTypes.func
 };
 
 export default CommentForm;

@@ -25,7 +25,7 @@ const Reply = ({ reply, setReplyClicked }) => {
   return (
     <div className={styles.reply}>
       <div className={styles.replyHeader}>
-        <div style={{ display: 'flex', 'justify-content': 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ height: 'auto' }} className={styles.replyData}>
             {reply.user.profilePic && <ProfilePic url={reply.user.profilePic} size="medium" />}
             <div>

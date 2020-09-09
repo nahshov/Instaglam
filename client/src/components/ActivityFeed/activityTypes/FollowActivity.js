@@ -36,7 +36,7 @@ const FollowActivity = ({
 
   useEffect(() => {
     setIsFollowed(follows.some(follow => (follow._id === userOfActivityId)));
-  }, [follows]);
+  }, [follows, userOfActivityId]);
 
   const handleFollow = async () => {
     const isProfilePage = usernames[0] === pathname.replace('/', '');

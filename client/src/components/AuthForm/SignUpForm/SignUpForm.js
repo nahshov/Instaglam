@@ -60,7 +60,7 @@ const SignUpForm = () => {
     } else {
       setPasswordCheckOrError('');
     }
-  }, [signUpForm]);
+  }, [signUpForm, usernameCheckOrError]);
 
   const checkDisabled = () => Object.values(signUpForm).some(
     value => !value || signUpForm.password.length < 6

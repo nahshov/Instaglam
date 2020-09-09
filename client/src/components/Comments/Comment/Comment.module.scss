@@ -32,7 +32,8 @@
   }
 
   .replyBar{
-    @include flexStart;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     .grayLine{
       width: 24px;

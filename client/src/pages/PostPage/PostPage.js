@@ -19,7 +19,6 @@ const PostPage = () => {
   const { post, postsOfUser, authenticatedUser } = useSelector(postPageStructuredSelector);
   const { pathname } = useLocation();
   const searchedPostId = pathname.replace('/p/', '');
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPost(searchedPostId, true));
@@ -31,7 +30,11 @@ const PostPage = () => {
         {
         post
         && post.user && (
-        <Post post={post} isAuthenticatedUser={post.user._id === authenticatedUser._id} />
+        <Post
+          post={post}
+          isAuthenticatedUser={post.user._id === authenticatedUser._id}
+          authenticatedUserId={authenticatedUser._id}
+        />
         )
       }
         <PostsGrid posts={postsOfUser.filter(p => p._id !== post._id)} isLink loading={false} />

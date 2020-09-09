@@ -25,7 +25,7 @@ const structuredFollowSelector = createStructuredSelector({
   follows: followsSelector
 });
 
-const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
+const Post = ({ post, isAuthenticatedUser, authenticatedUserId = '' }) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const { follows } = useSelector(structuredFollowSelector);
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const Post = ({ post, isAuthenticatedUser, authenticatedUserId }) => {
 
   useEffect(() => {
     setIsFollowed(follows.some(follow => (follow._id === post.user._id)));
-  }, [follows]);
+  }, [follows, post.user._id]);
 
   const handleFollow = async () => {
     await dispatch(toggleFollows(post.user._id, isFollowed));

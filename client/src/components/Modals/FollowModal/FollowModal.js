@@ -60,7 +60,7 @@ const FollowModal = ({
     return () => {
       dispatch(resetFollows());
     };
-  }, []);
+  }, [dispatch, id, isComment, type, userId]);
 
   const handleFollow = async (user) => {
     await dispatch(toggleFollows(user._id, user.isFollowed));
