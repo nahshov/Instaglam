@@ -26,6 +26,7 @@ const ProfileHeader = ({ postsCount, profile, isAuthenticatedUser }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getFollows(authenticatedUser._id, 'following'));
     setIsFollowed(follows.some(follow => (follow._id === profile._id)));
   }, [follows, profile._id]);
 

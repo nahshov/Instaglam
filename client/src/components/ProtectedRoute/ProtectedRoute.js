@@ -6,6 +6,7 @@ import Navbar from 'components/Navbar/Navbar';
 import { loadUser, logout } from 'actions/auth/authActions';
 import { createStructuredSelector } from 'reselect';
 import { authLoadingSelector, isAuthenticatedSelector } from 'actions/auth/authSelectors';
+import styles from './ProtectedRoute.module.scss';
 
 const structuredAuthSelector = createStructuredSelector({
   isAuthenticated: isAuthenticatedSelector,
@@ -35,7 +36,9 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                 return (
                   <>
                     <Navbar {...props} />
-                    <Component {...props} />
+                    <div className={styles.mainView}>
+                      <Component {...props} />
+                    </div>
                   </>
                 );
               }
