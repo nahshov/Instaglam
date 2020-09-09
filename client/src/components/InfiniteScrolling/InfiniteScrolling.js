@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPosts, resetPosts } from 'actions/posts/postActions';
 import PropTypes from 'prop-types';
@@ -19,11 +19,11 @@ const InfiniteScrolling = ({ children }) => {
     setIsFetching(true);
   }
 
-  function getMorePosts() {
+  const getMorePosts = useCallback(() => {
     page += 1;
     dispatch(getAllPosts(page));
     setIsFetching(false);
-  }
+  }, [dispatch]);
 
   useEffect(() => {
     page = 0;
@@ -41,7 +41,7 @@ const InfiniteScrolling = ({ children }) => {
     } else {
       return;
     }
-  }, [isFetching, noMorePosts]);
+  }, [isFetching, noMorePosts, getMorePosts]);
 
   return (
     <div>
@@ -50,15 +50,11 @@ const InfiniteScrolling = ({ children }) => {
   );
 };
 
-InfiniteScrolling.defaultProps = {
-  children: undefined
-};
-
 InfiniteScrolling.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ])
+  ]).isRequired
 
 };
 export default InfiniteScrolling;
