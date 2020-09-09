@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import Modal from 'components/Modals/Modal';
 import ModalList from 'components/Modals/ModalList/ModalList';
 import ModalListItem from 'components/Modals/ModalList/ModalListItem';
@@ -8,6 +7,7 @@ import TakingPicture from 'components/Modals//UploadPostModal/TakingPicture';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
 import { submitAPost } from 'actions/posts/postActions';
+import PropTypes from 'prop-types';
 import styles from 'components/Navbar/NavUploadPost.module.scss';
 
 const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) => {
@@ -21,7 +21,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
 
   const video = useRef();
 
-  const handleUploadPostOnClose = () => {
+  const handleUploadPostOnClose = useCallback(() => {
     if (video.current) {
       video.current.srcObject.getTracks().forEach((media) => { return media.stop(); });
     }
@@ -29,7 +29,7 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
     setIsTakingPicture(false);
     setPostMedia('');
     setUploadAlert('');
-  };
+  }, [setIsUploadPostModalOpen]);
 
   const handleOpenCamClick = async () => {
     try {
