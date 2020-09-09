@@ -7,7 +7,6 @@
   width: 100%;
   height: 100%;
   color: $primary-text-color;
-  overflow: auto;
 
   @include respond(phone) {
     height: 100vh;
