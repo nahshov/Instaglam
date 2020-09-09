@@ -31,6 +31,17 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_POSTS:
+
+      if (payload.initialLoad) {
+        return {
+          ...state,
+          posts: payload.posts,
+          noMorePosts: payload.noMorePosts,
+          loading: false,
+          error: ''
+        };
+      }
+
       return {
         ...state,
         posts: [...state.posts, ...payload.posts],

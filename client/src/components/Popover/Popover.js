@@ -12,7 +12,6 @@ const Popover = ({ isPopoverOpen,
   className={isActivityFeed ? styles.activityFeed : styles.Popover}
   {...otherProps}
 >
-  {console.log(hideTriangle)}
   {!hideTriangle
   && <div className={styles.triangle} style={isActivityFeed ? { left: '94%' } : {}} />}
   <div className={styles.content}>{children}</div>

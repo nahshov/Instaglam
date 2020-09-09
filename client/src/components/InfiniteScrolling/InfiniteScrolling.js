@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 let page = 0;
 
 const InfiniteScrolling = ({ children }) => {
+  const [initialLoad, setInitialLoad] = useState(true);
   const { noMorePosts } = useSelector(state => state.posts);
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(false);
@@ -26,14 +27,18 @@ const InfiniteScrolling = ({ children }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    page = 0;
     dispatch(resetPosts());
-    dispatch(getAllPosts(page));
+    page = 0;
+    if (initialLoad) {
+      dispatch(getAllPosts(page, initialLoad));
+    }
     window.addEventListener('scroll', isScrolling);
+    setInitialLoad(false);
     return () => {
+      dispatch(resetPosts());
       window.removeEventListener('scroll', isScrolling);
     };
-  }, [dispatch]);
+  }, [dispatch, initialLoad]);
 
   useEffect(() => {
     if (isFetching && !noMorePosts) {

@@ -28,7 +28,7 @@ const ActivityFeed = () => {
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia('(max-width: 700px)');
-    mediaQueryList.addListener(() => {
+    mediaQueryList.addEventListener('change', () => {
       setHideTriangle(mediaQueryList.matches);
     });
   }, []);
