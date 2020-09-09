@@ -5,7 +5,6 @@
   @include flexCenter;
   flex-direction: column;
   align-content: center;
-  border: 5px dashed blue;
 }
 .firstRow, .fifthRow{
   color: darkslategray;
@@ -14,5 +13,4 @@
 
 .secondRow, .thirdRow, .fourthRow{
   font-weight: 400;
-  color: red;
 }

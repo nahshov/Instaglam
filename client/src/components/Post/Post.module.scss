@@ -4,7 +4,9 @@
 .container {
   width: 100%;
   display: flex;
-    @include respond(postModal){
+  border-bottom: 1px solid lightgray;
+
+  @include respond(postModal){
       overflow: auto;
       @include flexColumn;
       height: 100%;
@@ -26,6 +28,12 @@
     @include flexColumn;
     flex: 1;
     max-height: 600px;
+    width: 90%;
+
+    @include respond(postModal) {
+      width: 100%;
+    }
+
     .postContentContainer{
       width: 100%;
       height: 100%;

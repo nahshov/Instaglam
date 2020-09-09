@@ -47,7 +47,7 @@ const CommentForm = ({
     setCommentLoading(false);
   };
   return (
-    <form onSubmit={handleSubmit} className={styles.commentContainer}>
+    <form style={{ background: '#fff' }} onSubmit={handleSubmit} className={styles.commentContainer}>
       <textarea
         onBlur={() => {
           if (replyClicked && replyClicked.wasClicked) {
