@@ -23,7 +23,7 @@ const LikeActivity = ({
     postMedia = referredEntity.media;
     likeActivityText = 'liked your post.';
   } else {
-    postId = referredEntity.post._id;
+    postId = referredEntity.post;
     postMedia = referredEntity.post.media;
     likeActivityText = 'liked your comment.';
   }
