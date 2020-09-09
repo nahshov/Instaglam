@@ -47,7 +47,6 @@ const FollowModal = ({
   const title = type[0].toUpperCase() + type.substr(1);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (type === 'likes') {
       dispatch(getFollows(id, type, isComment))
@@ -78,6 +77,8 @@ const FollowModal = ({
     return Promise.resolve();
   };
 
+  window.type = type;
+
   return (
     <Modal isOpen={isModalOpen} setModalOpen={setIsModalOpen} {...otherProps}>
       <div className={styles.modalContainer}>
@@ -94,7 +95,7 @@ const FollowModal = ({
           !follows.length && !follows.loading
             ? (
               <ModalListItem>
-                {type === 'followers' && type !== 'likes' ? 'You do not have any followers yet...' : 'You are not following anyone yet...'}
+                No one likes this yet...
               </ModalListItem>
             )
             : (follows.map(f => (

@@ -59,7 +59,6 @@ export const togglePostOwnerFollow = (userId, isFollowed) => async dispatch => {
 
 // toggle like of a post
 export const togglePostLike = (postId, isLike) => {
-  console.log(postId, isLike);
   return async dispatch => {
     try {
       if (postId) {

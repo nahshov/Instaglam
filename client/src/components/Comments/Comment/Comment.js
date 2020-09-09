@@ -81,7 +81,10 @@ const Comment = (
                  {!shownReplies ? `View Replies(${filteredReply.length})` : 'Hide Replies' }
                </span>
              </button>
-               {shownReplies && filteredReply.map(reply => <Reply reply={reply} key={reply._id} />)}
+               {shownReplies && (
+                 filteredReply.map(reply => (
+                   <Reply setReplyClicked={setReplyClicked} reply={reply} key={reply._id} />
+                 )))}
            </>
          )}
       {isPostPage
@@ -90,7 +93,12 @@ const Comment = (
           <Link to={`/p/${postId}`}>
             <CreatedTime created={comment.created} isPost />
           </Link>
-          <NumOfLikes id={comment._id} likes={comment.numOfLikes} isSinglePost isComment />
+          <NumOfLikes
+            id={comment._id}
+            likes={comment.numOfLikes}
+            isSinglePost
+            isComment
+          />
           <Button
             style={{ margin: '0px 0px 0px 10px', padding: '0', fontSize: '13px', height: 'auto' }}
             btnRole="astext primary"

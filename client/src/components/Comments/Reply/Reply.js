@@ -22,6 +22,7 @@ const Reply = ({ reply, setReplyClicked }) => {
 
     setHeartClickLoading(false);
   });
+
   return (
     <div className={styles.reply}>
       <div className={styles.replyHeader}>
@@ -45,7 +46,12 @@ const Reply = ({ reply, setReplyClicked }) => {
                   <Link to={`/p/${reply.post}`}>
                     <CreatedTime style={{ margin: '0' }} created={reply.created} isPost />
                   </Link>
-                  <NumOfLikes id={reply.post} likes={reply.numOfLikes} isSinglePost />
+                  <NumOfLikes
+                    id={reply.replyToComment ? reply.replyToComment : reply.post}
+                    likes={reply.numOfLikes}
+                    isComment
+                    isSinglePost
+                  />
                   <Button
                     style={{ margin: '0px 0px 0px 10px', padding: '0' }}
                     btnRole="astext primary"
