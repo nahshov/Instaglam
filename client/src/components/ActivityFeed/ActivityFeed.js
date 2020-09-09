@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { authenticatedUserSelector } from 'actions/auth/authSelectors';
@@ -21,9 +21,17 @@ const ActivityFeed = () => {
   const [localLoading, setLocalLoading] = useState(true);
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
   const [isActivityFeedOpen, setIsActivityFeedOpen] = useState(false);
+  const [hideTriangle, setHideTriangle] = useState(false);
   const { user, userActivities } = useSelector(structuredActivitieFeedSelector);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const mediaQueryList = window.matchMedia('(max-width: 700px)');
+    mediaQueryList.addListener(() => {
+      setHideTriangle(mediaQueryList.matches);
+    });
+  }, []);
 
   return (
     (
@@ -51,6 +59,7 @@ const ActivityFeed = () => {
             <Popover
               isPopoverOpen
               isActivityFeed
+              hideTriangle={hideTriangle}
             >
               {localLoading
                 ? (

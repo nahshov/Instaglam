@@ -12,6 +12,7 @@
   box-shadow: $primary-box-shadow;
   border: 1px solid $primary-border-color;
   border-radius: 2px;
+  z-index: 1000;
 }
 
 .Popover {
@@ -54,9 +55,9 @@
   border-bottom: 15px solid $color-white;
   filter: drop-shadow($primary-box-shadow);
 
-  @include respond(phone) {
-    display: none;
-  }
+  // @include respond(phone) {
+  //   display: none;
+  // }
 }
 
 .content {

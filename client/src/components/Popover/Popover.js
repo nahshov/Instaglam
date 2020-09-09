@@ -5,19 +5,23 @@ import styles from './Popover.module.scss';
 const Popover = ({ isPopoverOpen,
   children,
   isActivityFeed = false,
+  hideTriangle = false,
   ...otherProps
 }) => isPopoverOpen && (
 <div
   className={isActivityFeed ? styles.activityFeed : styles.Popover}
   {...otherProps}
 >
-  <div className={styles.triangle} style={isActivityFeed ? { left: '94%' } : {}} />
+  {console.log(hideTriangle)}
+  {!hideTriangle
+  && <div className={styles.triangle} style={isActivityFeed ? { left: '94%' } : {}} />}
   <div className={styles.content}>{children}</div>
 </div>
 );
 
 Popover.defaultProps = {
-  isActivityFeed: false
+  isActivityFeed: false,
+  hideTriangle: false
 };
 
 Popover.propTypes = {
@@ -26,7 +30,8 @@ Popover.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  isActivityFeed: PropTypes.bool
+  isActivityFeed: PropTypes.bool,
+  hideTriangle: PropTypes.bool
 };
 
 export default Popover;
