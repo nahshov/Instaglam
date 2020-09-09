@@ -43,7 +43,7 @@ const Comment = (
   };
 
   return (
-    <div className={styles.comment}>
+    <div className={styles.comment} style={isPostPage ? { margin: '15px 0px' } : {}}>
       <div className={styles.commentHeader}>
         <div style={{ height: `${isPostPage ? 'auto' : ''}` }} className={styles.commentData}>
           {isPostPage && comment.user.profilePic && <ProfilePic url={comment.user.profilePic} size="medium" />}

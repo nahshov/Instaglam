@@ -46,12 +46,6 @@
 
 /* MEDIA QUERY MANAGER
 
-phones: 0 - 600px
-tablet-portrait: 600 - 900px
-tablet-landscape: 900 - 1200px
-desktop(first): 1200 - 1800px
-big desketop: 1800px +
-
 $breakpoint argument choices:
 - phone
 - tab-port
@@ -86,6 +80,12 @@ $breakpoint argument choices:
   @if $breakpoint == big-desktop {
     @media (min-width: 1800px) {
       @content;
+    }
+  }
+
+  @if $breakpoint == postModal {
+    @media (max-width: 1000px) {
+      @content
     }
   }
 }
