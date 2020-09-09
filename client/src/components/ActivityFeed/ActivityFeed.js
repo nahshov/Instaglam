@@ -26,7 +26,7 @@ const ActivityFeed = () => {
   const [isActivityFeedOpen, setIsActivityFeedOpen] = useState(false);
   const [hideTriangle, setHideTriangle] = useState(mediaQueryList.matches);
   const { user, userActivities } = useSelector(structuredActivitieFeedSelector);
-  window.isActivityFeedOpen = isActivityFeedOpen;
+
   const dispatch = useDispatch();
 
   const handleMediaQuery = () => {
