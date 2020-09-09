@@ -66,13 +66,13 @@ export const resetPosts = () => (dispatch) => {
 };
 
 // getAll posts
-export const getAllPosts = (page) => {
+export const getAllPosts = (page, initialLoad) => {
   return async dispatch => {
     try {
       const { data: posts } = await axios.get('/api/posts', { params: { includeComments: 2, page } });
       dispatch({
         type: SET_POSTS,
-        payload: { posts, noMorePosts: !posts.length }
+        payload: { posts, noMorePosts: !posts.length, initialLoad }
       });
     } catch (e) {
       dispatch({
@@ -88,7 +88,7 @@ export const submitAPost = (fd) => {
     try {
       await axios.post('/api/posts', fd);
       dispatch(loadUser());
-      window.location.reload();
+      dispatch(getAllPosts(0, true));
     } catch (e) {
       console.log(e);
     }

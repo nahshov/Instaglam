@@ -17,21 +17,40 @@ const structuredActivitieFeedSelector = createStructuredSelector({
   user: authenticatedUserSelector,
   userActivities: userActivitiesFeedSelector
 });
+
+const mediaQueryList = window.matchMedia('(max-width: 700px)');
+
 const ActivityFeed = () => {
   const [localLoading, setLocalLoading] = useState(true);
   const [isHeartIconFilled, setHeartIconFilled] = useState(false);
   const [isActivityFeedOpen, setIsActivityFeedOpen] = useState(false);
-  const [hideTriangle, setHideTriangle] = useState(false);
+  const [hideTriangle, setHideTriangle] = useState(mediaQueryList.matches);
   const { user, userActivities } = useSelector(structuredActivitieFeedSelector);
 
   const dispatch = useDispatch();
 
+  const handleMediaQuery = () => {
+    setHideTriangle(mediaQueryList.matches);
+
+    if ((mediaQueryList.matches || window.innerWidth < 700) && isActivityFeedOpen) {
+      document.body.setAttribute('style', 'overflow: hidden;');
+    } else {
+      document.body.removeAttribute('style');
+    }
+  };
+
   useEffect(() => {
-    const mediaQueryList = window.matchMedia('(max-width: 700px)');
-    mediaQueryList.addListener(() => {
-      setHideTriangle(mediaQueryList.matches);
-    });
-  }, []);
+    if (window.innerWidth < 700 && isActivityFeedOpen) {
+      document.body.setAttribute('style', 'overflow: hidden;');
+    } else {
+      document.body.removeAttribute('style');
+    }
+    mediaQueryList.addEventListener('change', handleMediaQuery);
+
+    return () => {
+      mediaQueryList.removeEventListener('change', handleMediaQuery);
+    };
+  }, [isActivityFeedOpen]);
 
   return (
     (

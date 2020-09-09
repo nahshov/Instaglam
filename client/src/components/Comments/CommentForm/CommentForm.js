@@ -9,8 +9,11 @@ import styles from './CommentForm.module.scss';
 const CommentForm = ({
   postId,
   isPostPage = false,
-  replyClicked,
-  setReplyClicked,
+  replyClicked = {
+    wasClicked: false,
+    parentCommentId: ''
+  },
+  setReplyClicked = () => {},
   isCommentBubbleClicked,
   setCommentBubbleClicked
 }) => {
@@ -81,7 +84,12 @@ const CommentForm = ({
 };
 
 CommentForm.defaultProps = {
-  isPostPage: false
+  isPostPage: false,
+  replyClicked: {
+    wasClicked: false,
+    parentCommentId: ''
+  },
+  setReplyClicked: () => {}
 };
 
 CommentForm.propTypes = {
@@ -90,10 +98,10 @@ CommentForm.propTypes = {
   replyClicked: PropTypes.shape({
     wasClicked: PropTypes.bool,
     parentCommentId: PropTypes.string
-  }).isRequired,
+  }),
   setReplyClicked: PropTypes.func,
-  isCommentBubbleClicked: PropTypes.bool,
-  setCommentBubbleClicked: PropTypes.func
+  isCommentBubbleClicked: PropTypes.bool.isRequired,
+  setCommentBubbleClicked: PropTypes.func.isRequired
 };
 
 export default CommentForm;
