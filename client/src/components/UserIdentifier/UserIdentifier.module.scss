@@ -1,0 +1,8 @@
+@import "../../styles/mixins.scss";
+
+.userIdentifier{
+  @include flexCenter;
+}
+.username{
+  margin-left: 10px;
+}

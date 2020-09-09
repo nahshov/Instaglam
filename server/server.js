@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { port } = require('./config');
+const { port, isProduction } = require('./config/index');
 const connect = require('./db');
 
 const app = express();
@@ -18,12 +18,13 @@ app.use(
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // error handling logic
+  console.log(err);
   res.status(400).send('Bad request');
 });
 
 require('./routes/index.js')(app);
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {

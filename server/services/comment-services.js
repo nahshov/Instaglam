@@ -4,17 +4,18 @@ function getComment(commentId) {
   return Comment.findOne({ _id: commentId });
 }
 
-function getCommentsOfPost(postId) {
-  return Comment.find({ post: postId });
+function getCommentsOfPost(postId, includeComments = undefined) {
+  return Comment.find({ post: postId }, null, { sort: '-created', limit: includeComments })
+    .populate('user', 'username profilePic');
 }
 
 function getRepliesOfComment(commentId) {
   return Comment.find({ replyToComment: commentId });
 }
 
-function addComment(comment) {
+async function addComment(comment) {
   comment = new Comment(comment);
-  return comment.save();
+  return comment.save().then(c => c.populate('user -_id', 'username profilePic').execPopulate());
 }
 
 function removeComment(commentId) {

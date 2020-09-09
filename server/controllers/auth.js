@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const { refreshTokenSecret } = require('../config');
+const { refreshTokenSecret } = require('../config/index');
 const {
   verifyPassword,
   getUser,
@@ -19,7 +19,7 @@ const login = async (req, res) => {
     if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
     const { email, password } = req.body || {};
-    const user = await getUser(email);
+    const user = await getUser(email.toLowerCase());
 
     if (!user) {
       return serverResponse(res, 401, {
@@ -67,8 +67,9 @@ const register = async (req, res) => {
 
     if (!errors.isEmpty()) return serverResponse(res, 400, { errors: errors.array() });
 
-    const exists = await getUser(req.body.email);
-    const userNameExists = await getUser(req.body.username);
+    const exists = await getUser(req.body.email.toLowerCase());
+
+    const usernameExists = await getUser(req.body.username);
 
     if (exists) {
       return serverResponse(res, 400, {
@@ -76,13 +77,20 @@ const register = async (req, res) => {
       });
     }
 
-    if (userNameExists) {
+    if (usernameExists) {
       return serverResponse(res, 400, {
         errors: "This username isn't available. Please try another."
       });
     }
 
-    const user = await createUser(req.body);
+    if (req.body.username.length > 20) {
+      return serverResponse(res, 400, {
+        errors: 'Username should be shorter than 20 characters.'
+      });
+    }
+
+    const userWithLowerCasedEmail = { ...req.body, email: req.body.email.toLowerCase() };
+    const user = await createUser(userWithLowerCasedEmail);
 
     const userAgent = req.headers['user-agent'];
 

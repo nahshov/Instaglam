@@ -10,11 +10,9 @@ import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
 import ErrorIcon from 'components/Icons/ErrorIcon/ErrorIcon';
 import CheckIcon from 'components/Icons/CheckIcon/CheckIcon';
 import { register } from 'actions/auth/authActions';
-import { setAlert } from 'actions/alerts/alertActions';
 import styles from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
-  const [hasAccount] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [signUpForm, setSignUpForm] = useState({
     email: '',
@@ -22,15 +20,15 @@ const SignUpForm = () => {
     username: '',
     password: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [signUpAlert, setSignUpAlert] = useState('');
   const [emailCheckOrError, setEmailCheckOrError] = useState('');
   const [fullNameCheckOrError, setFullNameCheckOrError] = useState('');
   const [usernameCheckOrError, setUsernameCheckOrError] = useState('');
   const [passwordCheckOrError, setPasswordCheckOrError] = useState('');
+
   const {
-    auth: { isAuthenticated, loading },
-    alert
-  } = useSelector(state => state);
+    isAuthenticated, loading
+  } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -62,28 +60,27 @@ const SignUpForm = () => {
     } else {
       setPasswordCheckOrError('');
     }
-  }, [signUpForm]);
+  }, [signUpForm, usernameCheckOrError]);
 
   const checkDisabled = () => Object.values(signUpForm).some(
     value => !value || signUpForm.password.length < 6
   );
 
   const handleChange = e => {
-    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.value });
+    setSignUpForm({ ...signUpForm, [e.target.name]: e.target.name === 'email' ? e.target.value.toLowerCase() : e.target.value });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     if (!isEmail(signUpForm.email)) {
-      dispatch(setAlert('Enter a valid email address.', 'Error'));
+      setSignUpAlert('Enter a valid email address.');
     } else if (signUpForm.password.length < 6) {
-      dispatch(setAlert('Create a password at least 6 characters long.'));
+      setSignUpAlert('Create a password at least 6 characters long.');
     } else if (!signUpForm.fullName || !signUpForm.username) {
-      dispatch(setAlert('Full Name/Username are required fields'));
+      setSignUpAlert('Full Name/Username are required fields');
     } else {
-      setIsLoading(true);
-      dispatch(register(signUpForm));
-      dispatch(setAlert('', null));
+      dispatch(register(signUpForm, setSignUpAlert));
+      setSignUpAlert('');
     }
   };
 
@@ -95,14 +92,14 @@ const SignUpForm = () => {
 
   const inputType = showPass ? 'text' : 'password';
   const buttonText = showPass ? 'Hide' : 'Show';
-  const emailValidationIcon = alert.message !== `Another account is using ${signUpForm.email}`
+  const emailValidationIcon = signUpAlert !== `Another account is using ${signUpForm.email}`
     && emailCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
       <ErrorIcon />
     );
 
-  const usernameValidationIcon = alert.message !== "This username isn't available. Please try another."
+  const usernameValidationIcon = signUpAlert !== "This username isn't available. Please try another."
     && usernameCheckOrError === 'Check' ? (
       <CheckIcon />
     ) : (
@@ -112,7 +109,7 @@ const SignUpForm = () => {
   return (
     <div className={styles.authWrapper}>
       <div className={styles.authDiv}>
-        <AuthHeader hasAccount={hasAccount} />
+        <AuthHeader hasAccount />
         <form className={styles.authForm} onSubmit={handleSubmit}>
           <InputField
             placeHolderText="Email"
@@ -180,15 +177,19 @@ const SignUpForm = () => {
           <Button
             type="submit"
             disabled={checkDisabled()}
-            isLoading={!loading ? false : isLoading}
+            isLoading={loading}
             btnRole="primary btnBlock"
           >
             Sign Up
           </Button>
-          {alert.message && <Alert alerts={alert.message} />}
+          {signUpAlert && <Alert>{signUpAlert}</Alert>}
         </form>
       </div>
-      <AuthSwitch hasAccountText="Have an account?" linkText="Log in" />
+      <AuthSwitch
+        hasAccountText="Have an account?"
+        linkText="Log in"
+        onClick={() => setSignUpAlert('')}
+      />
     </div>
   );
 };

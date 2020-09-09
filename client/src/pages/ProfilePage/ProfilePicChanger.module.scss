@@ -1,0 +1,53 @@
+@import '../../styles/typography.scss';
+@import '../../styles/color-palette.scss';
+@import '../../styles/mixins.scss';
+
+.profilePageProfilePic {
+  @include flexColumn;
+  border-radius: 50%;
+  grid-area: profilePic;
+  @include respond(phablet) {
+    height: 77px;
+  }
+
+  @include respond(phone) {
+    align-items: flex-start;
+
+  }
+
+  .changeProfilePicButton {
+    cursor: pointer;
+    display: inline-block;
+
+    .profilePic {
+      display: inline-flex;
+      @include flexCenter;
+
+
+      img {
+        border-radius: 50%;
+        border: 1px solid $primary-border-color;
+        width: 150px;
+        height: 150px;
+
+        @include respond(phablet) {
+          height: 77px;
+          width: 77px;
+        }
+
+        @include respond(phone) {
+          height: 77px;
+          width: 77px;
+        }
+
+
+      }
+    }
+  }
+}
+
+.uploadPhoto {
+  color: $primary-color;
+  cursor: pointer;
+  font-weight: bold;
+}

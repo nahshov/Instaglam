@@ -1,0 +1,29 @@
+@import '../../../styles/color-palette.scss';
+
+.reply {
+    display: flex;
+    margin-left: 38px;
+    .replyHeader{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      flex: 1;
+      padding: 5px 9px;
+      
+      .replyData {
+        display: flex;
+         .postPageUsername {
+          padding-left: 10px;
+          font-weight: bold;
+         }
+      }
+    
+    }
+    .replyActions{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+} 

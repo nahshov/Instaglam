@@ -3,91 +3,37 @@
 @import '../../styles/mixins.scss';
 
 .main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 
   .container {
     @include container;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
-    .profileHeader {
-      display: flex;
-      border-bottom: 1px solid $primary-border-color;
-      padding-bottom: 40px;
-
-      .profilePageProfilePic {
-        @include flexColumn;
-        width: 30%;
-        margin-right: 30px;
-        min-height: 240px;
-        border-radius: 50%;
-
-
-        .changeProfilePicButton {
-          cursor: pointer;
-          display: inline-block;
-
-          .profilePic {
-            display: inline-flex;
-            @include flexCenter;
-
-            img {
-              border-radius: 50%;
-              border: 1px solid $primary-border-color;
-              width: 150px;
-              height: 150px;
-            }
-          }
-        }
-      }
-
-      .profileInfo {
-        display: flex;
-        flex-direction: column;
-        width: 35%;
-
-        .profileInfoHeader {
-          display: flex;
-          align-items: center;
-          font-size: $button-text;
-          margin-bottom: 10px;
-
-          .username {
-            font-size: $secondary-heading;
-            font-weight: 400;
-          }
-
-          .editLink {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-          }
-
-          .logoutBtn {
-            padding: 3px 5px;
-            margin-left: 5px;
-          }
-        }
-
-        .socialStatusList {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 20px;
-
-          & li > {
-            display: flex;
-            margin-right: 40px;
-          }
-        }
-
-        .bioContainer {
-          .fullName {
-            margin-bottom: 10px;
-          }
-        }
-      }
+    @include respond(tab-port) {
+      width: 100%;
+      padding: 30px 20px 0;
     }
+
+    @include respond(phablet) {
+      width: 90%;
+      padding: 0;
+    }
+
+    @include respond(phone) {
+      width: 90%;
+      padding: 0;
+    }
+
   }
+}
+
+.socialStatusList {
+  grid-area: socialStatusList;
 }
 
 .uploadPhoto {
@@ -97,4 +43,11 @@
   color: $primary-color;
   cursor: pointer;
   width: 100%;
+}
+
+.noPostsUploaded {
+  color: rgba($secondary-text-color, 0.7);
+  padding: 30px;
+  height: 70%;
+  background: rgba($secondary-background, 0.7);
 }

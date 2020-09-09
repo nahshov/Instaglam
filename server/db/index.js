@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { mongoUri } = require('../config');
+const { mongoUri } = require('../config/index');
 
 module.exports = async function connect() {
   require('../models/User');

@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import FollowModal from 'components/Modals/FollowModal/FollowModal';
-import { getFollowers, getFollowing } from 'actions/follows/followActions';
-import styles from './ProfilePage.module.scss';
+import styles from './SocialStatusList.module.scss';
 
-const SocialStatusList = ({ postCount, userId = '' }) => {
-  const dispatch = useDispatch();
+const SocialStatusList = ({ postCount, followingCount, followersCount, userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [follow, setFollow] = useState({
-    title: ''
-  });
-
-  const { followers, following } = useSelector(state => state.follow);
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(getFollowers(userId));
-      dispatch(getFollowing(userId));
-    }
-  }, [userId]);
+  const [modalType, setModalType] = useState('');
 
   return (
     <ul className={styles.socialStatusList}>
       <li>
-        <div>
+        <div className={styles.postCount}>
           {postCount}
           {' '}
           posts
@@ -35,13 +21,11 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
         <Button
           btnRole="astext"
           onClick={() => {
-            setFollow({
-              title: 'Followers'
-            });
+            setModalType('Followers');
             setIsModalOpen(true);
           }}
         >
-          {`${followers.length || ''} `}
+          {`${followersCount || 0} `}
           {' '}
           followers
         </Button>
@@ -50,35 +34,33 @@ const SocialStatusList = ({ postCount, userId = '' }) => {
         <Button
           btnRole="astext"
           onClick={() => {
-            setFollow({
-              title: 'Following'
-            });
+            setModalType('Following');
             setIsModalOpen(true);
           }}
         >
-          {`${following.length || ''}`}
+          {`${followingCount || 0}`}
           {' '}
           following
         </Button>
       </li>
-      {isModalOpen && (
+      {isModalOpen && modalType && userId && (
         <FollowModal
-          title={follow.title}
+          userId={userId}
+          type={modalType}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          isAnimated
         />
       )}
     </ul>
   );
 };
 
-SocialStatusList.defaultProps = {
-  userId: PropTypes.string
-};
-
 SocialStatusList.propTypes = {
   postCount: PropTypes.number.isRequired,
-  userId: PropTypes.string
+  followingCount: PropTypes.number.isRequired,
+  followersCount: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
 export default SocialStatusList;

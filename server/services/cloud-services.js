@@ -1,6 +1,6 @@
 const { Storage } = require('@google-cloud/storage');
 const replaceFileNameWithUUID = require('../utils/replaceFileName');
-const { googleStorage } = require('../config');
+const { googleStorage } = require('../config/index');
 
 const gc = new Storage(googleStorage.config);
 

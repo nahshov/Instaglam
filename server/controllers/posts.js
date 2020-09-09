@@ -7,7 +7,14 @@ const {
   getAllPosts
 } = require('../services/post-services.js');
 
-const { removeLikesFromPost, removeLikesFromComment } = require('../services/like-services');
+const {
+  removeLikesFromPost,
+  removeLikesFromComment,
+  // getPostLikes,
+  arePostsLiked,
+  isPostLiked,
+  areCommentsLiked
+} = require('../services/like-services');
 
 const {
   getCommentsOfPost, removeAllPostComments
@@ -18,6 +25,7 @@ const serverResponse = require('../utils/serverResponse');
 const { uploadFile, deleteFile } = require('../services/cloud-services');
 const formatImage = require('../utils/formatMedia.js');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
+const { isFollowed } = require('../services/follow-services.js');
 
 // @route  POST '/api/posts'
 // @desc   Submit a posts
@@ -49,13 +57,33 @@ const submitPost = async (req, res) => {
 // @access private
 const getPosts = async (req, res) => {
   try {
-    const posts = await getAllPosts(req.query.limit, req.query.skip);
+    const userId = req.user.sub;
+    const limit = 2;
+    const skip = limit * +req.query.page;
+    const posts = await getAllPosts(limit, skip);
+    const postsIds = posts.map(p => p._id);
+    const [postLikes, postsComments] = await Promise.all([
+      arePostsLiked(userId, postsIds),
+      Promise.all(
+        postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
+      )
+
+    ]);
+    const commentsIds = postsComments.flat().map(c => c._id);
+    const commentLiked = await areCommentsLiked(userId, commentsIds);
 
     if (posts.length === 0) {
-      return serverResponse(res, 404, { message: 'No posts found' });
+      return serverResponse(res, 200, []);
     }
 
-    return serverResponse(res, 200, posts);
+    return serverResponse(res, 200, posts.map((post, index) => (
+      {
+        ...post.toObject(),
+        isPostLiked: postLikes[post._id],
+        comments: postsComments[index].map(
+          comment => ({ ...comment.toObject(), isCommentLiked: commentLiked[comment._id] })
+        )
+      })));
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'internal error while trying to get posts'
@@ -68,9 +96,37 @@ const getPosts = async (req, res) => {
 // @access private
 const getPostsOfAUser = async (req, res) => {
   try {
-    const posts = await getAllPostsOfUser(req.params.userInfo);
+    const posts = await getAllPostsOfUser(req.params.userInfo, +req.query.limit);
 
-    return serverResponse(res, 200, posts);
+    if (posts.length === 0) {
+      return serverResponse(res, 200, []);
+    }
+
+    const postsIds = posts.map(p => p._id);
+    const [postLikes, postsComments] = await Promise.all([
+      arePostsLiked(req.user.sub, postsIds),
+      Promise.all(
+        postsIds.map(id => getCommentsOfPost(id, +req.query.includeComments || undefined))
+      )
+
+    ]);
+    const commentsIds = postsComments.flat().map(c => c._id);
+    const commentLiked = await areCommentsLiked(req.user.sub, commentsIds);
+
+    const postsOfUser = await Promise.all(posts.map(async (post, index) => (
+      {
+        ...post.toObject(),
+        isPostLiked: postLikes[post._id],
+        comments: postsComments[index].map(
+          comment => ({ ...comment.toObject(), isCommentLiked: commentLiked[comment._id] })
+        ),
+        user: {
+          ...post.user.toObject(),
+          isFollowed: await isFollowed(req.user.sub, post.user._id)
+        }
+      })));
+
+    return serverResponse(res, 200, postsOfUser);
   } catch (e) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to get posts'
@@ -82,8 +138,18 @@ const getPostsOfAUser = async (req, res) => {
 // @desc   Get one post, with post id
 // @access private
 const getOnePost = async (req, res) => {
+  const { postId } = req.params;
+  const userId = req.user.sub;
+  // const limit = 5;
+  // const skip = limit * +req.query.page;
   try {
-    const post = await getPost(req.params.postId);
+    const [post, isUserLike, postComments] = await Promise.all([
+      getPost(postId),
+      isPostLiked(userId, postId),
+      getCommentsOfPost(postId)
+    ]);
+    const commentsIds = postComments.flat().map(c => c._id);
+    const commentLiked = await areCommentsLiked(userId, commentsIds);
 
     if (!post) {
       return serverResponse(res, 404, {
@@ -91,7 +157,18 @@ const getOnePost = async (req, res) => {
       });
     }
 
-    return serverResponse(res, 200, post);
+    return serverResponse(res, 200, {
+      ...post.toObject(),
+      isPostLiked: isUserLike,
+      user: {
+        ...post.user.toObject(),
+        isFollowed: await isFollowed(req.user.sub, post.user._id)
+      },
+      comments: postComments.map(
+        comment => ({ ...comment.toObject(), isCommentLiked: !!commentLiked[comment._id] })
+      )
+
+    });
   } catch (e) {
     res
       .status(500)
@@ -121,7 +198,9 @@ const deletePost = async (req, res) => {
 
     const comments = await getCommentsOfPost(req.params.postId);
 
-    const removeLikesFromCommentPromises = comments.map(async comment => removeLikesFromComment(comment._id));
+    const removeLikesFromCommentPromises = comments.map(
+      async comment => removeLikesFromComment(comment._id)
+    );
 
     await Promise.all([removeLikesFromPost(req.params.postId),
       removeAllPostComments(req.params.postId),

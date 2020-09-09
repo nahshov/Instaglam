@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styles from 'components/SearchInput/SearchInput.module.scss';
-import { searchUsers } from 'actions/users/userActions';
+import { searchUsers } from 'actions/search/searchActions';
 import Popover from 'components/Popover/Popover';
 import PopoverList from 'components/Popover/PopoverList';
 import PopoverListItem from 'components/Popover/PopoverListItem';
@@ -15,7 +15,7 @@ import { useDebouncedCallback } from 'use-debounce';
 const SearchInput = () => {
   const [value, setValue] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { users, usersLoading, error } = useSelector((state) => state.users);
+  const { users, usersLoading, error } = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -59,6 +59,7 @@ const SearchInput = () => {
                     <LoadingSpinner className={styles.searchProfilePic} />
                   ) : (
                     <ProfilePic
+                      size="medium"
                       url={user.profilePic}
                       className={styles.searchProfilePic}
                     />
@@ -79,6 +80,7 @@ const SearchInput = () => {
         required
         onFocus={() => value && setIsPopoverOpen(true)}
         onBlur={() => setIsPopoverOpen(false)}
+        autoComplete="off"
       />
       <label htmlFor="searchInput" className={styles.searchLabel}>
         <div>

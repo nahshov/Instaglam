@@ -1,16 +1,13 @@
 import {
-  GET_FOLLOWERS,
-  GET_FOLLOWING,
-  RESET_FOLLOWERS_LOADING,
-  RESET_FOLLOWING_LOADING,
-  FOLLOWERS_ERROR, FOLLOWING_ERROR
+  SET_FOLLOWS,
+  SET_FOLLOWS_LOADING,
+  TOGGLE_FOLLOWS,
+  RESET_FOLLOWS
 } from 'actions/follows/followTypes';
 
 const initialState = {
-  followersLoading: true,
-  followers: [],
-  followingLoading: true,
-  following: [],
+  follows: [],
+  followsLoading: true,
   error: ''
 };
 
@@ -18,40 +15,33 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_FOLLOWERS:
+    case SET_FOLLOWS:
       return {
         ...state,
-        followersLoading: false,
-        followers: payload
+        followsLoading: false,
+        follows: payload
       };
-    case RESET_FOLLOWERS_LOADING:
+    case SET_FOLLOWS_LOADING:
       return {
         ...state,
-        error: 'Error loading followers',
-        followers: []
+        followsLoading: payload
       };
-    case FOLLOWERS_ERROR:
+    case TOGGLE_FOLLOWS:
       return {
         ...state,
-        error: 'Error loading following',
-        followers: []
+        followsLoading: false,
+        follows: state.follows.map(f => {
+          if (payload.userId === f._id) {
+            return { ...f, isFollowed: payload.isFollowed };
+          }
+          return f;
+        })
       };
-    case GET_FOLLOWING:
+    case RESET_FOLLOWS:
       return {
-        ...state,
-        followingLoading: false,
-        following: payload
-      };
-    case RESET_FOLLOWING_LOADING:
-      return {
-        ...state,
-        followersLoading: true
-      };
-    case FOLLOWING_ERROR:
-      return {
-        ...state,
-        followingLoading: false,
-        following: []
+        follows: [],
+        followsLoading: true,
+        error: ''
       };
     default:
       return state;

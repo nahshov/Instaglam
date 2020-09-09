@@ -3,7 +3,10 @@
 @import '../../styles/animations';
 
 .modalShadow {
-  @include flexCenter;
+  //@include flexCenter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   left: 0;
   top: 0;
@@ -24,4 +27,6 @@
   z-index: 2;
   opacity: 1;
   animation: popup 0.03s ease-in-out;
+  border-radius: 10px;
+  overflow: hidden;
 }

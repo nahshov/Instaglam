@@ -1,0 +1,56 @@
+@import '../../styles/mixins.scss';
+
+.activityWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  span {
+    white-space: normal;
+    text-overflow: initial;
+  }
+}
+
+.activityContentWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.activityContent {
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+
+  div {
+    margin: 0px;
+    width: auto;
+  }
+}
+
+.activityProfilePicDiv {
+  width: 45px;
+  display: flex;
+  margin-right: 20px;
+
+  img {
+    width: inherit;
+    border-radius: 100%;
+  }
+
+  @include respond(phone) {
+    margin-right: 16px;
+  }
+}
+
+.activityUsernamesText {
+  font-weight: 600;
+}
+
+.activityMedia {
+  display: flex;
+
+  img {
+    width: 45px;
+  }
+}

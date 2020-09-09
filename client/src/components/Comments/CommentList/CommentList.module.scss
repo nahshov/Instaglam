@@ -1,0 +1,13 @@
+@import '../../../styles/color-palette.scss';
+
+.commentContainer{
+  width: 100%;
+  height: 100%;
+  .commentListWrapper{
+    width: 100%;
+    button{
+      color: $secondary-text-color;
+    }
+  }
+
+}

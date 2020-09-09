@@ -4,12 +4,17 @@
 
 .headerPostContainer{
   margin-top: 5px;
+  margin-left: 10px;
+  @include respond(phone){
+    width: 100%;
+  };
+
       
   .postHeader{
       @include flexSpaceBetween;
       width: 100%;
-      .userIdentifier{
-        @include flexCenter;
-    }
   }
+  .moreIcon{
+    font-size: 22px;
+}
 }

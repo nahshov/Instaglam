@@ -12,13 +12,18 @@ const Button = ({
 }) => {
   const classes = btnRole
     .split(' ')
-    .map((btnClass) => styles[btnClass])
+    .map((btnClass) => { return styles[btnClass]; })
     .join(' ');
-
   return (
     <div className={`${styles.btn} ${classes}`}>
       <button {...otherProps}>
-        {isLoading ? <LoadingSpinner /> : children}
+        {isLoading
+          ? (
+            <div className={styles.buttonLoadingSpinner}>
+              <LoadingSpinner />
+            </div>
+          )
+          : children}
       </button>
     </div>
   );

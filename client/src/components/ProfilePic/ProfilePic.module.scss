@@ -24,12 +24,15 @@
     }
 }
 
-.ProfilePic.small{
+.ProfilePic.medium{
+  height: 31px;
+  width: 31px;
+  
   img{
     height: 30px;
     width: 30px;
     border-radius: 100%;
-    margin-right: 10px;
-    margin-left: 10px;
+    //margin-right: 10px;
+    //margin-left: 20px;
   }
 }

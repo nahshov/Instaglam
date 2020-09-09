@@ -1,0 +1,39 @@
+@import "../../styles/color-palette.scss";
+@import "../../styles/typography.scss";
+
+.heartIcon {
+  font-size: $icon-medium-large;
+}
+
+.notFound {
+  color: $secondary-text-color;
+  padding: 5px;
+}
+
+.loadingSpinnerDiv {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  cursor: default;
+
+  img {
+    width: 50px;
+  }
+}
+
+.activityFeedWrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.popoverWrapper {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  cursor: default;
+  overflow: hidden;
+}

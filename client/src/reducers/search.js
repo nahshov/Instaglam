@@ -1,22 +1,18 @@
 import {
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS_FAIL,
-  SEARCH_SINGLE_USER_SUCCESS,
-  SEARCH_SINGLE_USER_FAIL,
-  RESET_LOADING
-} from 'actions/users/userTypes';
+  RESET_USERS_LOADING,
+  RESET_USERS
+} from '../actions/search/searchTypes';
 
 const initialState = {
   users: [],
   usersLoading: true,
-  user: {},
-  userLoading: true,
   error: ''
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
   switch (type) {
     case SEARCH_USERS_SUCCESS:
       return {
@@ -32,26 +28,17 @@ export default function (state = initialState, action) {
         usersLoading: false,
         error: payload
       };
-    case SEARCH_SINGLE_USER_SUCCESS:
+    case RESET_USERS_LOADING:
       return {
         ...state,
-        user: payload,
-        userLoading: false,
-        error: ''
-      };
-    case SEARCH_SINGLE_USER_FAIL:
-      return {
-        ...state,
-        user: {},
-        userLoading: false,
-        error: payload
-      };
-    case RESET_LOADING:
-      return {
-        ...state,
-        userLoading: true,
         usersLoading: true
       };
+    case RESET_USERS: {
+      return {
+        users: [],
+        usersLoading: true
+      };
+    }
     default:
       return state;
   }

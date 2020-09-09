@@ -3,12 +3,18 @@ const {
   getCommentLikes,
   addLikeToPost,
   addLikeToComment,
-  removeLike
+  removeLikeFromAPost,
+  removeLikeFromAComment,
+  getPostLikers,
+  getCommentLikers
 } = require('../services/like-services');
 
 const { getComment } = require('../services/comment-services');
 const serverResponse = require('../utils/serverResponse');
 const { getPost } = require('../services/post-services');
+const { likesOnPostListener, removeLikeOnPostListener } = require('../listeners/activityListeners/likesOnPostListeners');
+const { likesOnCommentListener, removeLikeOnCommentListener } = require('../listeners/activityListeners/likesOnCommentListeners');
+const { activityEmitter } = require('../events/events');
 
 // @route   GET '/api/posts/:postId/likes'
 // @desc    Get likes of a specific post
@@ -24,6 +30,48 @@ const getLikesOfPost = async (req, res) => {
     const likes = await getPostLikes(req.params.postId);
 
     return serverResponse(res, 200, likes);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get likes'
+    });
+  }
+};
+
+// @route   GET '/api/posts/:postId/likes/users'
+// @desc    Get all users who liked a specific post
+// @access  private
+const getLikersOfPost = async (req, res) => {
+  try {
+    const post = await getPost(req.params.postId);
+
+    if (!post) {
+      return serverResponse(res, 404, { message: "Post doesn't exist" });
+    }
+
+    const likers = await getPostLikers(req.params.postId, req.user.sub);
+
+    return serverResponse(res, 200, likers);
+  } catch (error) {
+    return serverResponse(res, 500, {
+      message: 'Internal error while trying to get likes'
+    });
+  }
+};
+
+// @route   GET '/api/comments/:commentId/likes/users'
+// @desc    Get all users who liked a specific post
+// @access  private
+const getLikersOfComment = async (req, res) => {
+  try {
+    const comment = await getComment(req.params.commentId);
+
+    if (!comment) {
+      return serverResponse(res, 404, { message: "Comment doesn't exist" });
+    }
+
+    const likers = await getCommentLikers(req.params.commentId, req.user.sub);
+
+    return serverResponse(res, 200, likers);
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to get likes'
@@ -51,8 +99,20 @@ const addLikeToAPost = async (req, res) => {
       return serverResponse(res, 400, { message: 'Post already liked' });
     }
 
-    post.likes++;
+    post.numOfLikes++;
     await post.save();
+
+    if (post.user._id.toString() !== req.user.sub) {
+      await likesOnPostListener;
+
+      activityEmitter.emit('postLike', {
+        post: req.params.postId,
+        postBy: post.user,
+        liker: req.user.sub,
+        likeId: like._id,
+        created: new Date()
+      });
+    }
 
     return serverResponse(res, 200, like);
   } catch (error) {
@@ -67,7 +127,7 @@ const addLikeToAPost = async (req, res) => {
 // @access  private
 const deleteLikeFromAPost = async (req, res) => {
   try {
-    const like = await removeLike(req.params.likeId);
+    const like = await removeLikeFromAPost(req.params.postId, req.user.sub);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
@@ -75,10 +135,14 @@ const deleteLikeFromAPost = async (req, res) => {
 
     const post = await getPost(req.params.postId);
 
-    post.likes--;
+    post.numOfLikes--;
     await post.save();
 
-    return serverResponse(res, 200, like);
+    await removeLikeOnPostListener;
+
+    activityEmitter.emit('deletePostLike', { likeId: like._id, postId: req.params.postId });
+
+    return serverResponse(res, 200, { message: 'Like successfully removed' });
   } catch (error) {
     return serverResponse(res, 500, {
       message: 'Internal error while trying to remove a like'
@@ -127,7 +191,18 @@ const addLikeToAComment = async (req, res) => {
       return serverResponse(res, 400, { message: 'Comment already liked' });
     }
 
-    comment.likes++;
+    if (comment.user._id.toString() !== req.user.sub) {
+      await likesOnCommentListener;
+
+      activityEmitter.emit('commentLike', {
+        comment: req.params.commentId,
+        commentBy: comment.user,
+        liker: req.user.sub,
+        likeId: like._id,
+        created: new Date()
+      });
+    }
+    comment.numOfLikes++;
     await comment.save();
 
     return serverResponse(res, 200, like);
@@ -143,7 +218,7 @@ const addLikeToAComment = async (req, res) => {
 // @access  private
 const deleteLikeFromAComment = async (req, res) => {
   try {
-    const like = await removeLike(req.params.likeId);
+    const like = await removeLikeFromAComment(req.params.commentId, req.user.sub);
 
     if (!like) {
       return serverResponse(res, 404, { message: "Like doesn't exist" });
@@ -151,8 +226,12 @@ const deleteLikeFromAComment = async (req, res) => {
 
     const comment = await getComment(req.params.commentId);
 
-    comment.likes--;
+    comment.numOfLikes--;
     await comment.save();
+
+    await removeLikeOnCommentListener;
+
+    activityEmitter.emit('deleteCommentLike', { likeId: like._id, commentId: req.params.commentId });
 
     return serverResponse(res, 200, like);
   } catch (error) {
@@ -164,6 +243,8 @@ const deleteLikeFromAComment = async (req, res) => {
 
 module.exports = {
   getLikesOfPost,
+  getLikersOfPost,
+  getLikersOfComment,
   addLikeToAPost,
   deleteLikeFromAPost,
   getLikesOfComment,

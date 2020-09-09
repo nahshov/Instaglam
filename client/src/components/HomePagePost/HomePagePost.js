@@ -1,53 +1,84 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RiChat3Line } from 'react-icons/ri';
-import { GrBookmark } from 'react-icons/gr';
-import HeartIcon from 'components/Icons/HeartIcon/HeartIcon';
-import ShareModalIcon from 'components/Icons/ChatIcon/ChatIcon';
 import HomePagePostHeader from 'components/HomePagePost/HomePagePostHeader/HomePagePostHeader';
+import HomePagePostMedia from 'components/HomePagePost/HomePagePostMedia/HomePagePostMedia';
+import HomePagePostIconBar from 'components/HomePagePost/HomePagePostIconsBar/HomePagePostIconBar';
+import NumOfLikes from 'components/HomePagePost/NumOfLikes/NumOfLikes';
+import HomePagePostContent from 'components/HomePagePost/HomePagePostContent/HomePagePostContent';
+import CreatedTime from 'components/CreatedTime/CreatedTime';
+import CommentForm from 'components/Comments/CommentForm/CommentForm';
+import CommentList from 'components/Comments/CommentList/CommentList';
 import { postPropType } from 'customPropTypes';
 import styles from './HomePagePost.module.scss';
+import ViewAllComments from '../Comments/ViewAllComments/ViewAllComments';
+import PostModal from '../Modals/PostModal/PostModal';
 
-const HomePagePost = ({ post: { likes, comments, content, user: { username = '', profilePic = '' }, media, created, _id } }) => {
-  const handleSubmit = e => {
-    e.preventDefault();
-  };
-  const [isHeartIconFilled, setHeartIconFilled] = useState(false);
+const HomePagePost = ({
+  post
+}) => {
+  const {
+    numOfLikes,
+    numOfComments,
+    content,
+    user: {
+      username = '',
+      profilePic = ''
+    },
+    media,
+    created,
+    _id: postId,
+    isPostLiked,
+    comments
+  } = post;
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isCommentBubbleClicked, setCommentBubbleClicked] = useState(false);
 
   return (
-
     <article className={styles.postContainer}>
-      <HomePagePostHeader username={username} profilePic={profilePic} _id={_id} />
-      <img alt="post media" src={media} className={styles.postPicture} />
-      <div className={styles.iconsWrapper}>
-        <div className={styles.leftIconsWrapper}>
-          <HeartIcon
-            isActive={isHeartIconFilled}
-            isLike
-            onClick={() => setHeartIconFilled(!isHeartIconFilled)}
-          />
-          <RiChat3Line className={styles.chatIcon} />
-          <ShareModalIcon className={styles.ShareModalIcon} />
-        </div>
-        <GrBookmark className={styles.bookMark} />
-      </div>
-      <div className={styles.likesAmount}>
-        {likes}
-        &nbsp;likes
-      </div>
-      <div className={styles.postContentContainer}>
-        <Link to={`/${username}`}>
-          <span className={styles.username}>
-            {username}
-          </span>
-        </Link>
-        <span>{content}</span>
-      </div>
-      <Link to="/" className={styles.postAge}>*** ***** AGO</Link>
-      <form onSubmit={handleSubmit} className={styles.commentContainer}>
-        <textarea id="commentTextArea" placeholder="Add a comment" className={styles.commentInput} />
-        <button type="submit" className={styles.postButton}>Post</button>
-      </form>
+      <HomePagePostHeader
+        username={username}
+        profilePic={profilePic}
+        postId={postId}
+        className={styles.postHeader}
+      />
+      <HomePagePostMedia media={media} isLike={isPostLiked} postId={postId} />
+      <HomePagePostIconBar
+        isCommentBubbleClicked={isCommentBubbleClicked}
+        setCommentBubbleClicked={setCommentBubbleClicked}
+        isLike={isPostLiked}
+        postId={postId}
+      />
+      <NumOfLikes
+        likes={numOfLikes}
+        username={username}
+        profilePic={profilePic}
+        id={postId}
+      />
+      <HomePagePostContent username={username} content={content} />
+      <ViewAllComments numOfComments={numOfComments} setIsPostModalOpen={setIsPostModalOpen} />
+      <CommentList
+        comments={comments}
+        isPostPage={false}
+        className={styles.homePagePostCommentList}
+      />
+      <Link to={`/p/${postId}`}>
+        <CreatedTime created={created} />
+      </Link>
+      {postId && (
+        <CommentForm
+          postId={postId}
+          isCommentBubbleClicked={isCommentBubbleClicked}
+          setCommentBubbleClicked={setCommentBubbleClicked}
+        />
+      )}
+      {isPostModalOpen && (
+        <PostModal
+          isOpen={isPostModalOpen}
+          setModalOpen={setIsPostModalOpen}
+          postId={postId}
+          postProp={post}
+        />
+      )}
     </article>
   );
 };

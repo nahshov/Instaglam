@@ -1,0 +1,29 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette';
+@import '../../../styles/typography.scss';
+
+.iconsWrapper{
+  width: 100%;
+  @include flexSpaceBetween;
+  font-size: $icon-medium-large;
+  padding: 0px 10px;
+
+  .leftIconsWrapper{
+      width: 25%;
+      height: 40px;
+      @include flexSpaceBetween;
+      .chatIcon{
+          font-size: $icon-medium-large
+      }
+      .likeHeart{
+        color: red;
+      }   
+      .ShareModalIcon{
+        font-size: $icon-medium-large
+      }
+  }
+  .BookMarkIcon{
+    font-size: $icon-medium-large;
+  }
+}
+

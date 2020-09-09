@@ -2,7 +2,6 @@
 @import '../../../styles/mixins';
 
 .list {
-  border-radius: 10px;
   background: $color-white;
   min-width: 400px;
   min-height: auto;
@@ -10,4 +9,8 @@
   font-size: 14px;
   @include flexColumn;
   justify-content: center;
+
+  @include respond(phone) {
+    min-width: 320px;
+  }
 }

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
-import alert from './alert';
-import users from './users';
 import posts from './posts';
+import post from './post';
 import follow from './follow';
+import search from './search';
+import profile from './profile';
+import activitiesFeed from './activitiesFeed';
 
-export default combineReducers({ auth, alert, users, posts, follow });
+export default combineReducers({ auth, posts, post, follow, search, profile, activitiesFeed });

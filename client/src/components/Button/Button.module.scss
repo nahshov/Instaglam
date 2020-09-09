@@ -1,6 +1,6 @@
-@import '../../styles/color-palette.scss';
-@import '../../styles/mixins.scss';
-@import '../../styles/typography.scss';
+@import "../../styles/color-palette.scss";
+@import "../../styles/mixins.scss";
+@import "../../styles/typography.scss";
 
 .btn {
   display: flex;
@@ -13,6 +13,8 @@
   }
 
   & button {
+    display: block;
+    width: 100%;
     font-family: inherit;
     background: transparent;
     border: 1px solid $primary-border-color;
@@ -58,6 +60,13 @@
       color: $primary-color;
     }
   }
+  &.morebtn {
+    & button {
+      padding: 0px 0px 0px 3px;
+      height: 13px;
+      display: inline-block;
+    }
+  }
 }
 
 .danger {
@@ -66,6 +75,7 @@
     font-weight: bold;
     background-color: $error-text-color;
     color: $color-white;
+    padding: 5px;
   }
 
   &.astext {
@@ -73,5 +83,15 @@
       background: none;
       color: $error-text-color;
     }
+  }
+}
+
+.buttonLoadingSpinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 21px;
   }
 }

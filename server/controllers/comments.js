@@ -11,6 +11,9 @@ const {
 const { removeLikesFromComment } = require('../services/like-services');
 
 const { getPost } = require('../services/post-services');
+const { commentListener, removeCommentListener } = require('../listeners/activityListeners/commentListeners');
+const { replyListener, removeReplyListener } = require('../listeners/activityListeners/replyListener');
+const { activityEmitter } = require('../events/events');
 const serverResponse = require('../utils/serverResponse');
 const { requesterIsAuthenticatedUser } = require('../utils/auth.js');
 
@@ -73,10 +76,21 @@ const addCommentToPost = async (req, res) => {
       post: req.params.postId
     };
 
-    post.comments++;
+    post.numOfComments++;
 
     const [response] = await Promise.all([addComment(comment), post.save()]);
 
+    if (post.user._id.toString() !== req.user.sub) {
+      await commentListener;
+
+      activityEmitter.emit('comment', {
+        post: req.params.postId,
+        postBy: post.user,
+        commenter: req.user.sub,
+        commentId: response._id,
+        created: new Date()
+      });
+    }
     return serverResponse(res, 200, response);
   } catch (error) {
     return serverResponse(res, 500, {
@@ -105,9 +119,21 @@ const addReplyToComment = async (req, res) => {
       replyToComment: comment.replyToComment || req.params.commentId
     };
 
-    post.comments++;
+    post.numOfComments++;
 
     const [response] = await Promise.all([addComment(reply), post.save()]);
+
+    if (comment.user._id.toString() !== req.user.sub) {
+      await replyListener;
+
+      activityEmitter.emit('reply', {
+        comment: comment.replyToComment || req.params.commentId,
+        commentBy: comment.user,
+        replier: req.user.sub,
+        replyId: response._id,
+        created: new Date()
+      });
+    }
 
     return serverResponse(res, 200, response);
   } catch (error) {
@@ -139,8 +165,8 @@ const removeAComment = async (req, res) => {
     const removeLikesFromReplyPromises = replies.map(reply => removeLikesFromComment(reply));
 
     const post = await getPost(req.params.postId);
-    post.comments -= replies.length;
-    post.comments--;
+    post.numOfComments -= replies.length;
+    post.numOfComments--;
 
     const [comment] = await Promise.all([removeComment(req.params.commentId),
       removeLikesFromComment(req.params.commentId),
@@ -148,6 +174,16 @@ const removeAComment = async (req, res) => {
       removeLikesFromComment(req.params.commentId),
       ...removeLikesFromReplyPromises,
       post.save()]);
+
+    if (getAComment.replyToComment) {
+      await removeReplyListener;
+
+      activityEmitter.emit('deleteReply', { replyId: req.params.commentId, commentId: getAComment.replyToComment });
+    } else {
+      await removeCommentListener;
+
+      activityEmitter.emit('deleteComment', { commentId: req.params.commentId, postId: post._id });
+    }
 
     return serverResponse(res, 200, comment);
   } catch (error) {

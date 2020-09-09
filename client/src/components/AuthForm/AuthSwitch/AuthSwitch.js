@@ -1,20 +1,9 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setAlert } from 'actions/alerts/alertActions';
 import styles from 'components/AuthForm/AuthSwitch/AuthSwitch.module.scss';
 
-const AuthSwitch = ({ hasAccountText, linkText }) => {
-  const { alert } = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    if (alert.message !== '') {
-      dispatch(setAlert('', null));
-    }
-  };
-
+const AuthSwitch = ({ hasAccountText, linkText, ...otherProps }) => {
   return (
     <div className={styles.wrapper}>
       <p className={styles.paragraph}>
@@ -23,7 +12,7 @@ const AuthSwitch = ({ hasAccountText, linkText }) => {
           <Link
             className={styles.link}
             to="/accounts/emailsignup/"
-            onClick={handleClick}
+            {...otherProps}
           >
             {linkText}
           </Link>
@@ -31,7 +20,7 @@ const AuthSwitch = ({ hasAccountText, linkText }) => {
           <Link
             className={styles.link}
             to="/accounts/login/"
-            onClick={handleClick}
+            {...otherProps}
           >
             {linkText}
           </Link>

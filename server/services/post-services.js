@@ -2,7 +2,7 @@ const Post = require('../models/Post.js');
 const { deleteFile } = require('./cloud-services');
 const { getUser } = require('./user-services');
 
-function getAllPosts(limit = 10, skip = 0) {
+function getAllPosts(limit, skip) {
   return Post.find({})
     .limit(+limit)
     .skip(+skip)
@@ -10,14 +10,16 @@ function getAllPosts(limit = 10, skip = 0) {
     .populate('user', 'profilePic username -_id');
 }
 
-async function getAllPostsOfUser(userInfo) {
+async function getAllPostsOfUser(userInfo, limit) {
   const user = await getUser(userInfo);
-
-  return Post.find({ user: user._id }).sort('-created');
+  return Post.find({ user: user._id })
+    .sort('-created').populate('user', 'profilePic username')
+    .limit(+limit);
 }
 
 function getPost(postId) {
-  return Post.findOne({ _id: postId });
+  return Post.findOne({ _id: postId })
+    .populate('user', 'profilePic username');
 }
 
 function createPost(post) {

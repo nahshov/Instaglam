@@ -1,0 +1,45 @@
+@import '../../../styles/mixins.scss';
+@import '../../../styles/color-palette.scss';
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  .commentHeader{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 5px 9px;  
+    .commentData {
+      display: flex;
+       .postPageUsername {
+        padding-left: 10px;
+        font-weight: bold;
+       }
+       .homePageUsername{
+         font-weight: bold;
+       }
+    }
+  
+  }
+  .commentActions{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+
+  .replyBar{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .grayLine{
+      width: 24px;
+      height: 1px;
+      background-color: #8e8e8e;
+      margin-right: 20px;
+      margin-left: 50px;
+    }
+  }
+}

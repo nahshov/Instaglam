@@ -9,7 +9,7 @@
   width: 100%;
   border-bottom: 1px solid $primary-border-color;
   background: $color-white;
-  z-index: 4;
+  z-index: 1;
 }
 
 .content {
@@ -19,14 +19,24 @@
   justify-content: space-between;
   padding: 0 20px;
 
-  @include respond(tab-port) {
-    width: 90%;
+    @include respond(tab-port) {
+      width: 90%;
+    }
+
+    @include respond(phablet) {
+      width: 80%;
+      padding: 0;
+    }
+
+    @include respond(phone) {
+      position: relative;
+      width: 90%;
+      padding: 0;
+    }
+
   }
 
-  @include respond(phone) {
-    position: relative;
-  }
-}
+
 
 .cameraAndLogoDiv {
   display: flex;

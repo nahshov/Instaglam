@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from 'pages/HomePage/HomePage.module.scss';
 import HomePagePost from 'components/HomePagePost/HomePagePost';
-import { getAllPosts } from 'actions/posts/postActions';
+import NoPosts from 'components/NoPosts/NoPosts';
+import InfiniteScrolling from 'components/InfiniteScrolling/InfiniteScrolling';
 
 const HomePage = () => {
-  const { posts: { posts, loading } } = useSelector(state => state);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, []);
+  const { posts, loading } = useSelector(state => state.posts);
 
   return (
-    <div className={styles.container}>
-      {posts.length && !loading && posts.map(post => <HomePagePost key={post._id} post={post} />)}
-    </div>
+    <InfiniteScrolling>
+      <div className={styles.container}>
+        {!posts.length && !loading ? <NoPosts /> : !!posts.length && !loading && posts.map(
+          post => <HomePagePost key={post._id} post={post} />
+        )}
+      </div>
+    </InfiniteScrolling>
   );
 };
 
