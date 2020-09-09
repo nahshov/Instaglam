@@ -5,6 +5,10 @@
 .headerPostContainer{
   margin-top: 5px;
   margin-left: 10px;
+  @include respond(phone){
+    width: 100%;
+  };
+
       
   .postHeader{
       @include flexSpaceBetween;

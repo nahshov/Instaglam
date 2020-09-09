@@ -9,6 +9,9 @@
   flex-direction: column;
   background: $color-white;
   margin-bottom: 40px;
+  @include respond(phone){
+    width: 100%;
+  }
   .postHeader{
     padding: 3px 10px;
   }
