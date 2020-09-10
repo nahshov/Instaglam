@@ -25,10 +25,11 @@ app.use((err, req, res, next) => {
 require('./routes/index.js')(app);
 
 if (isProduction) {
-  app.use(express.static('../client/build'));
+  app.use(express.static(path.resolve(__dirname, '../client', 'build')));
 
   app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
+    console.log(path.resolve(__dirname, '../client', 'build', 'index.html'));
+    res.sendFile(path.join(path.resolve(__dirname, '../client', 'build', 'index.html')));
   });
 }
 
