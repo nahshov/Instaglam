@@ -18,5 +18,5 @@ module.exports = {
     bucketName: process.env.GOOGLE_STORAGE_BUCKET_NAME
   },
   activityInterval: 30000,
-  isProduction: true
+  isProduction: process.env.NODE_ENV === 'production'
 };
