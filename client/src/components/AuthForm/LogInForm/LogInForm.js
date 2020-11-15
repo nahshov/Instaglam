@@ -7,7 +7,7 @@ import InputField from 'components/InputField/InputField';
 import Button from 'components/Button/Button';
 import Alert from 'components/Alert/Alert';
 import AuthSwitch from 'components/AuthForm/AuthSwitch/AuthSwitch';
-import { login } from 'actions/auth/authActions';
+import {LOGIN_REQUESTED} from 'actions/auth/authTypes';
 import styles from './LogInForm.module.scss';
 
 const LogInForm = () => {
@@ -41,8 +41,7 @@ const LogInForm = () => {
     } else if (logInForm.password.length < 6) {
       setLogInAlert('Enter a password at least 6 characters long.');
     } else {
-      dispatch(login(logInForm, setLogInAlert));
-      setLogInAlert('');
+      dispatch({type: LOGIN_REQUESTED, payload: {logInForm, setLogInAlert}})
     }
   };
 

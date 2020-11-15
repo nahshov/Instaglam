@@ -7,3 +7,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const RESET_AUTH_LOADING = 'RESET_AUTH_LOADING';
 export const RESET_AUTH = 'RESET_AUTH';
+export const LOAD_USER_REQUESTED = 'LOAD_USER_REQUESTED';
+export const LOGIN_REQUESTED = 'LOGIN_REQUESTED';

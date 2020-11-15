@@ -6,7 +6,7 @@ import ModalListItem from 'components/Modals/ModalList/ModalListItem';
 import TakingPicture from 'components/Modals//UploadPostModal/TakingPicture';
 import Alert from 'components/Alert/Alert';
 import Button from 'components/Button/Button';
-import { submitAPost } from 'actions/posts/postActions';
+import { SUBMIT_A_POST_REQUESTED } from 'actions/posts/postTypes';
 import PropTypes from 'prop-types';
 import styles from 'components/Navbar/NavUploadPost.module.scss';
 
@@ -63,10 +63,10 @@ const UploadPostModal = ({ isUploadPostModalOpen, setIsUploadPostModalOpen }) =>
     }
 
     setIsSubmitting(true);
-    const fd = new FormData();
-    fd.append('content', postCaption);
-    fd.append('media', postMedia);
-    dispatch(submitAPost(fd));
+      const fd = new FormData();
+      fd.append('content', postCaption);
+      fd.append('media', postMedia);
+      dispatch({ type: SUBMIT_A_POST_REQUESTED, payload: {fd} });
   };
 
   return (

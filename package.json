@@ -4,7 +4,7 @@
 	"description": "### By [Almog Ram](https://github.com/almoghr), [Roi Assa](https://github.com/roiassa), [Omer Gronich](https://github.com/OmerGronich)",
 	"main": "index.js",
 	"scripts": {
-		"mongo": "docker run -p 27017-27019:27017-27019 -v ${PWD}/server/db-data:/data/db -d  mongo",
+		"mongo": "docker run -p 27017-27019:27017-27019 -v C:/Users/almog/Desktop/programming/instaSaga/Instaglam/server/db-data:/data/db -d  mongo",
 		"start:frontend": "cd client && npm start",
 		"start:backend": "cd server && npm run dev",
 		"start": "node server/server.js",
